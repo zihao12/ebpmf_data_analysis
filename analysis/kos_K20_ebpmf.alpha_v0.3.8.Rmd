@@ -1,0 +1,138 @@
+---
+title: "kos_K20_ebpmf.alpha_v0.3.8"
+author: "zihao12"
+date: "2020-05-11"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+I apply `ebpmf.alpha` (version 0.3.8) to [KOS dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/). I use $K = 20$. The data has $n = 3430,p = 6906$ and sparsity around $98$ percent. 
+
+### model
+\begin{align}
+    & X_{ij} = \sum_k Z_{ijk}\\
+    & Z_{ijk} \sim Pois(l_{i0} f_{j0} l_{ik} f_{jk})\\
+    & l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.) 
+\end{align}
+For details see [ebpmf_bg](https://github.com/stephenslab/ebpmf.alpha/blob/master/derivations/ebpmf_bg.pdf)
+
+### prior options
+I use gamma mixture $\sum_l \pi_{l} Ga(1/\phi_l, 1/\phi_l)$ as prior for both $L, F$.  Note that each grid component has $E = 1, Var = \phi_L$
+
+### initialization
+I initialize $l_{i0}, f_{j0}$ by rank-1 pNMF. Then let posterior mean and exp of posterior log mean of $q(l_{ik}), q(f_{jk})$ be all 1. 
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+```
+
+
+```{r}
+library(pheatmap)
+source("code/misc.R")
+
+output_dir = "output/uci_BoW/"
+data_dir = "data/uci_BoW/"
+model_name = "kos_ebpmf_bg_K20_maxiter1000.Rds"
+dict_name = "vocab.kos.txt"
+model = readRDS(sprintf("%s/%s", output_dir, model_name))
+dict = read.csv(sprintf("%s/%s", data_dir, dict_name), header = FALSE)[,1]
+dict = as.vector(dict)
+```
+
+## ELBO
+
+* The progress of ELBO is very interesting, different from the curves we see before. 
+
+* From the $g$ below, I guess it is because: $g$ remains the same for many iterations, during which the algo is similar to pNMF (EM) and has siimilar convergence behavior; then $g$ makes one discrete change(mostly), which repeats the convergence behavior ...
+```{r}
+plot(model$ELBO, xlab = "niter", ylab = "elbo")
+```
+
+## look at $g_L, g_F$
+
+*  It is interesting that almost all topics have only one component... (at iteration 500, all topic have one component). Is it because of initialization?
+```{r}
+get_prior_summary <- function(gs){
+  K = length(gs)
+  phi_L = gs[[1]][["scale"]]
+  idx = order(phi_L, decreasing = TRUE)
+  L = length(phi_L)
+  Pi = matrix(, nrow = L, ncol = K)
+  for(k in 1:K){
+    Pi[,k] = gs[[k]][["pi"]][idx]
+  }
+  rownames(Pi) = paste("phi=", round(phi_L[idx], digits = 4), sep = "")
+  colnames(Pi) = paste("Topic", 1:K, sep = "")
+  pheatmap(Pi, cluster_rows=FALSE, cluster_cols=FALSE)
+}
+```
+
+### $g_L$
+```{r}
+get_prior_summary(model$qg$gls)
+```
+
+### $g_F$
+```{r}
+get_prior_summary(model$qg$gfs)
+```
+
+
+## $f_{Jk}$
+It seems that many topics contain lots of finer structure (not easily explained by a few words). This is not DIFFERENT from what we see from [pNMF results](https://zihao12.github.io/ebpmf_demo/applications_kos.html#look_at_the_meaning_of_each_topic). 
+```{r fig.width=14, fig.height=14}
+K = length(model$qg$gls)
+par(mfrow = c(5,4))
+for(k in 1:K){
+  f = model$qg$qfs_mean[,k]
+  probs = seq(0, 1, 0.002)
+  plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k))
+}
+```
+
+
+## $f_{J0} f_{Jk}$ (scaled to multinom model)
+```{r fig.width=14, fig.height=14}
+lf = poisson2multinom(F = model$f0 * model$qg$qfs_mean,
+                 L = model$l0 * model$qg$qls_mean)
+
+K = length(model$qg$gls)
+par(mfrow = c(5,4))
+for(k in 1:K){
+  f = lf$F[,k]
+  probs = seq(0, 1, 0.002)
+  plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k))
+}
+```
+
+## look at $s_k$
+
+$s_k := \sum_i l_i0 \bar{l}_{ik}$. I make $\sum_j f_{j0} = 1$ for interpretability. 
+```{r}
+d = sum(model$f0)
+s_k = colSums(d * model$l0 * model$qg$qls_mean)
+names(s_k) <- paste("Topic", 1:K, sep = "")
+#round(s_k[1:5], digits = 0)
+step = 5
+for(i in 1:round(K/step)){
+  print(round(s_k[((i-1)*step + 1):(i*step)]))
+}
+```
+
+
+<!-- ```{r} -->
+<!-- #par(mfrow = c(5,4)) -->
+<!-- n_top_word = round(0.002 * p) -->
+<!-- for(k in 1:K){ -->
+<!--   print(sprintf("topic %d", k)) -->
+<!--   word_idx = order(lf$F[,k], decreasing = TRUE)[1:n_top_word] -->
+<!--   F_sub = F[word_idx, ] -->
+<!--   rownames(F_sub) = dict[word_idx] -->
+<!--   colnames(F_sub) = paste("Topic", 1:K, sep = "") -->
+<!--   pheatmap(F_sub) -->
+<!-- } -->
+<!-- ``` -->
+
