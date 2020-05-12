@@ -31,11 +31,12 @@ knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 
 ```{r}
 library(pheatmap)
+library(gridExtra)
 source("code/misc.R")
 
 output_dir = "output/uci_BoW/"
 data_dir = "data/uci_BoW/"
-model_name = "kos_ebpmf_bg_K20_maxiter1000.Rds"
+model_name = "kos_ebpmf_bg_K20_maxiter5000.Rds"
 dict_name = "vocab.kos.txt"
 model = readRDS(sprintf("%s/%s", output_dir, model_name))
 dict = read.csv(sprintf("%s/%s", data_dir, dict_name), header = FALSE)[,1]
@@ -44,16 +45,22 @@ dict = as.vector(dict)
 
 ## ELBO
 
-* The progress of ELBO is very interesting, different from the curves we see before. 
+* The progress of ELBO (in the first 1000 iterations) is very interesting, different from the curves we see before. \
 
-* From the $g$ below, I guess it is because: $g$ remains the same for many iterations, during which the algo is similar to pNMF (EM) and has siimilar convergence behavior; then $g$ makes one discrete change(mostly), which repeats the convergence behavior ...
+* From the $g$ below, I guess it is because: $g$ remains the same for many iterations, during which the algo is similar to pNMF (EM) and has siimilar convergence behavior; then $g$ makes one discrete change(mostly), which repeats the convergence behavior ...\
+
+* It might be because of initialization
 ```{r}
 plot(model$ELBO, xlab = "niter", ylab = "elbo")
+## runtime
+model$runtime
 ```
 
 ## look at $g_L, g_F$
 
-*  It is interesting that almost all topics have only one component... (at iteration 500, all topic have one component). Is it because of initialization?
+* I show component proportions for $g_L, g_F$. \
+
+*  It is interesting that almost all topics have only one component... (at iteration 500, all topic have one component). Is it because of initialization? Or is the discrete component truly a good global solution? (If that's the case we can just do a grid search instead of solving a convex problem). 
 ```{r}
 get_prior_summary <- function(gs){
   K = length(gs)
@@ -81,8 +88,19 @@ get_prior_summary(model$qg$gfs)
 ```
 
 
-## $f_{Jk}$
+
+## $f_{J0}$
+```{r}
+f = model$f0
+probs = seq(0, 1, 0.002)
+plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",0))
+```
+
+
+
+## $f_{Jk} (k > 0)$ 
 It seems that many topics contain lots of finer structure (not easily explained by a few words). This is not DIFFERENT from what we see from [pNMF results](https://zihao12.github.io/ebpmf_demo/applications_kos.html#look_at_the_meaning_of_each_topic). 
+
 ```{r fig.width=14, fig.height=14}
 K = length(model$qg$gls)
 par(mfrow = c(5,4))
@@ -109,7 +127,6 @@ for(k in 1:K){
 ```
 
 ## look at $s_k$
-
 $s_k := \sum_i l_i0 \bar{l}_{ik}$. I make $\sum_j f_{j0} = 1$ for interpretability. 
 ```{r}
 d = sum(model$f0)
@@ -123,16 +140,50 @@ for(i in 1:round(K/step)){
 ```
 
 
-<!-- ```{r} -->
-<!-- #par(mfrow = c(5,4)) -->
-<!-- n_top_word = round(0.002 * p) -->
-<!-- for(k in 1:K){ -->
-<!--   print(sprintf("topic %d", k)) -->
-<!--   word_idx = order(lf$F[,k], decreasing = TRUE)[1:n_top_word] -->
-<!--   F_sub = F[word_idx, ] -->
-<!--   rownames(F_sub) = dict[word_idx] -->
-<!--   colnames(F_sub) = paste("Topic", 1:K, sep = "") -->
-<!--   pheatmap(F_sub) -->
-<!-- } -->
-<!-- ``` -->
+## look at top words for topics
 
+### look at the top words in $\bar{f}_{Jk}$. 
+```{r fig.width=16, fig.height=16}
+K_sub <- 1:K
+#par(mfrow = c(5,4))
+p = length(model$l0)
+n_top_word = round(0.002 * p)
+f = model$qg$qfs_mean
+
+show_topic <- function(k){
+  #print(sprintf("topic %d", k))
+  word_idx = order(f[,k], decreasing = TRUE)[1:n_top_word]
+  F_sub = model$qg$qfs_mean[word_idx,]
+  rownames(F_sub) = dict[word_idx]
+  colnames(F_sub) = paste("Topic", 1:K, sep = "")
+  pheatmap(F_sub, 
+           cluster_rows=FALSE, cluster_cols=FALSE,
+           silent = TRUE, 
+           main = sprintf("topic %d", k))[[4]]
+}
+gs = lapply(K_sub, FUN = show_topic)
+grid.arrange(grobs = gs, ncol = 4)
+```
+
+### look at the top words in $f_{J0}\bar{f}_{Jk}$ (after scaling to multinom model). 
+```{r fig.width=16, fig.height=16}
+K_sub <- 1:K
+#par(mfrow = c(5,4))
+p = length(model$l0)
+n_top_word = round(0.002 * p)
+f = lf$F
+
+show_topic <- function(k){
+  #print(sprintf("topic %d", k))
+  word_idx = order(f[,k], decreasing = TRUE)[1:n_top_word]
+  F_sub = model$qg$qfs_mean[word_idx,]
+  rownames(F_sub) = dict[word_idx]
+  colnames(F_sub) = paste("Topic", 1:K, sep = "")
+  pheatmap(F_sub, 
+           cluster_rows=FALSE, cluster_cols=FALSE,
+           silent = TRUE, 
+           main = sprintf("topic %d", k))[[4]]
+}
+gs = lapply(K_sub, FUN = show_topic)
+grid.arrange(grobs = gs, ncol = 4)
+```
