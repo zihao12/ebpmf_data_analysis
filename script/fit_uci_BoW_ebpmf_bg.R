@@ -10,8 +10,8 @@ K = as.integer(args[2])
 maxiter = as.integer(args[3])
 
 
-datadir = "../data/uci_bag_of_words"
-outdir = "../output/uci_bag_of_words"
+datadir = "../data/uci_BoW"
+outdir = "../output/uci_BoW"
 filename = sprintf("docword.%s", docname)
 format = "txt"
 file_out = sprintf("%s/%s_ebpmf_bg_K%d_maxiter%d.Rds", 
