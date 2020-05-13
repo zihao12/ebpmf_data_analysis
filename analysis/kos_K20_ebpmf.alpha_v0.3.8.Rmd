@@ -25,7 +25,7 @@ I use gamma mixture $\sum_l \pi_{l} Ga(1/\phi_l, 1/\phi_l)$ as prior for both $L
 I initialize $l_{i0}, f_{j0}$ by rank-1 pNMF. Then let posterior mean and exp of posterior log mean of $q(l_{ik}), q(f_{jk})$ be all 1. 
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+#knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 ```
 
 
