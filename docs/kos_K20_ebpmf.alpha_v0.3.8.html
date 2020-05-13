@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-05-12
+<strong>Last updated:</strong> 2020-05-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8558495d0046f5d8bd3732b9b2431ebf27e383d3targetblank8558495a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8558495d0046f5d8bd3732b9b2431ebf27e383d3" target="_blank">8558495</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreefbebc21ae37012d3e6e9faebace2b22b4e50c41dtargetblankfbebc21a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/fbebc21ae37012d3e6e9faebace2b22b4e50c41d" target="_blank">fbebc21</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8558495d0046f5d8bd3732b9b2431ebf27e383d3targetblank8558495a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreefbebc21ae37012d3e6e9faebace2b22b4e50c41dtargetblankfbebc21a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8558495d0046f5d8bd3732b9b2431ebf27e383d3" target="_blank">8558495</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/fbebc21ae37012d3e6e9faebace2b22b4e50c41d" target="_blank">fbebc21</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -521,6 +521,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
 
 Untracked files:
     Untracked:  code/misc.R
@@ -562,6 +563,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fbebc21ae37012d3e6e9faebace2b22b4e50c41d/analysis/kos_K20_ebpmf.alpha_v0.3.8.Rmd" target="_blank">fbebc21</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-13
+</td>
+<td>
+update analysis/kos_K20_ebpmf.alpha_v0.3.8.Rmd show code chunks
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/90f2fbd5afb77121c975158741ca168f7a6bc1cf/docs/kos_K20_ebpmf.alpha_v0.3.8.html" target="_blank">90f2fbd</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -673,6 +708,18 @@ kos_K20_ebpmf.alpha_v0.3.8.Rmd
 <div id="initialization" class="section level3">
 <h3>initialization</h3>
 <p>I initialize <span class="math inline">\(l_{i0}, f_{j0}\)</span> by rank-1 pNMF. Then let posterior mean and exp of posterior log mean of <span class="math inline">\(q(l_{ik}), q(f_{jk})\)</span> be all 1.</p>
+<pre class="r"><code>library(pheatmap)</code></pre>
+<pre><code>Warning: package &#39;pheatmap&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>library(gridExtra)
+source(&quot;code/misc.R&quot;)
+
+output_dir = &quot;output/uci_BoW/&quot;
+data_dir = &quot;data/uci_BoW/&quot;
+model_name = &quot;kos_ebpmf_bg_K20_maxiter5000.Rds&quot;
+dict_name = &quot;vocab.kos.txt&quot;
+model = readRDS(sprintf(&quot;%s/%s&quot;, output_dir, model_name))
+dict = read.csv(sprintf(&quot;%s/%s&quot;, data_dir, dict_name), header = FALSE)[,1]
+dict = as.vector(dict)</code></pre>
 </div>
 </div>
 <div id="elbo" class="section level2">
@@ -682,8 +729,10 @@ kos_K20_ebpmf.alpha_v0.3.8.Rmd
 </li>
 <li>From the <span class="math inline">\(g\)</span> below, I guess it is because: <span class="math inline">\(g\)</span> remains the same for many iterations, during which the algo is similar to pNMF (EM) and has siimilar convergence behavior; then <span class="math inline">\(g\)</span> makes one discrete change(mostly), which repeats the convergence behavior …<br />
 </li>
-<li>It might be because of initialization <img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></li>
+<li>It might be because of initialization</li>
 </ul>
+<pre class="r"><code>plot(model$ELBO, xlab = &quot;niter&quot;, ylab = &quot;elbo&quot;)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
 Past versions of unnamed-chunk-3-1.png
@@ -732,6 +781,8 @@ zihao12
 </table>
 </div>
 </div>
+<pre class="r"><code>## runtime
+model$runtime</code></pre>
 <pre><code>     user    system   elapsed 
 58135.647    49.558 37755.845 </code></pre>
 </div>
@@ -742,8 +793,22 @@ zihao12
 </li>
 <li>It is interesting that almost all topics have only one component… (at iteration 500, all topic have one component). Is it because of initialization? Or is the discrete component truly a good global solution? (If that’s the case we can just do a grid search instead of solving a convex problem).</li>
 </ul>
+<pre class="r"><code>get_prior_summary &lt;- function(gs){
+  K = length(gs)
+  phi_L = gs[[1]][[&quot;scale&quot;]]
+  idx = order(phi_L, decreasing = TRUE)
+  L = length(phi_L)
+  Pi = matrix(, nrow = L, ncol = K)
+  for(k in 1:K){
+    Pi[,k] = gs[[k]][[&quot;pi&quot;]][idx]
+  }
+  rownames(Pi) = paste(&quot;phi=&quot;, round(phi_L[idx], digits = 4), sep = &quot;&quot;)
+  colnames(Pi) = paste(&quot;Topic&quot;, 1:K, sep = &quot;&quot;)
+  pheatmap(Pi, cluster_rows=FALSE, cluster_cols=FALSE)
+}</code></pre>
 <div id="g_l" class="section level3">
 <h3><span class="math inline">\(g_L\)</span></h3>
+<pre class="r"><code>get_prior_summary(model$qg$gls)</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -796,6 +861,7 @@ zihao12
 </div>
 <div id="g_f" class="section level3">
 <h3><span class="math inline">\(g_F\)</span></h3>
+<pre class="r"><code>get_prior_summary(model$qg$gfs)</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
@@ -854,19 +920,34 @@ zihao12
 </li>
 <li>Those almost identical topics/loadings are adjacent in our update order. It seems we need to randomize the update order?</li>
 </ul>
+<pre class="r"><code>print(&quot;|f_2 - f_k|_1, k = 1,3,4,5&quot;)</code></pre>
 <pre><code>[1] &quot;|f_2 - f_k|_1, k = 1,3,4,5&quot;</code></pre>
+<pre class="r"><code>f = model$qg$qfs_mean
+sum(abs(f[,2] - f[,1]))</code></pre>
 <pre><code>[1] 1.941782</code></pre>
+<pre class="r"><code>sum(abs(f[,2] - f[,3]))</code></pre>
 <pre><code>[1] 1.042236e-07</code></pre>
+<pre class="r"><code>sum(abs(f[,2] - f[,4]))</code></pre>
 <pre><code>[1] 2.084468e-07</code></pre>
+<pre class="r"><code>sum(abs(f[,2] - f[,5]))</code></pre>
 <pre><code>[1] 3.126695e-07</code></pre>
+<pre class="r"><code>print(&quot;|l_2 - l_k|_1, k = 1,3,4,5&quot;)</code></pre>
 <pre><code>[1] &quot;|l_2 - l_k|_1, k = 1,3,4,5&quot;</code></pre>
+<pre class="r"><code>l = model$qg$qls_mean
+sum(abs(l[,2] - l[,1]))</code></pre>
 <pre><code>[1] 3.230945</code></pre>
+<pre class="r"><code>sum(abs(l[,2] - l[,3]))</code></pre>
 <pre><code>[1] 3.03823e-10</code></pre>
+<pre class="r"><code>sum(abs(l[,2] - l[,4]))</code></pre>
 <pre><code>[1] 6.076523e-10</code></pre>
+<pre class="r"><code>sum(abs(l[,2] - l[,5]))</code></pre>
 <pre><code>[1] 9.114836e-10</code></pre>
 </div>
 <div id="quantile-of-f_j0" class="section level2">
 <h2>quantile of <span class="math inline">\(f_{J0}\)</span></h2>
+<pre class="r"><code>f = model$f0
+probs = seq(0, 1, 0.002)
+plot(probs, quantile(f, probs = probs), main = sprintf(&quot;topic %d&quot;,0))</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
@@ -890,6 +971,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/90f2fbd5afb77121c975158741ca168f7a6bc1cf/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-8-1.png" target="_blank">90f2fbd</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b45dcd73f737b9828f54d0f434285aa687900bd5/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-8-1.png" target="_blank">b45dcd7</a>
@@ -920,6 +1012,13 @@ zihao12
 <div id="quantile-of-f_jk-k-0" class="section level2">
 <h2>quantile of <span class="math inline">\(f_{Jk} (k &gt; 0)\)</span></h2>
 <p>It seems that many topics contain lots of finer structure (not easily explained by a few words). This is not DIFFERENT from what we see from <a href="https://zihao12.github.io/ebpmf_demo/applications_kos.html#look_at_the_meaning_of_each_topic">pNMF results</a>.</p>
+<pre class="r"><code>K = length(model$qg$gls)
+par(mfrow = c(5,4))
+for(k in 1:K){
+  f = model$qg$qfs_mean[,k]
+  probs = seq(0, 1, 0.002)
+  plot(probs, quantile(f, probs = probs), main = sprintf(&quot;topic %d&quot;,k))
+}</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-9-1.png" width="1344" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
@@ -945,6 +1044,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/90f2fbd5afb77121c975158741ca168f7a6bc1cf/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-9-1.png" target="_blank">90f2fbd</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b45dcd73f737b9828f54d0f434285aa687900bd5/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-9-1.png" target="_blank">b45dcd7</a>
 </td>
 <td>
@@ -961,11 +1071,66 @@ zihao12
 </div>
 <div id="quantile-of-f_j0-f_jk-scaled-to-multinom-model" class="section level2">
 <h2>quantile of <span class="math inline">\(f_{J0} f_{Jk}\)</span> (scaled to multinom model)</h2>
+<pre class="r"><code>lf = poisson2multinom(F = model$f0 * model$qg$qfs_mean,
+                 L = model$l0 * model$qg$qls_mean)
+
+K = length(model$qg$gls)
+par(mfrow = c(5,4))
+for(k in 1:K){
+  f = lf$F[,k]
+  probs = seq(0, 1, 0.002)
+  plot(probs, quantile(f, probs = probs), main = sprintf(&quot;topic %d&quot;,k))
+}</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-10-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/90f2fbd5afb77121c975158741ca168f7a6bc1cf/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-10-1.png" target="_blank">90f2fbd</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="look-at-s_k" class="section level2">
 <h2>look at <span class="math inline">\(s_k\)</span></h2>
 <p><span class="math inline">\(s_k := \sum_i l_i0 \bar{l}_{ik}\)</span>. I make <span class="math inline">\(\sum_j f_{j0} = 1\)</span> for interpretability.</p>
+<pre class="r"><code>d = sum(model$f0)
+s_k = colSums(d * model$l0 * model$qg$qls_mean)
+names(s_k) &lt;- paste(&quot;Topic&quot;, 1:K, sep = &quot;&quot;)
+#round(s_k[1:5], digits = 0)
+step = 5
+for(i in 1:round(K/step)){
+  print(round(s_k[((i-1)*step + 1):(i*step)]))
+}</code></pre>
 <pre><code>Topic1 Topic2 Topic3 Topic4 Topic5 
   5802   5791   5791   5791   5791 
  Topic6  Topic7  Topic8  Topic9 Topic10 
@@ -979,6 +1144,25 @@ Topic16 Topic17 Topic18 Topic19 Topic20
 <h2>look at top words for topics</h2>
 <div id="look-at-the-top-words-in-barf_jk." class="section level3">
 <h3>look at the top words in <span class="math inline">\(\bar{f}_{Jk}\)</span>.</h3>
+<pre class="r"><code>K_sub &lt;- 1:K
+#par(mfrow = c(5,4))
+p = length(model$l0)
+n_top_word = round(0.002 * p)
+f = model$qg$qfs_mean
+
+show_topic &lt;- function(k){
+  #print(sprintf(&quot;topic %d&quot;, k))
+  word_idx = order(f[,k], decreasing = TRUE)[1:n_top_word]
+  F_sub = model$qg$qfs_mean[word_idx,]
+  rownames(F_sub) = dict[word_idx]
+  colnames(F_sub) = paste(&quot;Topic&quot;, 1:K, sep = &quot;&quot;)
+  pheatmap(F_sub, 
+           cluster_rows=FALSE, cluster_cols=FALSE,
+           silent = TRUE, 
+           main = sprintf(&quot;topic %d&quot;, k))[[4]]
+}
+gs = lapply(K_sub, FUN = show_topic)
+grid.arrange(grobs = gs, ncol = 4)</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-12-1.png" width="1536" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
@@ -1004,6 +1188,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/90f2fbd5afb77121c975158741ca168f7a6bc1cf/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-12-1.png" target="_blank">90f2fbd</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b45dcd73f737b9828f54d0f434285aa687900bd5/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-12-1.png" target="_blank">b45dcd7</a>
 </td>
 <td>
@@ -1020,7 +1215,63 @@ zihao12
 </div>
 <div id="look-at-the-top-words-in-f_j0barf_jk-after-scaling-to-multinom-model." class="section level3">
 <h3>look at the top words in <span class="math inline">\(f_{J0}\bar{f}_{Jk}\)</span> (after scaling to multinom model).</h3>
+<pre class="r"><code>K_sub &lt;- 1:K
+#par(mfrow = c(5,4))
+p = length(model$l0)
+n_top_word = round(0.002 * p)
+f = lf$F
+
+show_topic &lt;- function(k){
+  #print(sprintf(&quot;topic %d&quot;, k))
+  word_idx = order(f[,k], decreasing = TRUE)[1:n_top_word]
+  F_sub = model$qg$qfs_mean[word_idx,]
+  rownames(F_sub) = dict[word_idx]
+  colnames(F_sub) = paste(&quot;Topic&quot;, 1:K, sep = &quot;&quot;)
+  pheatmap(F_sub, 
+           cluster_rows=FALSE, cluster_cols=FALSE,
+           silent = TRUE, 
+           main = sprintf(&quot;topic %d&quot;, k))[[4]]
+}
+gs = lapply(K_sub, FUN = show_topic)
+grid.arrange(grobs = gs, ncol = 4)</code></pre>
 <p><img src="figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-13-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/90f2fbd5afb77121c975158741ca168f7a6bc1cf/docs/figure/kos_K20_ebpmf.alpha_v0.3.8.Rmd/unnamed-chunk-13-1.png" target="_blank">90f2fbd</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- ```{r} -->
 <!-- f = model$qg$qfs_mean -->
 <!-- rownames(f) = NULL -->
@@ -1034,6 +1285,7 @@ zihao12
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.5.1 (2018-07-02)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
 Running under: macOS  10.14
