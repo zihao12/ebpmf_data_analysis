@@ -1,0 +1,190 @@
+---
+title: "ebpmf_bg_tutorial"
+author: "zihao12"
+date: "2020-05-14"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+Our model
+\begin{align}
+& X_{ij} \sim Pois(l_{i0} f_{j0} \sum_k l_{ik} f_{jk})\\
+& l_{ik} \sim g_{L, k}(.)\\
+& f_{jk} \sim g_{F, k}(.)
+\end{align}
+Although `ebpmf_bg` function has the option to use various prior families for $l_{ik}, f_{jk}$, the focus is on $g = \sum_l \pi_l Ga(1/\phi_l, 1/\phi_l)$ for both $l_{ik}, f_{jk}$. The other options are not checked. 
+
+
+```{r warning=F, message=F}
+rm(list = ls())
+library(Matrix)
+library(ebpmf.alpha)
+library(pheatmap)
+library(gridExtra)
+source("code/util.R")
+source("code/misc.R")
+set.seed(123)
+```
+
+
+## load data and use subset for experiments
+```{r}
+docname = "kos"
+datadir = "data/uci_BoW"
+filename = sprintf("docword.%s", docname)
+format = "txt"
+X = read_uci_bag_of_words(file= sprintf("%s/%s.%s",
+          datadir,filename, format))
+# dim(X)
+# class(X)
+# length(X@x)
+
+## subset samples
+row_sub = sample(x = 1:nrow(X), size = 500,replace = FALSE)
+X_sub = X[row_sub,]
+col_sub = which(colSums(X_sub) > 0)
+X_sub = X_sub[, col_sub]
+dim(X_sub)
+length(X_sub@x)
+```
+
+### run with default configuration
+I specifically show how initialization is done (this is equivalent to using `init = NULL`). 
+```{r cache=TRUE, autodep=TRUE, message=FALSE, warning=FALSE}
+K = 5
+maxiter = 50
+verbose = FALSE
+
+## initialization
+#init = ebpmf.alpha::initialize_qg_l0f0(X = X_sub, K = K, seed = 123)
+initialize_qg_l0f0 <- function(X, K, seed = 123){
+  set.seed(seed)
+  n = nrow(X)
+  p = ncol(X)
+  L0 = matrix(exp(runif(n*K, min = -1.5, max = 1)), ncol = K)
+  F0 = matrix(exp(runif(p*K, min = -1.5, max = 1)), ncol = K)
+  qg = initialize_qg_from_LF(L0, F0)
+  l0 = rowSums(X)
+  denom <- colSums( t(qg$qfs_mean) * colSums(l0 * qg$qls_mean))
+  f0 <- colSums(X)/denom
+  ## initialize g
+  aL = c(seq(0.01, 0.10, 0.01), seq(0.2, 0.9, 0.1), seq(1,15,2), 20, 50, 75, 100, 200, 1e3)
+  D = length(aL)
+  g = ebpm::gammamix(pi = replicate(D, 1/D), shape = aL, scale = 1/aL)
+  qg$gls = replicate(K, list(g))
+  qg$gfs = replicate(K, list(g))
+  return(list(qg = qg, l0 = l0, f0 = f0))
+}
+
+init = initialize_qg_l0f0(X = X_sub, K = K, seed = 123)
+names(init)
+
+model1 = ebpmf.alpha::ebpmf_bg(X = X_sub, K = K,
+                          maxiter = maxiter, verbose = verbose,
+                          init = init,
+                          pm_func = list(f = ebpm::ebpm_gamma_mixture,
+                                         l = ebpm::ebpm_gamma_mixture),
+                          fix_option = list(l0 = FALSE, f0 = FALSE, 
+                                            gl = FALSE, ql = FALSE, 
+                                            gf = FALSE, qf = FALSE))
+```
+
+```{r}
+plot(model1$ELBO)
+get_prior_summary(model1$qg$gls)
+get_prior_summary(model1$qg$gfs)
+```
+
+### what if we want to fix $f_{j0} f_{jk}$
+Sometimes, we run `pNMF` and a pair of $(l_{i0} l_{ik},f_{j0} f_{jk})$. We want to fix $f$s and shrink $l$s. How can we do this?
+
+```{r cache=TRUE, autodep=TRUE, message=FALSE, warning=FALSE}
+initialize_qg_l0f0_fixF <- function(X, L0, F0){
+  l0 = apply(L0, 1, median)
+  l0[l0 == 0] = 1e-8
+  L0 = L0/l0
+  qg = ebpmf.alpha::initialize_qg_from_LF(L0 = L0, F0 = F0)
+  denom <- colSums( t(qg$qfs_mean) * colSums(l0 * qg$qls_mean))
+  f0 <- colSums(X)/denom
+  aL = c(seq(0.01, 0.10, 0.01), seq(0.2, 0.9, 0.1), seq(1,15,2), 20, 50, 75, 100, 200, 1e3)
+  D = length(aL)
+  g = ebpm::gammamix(pi = replicate(D, 1/D), shape = aL, scale = 1/aL)
+  qg$gls = replicate(K, list(g))
+  qg$gfs = replicate(K, list(NULL)) 
+  return(list(qg = qg, l0 = l0, f0 = f0))
+}
+
+fit_pmf = NNLM::nnmf(A = as.matrix(X_sub), k = K, loss = "mkl", method = "scd", 
+                     max.iter = 20, verbose = FALSE, show.warning = FALSE)
+L0 = fit_pmf$W
+F0 = t(fit_pmf$H)
+init = initialize_qg_l0f0_fixF(X = X_sub, L0 = L0, F0 = F0)
+
+model2 = ebpmf.alpha::ebpmf_bg(X = X_sub, K = K,
+                          maxiter = maxiter, verbose = verbose,
+                          init = init,
+                          pm_func = list(f = ebpm::ebpm_gamma_mixture,## this will be ignored
+                                         l = ebpm::ebpm_gamma_mixture),
+                          fix_option = list(l0 = FALSE, f0 = TRUE, 
+                                            gl = FALSE, ql = FALSE, 
+                                            gf = TRUE, qf = TRUE))
+## check if `f` remains unchanged
+all(model2$qg$qfs_mean == init$qg$qfs_mean)
+```
+
+
+```{r}
+plot(model2$ELBO)
+get_prior_summary(model2$qg$gls)
+```
+
+* can we compare the two ELBOs, since the two models are different?\
+
+* Seems that we can explore ways of initialization...
+
+<!-- * Seems we can get better intialization this way. Let me initialize similarly. -->
+
+<!-- ```{r cache=TRUE, autodep=TRUE, message=FALSE, warning=FALSE} -->
+<!-- initialize_qg_l0f0_from_L0F0 <- function(X, L0, F0){ -->
+<!--   l0 = apply(L0, 1, median) -->
+<!--   l0[l0 == 0] = 1e-8 -->
+<!--   L0 = L0/l0 -->
+<!--   f0 = apply(F0, 1, median) -->
+<!--   f0[f0 == 0] = 1e-8 -->
+<!--   F0 = F0/f0 -->
+<!--   qg = ebpmf.alpha::initialize_qg_from_LF(L0 = L0, F0 = F0) -->
+<!--   denom <- colSums( t(qg$qfs_mean) * colSums(l0 * qg$qls_mean)) -->
+<!--   f0 <- colSums(X)/denom -->
+<!--   aL = c(seq(0.01, 0.10, 0.01), seq(0.2, 0.9, 0.1), seq(1,15,2), 20, 50, 75, 100, 200, 1e3) -->
+<!--   D = length(aL) -->
+<!--   g = ebpm::gammamix(pi = replicate(D, 1/D), shape = aL, scale = 1/aL) -->
+<!--   qg$gls = replicate(K, list(g)) -->
+<!--   qg$gfs = replicate(K, list(g))  -->
+<!--   return(list(qg = qg, l0 = l0, f0 = f0)) -->
+<!-- } -->
+
+<!-- # fit_pmf = NNLM::nnmf(A = as.matrix(X_sub), k = K, loss = "mkl", method = "scd",  -->
+<!-- #                      max.iter = 20, verbose = FALSE, show.warning = FALSE) -->
+<!-- L0 = fit_pmf$W -->
+<!-- F0 = t(fit_pmf$H) -->
+<!-- init = initialize_qg_l0f0_from_L0F0(X = X_sub, L0 = L0, F0 = F0) -->
+
+<!-- model3 = ebpmf.alpha::ebpmf_bg(X = X_sub, K = K, -->
+<!--                           maxiter = maxiter, verbose = verbose, -->
+<!--                           init = init, -->
+<!--                           pm_func = list(f = ebpm::ebpm_gamma_mixture,## this will be ignored -->
+<!--                                          l = ebpm::ebpm_gamma_mixture), -->
+<!--                           fix_option = list(l0 = FALSE, f0 = FALSE,  -->
+<!--                                             gl = FALSE, ql = FALSE,  -->
+<!--                                             gf = FALSE, qf = FALSE)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- plot(model3$ELBO) -->
+<!-- get_prior_summary(model3$qg$gls) -->
+<!-- get_prior_summary(model3$qg$gfs) -->
+<!-- ``` -->
+
+
