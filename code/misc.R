@@ -1,31 +1,3 @@
-sample_point_gamma_one <- function(point_gamma_){
-  if(rbinom(1,1, point_gamma_$pi0) == 1){
-    return(0)
-  }else{
-    return(rgamma(1,shape = point_gamma_$shape, scale = point_gamma_$scale))
-  }
-}
-
-sample_point_gamma  <- function(n, point_gamma_, seed = 123){
-  set.seed(seed)
-  out = replicate(n, sample_point_gamma_one(point_gamma_))
-  return(out)
-}
-
-## simulate a poisson mean problem from mixture of exponential
-sample_expmix  <-  function(n,gammamix_, seed = 123){
-  set.seed(seed)
-  a = gammamix_$shape
-  b = 1/gammamix_$scale
-  pi = gammamix_$pi
-  lam = replicate(n, sim_mgamma(a, b, pi))
-  return(lam)
-}
-sim_mgamma <- function(a,b,pi){
-  idx = which(rmultinom(1,1,pi) == 1)
-  return(rgamma(1, shape = a[idx], rate =  b[idx]))
-}
-
 # Scale each column of A so that the entries in each column sum to 1;
 # i.e., colSums(scale.cols(A)) should return a vector of ones.
 scale.cols <- function (A)
