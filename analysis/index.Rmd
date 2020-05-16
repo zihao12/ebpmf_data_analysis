@@ -12,10 +12,11 @@ Welcome to my research website.
 
 Data analysis results:\
 
- * Version `0.3.8`: 
+
+ * Version `0.3.8`: \
  [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\
  
- * Version `0.3.9`:  
- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), 
- [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),
- [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html),
+ * Version `0.3.9`:  \
+ [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), \
+ [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\
+ [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html)
