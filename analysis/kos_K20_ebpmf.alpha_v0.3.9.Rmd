@@ -46,6 +46,12 @@ model = readRDS(sprintf("%s/%s", output_dir, model_name))
 model_pmf = readRDS(sprintf("%s/%s", output_dir, model_pmf_name))
 dict = read.csv(sprintf("%s/%s", data_dir, dict_name), header = FALSE)[,1]
 dict = as.vector(dict)
+
+K = ncol(model_pmf$L)
+L_pmf = model_pmf$L; F_pmf = model_pmf$F
+L_bg = model$l0 * model$qg$qls_mean; F_bg = model$f0 * model$qg$qfs_mean
+lf = poisson2multinom(L=L_bg,F=F_bg)
+lf_pmf = poisson2multinom(L = L_pmf,F = F_pmf)
 ```
 
 ## ELBO and runtime
@@ -72,53 +78,6 @@ get_prior_summary(model$qg$gls)
 ### $g_F$
 ```{r}
 get_prior_summary(model$qg$gfs)
-```
-
-## Look at quantile of topics
-
-### quantile of $f_{J0}$ (`ebpmf_bg`)
-```{r}
-f = model$f0
-probs = seq(0, 1, 0.002)
-plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",0))
-```
-
-### quantile of $f_{Jk} (k > 0)$ (`ebpmf_bg`)
-
-```{r fig.width=14, fig.height=14}
-K = length(model$qg$gls)
-par(mfrow = c(5,4))
-for(k in 1:K){
-  f = model$qg$qfs_mean[,k]
-  probs = seq(0, 1, 0.002)
-  plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k))
-}
-```
-
-
-### quantile of $f_{J0} f_{Jk}$ (`ebpmf_bg`) (scaled to multinom)
-```{r fig.width=14, fig.height=14}
-lf = poisson2multinom(F = model$f0 * model$qg$qfs_mean,
-                 L = model$l0 * model$qg$qls_mean)
-
-K = length(model$qg$gls)
-par(mfrow = c(5,4))
-for(k in 1:K){
-  f = lf$F[,k]
-  probs = seq(0, 1, 0.002)
-  plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k))
-}
-```
-
-### quantile of $f_{Jk}$ (`PMF`) (scaled to multinom)
-```{r fig.width=14, fig.height=14}
-lf_pmf = poisson2multinom(F = model_pmf$F, L = model_pmf$L)
-par(mfrow = c(5,4))
-for(k in 1:K){
-  f = lf_pmf$F[,k]
-  probs = seq(0, 1, 0.002)
-  plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k))
-}
 ```
 
 ## look at $s_k$ (`ebpmf_bg`)
@@ -179,3 +138,85 @@ other_var = list(n_top_word = n_top_word,F = F)
 gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
 grid.arrange(grobs = gs, ncol = 4)
 ```
+
+## Compare $L, F$ (in the context of PMF model)
+```{r}
+## scale L, F so that colSums(F) = 1
+L_pmf = L_pmf %*% diag(colSums(F_pmf))
+F_pmf = F_pmf %*% diag(1/colSums(F_pmf))
+
+L_bg = L_bg %*% diag(colSums(F_bg))
+F_bg = F_bg %*% diag(1/colSums(F_bg))
+```
+
+### $L$
+```{r fig.width=16, fig.height=16}
+par(mfrow = c(5,4))
+for(k in 1:K){
+  plot(L_pmf[,k], L_bg[,k], pch = 18, 
+       xlab = "pmf", ylab = "bg", main = sprintf("loading %d", k))
+  abline(0,1,lwd=1,col="blue")
+}
+```
+
+### $F$
+```{r fig.width=16, fig.height=16}
+par(mfrow = c(5,4))
+for(k in 1:K){
+  plot(F_pmf[,k], F_bg[,k], pch = 18, 
+       xlab = "pmf", ylab = "bg", main = sprintf("factor %d", k))
+  abline(0,1,lwd=1,col="blue")
+}
+```
+
+
+
+<!-- ## Look at quantile of topics -->
+
+<!-- ### quantile of $f_{J0}$ (`ebpmf_bg`) -->
+<!-- ```{r} -->
+<!-- f = model$f0 -->
+<!-- probs = seq(0, 1, 0.002) -->
+<!-- plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",0)) -->
+<!-- ``` -->
+
+<!-- ### quantile of $f_{Jk} (k > 0)$ (`ebpmf_bg`) -->
+
+<!-- ```{r fig.width=14, fig.height=14} -->
+<!-- K = length(model$qg$gls) -->
+<!-- par(mfrow = c(5,4)) -->
+<!-- for(k in 1:K){ -->
+<!--   f = model$qg$qfs_mean[,k] -->
+<!--   probs = seq(0, 1, 0.002) -->
+<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ### quantile of $f_{J0} f_{Jk}$ (`ebpmf_bg`) (scaled to multinom) -->
+<!-- ```{r fig.width=14, fig.height=14} -->
+<!-- lf = poisson2multinom(F = model$f0 * model$qg$qfs_mean, -->
+<!--                  L = model$l0 * model$qg$qls_mean) -->
+
+<!-- K = length(model$qg$gls) -->
+<!-- par(mfrow = c(5,4)) -->
+<!-- for(k in 1:K){ -->
+<!--   f = lf$F[,k] -->
+<!--   probs = seq(0, 1, 0.002) -->
+<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ### quantile of $f_{Jk}$ (`PMF`) (scaled to multinom) -->
+<!-- ```{r fig.width=14, fig.height=14} -->
+<!-- lf_pmf = poisson2multinom(F = model_pmf$F, L = model_pmf$L) -->
+<!-- par(mfrow = c(5,4)) -->
+<!-- for(k in 1:K){ -->
+<!--   f = lf_pmf$F[,k] -->
+<!--   probs = seq(0, 1, 0.002) -->
+<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
+<!-- } -->
+<!-- ``` -->
+
+
+
