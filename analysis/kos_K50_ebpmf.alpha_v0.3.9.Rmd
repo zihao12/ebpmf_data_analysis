@@ -1,0 +1,230 @@
+---
+title: "kos_K50_ebpmf.alpha_v0.3.9"
+author: "zihao12"
+date: "2020-05-11"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* I apply `ebpmf.alpha` (version 0.3.9) to [KOS dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/bag-of-words/). I use $K = 50$. The data has $n = 3430,p = 6906$ and sparsity around $98$ percent. \
+
+* Besides, I also apply to `PMF` (lee's, but I implemented a version for sparse data) to the same dataset with the same initialization. In each iteration, `ebpmf_bg` does two things: MLE for prior and updates posterior. The second part has almost the same computation as in `PMF`. 
+
+### model
+\begin{align}
+    & X_{ij} = \sum_k Z_{ijk}\\
+    & Z_{ijk} \sim Pois(l_{i0} f_{j0} l_{ik} f_{jk})\\
+    & l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.) 
+\end{align}
+For details see [ebpmf_bg](https://github.com/stephenslab/ebpmf.alpha/blob/master/derivations/ebpmf_bg.pdf)
+
+### prior options
+I use gamma mixture $\sum_l \pi_{l} Ga(1/\phi_l, 1/\phi_l)$ as prior for both $L, F$.  Note that each grid component has $E = 1, Var = \phi_L$
+
+### initialization
+I initialized with 50 runs of `NNLM::nnmf` (`scd`). Then I used medians of each row of $L, F$ as $l_{i0}, f_{j0}$, and $l_{ik} = l^0_{ik}/l_{i0}, f_{jk} = f^0_{jk}/f_{j0}$. 
+
+```{r include=FALSE}
+#knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+```
+
+
+```{r}
+library(pheatmap)
+library(gridExtra)
+source("code/misc.R")
+
+output_dir = "output/uci_BoW/v0.3.9/"
+data_dir = "data/uci_BoW/"
+model_name = "kos_ebpmf_bg_initLF50_K50_maxiter2000.Rds"
+model_pmf_name = "kos_pmf_initLF50_K50_maxiter2000.Rds"
+dict_name = "vocab.kos.txt"
+model = readRDS(sprintf("%s/%s", output_dir, model_name))
+model_pmf = readRDS(sprintf("%s/%s", output_dir, model_pmf_name))
+dict = read.csv(sprintf("%s/%s", data_dir, dict_name), header = FALSE)[,1]
+dict = as.vector(dict)
+
+K = ncol(model_pmf$L)
+L_pmf = model_pmf$L; F_pmf = model_pmf$F
+L_bg = model$l0 * model$qg$qls_mean; F_bg = model$f0 * model$qg$qfs_mean
+lf = poisson2multinom(L=L_bg,F=F_bg)
+lf_pmf = poisson2multinom(L = L_pmf,F = F_pmf)
+```
+
+## ELBO and runtime
+
+```{r}
+plot(model$ELBO, xlab = "niter", ylab = "elbo")
+
+## see when it "converges"
+plot(model$ELBO[1:200], xlab = "niter", ylab = "elbo")
+## ebpmf_bg runtime per iteration
+model$runtime/length(model$ELBO)
+
+## pmf runtime per iteration
+model_pmf$runtime/length(model_pmf$log_liks)
+```
+
+## look at priors in `ebpmf_bg`
+
+### $g_L$
+```{r}
+get_prior_summary(model$qg$gls)
+```
+
+### $g_F$
+```{r}
+get_prior_summary(model$qg$gfs)
+```
+
+## look at $s_k$ (`ebpmf_bg`)
+$s_k := \sum_i l_i0 \bar{l}_{ik}$. I make $\sum_j f_{j0} = 1$ for interpretability. 
+```{r}
+d = sum(model$f0)
+s_k = colSums(d * model$l0 * model$qg$qls_mean)
+names(s_k) <- paste("Topic", 1:K, sep = "")
+step = 5
+for(i in 1:round(K/step)){
+  print(round(s_k[((i-1)*step + 1):(i*step)]))
+}
+```
+
+
+
+## look at top words for topics
+```{r}
+show_topic <- function(k, other_var){
+  K = ncol(F)
+  n_top_word = other_var$n_top_word
+  F = other_var$F
+  word_idx = order(F[,k], decreasing = TRUE)[1:n_top_word]
+  F_sub = F[word_idx,]
+  rownames(F_sub) = dict[word_idx]
+  #colnames(F_sub) = paste("Topic", 1:K, sep = "")
+  colnames(F_sub) = NULL
+  pheatmap(F_sub, 
+           cluster_rows=FALSE, cluster_cols=FALSE,
+           silent = TRUE, 
+           main = sprintf("topic %d", k))[[4]]
+}
+```
+
+### top words in $\bar{f}_{Jk}$ (`ebpmf_bg`)
+```{r fig.width=16, fig.height=32}
+K_sub = 1:K
+p = length(model$l0)
+n_top_word = round(0.002 * p)
+F = model$qg$qfs_mean[, K_sub]
+other_var = list(n_top_word = n_top_word,F = F)
+gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
+grid.arrange(grobs = gs, ncol = 4)
+```
+
+### top words in $f_{J0}\bar{f}_{Jk}$ (`ebpmf_bg`) (scaled to multinom). 
+```{r fig.width=16, fig.height=32}
+F = lf$F[, K_sub]
+other_var = list(n_top_word = n_top_word,F = F)
+gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
+grid.arrange(grobs = gs, ncol = 4)
+```
+
+### top words in $f_{jk}$ (`PMF`) (scaled to multinom). 
+```{r fig.width=16, fig.height=32}
+F = lf_pmf$F[, K_sub]
+
+other_var = list(n_top_word = n_top_word,F = F)
+gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
+grid.arrange(grobs = gs, ncol = 4)
+```
+
+
+## Compare $L, F$ (in the context of PMF model)
+```{r}
+## scale L, F so that colSums(F) = 1
+L_pmf = L_pmf %*% diag(colSums(F_pmf))
+F_pmf = F_pmf %*% diag(1/colSums(F_pmf))
+
+L_bg = L_bg %*% diag(colSums(F_bg))
+F_bg = F_bg %*% diag(1/colSums(F_bg))
+```
+
+### $L$
+```{r fig.width=16, fig.height=32}
+par(mfrow = c(13,4))
+for(k in 1:K){
+  plot(L_pmf[,k], L_bg[,k], pch = 18, 
+       xlab = "pmf", ylab = "bg", main = sprintf("loading %d", k))
+  abline(0,1,lwd=1,col="blue")
+}
+```
+
+### $F$
+```{r fig.width=16, fig.height=32}
+par(mfrow = c(13,4))
+for(k in 1:K){
+  plot(F_pmf[,k], F_bg[,k], pch = 18, 
+       xlab = "pmf", ylab = "bg", main = sprintf("factor %d", k))
+  abline(0,1,lwd=1,col="blue")
+}
+```
+
+
+
+
+
+
+
+<!-- ## Look at quantile of topics -->
+
+<!-- ### quantile of $f_{J0}$ (`ebpmf_bg`) -->
+<!-- ```{r} -->
+<!-- f = model$f0 -->
+<!-- probs = seq(0, 1, 0.002) -->
+<!-- plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",0)) -->
+<!-- ``` -->
+
+<!-- ### quantile of $f_{Jk} (k > 0)$ (`ebpmf_bg`) -->
+
+<!-- ```{r fig.width=16, fig.height=32} -->
+<!-- K = length(model$qg$gls) -->
+<!-- par(mfrow = c(13,4)) -->
+<!-- for(k in 1:K){ -->
+<!--   f = model$qg$qfs_mean[,k] -->
+<!--   probs = seq(0, 1, 0.002) -->
+<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ### quantile of $f_{J0} f_{Jk}$ (`ebpmf_bg`) (scaled to multinom) -->
+<!-- ```{r fig.width=16, fig.height=32} -->
+<!-- lf = poisson2multinom(F = model$f0 * model$qg$qfs_mean, -->
+<!--                  L = model$l0 * model$qg$qls_mean) -->
+
+<!-- K = length(model$qg$gls) -->
+<!-- par(mfrow = c(13,4)) -->
+<!-- for(k in 1:K){ -->
+<!--   f = lf$F[,k] -->
+<!--   probs = seq(0, 1, 0.002) -->
+<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ### quantile of $f_{Jk}$ (`PMF`) (scaled to multinom) -->
+<!-- ```{r fig.width=16, fig.height=32} -->
+<!-- lf_pmf = poisson2multinom(F = model_pmf$F, L = model_pmf$L) -->
+<!-- par(mfrow = c(13,4)) -->
+<!-- for(k in 1:K){ -->
+<!--   f = lf_pmf$F[,k] -->
+<!--   probs = seq(0, 1, 0.002) -->
+<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
+<!-- } -->
+<!-- ``` -->
+
+
+
+
+
