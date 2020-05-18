@@ -1,0 +1,9 @@
+running
+  '/software/R-3.6.1-el7-x86_64/lib64/R/bin/R --slave --no-restore --no-save --no-restore --file=fit_uci_BoW_pmf_initLF.R --args kos 500 1000 100'
+
+[1] "##########################################"
+[1] "start fitting from 1 iteration"
+Error in Ez.val[mask] <- d$x[mask] * B_k[mask]/B[mask] : 
+  NAs are not allowed in subscripted assignments
+Calls: <Anonymous> -> compute_EZ
+Execution halted
