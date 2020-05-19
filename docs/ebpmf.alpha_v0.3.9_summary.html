@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreec54e018842973ea41551751995d8bde035999bb4targetblankc54e018a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/c54e018842973ea41551751995d8bde035999bb4" target="_blank">c54e018</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreedc51799f0669ac2216cb6c45b45b2b55d9c7c702targetblankdc51799a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/dc51799f0669ac2216cb6c45b45b2b55d9c7c702" target="_blank">dc51799</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreec54e018842973ea41551751995d8bde035999bb4targetblankc54e018a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreedc51799f0669ac2216cb6c45b45b2b55d9c7c702targetblankdc51799a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/c54e018842973ea41551751995d8bde035999bb4" target="_blank">c54e018</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/dc51799f0669ac2216cb6c45b45b2b55d9c7c702" target="_blank">dc51799</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -565,6 +565,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/dc51799f0669ac2216cb6c45b45b2b55d9c7c702/analysis/ebpmf.alpha_v0.3.9_summary.Rmd" target="_blank">dc51799</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-19
+</td>
+<td>
+add todo to v0.3.9 summary
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/47d068605f3adc16f77b894b4e88916263b56d8b/docs/ebpmf.alpha_v0.3.9_summary.html" target="_blank">47d0686</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -697,46 +731,65 @@ zihao12
 </div>
 </div>
 </div>
-<div id="look-at-the-changes-in-kl-and-e_ll-over-iterations" class="section level3">
-<h3>look at the changes in <code>KL</code> and <code>E_ll</code> over iterations</h3>
-<p>Note that <code>KL</code> and <code>E_ll</code> starts from 500 iterations so it is not very insightful for the first iterations … (next version should include <code>KL</code> as part of the output) <img src="figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-4-1.png" width="1536" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/8d1d007db1056c44238d502683cc8173f5690081/docs/figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-4-1.png" target="_blank">8d1d007</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-</tr>
-</tbody>
-</table>
 </div>
+<div id="todo" class="section level2">
+<h2>TODO:</h2>
+<p>As suggested by Matthew:</p>
+<div id="add-w_k-to-the-model" class="section level3">
+<h3>add <span class="math inline">\(w_k\)</span> to the model</h3>
+<span class="math display">\[\begin{align}
+&amp; X_{ij} \sim Pois(l_{i0} f_{j0} \sum_k w_k l_{ik} f_{jk})\\
+&amp; l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.) \\
+&amp; \sum_{i} l_{i0} = \sum_j f_{j0} = 1
+\end{align}\]</span>
+<p>where <span class="math inline">\(g\)</span> are mixtures of gamma, with mean 1 and different variances.<br />
+We use <span class="math inline">\(w_k\)</span> to account for the inbalance of topics.</p>
 </div>
+<div id="think-about-rank-1-update-and-automatically-choose-k" class="section level3">
+<h3>think about rank-1 update and automatically choose <span class="math inline">\(K\)</span></h3>
+<p>Analogous to the greedy algorithm (rank-1 update) in <code>flashr</code>, we want to do similar things in our model.</p>
+</div>
+<div id="how-to-pick-key-words-for-each-topic" class="section level3">
+<h3>how to pick key words for each topic</h3>
+<p>We already see that we can learn some rare and important key words from <span class="math inline">\(\bar{f}_{jk}\)</span> that we can’t from <span class="math inline">\(f_{j0}\bar{f}_{jk}\)</span>. Peter has some ways to find ways to find key words so it wold be great to apply them here.</p>
+</div>
+<div id="find-a-better-dataset" class="section level3">
+<h3>find a better dataset</h3>
+<p>Some issue with the <code>kos</code> dataset: some words are not truncated properly (particularly names); does not include common and non-informative words like “a”, “the” (which would allow us to compare with common but informative words)</p>
+</div>
+<div id="overfitting" class="section level3">
+<h3>overfitting?</h3>
+<p>IN <span class="math inline">\(g_F\)</span>, most topics have around <span class="math inline">\(80\)</span> percent of weight on large <span class="math inline">\(\phi_l\)</span>, which shrinks the enrichment of most words to almost 0. For a very small number in <span class="math inline">\(f_{j0}\bar{f}_{jk}\)</span>, which is more suitable: a small background or very little enrichment?</p>
+<!-- ### look at the changes  in `KL` and `E_ll` over iterations -->
+<!-- Note that `KL` and `E_ll` starts from 500 iterations so it is not very insightful for the first iterations ... (next version should include `KL` as part of the output) -->
+<!-- ```{r fig.height=20, fig.width=16} -->
+<!-- par(mfrow = c(4, 3)) -->
+<!-- Ks = c(20, 50, 100, 300) -->
+<!-- for(K in Ks){ -->
+<!--   ELBO = c() -->
+<!--   KL = c() -->
+<!--   ll = c() -->
+<!--   if(K == 300){maxiters = seq(100, 1000, 100)} -->
+<!--   if(K == 100){maxiters = seq(500, 2000, 500)} -->
+<!--   if(K == 50 | K == 20){maxiters = seq(500, 5000, 500)} -->
+<!--   #else{maxiters = seq(500, 5000, 500) } -->
+<!--   for(maxiter in maxiters){ -->
+<!--     bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter) -->
+<!--     #pmf_name = sprintf("kos_pmf_initLF50_K%d_maxiter%d.Rds", K, maxiter) -->
+<!--     bg = readRDS(sprintf("%s/%s", output_dir, bg_name)) -->
+<!--     #pmf = readRDS(sprintf("%s/%s", output_dir, pmf_name)) -->
+<!--     ELBO = c(ELBO, bg$ELBO[length(bg$ELBO)]) -->
+<!--     KL = c(KL, sum(bg$qg$kl_l) + sum(bg$qg$kl_f)) -->
+<!--     ll = c(ll, pmf$log_liks[length(pmf$log_liks)]) -->
+<!--   } -->
+<!--   E_ll = ELBO + KL -->
+<!--   plot(1:length(bg$ELBO), max(bg$ELBO) - bg$ELBO, xlab = "iter", ylab = "max(ELBO) - ELBO") -->
+<!--   plot(maxiters, max(KL) - KL, xlab = "iter", type = "l", col = "red", lwd = 3,  -->
+<!--        main = sprintf("K = %d", K)) -->
+<!--   plot(maxiters, max(E_ll) - E_ll, xlab = "iter", type = "l",  col = "blue", lwd = 3,  -->
+<!--        main = sprintf("K = %d", K)) -->
+<!-- } -->
+<!-- ``` -->
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
