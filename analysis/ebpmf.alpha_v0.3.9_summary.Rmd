@@ -17,6 +17,7 @@ editor_options:
 [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\
 [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html)\
 
+
 ### some observations
 
 * $g_L$ 's components have large $\phi_l$ ($100$), $g_F$ has components with both large ($100$) and small ($0.01$) $\phi_l$. \
@@ -33,7 +34,6 @@ Note that
 
 $$ELBO = E_q(\text{log-lik}) - KL(q || g)$$.
 
-I show the results for 2000 iterations. 
 ```{r}
 output_dir = "output/uci_BoW/v0.3.9/"
 data_dir = "data/uci_BoW/"
@@ -64,7 +64,6 @@ For a large $K$, we should expect optimal soultion to have ELBO no less than sma
 (say $K = 50$ is optimal, and we use $K = 60$. we might initialize the last 20 to be point mass at 0. but the bg structure make it hard...)
 
 ### look at KL divergence for different $K$
-use `maxiter = 2000`
 ```{r fig.height=18, fig.width=12}
 par(mfrow = c(4, 2))
 Ks = c(20, 50, 100, 300)
