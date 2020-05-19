@@ -82,34 +82,59 @@ for(K in Ks){
 }
 ```
 
-### look at the changes  in `KL` and `E_ll` over iterations
+## TODO:
+As suggested by Matthew:
 
-Note that `KL` and `E_ll` starts from 500 iterations so it is not very insightful for the first iterations ... (next version should include `KL` as part of the output)
-```{r fig.height=20, fig.width=16}
-par(mfrow = c(4, 3))
-Ks = c(20, 50, 100, 300)
-for(K in Ks){
-  ELBO = c()
-  KL = c()
-  ll = c()
-  if(K == 300){maxiters = seq(100, 1000, 100)}
-  if(K == 100){maxiters = seq(500, 2000, 500)}
-  if(K == 50 | K == 20){maxiters = seq(500, 5000, 500)}
-  #else{maxiters = seq(500, 5000, 500) }
-  for(maxiter in maxiters){
-    bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter)
-    #pmf_name = sprintf("kos_pmf_initLF50_K%d_maxiter%d.Rds", K, maxiter)
-    bg = readRDS(sprintf("%s/%s", output_dir, bg_name))
-    #pmf = readRDS(sprintf("%s/%s", output_dir, pmf_name))
-    ELBO = c(ELBO, bg$ELBO[length(bg$ELBO)])
-    KL = c(KL, sum(bg$qg$kl_l) + sum(bg$qg$kl_f))
-    ll = c(ll, pmf$log_liks[length(pmf$log_liks)])
-  }
-  E_ll = ELBO + KL
-  plot(1:length(bg$ELBO), max(bg$ELBO) - bg$ELBO, xlab = "iter", ylab = "max(ELBO) - ELBO")
-  plot(maxiters, max(KL) - KL, xlab = "iter", type = "l", col = "red", lwd = 3, 
-       main = sprintf("K = %d", K))
-  plot(maxiters, max(E_ll) - E_ll, xlab = "iter", type = "l",  col = "blue", lwd = 3, 
-       main = sprintf("K = %d", K))
-}
-```
+### add $w_k$ to the model
+\begin{align}
+& X_{ij} \sim Pois(l_{i0} f_{j0} \sum_k w_k l_{ik} f_{jk})\\
+& l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.) \\
+& \sum_{i} l_{i0} = \sum_j f_{j0} = 1
+\end{align}
+where $g$ are mixtures of gamma, with mean 1 and different variances. \
+
+We use $w_k$ to account for the inbalance of topics.
+
+### think about rank-1 update and automatically choose $K$
+Analogous to the greedy algorithm (rank-1 update) in `flashr`, we want to do similar things in our model. 
+
+### how to pick key words for each topic
+We already see that we can learn some rare and important key words from $\bar{f}_{jk}$ that we can't from $f_{j0}\bar{f}_{jk}$. Peter has some ways to find ways to find key words so it wold be great to apply them here. 
+
+### find a better dataset
+Some issue with the `kos` dataset: some words are not truncated properly (particularly names); does not include common and non-informative words like "a", "the" (which would allow us to compare with common but informative words) 
+
+### overfitting?
+IN $g_F$, most topics have around $80$ percent of weight on large $\phi_l$, which shrinks the enrichment of most words to almost 0. For a very small number in $f_{j0}\bar{f}_{jk}$, which is more suitable: a small background or very little enrichment?
+
+<!-- ### look at the changes  in `KL` and `E_ll` over iterations -->
+
+<!-- Note that `KL` and `E_ll` starts from 500 iterations so it is not very insightful for the first iterations ... (next version should include `KL` as part of the output) -->
+<!-- ```{r fig.height=20, fig.width=16} -->
+<!-- par(mfrow = c(4, 3)) -->
+<!-- Ks = c(20, 50, 100, 300) -->
+<!-- for(K in Ks){ -->
+<!--   ELBO = c() -->
+<!--   KL = c() -->
+<!--   ll = c() -->
+<!--   if(K == 300){maxiters = seq(100, 1000, 100)} -->
+<!--   if(K == 100){maxiters = seq(500, 2000, 500)} -->
+<!--   if(K == 50 | K == 20){maxiters = seq(500, 5000, 500)} -->
+<!--   #else{maxiters = seq(500, 5000, 500) } -->
+<!--   for(maxiter in maxiters){ -->
+<!--     bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter) -->
+<!--     #pmf_name = sprintf("kos_pmf_initLF50_K%d_maxiter%d.Rds", K, maxiter) -->
+<!--     bg = readRDS(sprintf("%s/%s", output_dir, bg_name)) -->
+<!--     #pmf = readRDS(sprintf("%s/%s", output_dir, pmf_name)) -->
+<!--     ELBO = c(ELBO, bg$ELBO[length(bg$ELBO)]) -->
+<!--     KL = c(KL, sum(bg$qg$kl_l) + sum(bg$qg$kl_f)) -->
+<!--     ll = c(ll, pmf$log_liks[length(pmf$log_liks)]) -->
+<!--   } -->
+<!--   E_ll = ELBO + KL -->
+<!--   plot(1:length(bg$ELBO), max(bg$ELBO) - bg$ELBO, xlab = "iter", ylab = "max(ELBO) - ELBO") -->
+<!--   plot(maxiters, max(KL) - KL, xlab = "iter", type = "l", col = "red", lwd = 3,  -->
+<!--        main = sprintf("K = %d", K)) -->
+<!--   plot(maxiters, max(E_ll) - E_ll, xlab = "iter", type = "l",  col = "blue", lwd = 3,  -->
+<!--        main = sprintf("K = %d", K)) -->
+<!-- } -->
+<!-- ``` -->
