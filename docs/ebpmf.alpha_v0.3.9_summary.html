@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreee53c1c4e7590eb4d796524d3f9450a6d11fc4265targetblanke53c1c4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/e53c1c4e7590eb4d796524d3f9450a6d11fc4265" target="_blank">e53c1c4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreec54e018842973ea41551751995d8bde035999bb4targetblankc54e018a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/c54e018842973ea41551751995d8bde035999bb4" target="_blank">c54e018</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreee53c1c4e7590eb4d796524d3f9450a6d11fc4265targetblanke53c1c4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreec54e018842973ea41551751995d8bde035999bb4targetblankc54e018a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/e53c1c4e7590eb4d796524d3f9450a6d11fc4265" target="_blank">e53c1c4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/c54e018842973ea41551751995d8bde035999bb4" target="_blank">c54e018</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -570,6 +570,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c54e018842973ea41551751995d8bde035999bb4/analysis/ebpmf.alpha_v0.3.9_summary.Rmd" target="_blank">c54e018</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-19
+</td>
+<td>
+v0.3.9 summary
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/8d1d007db1056c44238d502683cc8173f5690081/docs/ebpmf.alpha_v0.3.9_summary.html" target="_blank">8d1d007</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/e53c1c4e7590eb4d796524d3f9450a6d11fc4265/analysis/ebpmf.alpha_v0.3.9_summary.Rmd" target="_blank">e53c1c4</a>
 </td>
 <td>
@@ -598,7 +632,9 @@ v0.3.9 summary
 <p><a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html">kos_K20</a>,<br />
 <a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html">kos_K50</a>,<br />
 <a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html">kos_K100</a><br />
-### some observations</p>
+</p>
+<div id="some-observations" class="section level3">
+<h3>some observations</h3>
 <ul>
 <li><span class="math inline">\(g_L\)</span> ’s components have large <span class="math inline">\(\phi_l\)</span> (<span class="math inline">\(100\)</span>), <span class="math inline">\(g_F\)</span> has components with both large (<span class="math inline">\(100\)</span>) and small (<span class="math inline">\(0.01\)</span>) <span class="math inline">\(\phi_l\)</span>.<br />
 </li>
@@ -608,11 +644,11 @@ v0.3.9 summary
 </li>
 </ul>
 </div>
+</div>
 <div id="more-comparisons-across-different-k" class="section level2">
 <h2>More comparisons across different <span class="math inline">\(K\)</span></h2>
 <p>Note that</p>
 <p><span class="math display">\[ELBO = E_q(\text{log-lik}) - KL(q || g)\]</span>.</p>
-<p>I show the results for 2000 iterations.</p>
 <pre><code>    K     ELBO       KL     E_ll   ll_pmf
 1  20 -1700057 151380.3 -1548677 -1504099
 2  50 -1688549 232036.2 -1456512 -1379746
@@ -622,11 +658,85 @@ v0.3.9 summary
 <p>(say <span class="math inline">\(K = 50\)</span> is optimal, and we use <span class="math inline">\(K = 60\)</span>. we might initialize the last 20 to be point mass at 0. but the bg structure make it hard…)</p>
 <div id="look-at-kl-divergence-for-different-k" class="section level3">
 <h3>look at KL divergence for different <span class="math inline">\(K\)</span></h3>
-<p>use <code>maxiter = 2000</code> <img src="figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/8d1d007db1056c44238d502683cc8173f5690081/docs/figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-3-1.png" target="_blank">8d1d007</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="look-at-the-changes-in-kl-and-e_ll-over-iterations" class="section level3">
 <h3>look at the changes in <code>KL</code> and <code>E_ll</code> over iterations</h3>
 <p>Note that <code>KL</code> and <code>E_ll</code> starts from 500 iterations so it is not very insightful for the first iterations … (next version should include <code>KL</code> as part of the output) <img src="figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-4-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/8d1d007db1056c44238d502683cc8173f5690081/docs/figure/ebpmf.alpha_v0.3.9_summary.Rmd/unnamed-chunk-4-1.png" target="_blank">8d1d007</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-05-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
