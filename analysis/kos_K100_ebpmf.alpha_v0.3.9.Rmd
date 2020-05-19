@@ -36,12 +36,17 @@ I initialized with 50 runs of `NNLM::nnmf` (`scd`). Then I used medians of each 
 library(pheatmap)
 library(gridExtra)
 source("code/misc.R")
+source("code/util.R")
 
 output_dir = "output/uci_BoW/v0.3.9/"
 data_dir = "data/uci_BoW/"
-model_name = "kos_ebpmf_bg_initLF50_K100_maxiter1000.Rds"
-model_pmf_name = "kos_pmf_initLF50_K100_maxiter1000.Rds"
+model_name = "kos_ebpmf_bg_initLF50_K100_maxiter2000.Rds"
+model_pmf_name = "kos_pmf_initLF50_K100_maxiter2000.Rds"
 dict_name = "vocab.kos.txt"
+data_name = "docword.kos.txt"
+
+Y = read_uci_bag_of_words(file= sprintf("%s/%s",
+			    data_dir,data_name))
 model = readRDS(sprintf("%s/%s", output_dir, model_name))
 model_pmf = readRDS(sprintf("%s/%s", output_dir, model_pmf_name))
 dict = read.csv(sprintf("%s/%s", data_dir, dict_name), header = FALSE)[,1]
@@ -93,56 +98,40 @@ for(i in 1:round(K/step)){
 }
 ```
 
+## what does background capture
 
-
-## look at top words for topics
+### compared to rank-1 fit
+Is the background very different from the rank-1 model? The rank-1 MLE has $l_{i0} \propto \sum_j X_{ij}$ and $f_{j0} \propto \sum_i X_{ij}$. Let's see if the fitted background model is close to it. 
 ```{r}
-show_topic <- function(k, other_var){
-  K = ncol(F)
-  n_top_word = other_var$n_top_word
-  F = other_var$F
-  word_idx = order(F[,k], decreasing = TRUE)[1:n_top_word]
-  F_sub = F[word_idx,]
-  rownames(F_sub) = dict[word_idx]
-  #colnames(F_sub) = paste("Topic", 1:K, sep = "")
-  colnames(F_sub) = NULL
-  pheatmap(F_sub, 
-           cluster_rows=FALSE, cluster_cols=FALSE,
-           silent = TRUE, 
-           main = sprintf("topic %d", k))[[4]]
-}
+Y_cs = Matrix::colSums(Y)
+Y_cs_scaled = Y_cs/sum(Y_cs)
+f0_scaled = model$f0/sum(model$f0)
+plot(f0_scaled, Y_cs_scaled)
+
+Y_rs = Matrix::rowSums(Y)
+Y_rs_scaled = Y_rs/sum(Y_rs)
+l0_scaled = model$l0/sum(model$l0)
+plot(l0_scaled, Y_rs_scaled)
 ```
 
-### top words in $\bar{f}_{Jk}$ (`ebpmf_bg`)
-```{r fig.width=16, fig.height=64}
-K_sub = 1:K
-p = length(model$l0)
-n_top_word = round(0.002 * p)
-F = model$qg$qfs_mean[, K_sub]
-other_var = list(n_top_word = n_top_word,F = F)
-gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
-grid.arrange(grobs = gs, ncol = 4)
-```
+### compared to median/mean of `PMF` fit
+The median of `L_pmf` are all 0, so I use mean instead
+```{r}
+f0_pmf = apply(F_pmf, 1, median)
+f0_pmf_scaled = f0_pmf/sum(f0_pmf)
 
-### top words in $f_{J0}\bar{f}_{Jk}$ (`ebpmf_bg`) (scaled to multinom). 
-```{r fig.width=16, fig.height=64}
-F = lf$F[, K_sub]
-other_var = list(n_top_word = n_top_word,F = F)
-gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
-grid.arrange(grobs = gs, ncol = 4)
-```
+l0_pmf = apply(L_pmf, 1, mean)
+l0_pmf_scaled = l0_pmf/sum(l0_pmf)
 
-### top words in $f_{jk}$ (`PMF`) (scaled to multinom). 
-```{r fig.width=16, fig.height=64}
-F = lf_pmf$F[, K_sub]
-
-other_var = list(n_top_word = n_top_word,F = F)
-gs = lapply(K_sub, FUN = show_topic, other_var = other_var)
-grid.arrange(grobs = gs, ncol = 4)
+plot(f0_scaled, f0_pmf_scaled)
+plot(l0_scaled, l0_pmf_scaled)
 ```
 
 ## Compare $L, F$ (in the context of PMF model)
-```{r}
+See [plots](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_v0.3.9_compare_LF.pdf). \
+
+Note: I scale them as below
+```{r eval=FALSE}
 ## scale L, F so that colSums(F) = 1
 L_pmf = L_pmf %*% diag(colSums(F_pmf))
 F_pmf = F_pmf %*% diag(1/colSums(F_pmf))
@@ -151,74 +140,8 @@ L_bg = L_bg %*% diag(colSums(F_bg))
 F_bg = F_bg %*% diag(1/colSums(F_bg))
 ```
 
-### $L$
-```{r fig.width=16, fig.height=64}
-par(mfrow = c(25,4))
-for(k in 1:K){
-  plot(L_pmf[,k], L_bg[,k], pch = 18, 
-       xlab = "pmf", ylab = "bg", main = sprintf("loading %d", k))
-  abline(0,1,lwd=1,col="blue")
-}
-```
 
-### $F$
-```{r fig.width=16, fig.height=64}
-par(mfrow = c(25,4))
-for(k in 1:K){
-  plot(F_pmf[,k], F_bg[,k], pch = 18, 
-       xlab = "pmf", ylab = "bg", main = sprintf("factor %d", k))
-  abline(0,1,lwd=1,col="blue")
-}
-```
-
-
-
-
-<!-- ## Look at quantile of topics -->
-
-<!-- ### quantile of $f_{J0}$ (`ebpmf_bg`) -->
-<!-- ```{r} -->
-<!-- f = model$f0 -->
-<!-- probs = seq(0, 1, 0.002) -->
-<!-- plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",0)) -->
-<!-- ``` -->
-
-<!-- ### quantile of $f_{Jk} (k > 0)$ (`ebpmf_bg`) -->
-
-<!-- ```{r fig.width=16, fig.height=64} -->
-<!-- K = length(model$qg$gls) -->
-<!-- par(mfrow = c(25,4)) -->
-<!-- for(k in 1:K){ -->
-<!--   f = model$qg$qfs_mean[,k] -->
-<!--   probs = seq(0, 1, 0.002) -->
-<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
-<!-- } -->
-<!-- ``` -->
-
-
-<!-- ### quantile of $f_{J0} f_{Jk}$ (`ebpmf_bg`) (scaled to multinom) -->
-<!-- ```{r fig.width=16, fig.height=64} -->
-<!-- lf = poisson2multinom(F = model$f0 * model$qg$qfs_mean, -->
-<!--                  L = model$l0 * model$qg$qls_mean) -->
-
-<!-- K = length(model$qg$gls) -->
-<!-- par(mfrow = c(25,4)) -->
-<!-- for(k in 1:K){ -->
-<!--   f = lf$F[,k] -->
-<!--   probs = seq(0, 1, 0.002) -->
-<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- ### quantile of $f_{Jk}$ (`PMF`) (scaled to multinom) -->
-<!-- ```{r fig.width=16, fig.height=64} -->
-<!-- lf_pmf = poisson2multinom(F = model_pmf$F, L = model_pmf$L) -->
-<!-- par(mfrow = c(25,4)) -->
-<!-- for(k in 1:K){ -->
-<!--   f = lf_pmf$F[,k] -->
-<!--   probs = seq(0, 1, 0.002) -->
-<!--   plot(probs, quantile(f, probs = probs), main = sprintf("topic %d",k)) -->
-<!-- } -->
-<!-- ``` -->
+## look at top words for topics
+See [plots](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_v0.3.9_topic_words.pdf)
 
 
