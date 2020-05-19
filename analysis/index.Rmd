@@ -17,6 +17,7 @@ Data analysis results:\
  [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\
  
  * Version `0.3.9`:  \
+ [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.3.9_summary)
  [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), \
  [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\
  [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html)
