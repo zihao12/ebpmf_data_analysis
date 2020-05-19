@@ -1,0 +1,116 @@
+---
+title: "ebpmf.alpha_v0.3.9_summary"
+author: "zihao12"
+date: "2020-05-19"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Model and implementation details:
+[ebpmf_bg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_bg.pdf)
+
+
+## Individual data analysis results:\ 
+
+[kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), \
+[kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\
+[kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html)\
+
+### some observations
+
+* $g_L$ 's components have large $\phi_l$ ($100$), $g_F$ has components with both large ($100$) and small ($0.01$) $\phi_l$. \
+
+* `bg` model can identify rare but important words for a topic. (although they are not very easy to understand sometimes... may need better dataset?)  \
+
+* The fitted background is quite different from the rank-1 fit, and the row-wise median from PMF fit. \
+
+## More comparisons across different $K$
+```{r echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+```
+Note that 
+
+$$ELBO = E_q(\text{log-lik}) - KL(q || g)$$.
+
+I show the results for 2000 iterations. 
+```{r}
+output_dir = "output/uci_BoW/v0.3.9/"
+data_dir = "data/uci_BoW/"
+
+## 
+maxiter = 2000
+Ks = c(20, 50, 100, 300)
+ELBO = c()
+KL = c()
+ll = c()
+for(K in Ks){
+  if(K == 300){maxiter = 1000}
+  else{maxiter = 2000}
+  bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+  pmf_name = sprintf("kos_pmf_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+  bg = readRDS(sprintf("%s/%s", output_dir, bg_name))
+  pmf = readRDS(sprintf("%s/%s", output_dir, pmf_name))
+  ELBO = c(ELBO, bg$ELBO[length(bg$ELBO)])
+  KL = c(KL, sum(bg$qg$kl_l) + sum(bg$qg$kl_f))
+  ll = c(ll, pmf$log_liks[length(pmf$log_liks)])
+}
+E_ll = ELBO + KL
+data.frame(K = Ks, ELBO = ELBO, KL = KL, E_ll = E_ll, ll_pmf = ll)
+```
+
+For a large $K$, we should expect optimal soultion to have ELBO no less than small $K$: we can just make $q, g$ to be point-mass at 0 for extra topics to ensure equal ELBO. But how can we achieve them? If we can do that, the algorithm can choose automatically $K$. 
+
+(say $K = 50$ is optimal, and we use $K = 60$. we might initialize the last 20 to be point mass at 0. but the bg structure make it hard...)
+
+### look at KL divergence for different $K$
+use `maxiter = 2000`
+```{r fig.height=18, fig.width=12}
+par(mfrow = c(4, 2))
+Ks = c(20, 50, 100, 300)
+for(K in Ks){
+  if(K == 300){maxiter = 1000}
+  else{maxiter = 2000}
+  ELBO = c()
+  KL = c()
+  ll = c()
+  bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+  bg = readRDS(sprintf("%s/%s", output_dir, bg_name))
+  kl_l = bg$qg$kl_l
+  kl_f = bg$qg$kl_f
+  hist(kl_l, breaks = 150, main = sprintf("k = %d", K))
+  hist(kl_f, breaks = 150, main = sprintf("k = %d", K))
+}
+```
+
+### look at the changes  in `KL` and `E_ll` over iterations
+
+Note that `KL` and `E_ll` starts from 500 iterations so it is not very insightful for the first iterations ... (next version should include `KL` as part of the output)
+```{r fig.height=20, fig.width=16}
+par(mfrow = c(4, 3))
+Ks = c(20, 50, 100, 300)
+for(K in Ks){
+  ELBO = c()
+  KL = c()
+  ll = c()
+  if(K == 300){maxiters = seq(100, 1000, 100)}
+  if(K == 100){maxiters = seq(500, 2000, 500)}
+  if(K == 50 | K == 20){maxiters = seq(500, 5000, 500)}
+  #else{maxiters = seq(500, 5000, 500) }
+  for(maxiter in maxiters){
+    bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+    #pmf_name = sprintf("kos_pmf_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+    bg = readRDS(sprintf("%s/%s", output_dir, bg_name))
+    #pmf = readRDS(sprintf("%s/%s", output_dir, pmf_name))
+    ELBO = c(ELBO, bg$ELBO[length(bg$ELBO)])
+    KL = c(KL, sum(bg$qg$kl_l) + sum(bg$qg$kl_f))
+    ll = c(ll, pmf$log_liks[length(pmf$log_liks)])
+  }
+  E_ll = ELBO + KL
+  plot(1:length(bg$ELBO), max(bg$ELBO) - bg$ELBO, xlab = "iter", ylab = "max(ELBO) - ELBO")
+  plot(maxiters, max(KL) - KL, xlab = "iter", type = "l", col = "red", lwd = 3, 
+       main = sprintf("K = %d", K))
+  plot(maxiters, max(E_ll) - E_ll, xlab = "iter", type = "l",  col = "blue", lwd = 3, 
+       main = sprintf("K = %d", K))
+}
+```
