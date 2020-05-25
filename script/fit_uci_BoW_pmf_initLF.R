@@ -1,7 +1,6 @@
 ## fit kos data
 
 library(Matrix)
-library(NNLM)
 library(ebpmf.alpha)
 source("../code/util.R")
 set.seed(123)
@@ -26,38 +25,29 @@ Y = read_uci_bag_of_words(file= sprintf("%s/%s.%s",
 			    datadir,filename, format))
 
 ## initialization & save file
-fit_nmf = NNLM::nnmf(A = as.matrix(Y), k = K,
-										 loss = "mkl", method = "scd",
-										 max.iter = init_iter)
-L = fit_nmf$W
-F = t(fit_nmf$H)
-saveRDS(list(L = L, F = F), init_file)
+init = readRDS(init_file)
 
 ## fit with ebpmf.alpha
 T = round(maxiter/every)
-init = initialize_qgl0f0_from_LF(L = L, F = F)
-ELBO = c()
+log_liks = c()
 RUNTIME = c()
 
 start_time = proc.time()
 for(t in 1:T){
 	start_iter = 1 + (t-1)*every
 	end_iter = t*every
-	file_out = sprintf("%s/%s_ebpmf_bg_initLF%d_K%d_maxiter%d.Rds",
+	file_out = sprintf("%s/%s_pmf_initLF%d_K%d_maxiter%d.Rds",
        outdir,docname, init_iter, K, end_iter)
 	print("##########################################")
 	print(sprintf("start fitting from %d iteration", start_iter))
-	fit <- ebpmf.alpha::ebpmf_bg(X = Y, K = K,
-															 pm_func = list(f = ebpm::ebpm_gamma_mixture, l = ebpm::ebpm_gamma_mixture),
-															 init = init,
-															 maxiter = every, verbose  = TRUE)
+	fit <- ebpmf.alpha::pmf(X = Y, K = K, init = init, maxiter = every, verbose = TRUE)
 	print(sprintf("finish fitting %d iteration", end_iter))
 	runtime = proc.time() - start_time
 	## update init, elbo
-	init = list(qg = fit$qg, l0 = fit$l0, f0 = fit$f0)
-	ELBO = c(ELBO, fit$ELBO)
+	init = list(L = fit$L, F = fit$F)
+	log_liks = c(log_liks, fit$log_liks)
 	## save file
-	fit[["ELBO"]] = ELBO
+	fit[["log_liks"]] = log_liks
 	fit[["runtime"]] = runtime
 	saveRDS(fit, file = file_out)
 }
