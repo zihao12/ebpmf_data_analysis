@@ -26,12 +26,9 @@ Y = read_uci_bag_of_words(file= sprintf("%s/%s.%s",
 			    datadir,filename, format))
 
 ## initialization & save file
-fit_nmf = NNLM::nnmf(A = as.matrix(Y), k = K,
-										 loss = "mkl", method = "scd",
-										 max.iter = init_iter)
-L = fit_nmf$W
-F = t(fit_nmf$H)
-saveRDS(list(L = L, F = F), init_file)
+init_tmp = readRDS(init_file)
+L = init_tmp$L
+F = init_tmp$F
 
 ## fit with ebpmf.alpha
 T = round(maxiter/every)
