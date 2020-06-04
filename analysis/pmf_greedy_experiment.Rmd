@@ -1,0 +1,96 @@
+---
+title: "pmf_greedy_experiment"
+author: "zihao12"
+date: "2020-06-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+This is an example the current greedy approach will probably not work. 
+
+```{r}
+library(ebpmf.alpha)
+library(flashr)
+```
+
+```{r}
+set.seed(123)
+n = 150
+p = 500
+k= 5
+L = matrix(0, nrow=n, ncol=k)
+F = matrix(0, nrow=p, ncol=k)
+L[1:(n/5),1] = 1
+L[((n/5)+1):(2*n/5),2] = 1
+L[(2 * (n/5)+1):(3*n/5),3] = 1
+L[(3 * (n/5)+1):(4*n/5),4] = 1
+L[(4 * (n/5)+1):(5 *n/5),5] = 1
+
+F[1:(p/5),1] = 1+10*runif(p/5)
+F[((p/5)+1):(2*p/5),2] = 1+10*runif(p/5)
+F[(2 * (p/5)+1):(3*p/5),3] = 1+10*runif(p/5)
+F[(3 * (p/5)+1):(4*p/5),4] = 1+10*runif(p/5)
+F[(4 * (p/5)+1):(5*p/5),5] = 1+10*runif(p/5)
+
+lambda = L %*% t(F)
+X = matrix(rpois(n=length(lambda),lambda),nrow=n)
+image(X)
+```
+
+
+```{r}
+eps = 1e-4
+init = NNLM::nnmf(A = X, k = k, loss = "mkl", method = "lee")
+L0 = init$W
+F0 = t(init$H)
+init_pmf = list(L = matrix(L0[,1] + eps, ncol = 1), 
+                F = matrix(F0[,1] + eps, ncol = 1))
+```
+
+```{r}
+maxiter = 200
+rate = 0.6
+verbose = FALSE
+
+system.time(
+  fit_pmf <- ebpmf.alpha::pmf_greedy(X = X, K = 3 * k,
+                              init = init_pmf, maxiter = maxiter, rate = rate,
+                              verbose = verbose)
+)
+
+system.time(
+  fit_flash <- flash(data = X, Kmax = 3*k)
+)
+
+fit_flash
+```
+
+## look at progress from greedy `pmf`
+```{r}
+plot(fit_pmf$loglik - max(fit_pmf$loglik))
+
+p.max = apply(fit_pmf$progress, 2, max)
+p.min = apply(fit_pmf$progress, 2, min)
+```
+
+## look at `L, F` from greedy `pmf`
+```{r, fig.width=30, fig.height=100}
+K = 3 *k
+par(mfrow = c(K, 2))
+for(k_ in 1:K){
+  plot(fit_pmf$L[,k_])
+  plot(fit_pmf$F[,k_])
+}
+```
+
+## look at `L, F` from `flashr`
+```{r, fig.width=30, fig.height=100}
+K = 3 *k
+par(mfrow = c(K, 2))
+for(k_ in 1:K){
+  plot(fit_flash$ldf$l[,k_])
+  plot(fit_flash$ldf$f[,k_])
+}
+```
