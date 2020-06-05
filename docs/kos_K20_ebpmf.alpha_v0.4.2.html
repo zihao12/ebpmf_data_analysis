@@ -1,0 +1,3694 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="zihao12" />
+
+<meta name="date" content="2020-06-01" />
+
+<title>kos_K20_ebpmf.alpha_v0.4.2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ebpmf_data_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/zihao12/ebpmf_data_analysis">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">kos_K20_ebpmf.alpha_v0.4.2</h1>
+<h4 class="author">zihao12</h4>
+<h4 class="date">2020-06-01</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-06-05
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree236b909c4fc1ffd31c464552916c3d8c23ed60d5targetblank236b909a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/236b909c4fc1ffd31c464552916c3d8c23ed60d5" target="_blank">236b909</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree236b909c4fc1ffd31c464552916c3d8c23ed60d5targetblank236b909a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/236b909c4fc1ffd31c464552916c3d8c23ed60d5" target="_blank">236b909</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/ebpmf_bg_tutorial_cache/
+
+Untracked files:
+    Untracked:  analysis/ebpmf.alpha_v0.4.2_summary.Rmd
+    Untracked:  analysis/get_topic_words.R
+    Untracked:  analysis/pmf_greedy_experiment2.Rmd
+    Untracked:  output/uci_BoW/v0.4.2/top_words_v0.4.2.csv
+
+Unstaged changes:
+    Modified:   analysis/plot_topic_words.R
+    Modified:   analysis/pmf_greedy_experiment.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/kos_K20_ebpmf.alpha_v0.4.2.Rmd</code>) and HTML (<code>docs/kos_K20_ebpmf.alpha_v0.4.2.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/236b909c4fc1ffd31c464552916c3d8c23ed60d5/analysis/kos_K20_ebpmf.alpha_v0.4.2.Rmd" target="_blank">236b909</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-05
+</td>
+<td>
+kos_K20_ebpmf.alpha_v0.4.2.Rmd
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<pre class="r"><code>rm(list = ls())
+library(ggplot2)</code></pre>
+<pre><code>Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>library(pheatmap)</code></pre>
+<pre><code>Warning: package &#39;pheatmap&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>library(gridExtra)
+library(fastTopics)
+source(&quot;code/misc.R&quot;)
+source(&quot;code/util.R&quot;)
+
+data_dir = &quot;data/uci_BoW/&quot;
+model_initLF_name = &quot;output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2000.Rds&quot;
+model_initL_name = &quot;output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2000.Rds&quot;
+model_pmf_name = &quot;output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2000.Rds&quot;
+dict_name = &quot;vocab.kos.txt&quot;
+data_name = &quot;docword.kos.txt&quot;
+
+Y = read_uci_bag_of_words(file= sprintf(&quot;%s/%s&quot;,
+                data_dir,data_name))
+model_initLF = readRDS(model_initLF_name)
+model_initL = readRDS(model_initL_name)
+model_pmf = readRDS(model_pmf_name)
+dict = read.csv(sprintf(&quot;%s/%s&quot;, data_dir, dict_name), header = FALSE)[,1]
+dict = as.vector(dict)
+
+K = ncol(model_pmf$L)
+L_pmf = model_pmf$L
+F_pmf = model_pmf$F
+
+L_initLF = model_initLF$l0 * model_initLF$qg$qls_mean
+F_initLF = model_initLF$f0 * model_initLF$qg$qfs_mean
+
+L_initL = model_initL$l0 * model_initL$qg$qls_mean
+F_initL = model_initL$f0 * model_initL$qg$qfs_mean
+
+lf_pmf = poisson2multinom(L = L_pmf,F = F_pmf)
+lf_initLF = poisson2multinom(L=L_initLF,F=F_initLF)
+lf_initLF = poisson2multinom(L=L_initL,F=F_initL)
+
+## one small mistake I made: forgot to append KLs
+Ks = seq(500, 2000, 500)
+KL_tmp = c()
+for(K in Ks){
+  model_tmp = readRDS(
+    sprintf(&quot;output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter%d.Rds&quot;, K))
+  KL_tmp &lt;- c(KL_tmp, model_tmp$KL)
+}
+model_initLF$KL = KL_tmp
+
+KL_tmp = c()
+for(K in Ks){
+  model_tmp = readRDS(
+    sprintf(&quot;output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter%d.Rds&quot;, K))
+  KL_tmp &lt;- c(KL_tmp, model_tmp$KL)
+}
+model_initL$KL = KL_tmp</code></pre>
+</div>
+<div id="elbo-and-kl" class="section level2">
+<h2>ELBO and KL</h2>
+<pre class="r"><code>df &lt;- data.frame(iter = 1:length(model_initLF$ELBO), 
+                 wbg_initLF.elbo = model_initLF$ELBO,
+                 wbg_initLF.kl = model_initLF$KL,
+                 wbg_initLF.ell = model_initLF$ELBO + model_initLF$KL,
+                 wbg_initL.elbo = model_initL$ELBO,
+                 wbg_initL.kl = model_initL$KL,
+                 wbg_initL.ell = model_initL$ELBO + model_initL$KL,
+                 pmf.ll = model_pmf$log_liks)
+
+## the log transformation onm y-axis does not work here!
+base = 2
+signed_log &lt;- scales::trans_new(&quot;signed_log&quot;,
+       transform=function(x) sign(x)*log(abs(x), base = base),
+       inverse=function(x) sign(x)*(base^(abs(x))))
+
+p1 &lt;- ggplot(data = df) + 
+  geom_point(aes(x = iter, y = wbg_initLF.elbo, color = &quot;wbg_initLF&quot;))+
+  geom_point(aes(x = iter, y = wbg_initL.elbo, color = &quot;wbg_initL&quot;))+
+  scale_y_continuous(trans = signed_log)+
+  ylab(&quot;elbo&quot;)+
+  ggtitle(&quot;ELBO&quot;)
+
+p2 &lt;- ggplot(data = df) + 
+  geom_point(aes(x = iter, y = wbg_initLF.kl, color = &quot;wbg_initLF&quot;))+
+  geom_point(aes(x = iter, y = wbg_initL.kl, color = &quot;wbg_initL&quot;))+
+  scale_y_continuous(trans = signed_log)+
+  ylab(&quot;kl&quot;)+
+  ggtitle(&quot;KL&quot;)
+
+p3 &lt;- ggplot(data = df) + 
+  geom_point(aes(x = iter, y = wbg_initLF.ell, color = &quot;wbg_initLF&quot;))+
+  geom_point(aes(x = iter, y = wbg_initL.ell, color = &quot;wbg_initL&quot;))+
+  geom_point(aes(x = iter, y = pmf.ll, color = &quot;pmf&quot;))+
+  scale_y_continuous(trans = signed_log)+
+  ylab(&quot;E(loglik)&quot;)+
+  ggtitle(&quot;E(loglik)&quot;)
+
+grid.arrange(p1, p2, p3, ncol=1)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-2-1.png" width="1344" style="display: block; margin: auto;" /></p>
+</div>
+<div id="look-at-priors-in" class="section level2">
+<h2>look at priors in</h2>
+<div id="g_l" class="section level3">
+<h3><span class="math inline">\(g_L\)</span></h3>
+<pre class="r"><code>get_prior_summary(model_initLF$qg$gls)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>get_prior_summary(model_initL$qg$gls)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-3-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="g_f" class="section level3">
+<h3><span class="math inline">\(g_F\)</span></h3>
+<pre class="r"><code>get_prior_summary(model_initLF$qg$gfs)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>get_prior_summary(model_initL$qg$gfs)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-4-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="look-at-w" class="section level2">
+<h2>look at <code>w</code></h2>
+<pre class="r"><code>get_w_scaled &lt;- function(model){model$w * sum(model$l0) * sum(model$f0)}
+
+plot(get_w_scaled(model_initLF), get_w_scaled(model_initL))
+abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>hist(get_w_scaled(model_initLF), breaks = 100)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>hist(get_w_scaled(model_initL), breaks = 100)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-5-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## average number of words for each topic
+sum(Y@x)/ncol(model_pmf$L)</code></pre>
+<pre><code>[1] 23385.7</code></pre>
+</div>
+<div id="look-at-l0-f0" class="section level2">
+<h2>look at <code>l0, f0</code></h2>
+<pre class="r"><code>plot(model_initLF$f0/sum(model_initLF$f0), model_initL$f0/sum(model_initL$f0), log = &quot;xy&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(model_initLF$l0/sum(model_initLF$l0), model_initL$l0/sum(model_initL$l0), log = &quot;xy&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/kos_K20_ebpmf.alpha_v0.4.2.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="look-at-top-words-compared-with-other-methods" class="section level2">
+<h2>look at top words (compared with other methods)</h2>
+<p>I use <code>wbg_init_L</code> together with <code>bg</code>, <code>pmf</code> and <code>pmf2binom</code> (which is log fold change computed from <code>fastTopics::poisson2binom</code>). I show their top 20 words for each topic.</p>
+<pre class="r"><code>top_words_df = read.csv(&quot;output/uci_BoW/v0.4.2/top_words_v0.4.2.csv&quot;)
+# K = ncol(model_pmf$F)
+# for(k in 1:K){
+#   print(top_words_df[top_words_df$Topic == k, ])
+# }
+library(&#39;knitr&#39;)</code></pre>
+<pre><code>Warning: package &#39;knitr&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>kable(top_words_df, format = &quot;markdown&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">bg</th>
+<th align="left">wbg</th>
+<th align="left">pmf2binom</th>
+<th align="left">pmf</th>
+<th align="right">Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">upenn</td>
+<td align="left">liberalrakkasan</td>
+<td align="left">liberalrakkasan</td>
+<td align="left">november</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">lud</td>
+<td align="left">sunzoo</td>
+<td align="left">rad</td>
+<td align="left">voting</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">senategovernors</td>
+<td align="left">bradnickel</td>
+<td align="left">senategovernors</td>
+<td align="left">republicans</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">jiacinto</td>
+<td align="left">altsite</td>
+<td align="left">nprigo</td>
+<td align="left">vote</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">abstain</td>
+<td align="left">boxblogroll</td>
+<td align="left">jiacinto</td>
+<td align="left">house</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">bald</td>
+<td align="left">boxfeed_listing</td>
+<td align="left">bald</td>
+<td align="left">account</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">danielua</td>
+<td align="left">boxrdf_feeds</td>
+<td align="left">lud</td>
+<td align="left">kerry</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">converted</td>
+<td align="left">bushsux</td>
+<td align="left">lawnorder</td>
+<td align="left">senate</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">lawnorder</td>
+<td align="left">calculator</td>
+<td align="left">danielua</td>
+<td align="left">governor</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">rad</td>
+<td align="left">calistan</td>
+<td align="left">converted</td>
+<td align="left">electoral</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">bradnickel</td>
+<td align="left">dryfly</td>
+<td align="left">upenn</td>
+<td align="left">poll</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">nprigo</td>
+<td align="left">endspan</td>
+<td align="left">egon</td>
+<td align="left">polls</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">egon</td>
+<td align="left">montclair</td>
+<td align="left">bradnickel</td>
+<td align="left">bush</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">seamus</td>
+<td align="left">newwindow</td>
+<td align="left">seamus</td>
+<td align="left">election</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">peanut</td>
+<td align="left">openhttpwwwedwardsforprezcomdailykoshtml</td>
+<td align="left">abstain</td>
+<td align="left">voter</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">buh</td>
+<td align="left">racine</td>
+<td align="left">furiousxgeorge</td>
+<td align="left">sunzoo</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">luaptifer</td>
+<td align="left">republicansforkerry</td>
+<td align="left">buh</td>
+<td align="left">general</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">furiousxgeorge</td>
+<td align="left">startspan</td>
+<td align="left">luaptifer</td>
+<td align="left">experience</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">cfr</td>
+<td align="left">var</td>
+<td align="left">maximumken</td>
+<td align="left">media</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">suppression</td>
+<td align="left">lawnorder</td>
+<td align="left">peanut</td>
+<td align="left">planned</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">rasmussen</td>
+<td align="left">surveyusa</td>
+<td align="left">rasmussen</td>
+<td align="left">bush</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">gallup</td>
+<td align="left">rasmussen</td>
+<td align="left">evs</td>
+<td align="left">kerry</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">battleground</td>
+<td align="left">gallup</td>
+<td align="left">tipp</td>
+<td align="left">poll</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">surveyusa</td>
+<td align="left">evs</td>
+<td align="left">lvs</td>
+<td align="left">polls</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">battlegrounds</td>
+<td align="left">tipp</td>
+<td align="left">gallup</td>
+<td align="left">general</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">tipp</td>
+<td align="left">zogby</td>
+<td align="left">oregonian</td>
+<td align="left">states</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">gotv</td>
+<td align="left">masondixon</td>
+<td align="left">battlegrounds</td>
+<td align="left">voters</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">bounce</td>
+<td align="left">lvs</td>
+<td align="left">cnnusa</td>
+<td align="left">florida</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">lvs</td>
+<td align="left">arkansas</td>
+<td align="left">nbcwsj</td>
+<td align="left">polling</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">evs</td>
+<td align="left">cnnusa</td>
+<td align="left">rasmussens</td>
+<td align="left">election</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">arkansas</td>
+<td align="left">zogbys</td>
+<td align="left">gallups</td>
+<td align="left">state</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">wisconsin</td>
+<td align="left">leads</td>
+<td align="left">arkansas</td>
+<td align="left">results</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">ruy</td>
+<td align="left">nader</td>
+<td align="left">orlando</td>
+<td align="left">ohio</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">kerryedwards</td>
+<td align="left">quinnipiac</td>
+<td align="left">rimjob</td>
+<td align="left">nader</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">undecided</td>
+<td align="left">susa</td>
+<td align="left">columbus</td>
+<td align="left">numbers</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">pollsters</td>
+<td align="left">oregonian</td>
+<td align="left">sampling</td>
+<td align="left">oct</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">kerry</td>
+<td align="left">bounce</td>
+<td align="left">surveyusa</td>
+<td align="left">vote</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">masondixon</td>
+<td align="left">battleground</td>
+<td align="left">roundup</td>
+<td align="left">battleground</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">soto</td>
+<td align="left">favorableunfavorable</td>
+<td align="left">snapshot</td>
+<td align="left">gore</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">nbcwsj</td>
+<td align="left">ruy</td>
+<td align="left">minnesota</td>
+<td align="left">news</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">sharpton</td>
+<td align="left">clark</td>
+<td align="left">lieberman</td>
+<td align="left">dean</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">braun</td>
+<td align="left">braun</td>
+<td align="left">sharpton</td>
+<td align="left">edwards</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">clarks</td>
+<td align="left">gephardt</td>
+<td align="left">braun</td>
+<td align="left">kerry</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">secondplace</td>
+<td align="left">sharpton</td>
+<td align="left">lieb</td>
+<td align="left">clark</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">parenthesis</td>
+<td align="left">kucinich</td>
+<td align="left">secondplace</td>
+<td align="left">primary</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">gep</td>
+<td align="left">clarks</td>
+<td align="left">marist</td>
+<td align="left">democratic</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">undecided</td>
+<td align="left">lieberman</td>
+<td align="left">composite</td>
+<td align="left">poll</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">lieb</td>
+<td align="left">secondplace</td>
+<td align="left">deanclark</td>
+<td align="left">lieberman</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">caucuses</td>
+<td align="left">dean</td>
+<td align="left">kucinich</td>
+<td align="left">gephardt</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">marist</td>
+<td align="left">parenthesis</td>
+<td align="left">clark</td>
+<td align="left">iowa</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">arg</td>
+<td align="left">lieb</td>
+<td align="left">moseley</td>
+<td align="left">results</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">antidean</td>
+<td align="left">gep</td>
+<td align="left">parenthesis</td>
+<td align="left">polls</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">composite</td>
+<td align="left">marist</td>
+<td align="left">edwards</td>
+<td align="left">numbers</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">deanclark</td>
+<td align="left">edwards</td>
+<td align="left">intangibles</td>
+<td align="left">kucinich</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">moseley</td>
+<td align="left">caucuses</td>
+<td align="left">inching</td>
+<td align="left">sharpton</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">zogbys</td>
+<td align="left">composite</td>
+<td align="left">clarks</td>
+<td align="left">jan</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">wisconsin</td>
+<td align="left">deanclark</td>
+<td align="left">geps</td>
+<td align="left">feb</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">lieberman</td>
+<td align="left">moseley</td>
+<td align="left">susas</td>
+<td align="left">candidates</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">edwards</td>
+<td align="left">thirdplace</td>
+<td align="left">wesley</td>
+<td align="left">state</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">matchups</td>
+<td align="left">geps</td>
+<td align="left">delegate</td>
+<td align="left">latest</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">nagourney</td>
+<td align="left">swift</td>
+<td align="left">nagourney</td>
+<td align="left">bush</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">boat</td>
+<td align="left">nagourney</td>
+<td align="left">fournier</td>
+<td align="left">kerry</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">millers</td>
+<td align="left">boat</td>
+<td align="left">brooks</td>
+<td align="left">president</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">swift</td>
+<td align="left">sbvt</td>
+<td align="left">sbvt</td>
+<td align="left">john</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">fournier</td>
+<td align="left">fournier</td>
+<td align="left">mccains</td>
+<td align="left">general</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">veterans</td>
+<td align="left">cheney</td>
+<td align="left">broder</td>
+<td align="left">bushs</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">mccains</td>
+<td align="left">cutter</td>
+<td align="left">playbook</td>
+<td align="left">campaign</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">cutter</td>
+<td align="left">flipflopper</td>
+<td align="left">cutter</td>
+<td align="left">kerrys</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">kerry</td>
+<td align="left">unfit</td>
+<td align="left">veepstakes</td>
+<td align="left">cheney</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">sbvt</td>
+<td align="left">vietnam</td>
+<td align="left">flipflopper</td>
+<td align="left">war</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">admire</td>
+<td align="left">vice</td>
+<td align="left">vet</td>
+<td align="left">debate</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">cleland</td>
+<td align="left">debates</td>
+<td align="left">acceptance</td>
+<td align="left">george</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">ahnold</td>
+<td align="left">kerrys</td>
+<td align="left">cheney</td>
+<td align="left">iraq</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">vietnam</td>
+<td align="left">mccains</td>
+<td align="left">millers</td>
+<td align="left">speech</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">dukakis</td>
+<td align="left">cheneys</td>
+<td align="left">ahnold</td>
+<td align="left">republicans</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">podium</td>
+<td align="left">edwards</td>
+<td align="left">unfit</td>
+<td align="left">convention</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">broder</td>
+<td align="left">speech</td>
+<td align="left">advertisement</td>
+<td align="left">presidential</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">vet</td>
+<td align="left">acceptance</td>
+<td align="left">dishonest</td>
+<td align="left">time</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">miserable</td>
+<td align="left">broder</td>
+<td align="left">vets</td>
+<td align="left">senator</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">chooses</td>
+<td align="left">nixon</td>
+<td align="left">profiles</td>
+<td align="left">vice</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">toomey</td>
+<td align="left">thune</td>
+<td align="left">herseth</td>
+<td align="left">senate</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">salazar</td>
+<td align="left">diedrich</td>
+<td align="left">thune</td>
+<td align="left">house</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">diedrich</td>
+<td align="left">salazar</td>
+<td align="left">toomey</td>
+<td align="left">republican</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">daschle</td>
+<td align="left">toomey</td>
+<td align="left">diedrich</td>
+<td align="left">race</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">thune</td>
+<td align="left">demint</td>
+<td align="left">salazar</td>
+<td align="left">democrats</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">herseth</td>
+<td align="left">herseth</td>
+<td align="left">beauprez</td>
+<td align="left">elections</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">dakota</td>
+<td align="left">dakota</td>
+<td align="left">tenenbaum</td>
+<td align="left">state</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">tenenbaum</td>
+<td align="left">specter</td>
+<td align="left">campbell</td>
+<td align="left">seat</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">demint</td>
+<td align="left">tenenbaum</td>
+<td align="left">toomeys</td>
+<td align="left">democratic</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">coors</td>
+<td align="left">coors</td>
+<td align="left">inez</td>
+<td align="left">gop</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">campbell</td>
+<td align="left">beauprez</td>
+<td align="left">specters</td>
+<td align="left">district</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">beauprez</td>
+<td align="left">inez</td>
+<td align="left">hoeffels</td>
+<td align="left">democrat</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">inez</td>
+<td align="left">seat</td>
+<td align="left">jindal</td>
+<td align="left">candidate</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">runoff</td>
+<td align="left">daschle</td>
+<td align="left">vitter</td>
+<td align="left">races</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">rodney</td>
+<td align="left">hoeffel</td>
+<td align="left">herseths</td>
+<td align="left">south</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">seats</td>
+<td align="left">vitter</td>
+<td align="left">diedrichs</td>
+<td align="left">primary</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">breaux</td>
+<td align="left">greenwood</td>
+<td align="left">greenwood</td>
+<td align="left">republicans</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">greenwood</td>
+<td align="left">humphreys</td>
+<td align="left">amdt</td>
+<td align="left">rep</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">vitter</td>
+<td align="left">specters</td>
+<td align="left">mitakides</td>
+<td align="left">herseth</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">indiana</td>
+<td align="left">jindal</td>
+<td align="left">cosen</td>
+<td align="left">election</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">clarke</td>
+<td align="left">rice</td>
+<td align="left">clarke</td>
+<td align="left">bush</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">counterterrorism</td>
+<td align="left">clarke</td>
+<td align="left">counterterrorism</td>
+<td align="left">administration</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">plame</td>
+<td align="left">counterterrorism</td>
+<td align="left">clarkes</td>
+<td align="left">house</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">clarkes</td>
+<td align="left">clarkes</td>
+<td align="left">plame</td>
+<td align="left">white</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">adviser</td>
+<td align="left">condoleezza</td>
+<td align="left">pdb</td>
+<td align="left">intelligence</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">libby</td>
+<td align="left">intelligence</td>
+<td align="left">condoleezza</td>
+<td align="left">president</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">condoleezza</td>
+<td align="left">cia</td>
+<td align="left">rices</td>
+<td align="left">commission</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">pdb</td>
+<td align="left">powell</td>
+<td align="left">berger</td>
+<td align="left">report</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">rices</td>
+<td align="left">rices</td>
+<td align="left">hijackers</td>
+<td align="left">security</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">colin</td>
+<td align="left">plame</td>
+<td align="left">scooter</td>
+<td align="left">officials</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">leak</td>
+<td align="left">pdb</td>
+<td align="left">rkan</td>
+<td align="left">cia</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">intelligence</td>
+<td align="left">documents</td>
+<td align="left">airplane</td>
+<td align="left">national</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">commissioners</td>
+<td align="left">fbi</td>
+<td align="left">declassified</td>
+<td align="left">adviser</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">hijackers</td>
+<td align="left">testimony</td>
+<td align="left">ddel</td>
+<td align="left">terrorism</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">withheld</td>
+<td align="left">hijackers</td>
+<td align="left">valerie</td>
+<td align="left">rice</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">biden</td>
+<td align="left">alqaida</td>
+<td align="left">stonewalling</td>
+<td align="left">powell</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">berger</td>
+<td align="left">leak</td>
+<td align="left">undercover</td>
+<td align="left">attacks</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">qaeda</td>
+<td align="left">colin</td>
+<td align="left">aristide</td>
+<td align="left">richard</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">rkan</td>
+<td align="left">libby</td>
+<td align="left">ashcrofts</td>
+<td align="left">news</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">alqaida</td>
+<td align="left">berger</td>
+<td align="left">withheld</td>
+<td align="left">secretary</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">wink</td>
+<td align="left">server</td>
+<td align="left">hecht</td>
+<td align="left">people</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">hecht</td>
+<td align="left">traffic</td>
+<td align="left">rude</td>
+<td align="left">time</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">johns</td>
+<td align="left">hecht</td>
+<td align="left">walks</td>
+<td align="left">ive</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">amazon</td>
+<td align="left">servers</td>
+<td align="left">wink</td>
+<td align="left">meteor</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">wood</td>
+<td align="left">surgery</td>
+<td align="left">observation</td>
+<td align="left">blades</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">dad</td>
+<td align="left">baseball</td>
+<td align="left">surgery</td>
+<td align="left">ill</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">wiki</td>
+<td align="left">wink</td>
+<td align="left">fatherinlaw</td>
+<td align="left">oct</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">rude</td>
+<td align="left">sox</td>
+<td align="left">internets</td>
+<td align="left">life</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">baseball</td>
+<td align="left">sports</td>
+<td align="left">bypass</td>
+<td align="left">live</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">walks</td>
+<td align="left">dad</td>
+<td align="left">baseball</td>
+<td align="left">lot</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">jenna</td>
+<td align="left">bugs</td>
+<td align="left">traffic</td>
+<td align="left">youre</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">sox</td>
+<td align="left">dkos</td>
+<td align="left">driver</td>
+<td align="left">general</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">equipment</td>
+<td align="left">wiki</td>
+<td align="left">amazon</td>
+<td align="left">night</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">realitybased</td>
+<td align="left">park</td>
+<td align="left">dad</td>
+<td align="left">years</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">sisters</td>
+<td align="left">jenna</td>
+<td align="left">sox</td>
+<td align="left">country</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">bypass</td>
+<td align="left">bypass</td>
+<td align="left">gobbell</td>
+<td align="left">put</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">strange</td>
+<td align="left">beer</td>
+<td align="left">taught</td>
+<td align="left">love</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">observation</td>
+<td align="left">karen</td>
+<td align="left">jenna</td>
+<td align="left">community</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">wheels</td>
+<td align="left">youll</td>
+<td align="left">sports</td>
+<td align="left">guys</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">gear</td>
+<td align="left">amazon</td>
+<td align="left">johns</td>
+<td align="left">war</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="left">deficit</td>
+<td align="left">cuts</td>
+<td align="left">tax</td>
+<td align="left">bush</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">taxes</td>
+<td align="left">tax</td>
+<td align="left">cuts</td>
+<td align="left">tax</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">cuts</td>
+<td align="left">income</td>
+<td align="left">deficit</td>
+<td align="left">health</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">fiscal</td>
+<td align="left">deficit</td>
+<td align="left">prescription</td>
+<td align="left">administration</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">prescription</td>
+<td align="left">vaccine</td>
+<td align="left">vaccine</td>
+<td align="left">billion</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">flu</td>
+<td align="left">tuition</td>
+<td align="left">tuition</td>
+<td align="left">budget</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">deficits</td>
+<td align="left">prescription</td>
+<td align="left">vaccines</td>
+<td align="left">year</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">vaccine</td>
+<td align="left">taxes</td>
+<td align="left">middleclass</td>
+<td align="left">cuts</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">tuition</td>
+<td align="left">flu</td>
+<td align="left">budget</td>
+<td align="left">care</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">reagans</td>
+<td align="left">fiscal</td>
+<td align="left">income</td>
+<td align="left">reagan</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">income</td>
+<td align="left">medicare</td>
+<td align="left">deficits</td>
+<td align="left">president</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">middleclass</td>
+<td align="left">middleclass</td>
+<td align="left">incomes</td>
+<td align="left">federal</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">medicare</td>
+<td align="left">vaccines</td>
+<td align="left">fiscal</td>
+<td align="left">government</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">vaccines</td>
+<td align="left">incomes</td>
+<td align="left">overtime</td>
+<td align="left">spending</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">incomes</td>
+<td align="left">overtime</td>
+<td align="left">taxes</td>
+<td align="left">years</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">overtime</td>
+<td align="left">budget</td>
+<td align="left">cato</td>
+<td align="left">taxes</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">wages</td>
+<td align="left">burden</td>
+<td align="left">grover</td>
+<td align="left">deficit</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">package</td>
+<td align="left">insurance</td>
+<td align="left">tobacco</td>
+<td align="left">bushs</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">revenues</td>
+<td align="left">billion</td>
+<td align="left">reagans</td>
+<td align="left">economy</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">social</td>
+<td align="left">deficits</td>
+<td align="left">colmes</td>
+<td align="left">plan</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">ethics</td>
+<td align="left">ethics</td>
+<td align="left">ethics</td>
+<td align="left">delay</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">jury</td>
+<td align="left">rowland</td>
+<td align="left">jury</td>
+<td align="left">republicans</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">judicial</td>
+<td align="left">judicial</td>
+<td align="left">judicial</td>
+<td align="left">house</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">judiciary</td>
+<td align="left">jury</td>
+<td align="left">judiciary</td>
+<td align="left">court</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">earle</td>
+<td align="left">earle</td>
+<td align="left">earle</td>
+<td align="left">committee</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">justices</td>
+<td align="left">redistricting</td>
+<td align="left">lindauer</td>
+<td align="left">law</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">prosecutors</td>
+<td align="left">indicted</td>
+<td align="left">violations</td>
+<td align="left">republican</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">rowland</td>
+<td align="left">janklow</td>
+<td align="left">scalia</td>
+<td align="left">federal</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">lawsuit</td>
+<td align="left">lawsuit</td>
+<td align="left">schwarz</td>
+<td align="left">texas</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">complaint</td>
+<td align="left">judiciary</td>
+<td align="left">lawsuit</td>
+<td align="left">bill</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">violations</td>
+<td align="left">investigation</td>
+<td align="left">justices</td>
+<td align="left">ethics</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">redistricting</td>
+<td align="left">mcgreevey</td>
+<td align="left">travis</td>
+<td align="left">investigation</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">scalia</td>
+<td align="left">prosecutors</td>
+<td align="left">censure</td>
+<td align="left">senate</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">supreme</td>
+<td align="left">complaint</td>
+<td align="left">aarp</td>
+<td align="left">supreme</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">indicted</td>
+<td align="left">courts</td>
+<td align="left">caci</td>
+<td align="left">democrats</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">mcgreevey</td>
+<td align="left">schwarz</td>
+<td align="left">matrix</td>
+<td align="left">majority</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">janklow</td>
+<td align="left">lindauer</td>
+<td align="left">ronnie</td>
+<td align="left">leader</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">schwarz</td>
+<td align="left">enron</td>
+<td align="left">license</td>
+<td align="left">political</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">bell</td>
+<td align="left">kuhl</td>
+<td align="left">obligations</td>
+<td align="left">legal</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">kuhl</td>
+<td align="left">subpoenas</td>
+<td align="left">drake</td>
+<td align="left">criminal</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">prices</td>
+<td align="left">oil</td>
+<td align="left">prices</td>
+<td align="left">jobs</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">cells</td>
+<td align="left">prices</td>
+<td align="left">emissions</td>
+<td align="left">bush</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">companies</td>
+<td align="left">tariffs</td>
+<td align="left">vance</td>
+<td align="left">years</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">oil</td>
+<td align="left">epa</td>
+<td align="left">walmart</td>
+<td align="left">administration</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">species</td>
+<td align="left">scientists</td>
+<td align="left">species</td>
+<td align="left">oil</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">walmart</td>
+<td align="left">emissions</td>
+<td align="left">cells</td>
+<td align="left">science</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">emissions</td>
+<td align="left">steel</td>
+<td align="left">china</td>
+<td align="left">energy</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">china</td>
+<td align="left">species</td>
+<td align="left">treaty</td>
+<td align="left">space</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">halliburton</td>
+<td align="left">vance</td>
+<td align="left">stagflation</td>
+<td align="left">economic</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">vance</td>
+<td align="left">gwb</td>
+<td align="left">kyoto</td>
+<td align="left">research</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">epa</td>
+<td align="left">walmart</td>
+<td align="left">wildlife</td>
+<td align="left">economy</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">treaty</td>
+<td align="left">cells</td>
+<td align="left">amphibians</td>
+<td align="left">blades</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">economists</td>
+<td align="left">stagflation</td>
+<td align="left">carbon</td>
+<td align="left">meteor</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">stagflation</td>
+<td align="left">researchers</td>
+<td align="left">landmines</td>
+<td align="left">policy</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">kyoto</td>
+<td align="left">environmental</td>
+<td align="left">petroleum</td>
+<td align="left">states</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">tariffs</td>
+<td align="left">industries</td>
+<td align="left">arctic</td>
+<td align="left">year</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">warming</td>
+<td align="left">sea</td>
+<td align="left">greenhouse</td>
+<td align="left">environmental</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">wildlife</td>
+<td align="left">pollution</td>
+<td align="left">zimbabwe</td>
+<td align="left">report</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">fishing</td>
+<td align="left">wildlife</td>
+<td align="left">tariffs</td>
+<td align="left">labor</td>
+<td align="right">10</td>
+</tr>
+<tr class="even">
+<td align="left">landmines</td>
+<td align="left">economists</td>
+<td align="left">epa</td>
+<td align="left">united</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">marriage</td>
+<td align="left">marriage</td>
+<td align="left">samesex</td>
+<td align="left">party</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">gay</td>
+<td align="left">amendment</td>
+<td align="left">catholics</td>
+<td align="left">democratic</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">amendment</td>
+<td align="left">gay</td>
+<td align="left">cats</td>
+<td align="left">marriage</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">abortion</td>
+<td align="left">samesex</td>
+<td align="left">couples</td>
+<td align="left">rights</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">samesex</td>
+<td align="left">abortion</td>
+<td align="left">paige</td>
+<td align="left">gay</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">catholic</td>
+<td align="left">catholics</td>
+<td align="left">bishops</td>
+<td align="left">republican</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">couples</td>
+<td align="left">catholic</td>
+<td align="left">equality</td>
+<td align="left">political</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">catholics</td>
+<td align="left">couples</td>
+<td align="left">marriages</td>
+<td align="left">democrats</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">womens</td>
+<td align="left">constitutional</td>
+<td align="left">marriage</td>
+<td align="left">vote</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">cats</td>
+<td align="left">marriages</td>
+<td align="left">marry</td>
+<td align="left">conservative</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">religious</td>
+<td align="left">dreier</td>
+<td align="left">abortion</td>
+<td align="left">amendment</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">outsiders</td>
+<td align="left">cats</td>
+<td align="left">communion</td>
+<td align="left">issue</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">marriages</td>
+<td align="left">bishops</td>
+<td align="left">gay</td>
+<td align="left">republicans</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">marry</td>
+<td align="left">rosenberg</td>
+<td align="left">discrimination</td>
+<td align="left">state</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">abortions</td>
+<td align="left">discrimination</td>
+<td align="left">catholic</td>
+<td align="left">people</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">bishops</td>
+<td align="left">devos</td>
+<td align="left">racial</td>
+<td align="left">women</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">paige</td>
+<td align="left">constitution</td>
+<td align="left">rosenberg</td>
+<td align="left">support</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">fma</td>
+<td align="left">paige</td>
+<td align="left">antigay</td>
+<td align="left">white</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">communion</td>
+<td align="left">communion</td>
+<td align="left">outsiders</td>
+<td align="left">states</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">sahni</td>
+<td align="left">antigay</td>
+<td align="left">womens</td>
+<td align="left">american</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">mich</td>
+<td align="left">duderino</td>
+<td align="left">parecommend</td>
+<td align="left">november</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">allegory</td>
+<td align="left">parecommend</td>
+<td align="left">duderino</td>
+<td align="left">poll</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">kingelection</td>
+<td align="left">bloomfield</td>
+<td align="left">hotshotxi</td>
+<td align="left">house</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">countdown</td>
+<td align="left">virginiadem</td>
+<td align="left">barbero</td>
+<td align="left">polls</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">gatana</td>
+<td align="left">idetestthispres</td>
+<td align="left">virginiadem</td>
+<td align="left">account</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">juppon</td>
+<td align="left">barbero</td>
+<td align="left">tradesports</td>
+<td align="left">electoral</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">punkmonk</td>
+<td align="left">hotshotxi</td>
+<td align="left">misterajc</td>
+<td align="left">republicans</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">sappy</td>
+<td align="left">misterajc</td>
+<td align="left">idetestthispres</td>
+<td align="left">senate</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">katerina</td>
+<td align="left">katerina</td>
+<td align="left">vaantirepublican</td>
+<td align="left">governor</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">chedrcheez</td>
+<td align="left">gatana</td>
+<td align="left">juppon</td>
+<td align="left">ground</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">wclathe</td>
+<td align="left">juppon</td>
+<td align="left">countdown</td>
+<td align="left">trouble</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">hoodies</td>
+<td align="left">allegory</td>
+<td align="left">gatana</td>
+<td align="left">turnout</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">vaantirepublican</td>
+<td align="left">kingelection</td>
+<td align="left">punkmonk</td>
+<td align="left">contact</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">releasing</td>
+<td align="left">tradesports</td>
+<td align="left">katerina</td>
+<td align="left">duderino</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">misterajc</td>
+<td align="left">punkmonk</td>
+<td align="left">bloomfield</td>
+<td align="left">parecommend</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">crooks</td>
+<td align="left">chedrcheez</td>
+<td align="left">sappy</td>
+<td align="left">exit</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">tradesports</td>
+<td align="left">wclathe</td>
+<td align="left">allegory</td>
+<td align="left">bush</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">barbero</td>
+<td align="left">crooks</td>
+<td align="left">wclathe</td>
+<td align="left">vote</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">hotshotxi</td>
+<td align="left">hoodies</td>
+<td align="left">chedrcheez</td>
+<td align="left">primary</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">idetestthispres</td>
+<td align="left">vaantirepublican</td>
+<td align="left">kingelection</td>
+<td align="left">general</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">ads</td>
+<td align="left">kerr</td>
+<td align="left">kerr</td>
+<td align="left">campaign</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">kerr</td>
+<td align="left">mcauliffe</td>
+<td align="left">oxley</td>
+<td align="left">million</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">mcauliffe</td>
+<td align="left">fundraising</td>
+<td align="left">soros</td>
+<td align="left">money</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">dccc</td>
+<td align="left">pacs</td>
+<td align="left">pacs</td>
+<td align="left">party</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">oxley</td>
+<td align="left">dccc</td>
+<td align="left">blitz</td>
+<td align="left">democratic</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">regula</td>
+<td align="left">chandler</td>
+<td align="left">dnc</td>
+<td align="left">ads</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">pacs</td>
+<td align="left">donations</td>
+<td align="left">begging</td>
+<td align="left">candidates</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">konop</td>
+<td align="left">dnc</td>
+<td align="left">frost</td>
+<td align="left">dnc</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">soros</td>
+<td align="left">blitz</td>
+<td align="left">loophole</td>
+<td align="left">raised</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">fund</td>
+<td align="left">expenditures</td>
+<td align="left">epatriots</td>
+<td align="left">bush</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">frost</td>
+<td align="left">oxley</td>
+<td align="left">buys</td>
+<td align="left">campaigns</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">blitz</td>
+<td align="left">schrader</td>
+<td align="left">mcauliffe</td>
+<td align="left">fundraising</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">parity</td>
+<td align="left">soros</td>
+<td align="left">axelrod</td>
+<td align="left">democrats</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">loophole</td>
+<td align="left">frost</td>
+<td align="left">sessions</td>
+<td align="left">election</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">fec</td>
+<td align="left">cash</td>
+<td align="left">soft</td>
+<td align="left">media</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">transfers</td>
+<td align="left">transfers</td>
+<td align="left">receipts</td>
+<td align="left">house</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">blogpac</td>
+<td align="left">axelrod</td>
+<td align="left">expenditures</td>
+<td align="left">national</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">fundraising</td>
+<td align="left">sessions</td>
+<td align="left">konop</td>
+<td align="left">political</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">soft</td>
+<td align="left">committees</td>
+<td align="left">shakeup</td>
+<td align="left">cash</td>
+<td align="right">13</td>
+</tr>
+<tr class="even">
+<td align="left">axelrod</td>
+<td align="left">ginny</td>
+<td align="left">mccainfeingold</td>
+<td align="left">republicans</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">ghraib</td>
+<td align="left">ghraib</td>
+<td align="left">ghraib</td>
+<td align="left">war</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">prisoners</td>
+<td align="left">abu</td>
+<td align="left">torture</td>
+<td align="left">iraq</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">abu</td>
+<td align="left">torture</td>
+<td align="left">prisoners</td>
+<td align="left">military</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">torture</td>
+<td align="left">prison</td>
+<td align="left">detainees</td>
+<td align="left">soldiers</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">civilian</td>
+<td align="left">detainees</td>
+<td align="left">prisoner</td>
+<td align="left">american</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">detainees</td>
+<td align="left">prisoners</td>
+<td align="left">civilian</td>
+<td align="left">abu</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">prison</td>
+<td align="left">interrogation</td>
+<td align="left">interrogation</td>
+<td align="left">iraqi</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">rumsfeld</td>
+<td align="left">prisoner</td>
+<td align="left">detention</td>
+<td align="left">people</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">soldiers</td>
+<td align="left">fallujah</td>
+<td align="left">petraeus</td>
+<td align="left">rumsfeld</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">prisoner</td>
+<td align="left">petraeus</td>
+<td align="left">armys</td>
+<td align="left">ghraib</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">fallujah</td>
+<td align="left">rumsfeld</td>
+<td align="left">battalion</td>
+<td align="left">general</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">fatalities</td>
+<td align="left">detention</td>
+<td align="left">atrocities</td>
+<td align="left">army</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">marines</td>
+<td align="left">battalion</td>
+<td align="left">airborne</td>
+<td align="left">pentagon</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">interrogation</td>
+<td align="left">saleh</td>
+<td align="left">maj</td>
+<td align="left">defense</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">pentagon</td>
+<td align="left">soldiers</td>
+<td align="left">gehlen</td>
+<td align="left">troops</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">petraeus</td>
+<td align="left">pentagon</td>
+<td align="left">gharib</td>
+<td align="left">prisoners</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">battalion</td>
+<td align="left">armys</td>
+<td align="left">fatalities</td>
+<td align="left">men</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">detention</td>
+<td align="left">iraqi</td>
+<td align="left">mercenaries</td>
+<td align="left">killed</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">armys</td>
+<td align="left">geneva</td>
+<td align="left">blackwater</td>
+<td align="left">fallujah</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">guatemala</td>
+<td align="left">fatalities</td>
+<td align="left">saleh</td>
+<td align="left">prison</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">shiite</td>
+<td align="left">iraqi</td>
+<td align="left">sunni</td>
+<td align="left">iraq</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">chalabi</td>
+<td align="left">shiite</td>
+<td align="left">shiite</td>
+<td align="left">war</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">occupation</td>
+<td align="left">iraqis</td>
+<td align="left">sadr</td>
+<td align="left">iraqi</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">explosives</td>
+<td align="left">baghdad</td>
+<td align="left">shiites</td>
+<td align="left">bush</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">sunni</td>
+<td align="left">sunni</td>
+<td align="left">sistani</td>
+<td align="left">troops</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">sadr</td>
+<td align="left">sadr</td>
+<td align="left">kurds</td>
+<td align="left">saddam</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">iraqis</td>
+<td align="left">occupation</td>
+<td align="left">spain</td>
+<td align="left">american</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">resistance</td>
+<td align="left">laden</td>
+<td align="left">kurdish</td>
+<td align="left">forces</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">baghdad</td>
+<td align="left">bin</td>
+<td align="left">cleric</td>
+<td align="left">attacks</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">spain</td>
+<td align="left">najaf</td>
+<td align="left">uprising</td>
+<td align="left">baghdad</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">shiites</td>
+<td align="left">chalabi</td>
+<td align="left">muqtada</td>
+<td align="left">united</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">laden</td>
+<td align="left">spain</td>
+<td align="left">ayatollah</td>
+<td align="left">killed</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">bin</td>
+<td align="left">shiites</td>
+<td align="left">zarqawi</td>
+<td align="left">country</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">najaf</td>
+<td align="left">sistani</td>
+<td align="left">sadrs</td>
+<td align="left">military</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">osama</td>
+<td align="left">cleric</td>
+<td align="left">militiamen</td>
+<td align="left">government</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">taliban</td>
+<td align="left">insurgents</td>
+<td align="left">alhusainy</td>
+<td align="left">iraqis</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">saddam</td>
+<td align="left">osama</td>
+<td align="left">dearborn</td>
+<td align="left">officials</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">islamic</td>
+<td align="left">saddams</td>
+<td align="left">kufa</td>
+<td align="left">weapons</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">sistani</td>
+<td align="left">kurds</td>
+<td align="left">fubar</td>
+<td align="left">people</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">cleric</td>
+<td align="left">kurdish</td>
+<td align="left">imam</td>
+<td align="left">bin</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">signatures</td>
+<td align="left">signatures</td>
+<td align="left">signatures</td>
+<td align="left">nader</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">naders</td>
+<td align="left">naders</td>
+<td align="left">naders</td>
+<td align="left">ballot</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">guard</td>
+<td align="left">thurlow</td>
+<td align="left">petition</td>
+<td align="left">bush</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">petition</td>
+<td align="left">petitions</td>
+<td align="left">thurlow</td>
+<td align="left">general</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">medals</td>
+<td align="left">nader</td>
+<td align="left">sproul</td>
+<td align="left">party</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">thurlow</td>
+<td align="left">guard</td>
+<td align="left">petitions</td>
+<td align="left">state</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">sproul</td>
+<td align="left">sproul</td>
+<td align="left">secretaries</td>
+<td align="left">election</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">petitions</td>
+<td align="left">volleyball</td>
+<td align="left">applications</td>
+<td align="left">republican</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">secretaries</td>
+<td align="left">martinez</td>
+<td align="left">volleyball</td>
+<td align="left">voter</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">applications</td>
+<td align="left">discharge</td>
+<td align="left">boats</td>
+<td align="left">national</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">volleyball</td>
+<td align="left">bronze</td>
+<td align="left">mel</td>
+<td align="left">guard</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">martinez</td>
+<td align="left">drills</td>
+<td align="left">drills</td>
+<td align="left">service</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">absentee</td>
+<td align="left">secretaries</td>
+<td align="left">indymedia</td>
+<td align="left">records</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">mel</td>
+<td align="left">allday</td>
+<td align="left">allday</td>
+<td align="left">voters</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">boat</td>
+<td align="left">verified</td>
+<td align="left">verified</td>
+<td align="left">campaign</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">verified</td>
+<td align="left">petition</td>
+<td align="left">medals</td>
+<td align="left">bushs</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">honorable</td>
+<td align="left">registrations</td>
+<td align="left">absentee</td>
+<td align="left">people</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">drills</td>
+<td align="left">mel</td>
+<td align="left">bronze</td>
+<td align="left">texas</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">boats</td>
+<td align="left">applications</td>
+<td align="left">discharge</td>
+<td align="left">vote</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">vietnam</td>
+<td align="left">camejo</td>
+<td align="left">ramsey</td>
+<td align="left">republicans</td>
+<td align="right">16</td>
+</tr>
+<tr class="odd">
+<td align="left">coburn</td>
+<td align="left">coburn</td>
+<td align="left">disapprove</td>
+<td align="left">percent</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">disapprove</td>
+<td align="left">disapprove</td>
+<td align="left">unfavorable</td>
+<td align="left">poll</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">unfavorable</td>
+<td align="left">unfavorable</td>
+<td align="left">statistically</td>
+<td align="left">voters</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">approval</td>
+<td align="left">favorability</td>
+<td align="left">percent</td>
+<td align="left">vote</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">surveys</td>
+<td align="left">carson</td>
+<td align="left">registrants</td>
+<td align="left">polls</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">latino</td>
+<td align="left">registrants</td>
+<td align="left">coburn</td>
+<td align="left">numbers</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">respondents</td>
+<td align="left">knowles</td>
+<td align="left">approve</td>
+<td align="left">lead</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">carson</td>
+<td align="left">coburns</td>
+<td align="left">favorability</td>
+<td align="left">results</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">percent</td>
+<td align="left">murkowski</td>
+<td align="left">tulsa</td>
+<td align="left">race</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">favorability</td>
+<td align="left">rating</td>
+<td align="left">coburns</td>
+<td align="left">coburn</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">registrants</td>
+<td align="left">tulsa</td>
+<td align="left">rating</td>
+<td align="left">carson</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">tulsa</td>
+<td align="left">respondents</td>
+<td align="left">latinos</td>
+<td align="left">democratic</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">coburns</td>
+<td align="left">statistically</td>
+<td align="left">hispanics</td>
+<td align="left">republican</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">murkowski</td>
+<td align="left">polled</td>
+<td align="left">countylevel</td>
+<td align="left">polling</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">hispanics</td>
+<td align="left">rotated</td>
+<td align="left">rell</td>
+<td align="left">support</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">statewide</td>
+<td align="left">latinos</td>
+<td align="left">oksen</td>
+<td align="left">registered</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">approve</td>
+<td align="left">registrations</td>
+<td align="left">adults</td>
+<td align="left">democrats</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">rating</td>
+<td align="left">cuban</td>
+<td align="left">twoparty</td>
+<td align="left">election</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">survey</td>
+<td align="left">countylevel</td>
+<td align="left">murkowskis</td>
+<td align="left">republicans</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">ratings</td>
+<td align="left">favorable</td>
+<td align="left">favorable</td>
+<td align="left">people</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">mongiardo</td>
+<td align="left">mongiardo</td>
+<td align="left">murphy</td>
+<td align="left">senate</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">keyes</td>
+<td align="left">matsunaka</td>
+<td align="left">keyes</td>
+<td align="left">race</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">murphy</td>
+<td align="left">keyes</td>
+<td align="left">nag</td>
+<td align="left">elections</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">nag</td>
+<td align="left">bunning</td>
+<td align="left">matsunaka</td>
+<td align="left">dkos</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">matsunaka</td>
+<td align="left">stork</td>
+<td align="left">mongiardo</td>
+<td align="left">campaign</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">stork</td>
+<td align="left">seemann</td>
+<td align="left">stork</td>
+<td align="left">candidates</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">donors</td>
+<td align="left">farmer</td>
+<td align="left">seemann</td>
+<td align="left">dozen</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">farmer</td>
+<td align="left">romero</td>
+<td align="left">lois</td>
+<td align="left">obama</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">seemann</td>
+<td align="left">crane</td>
+<td align="left">nagging</td>
+<td align="left">house</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">obama</td>
+<td align="left">burt</td>
+<td align="left">bunnings</td>
+<td align="left">illinois</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">lois</td>
+<td align="left">knowles</td>
+<td align="left">samara</td>
+<td align="left">jim</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">ilsen</td>
+<td align="left">ditka</td>
+<td align="left">crane</td>
+<td align="left">donors</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">romero</td>
+<td align="left">bunnings</td>
+<td align="left">ditka</td>
+<td align="left">candidate</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">samara</td>
+<td align="left">obama</td>
+<td align="left">hyde</td>
+<td align="left">bunning</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">cohen</td>
+<td align="left">lois</td>
+<td align="left">burt</td>
+<td align="left">jun</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">bunnings</td>
+<td align="left">morrison</td>
+<td align="left">actblue</td>
+<td align="left">races</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">crane</td>
+<td align="left">mosen</td>
+<td align="left">barend</td>
+<td align="left">farmer</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">nagging</td>
+<td align="left">barend</td>
+<td align="left">cegelis</td>
+<td align="left">knowles</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">burt</td>
+<td align="left">cegelis</td>
+<td align="left">storks</td>
+<td align="left">state</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">barend</td>
+<td align="left">ilsen</td>
+<td align="left">mosen</td>
+<td align="left">mongiardo</td>
+<td align="right">18</td>
+</tr>
+<tr class="odd">
+<td align="left">blogs</td>
+<td align="left">oreilly</td>
+<td align="left">oreilly</td>
+<td align="left">media</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">oreilly</td>
+<td align="left">fox</td>
+<td align="left">luntz</td>
+<td align="left">news</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">bloggers</td>
+<td align="left">luntz</td>
+<td align="left">theaters</td>
+<td align="left">bloggers</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">limbaugh</td>
+<td align="left">bloggers</td>
+<td align="left">oceana</td>
+<td align="left">internet</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">luntz</td>
+<td align="left">theaters</td>
+<td align="left">debunking</td>
+<td align="left">political</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">fox</td>
+<td align="left">film</td>
+<td align="left">splice</td>
+<td align="left">blog</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">oceana</td>
+<td align="left">moores</td>
+<td align="left">janeane</td>
+<td align="left">fox</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">theaters</td>
+<td align="left">fahrenheit</td>
+<td align="left">deceits</td>
+<td align="left">book</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">advertisers</td>
+<td align="left">sinclair</td>
+<td align="left">limbaugh</td>
+<td align="left">people</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">moores</td>
+<td align="left">franken</td>
+<td align="left">moores</td>
+<td align="left">blogs</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">tnr</td>
+<td align="left">splice</td>
+<td align="left">bloggers</td>
+<td align="left">radio</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">coulter</td>
+<td align="left">janeane</td>
+<td align="left">publications</td>
+<td align="left">press</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">splice</td>
+<td align="left">blogs</td>
+<td align="left">franken</td>
+<td align="left">conservative</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">debunking</td>
+<td align="left">debunking</td>
+<td align="left">brokaw</td>
+<td align="left">read</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">janeane</td>
+<td align="left">tnr</td>
+<td align="left">journalism</td>
+<td align="left">tom</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">kurtz</td>
+<td align="left">documentary</td>
+<td align="left">fahrenheit</td>
+<td align="left">america</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">rationing</td>
+<td align="left">deceits</td>
+<td align="left">dncc</td>
+<td align="left">liberal</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">dncc</td>
+<td align="left">dncc</td>
+<td align="left">programming</td>
+<td align="left">coverage</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">deceits</td>
+<td align="left">journalists</td>
+<td align="left">publishing</td>
+<td align="left">times</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">publications</td>
+<td align="left">limbaugh</td>
+<td align="left">documentary</td>
+<td align="left">air</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">afscme</td>
+<td align="left">afscme</td>
+<td align="left">afscme</td>
+<td align="left">dean</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">seiu</td>
+<td align="left">gephardt</td>
+<td align="left">seiu</td>
+<td align="left">iowa</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">moines</td>
+<td align="left">moines</td>
+<td align="left">mcdonalds</td>
+<td align="left">democratic</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">des</td>
+<td align="left">des</td>
+<td align="left">mcentee</td>
+<td align="left">campaign</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">trippi</td>
+<td align="left">seiu</td>
+<td align="left">mcmahon</td>
+<td align="left">primary</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">unions</td>
+<td align="left">deans</td>
+<td align="left">stella</td>
+<td align="left">gephardt</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">harkin</td>
+<td align="left">mcentee</td>
+<td align="left">dubuque</td>
+<td align="left">people</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">mcentee</td>
+<td align="left">dean</td>
+<td align="left">liebeck</td>
+<td align="left">deans</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">mcdonalds</td>
+<td align="left">trippi</td>
+<td align="left">weber</td>
+<td align="left">endorsement</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">mcmahon</td>
+<td align="left">caucuses</td>
+<td align="left">harts</td>
+<td align="left">howard</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">deans</td>
+<td align="left">unions</td>
+<td align="left">teamsters</td>
+<td align="left">unions</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">vermont</td>
+<td align="left">caucus</td>
+<td align="left">uaw</td>
+<td align="left">candidate</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">gephardts</td>
+<td align="left">dubuque</td>
+<td align="left">davenport</td>
+<td align="left">union</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">caucuses</td>
+<td align="left">iowans</td>
+<td align="left">aft</td>
+<td align="left">labor</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">stella</td>
+<td align="left">iowa</td>
+<td align="left">des</td>
+<td align="left">tom</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">endorsements</td>
+<td align="left">precinct</td>
+<td align="left">precinct</td>
+<td align="left">candidates</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">davenport</td>
+<td align="left">uaw</td>
+<td align="left">moines</td>
+<td align="left">schaller</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">organizational</td>
+<td align="left">mcmahon</td>
+<td align="left">harkin</td>
+<td align="left">state</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">liebeck</td>
+<td align="left">harts</td>
+<td align="left">ethic</td>
+<td align="left">edwards</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">aflcio</td>
+<td align="left">teamsters</td>
+<td align="left">iowans</td>
+<td align="left">jan</td>
+<td align="right">20</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS  10.14
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] knitr_1.28        fastTopics_0.3-64 gridExtra_2.3     pheatmap_1.0.12  
+[5] ggplot2_3.3.0     workflowr_1.6.2  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.4.6       highr_0.8          RColorBrewer_1.1-2 compiler_3.5.1    
+ [5] pillar_1.4.4       later_0.8.0        git2r_0.26.1       prettyunits_1.1.1 
+ [9] progress_1.2.2     tools_3.5.1        digest_0.6.25      Rtsne_0.15        
+[13] lattice_0.20-38    evaluate_0.14      lifecycle_0.2.0    tibble_3.0.1      
+[17] gtable_0.3.0       pkgconfig_2.0.3    rlang_0.4.6        Matrix_1.2-17     
+[21] yaml_2.2.0         xfun_0.8           withr_2.2.0        stringr_1.4.0     
+[25] dplyr_0.8.1        hms_0.4.2          fs_1.3.1           vctrs_0.3.0       
+[29] cowplot_0.9.4      rprojroot_1.3-2    grid_3.5.1         tidyselect_0.2.5  
+[33] glue_1.4.1         R6_2.4.1           rmarkdown_2.1      irlba_2.3.3       
+[37] farver_2.0.3       purrr_0.3.4        magrittr_1.5       whisker_0.3-2     
+[41] backports_1.1.7    scales_1.1.1       promises_1.0.1     htmltools_0.3.6   
+[45] ellipsis_0.3.1     assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.1      
+[49] labeling_0.3       quadprog_1.5-8     stringi_1.4.3      RcppParallel_4.4.3
+[53] munsell_0.5.0      crayon_1.3.4      </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
