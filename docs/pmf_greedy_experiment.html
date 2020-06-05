@@ -395,7 +395,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -404,7 +404,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -413,10 +413,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-06-04
+<strong>Last updated:</strong> 2020-06-05
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -480,12 +480,18 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongdetected"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Cache:</strong> detected </a>
 </p>
 </div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div id="strongCachestrongdetected" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+The following chunks had caches available:
+<ul>
+<li>
+unnamed-chunk-4
+</li>
+</ul>
+<p>To ensure reproducibility of the results, delete the cache directory <code>pmf_greedy_experiment_cache</code> and re-run the analysis. To have workflowr automatically delete the cache directory prior to building the file, set <code>delete_cache = TRUE</code> when running <code>wflow_build()</code> or <code>wflow_publish()</code>.</p>
 </div>
 </div>
 </div>
@@ -504,16 +510,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreecf57f39a44236e4510b2622fa750d4df736bb97atargetblankcf57f39a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/cf57f39a44236e4510b2622fa750d4df736bb97a" target="_blank">cf57f39</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree9cfba93942e204f34e7b397be09033d4308caba1targetblank9cfba93a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/9cfba93942e204f34e7b397be09033d4308caba1" target="_blank">9cfba93</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreecf57f39a44236e4510b2622fa750d4df736bb97atargetblankcf57f39a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree9cfba93942e204f34e7b397be09033d4308caba1targetblank9cfba93a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/cf57f39a44236e4510b2622fa750d4df736bb97a" target="_blank">cf57f39</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/9cfba93942e204f34e7b397be09033d4308caba1" target="_blank">9cfba93</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -523,9 +529,13 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/ebpmf_bg_tutorial_cache/
+    Ignored:    analysis/pmf_greedy_experiment_cache/
 
 Untracked files:
-    Untracked:  analysis/kos_K20_ebpmf.alpha_v0.4.2.Rmd
+    Untracked:  analysis/ebpmf.alpha_v0.4.2_summary.Rmd
+    Untracked:  analysis/get_topic_words.R
+    Untracked:  analysis/pmf_greedy_experiment2.Rmd
+    Untracked:  output/uci_BoW/v0.4.2/top_words_v0.4.2.csv
 
 Unstaged changes:
     Modified:   analysis/plot_topic_words.R
@@ -572,6 +582,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/9cfba93942e204f34e7b397be09033d4308caba1/analysis/pmf_greedy_experiment.Rmd" target="_blank">9cfba93</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-05
+</td>
+<td>
+pmf_greedy_experiment.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/23decbee82c86645d047cdd915b17f26fc717696/docs/pmf_greedy_experiment.html" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/cf57f39a44236e4510b2622fa750d4df736bb97a/analysis/pmf_greedy_experiment.Rmd" target="_blank">cf57f39</a>
 </td>
 <td>
@@ -594,7 +638,8 @@ pmf_greedy_experiment
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>This is an example the current greedy approach will probably not work.</p>
-<pre class="r"><code>library(ebpmf.alpha)
+<pre class="r"><code>rm(list = ls())
+library(ebpmf.alpha)
 library(flashr)</code></pre>
 <pre class="r"><code>set.seed(123)
 n = 150
@@ -618,6 +663,43 @@ lambda = L %*% t(F)
 X = matrix(rpois(n=length(lambda),lambda),nrow=n)
 image(X)</code></pre>
 <p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-2-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>eps = 1e-4
 init = NNLM::nnmf(A = X, k = k, loss = &quot;mkl&quot;, method = &quot;lee&quot;)
 L0 = init$W
@@ -634,371 +716,17 @@ system.time(
                               verbose = verbose)
 )</code></pre>
 <pre><code>   user  system elapsed 
-  4.338   0.123   4.475 </code></pre>
+  4.402   0.087   4.515 </code></pre>
 <pre class="r"><code>system.time(
-  fit_flash &lt;- flash(data = X, Kmax = 3*k)
+  fit_flash &lt;- flash(data = X, Kmax = 3*k, verbose = verbose)
 )</code></pre>
-<pre><code>Fitting factor/loading 1 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -166595.50        Inf</code></pre>
-<pre><code>          2     -163173.44   3.42e+03</code></pre>
-<pre><code>          3     -162290.13   8.83e+02</code></pre>
-<pre><code>          4     -162287.44   2.68e+00</code></pre>
-<pre><code>          5     -162287.44   8.16e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 1 decreases objective by 1.36e+04. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -162287.44</code></pre>
-<pre><code>Fitting factor/loading 2 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -155141.99        Inf</code></pre>
-<pre><code>          2     -152655.05   2.49e+03</code></pre>
-<pre><code>          3     -149421.55   3.23e+03</code></pre>
-<pre><code>          4     -149013.28   4.08e+02</code></pre>
-<pre><code>          5     -149013.01   2.78e-01</code></pre>
-<pre><code>          6     -149013.00   3.21e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 2 decreases objective by 1.33e+04. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -149013</code></pre>
-<pre><code>Fitting factor/loading 3 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -141388.12        Inf</code></pre>
-<pre><code>          2     -139299.40   2.09e+03</code></pre>
-<pre><code>          3     -136090.82   3.21e+03</code></pre>
-<pre><code>          4     -135627.64   4.63e+02</code></pre>
-<pre><code>          5     -135627.22   4.22e-01</code></pre>
-<pre><code>          6     -135627.21   6.54e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 3 decreases objective by 1.34e+04. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -135627.21</code></pre>
-<pre><code>Fitting factor/loading 4 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -121784.26        Inf</code></pre>
-<pre><code>          2     -121774.33   9.92e+00</code></pre>
-<pre><code>          3     -121774.28   5.27e-02</code></pre>
-<pre><code>          4     -121774.28   1.19e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 4 decreases objective by 1.39e+04. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -121774.28</code></pre>
-<pre><code>Fitting factor/loading 5 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -108331.31        Inf</code></pre>
-<pre><code>          2     -108329.31   2.00e+00</code></pre>
-<pre><code>          3     -108329.27   3.30e-02</code></pre>
-<pre><code>          4     -108329.27   7.50e-04</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 5 decreases objective by 1.34e+04. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -108329.27</code></pre>
-<pre><code>Fitting factor/loading 6 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -108167.86        Inf</code></pre>
-<pre><code>          2     -108151.66   1.62e+01</code></pre>
-<pre><code>          3     -108146.80   4.86e+00</code></pre>
-<pre><code>          4     -108143.93   2.87e+00</code></pre>
-<pre><code>          5     -108140.90   3.03e+00</code></pre>
-<pre><code>          6     -108139.30   1.60e+00</code></pre>
-<pre><code>          7     -108138.62   6.72e-01</code></pre>
-<pre><code>          8     -108137.82   8.09e-01</code></pre>
-<pre><code>          9     -108136.85   9.65e-01</code></pre>
-<pre><code>         10     -108136.43   4.24e-01</code></pre>
-<pre><code>         11     -108136.24   1.83e-01</code></pre>
-<pre><code>         12     -108136.11   1.31e-01</code></pre>
-<pre><code>         13     -108135.99   1.18e-01</code></pre>
-<pre><code>         14     -108135.87   1.22e-01</code></pre>
-<pre><code>         15     -108135.73   1.41e-01</code></pre>
-<pre><code>         16     -108135.55   1.76e-01</code></pre>
-<pre><code>         17     -108135.34   2.15e-01</code></pre>
-<pre><code>         18     -108135.12   2.20e-01</code></pre>
-<pre><code>         19     -108134.94   1.76e-01</code></pre>
-<pre><code>         20     -108134.82   1.19e-01</code></pre>
-<pre><code>         21     -108134.75   7.82e-02</code></pre>
-<pre><code>         22     -108134.69   5.30e-02</code></pre>
-<pre><code>         23     -108134.66   3.74e-02</code></pre>
-<pre><code>         24     -108134.63   2.74e-02</code></pre>
-<pre><code>         25     -108134.61   2.07e-02</code></pre>
-<pre><code>         26     -108134.59   1.60e-02</code></pre>
-<pre><code>         27     -108134.58   1.26e-02</code></pre>
-<pre><code>         28     -108134.57   1.01e-02</code></pre>
-<pre><code>         29     -108134.56   8.24e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 6 decreases objective by 1.95e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -108134.56</code></pre>
-<pre><code>Fitting factor/loading 7 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -108063.81        Inf</code></pre>
-<pre><code>          2     -107925.00   1.39e+02</code></pre>
-<pre><code>          3     -107903.45   2.15e+01</code></pre>
-<pre><code>          4     -107888.87   1.46e+01</code></pre>
-<pre><code>          5     -107882.56   6.31e+00</code></pre>
-<pre><code>          6     -107879.44   3.12e+00</code></pre>
-<pre><code>          7     -107877.46   1.99e+00</code></pre>
-<pre><code>          8     -107876.52   9.40e-01</code></pre>
-<pre><code>          9     -107876.14   3.71e-01</code></pre>
-<pre><code>         10     -107875.98   1.67e-01</code></pre>
-<pre><code>         11     -107875.89   9.02e-02</code></pre>
-<pre><code>         12     -107875.83   5.81e-02</code></pre>
-<pre><code>         13     -107875.78   4.44e-02</code></pre>
-<pre><code>         14     -107875.74   4.01e-02</code></pre>
-<pre><code>         15     -107875.70   4.17e-02</code></pre>
-<pre><code>         16     -107875.66   4.72e-02</code></pre>
-<pre><code>         17     -107875.60   5.37e-02</code></pre>
-<pre><code>         18     -107875.55   5.67e-02</code></pre>
-<pre><code>         19     -107875.49   5.25e-02</code></pre>
-<pre><code>         20     -107875.45   4.23e-02</code></pre>
-<pre><code>         21     -107875.42   3.08e-02</code></pre>
-<pre><code>         22     -107875.40   2.13e-02</code></pre>
-<pre><code>         23     -107875.38   1.47e-02</code></pre>
-<pre><code>         24     -107875.37   1.04e-02</code></pre>
-<pre><code>         25     -107875.37   7.54e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 7 decreases objective by 2.59e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -107875.37</code></pre>
-<pre><code>Fitting factor/loading 8 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -107715.35        Inf</code></pre>
-<pre><code>          2     -107692.17   2.32e+01</code></pre>
-<pre><code>          3     -107676.50   1.57e+01</code></pre>
-<pre><code>          4     -107665.09   1.14e+01</code></pre>
-<pre><code>          5     -107658.68   6.41e+00</code></pre>
-<pre><code>          6     -107654.53   4.15e+00</code></pre>
-<pre><code>          7     -107652.44   2.09e+00</code></pre>
-<pre><code>          8     -107651.30   1.13e+00</code></pre>
-<pre><code>          9     -107650.61   6.92e-01</code></pre>
-<pre><code>         10     -107650.10   5.14e-01</code></pre>
-<pre><code>         11     -107649.55   5.47e-01</code></pre>
-<pre><code>         12     -107648.63   9.25e-01</code></pre>
-<pre><code>         13     -107646.91   1.72e+00</code></pre>
-<pre><code>         14     -107645.11   1.80e+00</code></pre>
-<pre><code>         15     -107643.64   1.47e+00</code></pre>
-<pre><code>         16     -107642.22   1.42e+00</code></pre>
-<pre><code>         17     -107641.01   1.21e+00</code></pre>
-<pre><code>         18     -107639.93   1.08e+00</code></pre>
-<pre><code>         19     -107639.20   7.37e-01</code></pre>
-<pre><code>         20     -107638.84   3.57e-01</code></pre>
-<pre><code>         21     -107638.64   1.98e-01</code></pre>
-<pre><code>         22     -107638.48   1.57e-01</code></pre>
-<pre><code>         23     -107638.28   2.03e-01</code></pre>
-<pre><code>         24     -107637.87   4.07e-01</code></pre>
-<pre><code>         25     -107637.20   6.69e-01</code></pre>
-<pre><code>         26     -107636.76   4.44e-01</code></pre>
-<pre><code>         27     -107636.55   2.09e-01</code></pre>
-<pre><code>         28     -107636.35   2.02e-01</code></pre>
-<pre><code>         29     -107636.08   2.68e-01</code></pre>
-<pre><code>         30     -107635.84   2.38e-01</code></pre>
-<pre><code>         31     -107635.75   9.65e-02</code></pre>
-<pre><code>         32     -107635.73   2.13e-02</code></pre>
-<pre><code>         33     -107635.72   4.13e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 8 decreases objective by 2.40e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -107635.72</code></pre>
-<pre><code>Fitting factor/loading 9 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -107664.66        Inf</code></pre>
-<pre><code>          2     -107550.16   1.14e+02</code></pre>
-<pre><code>          3     -107467.01   8.31e+01</code></pre>
-<pre><code>          4     -107456.95   1.01e+01</code></pre>
-<pre><code>          5     -107452.15   4.80e+00</code></pre>
-<pre><code>          6     -107449.24   2.91e+00</code></pre>
-<pre><code>          7     -107447.01   2.22e+00</code></pre>
-<pre><code>          8     -107444.87   2.14e+00</code></pre>
-<pre><code>          9     -107442.17   2.70e+00</code></pre>
-<pre><code>         10     -107437.48   4.69e+00</code></pre>
-<pre><code>         11     -107432.38   5.10e+00</code></pre>
-<pre><code>         12     -107428.43   3.95e+00</code></pre>
-<pre><code>         13     -107425.39   3.04e+00</code></pre>
-<pre><code>         14     -107421.41   3.99e+00</code></pre>
-<pre><code>         15     -107418.23   3.18e+00</code></pre>
-<pre><code>         16     -107416.28   1.95e+00</code></pre>
-<pre><code>         17     -107414.07   2.21e+00</code></pre>
-<pre><code>         18     -107409.51   4.56e+00</code></pre>
-<pre><code>         19     -107399.34   1.02e+01</code></pre>
-<pre><code>         20     -107385.49   1.38e+01</code></pre>
-<pre><code>         21     -107376.61   8.88e+00</code></pre>
-<pre><code>         22     -107372.56   4.05e+00</code></pre>
-<pre><code>         23     -107371.37   1.19e+00</code></pre>
-<pre><code>         24     -107371.07   3.01e-01</code></pre>
-<pre><code>         25     -107370.99   7.94e-02</code></pre>
-<pre><code>         26     -107370.97   2.19e-02</code></pre>
-<pre><code>         27     -107370.97   6.23e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 9 decreases objective by 2.65e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -107370.97</code></pre>
-<pre><code>Fitting factor/loading 10 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -107323.75        Inf</code></pre>
-<pre><code>          2     -107216.89   1.07e+02</code></pre>
-<pre><code>          3     -107203.16   1.37e+01</code></pre>
-<pre><code>          4     -107194.60   8.56e+00</code></pre>
-<pre><code>          5     -107188.09   6.51e+00</code></pre>
-<pre><code>          6     -107183.60   4.49e+00</code></pre>
-<pre><code>          7     -107180.73   2.87e+00</code></pre>
-<pre><code>          8     -107176.58   4.14e+00</code></pre>
-<pre><code>          9     -107172.02   4.57e+00</code></pre>
-<pre><code>         10     -107170.05   1.96e+00</code></pre>
-<pre><code>         11     -107169.47   5.85e-01</code></pre>
-<pre><code>         12     -107169.26   2.08e-01</code></pre>
-<pre><code>         13     -107169.18   8.17e-02</code></pre>
-<pre><code>         14     -107169.14   3.47e-02</code></pre>
-<pre><code>         15     -107169.13   1.56e-02</code></pre>
-<pre><code>         16     -107169.12   7.28e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 10 decreases objective by 2.02e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -107169.12</code></pre>
-<pre><code>Fitting factor/loading 11 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -107005.56        Inf</code></pre>
-<pre><code>          2     -106985.81   1.98e+01</code></pre>
-<pre><code>          3     -106964.50   2.13e+01</code></pre>
-<pre><code>          4     -106952.54   1.20e+01</code></pre>
-<pre><code>          5     -106949.54   3.00e+00</code></pre>
-<pre><code>          6     -106948.00   1.55e+00</code></pre>
-<pre><code>          7     -106946.41   1.59e+00</code></pre>
-<pre><code>          8     -106943.84   2.57e+00</code></pre>
-<pre><code>          9     -106941.16   2.68e+00</code></pre>
-<pre><code>         10     -106938.77   2.39e+00</code></pre>
-<pre><code>         11     -106936.66   2.11e+00</code></pre>
-<pre><code>         12     -106934.84   1.82e+00</code></pre>
-<pre><code>         13     -106932.63   2.21e+00</code></pre>
-<pre><code>         14     -106929.51   3.12e+00</code></pre>
-<pre><code>         15     -106925.59   3.92e+00</code></pre>
-<pre><code>         16     -106921.49   4.10e+00</code></pre>
-<pre><code>         17     -106917.12   4.37e+00</code></pre>
-<pre><code>         18     -106913.95   3.16e+00</code></pre>
-<pre><code>         19     -106912.04   1.92e+00</code></pre>
-<pre><code>         20     -106910.68   1.35e+00</code></pre>
-<pre><code>         21     -106909.75   9.32e-01</code></pre>
-<pre><code>         22     -106909.27   4.82e-01</code></pre>
-<pre><code>         23     -106909.10   1.73e-01</code></pre>
-<pre><code>         24     -106909.05   4.66e-02</code></pre>
-<pre><code>         25     -106909.04   1.08e-02</code></pre>
-<pre><code>         26     -106909.04   2.36e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 11 decreases objective by 2.60e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -106909.04</code></pre>
-<pre><code>Fitting factor/loading 12 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -106812.30        Inf</code></pre>
-<pre><code>          2     -106744.70   6.76e+01</code></pre>
-<pre><code>          3     -106736.67   8.03e+00</code></pre>
-<pre><code>          4     -106728.18   8.50e+00</code></pre>
-<pre><code>          5     -106713.32   1.49e+01</code></pre>
-<pre><code>          6     -106701.84   1.15e+01</code></pre>
-<pre><code>          7     -106698.12   3.73e+00</code></pre>
-<pre><code>          8     -106695.44   2.68e+00</code></pre>
-<pre><code>          9     -106693.66   1.78e+00</code></pre>
-<pre><code>         10     -106692.65   1.01e+00</code></pre>
-<pre><code>         11     -106692.00   6.54e-01</code></pre>
-<pre><code>         12     -106691.42   5.76e-01</code></pre>
-<pre><code>         13     -106690.70   7.27e-01</code></pre>
-<pre><code>         14     -106689.68   1.02e+00</code></pre>
-<pre><code>         15     -106688.59   1.09e+00</code></pre>
-<pre><code>         16     -106687.64   9.53e-01</code></pre>
-<pre><code>         17     -106686.77   8.65e-01</code></pre>
-<pre><code>         18     -106685.79   9.84e-01</code></pre>
-<pre><code>         19     -106684.42   1.36e+00</code></pre>
-<pre><code>         20     -106683.06   1.36e+00</code></pre>
-<pre><code>         21     -106682.20   8.62e-01</code></pre>
-<pre><code>         22     -106681.69   5.05e-01</code></pre>
-<pre><code>         23     -106681.38   3.18e-01</code></pre>
-<pre><code>         24     -106681.15   2.29e-01</code></pre>
-<pre><code>         25     -106680.94   2.07e-01</code></pre>
-<pre><code>         26     -106680.70   2.39e-01</code></pre>
-<pre><code>         27     -106680.41   2.89e-01</code></pre>
-<pre><code>         28     -106680.13   2.79e-01</code></pre>
-<pre><code>         29     -106679.93   2.01e-01</code></pre>
-<pre><code>         30     -106679.81   1.26e-01</code></pre>
-<pre><code>         31     -106679.73   7.95e-02</code></pre>
-<pre><code>         32     -106679.68   5.13e-02</code></pre>
-<pre><code>         33     -106679.64   3.33e-02</code></pre>
-<pre><code>         34     -106679.62   2.15e-02</code></pre>
-<pre><code>         35     -106679.61   1.38e-02</code></pre>
-<pre><code>         36     -106679.60   8.70e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 12 decreases objective by 2.29e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -106679.6</code></pre>
-<pre><code>Fitting factor/loading 13 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -106507.95        Inf</code></pre>
-<pre><code>          2     -106496.90   1.11e+01</code></pre>
-<pre><code>          3     -106490.97   5.93e+00</code></pre>
-<pre><code>          4     -106485.42   5.55e+00</code></pre>
-<pre><code>          5     -106480.19   5.24e+00</code></pre>
-<pre><code>          6     -106474.26   5.93e+00</code></pre>
-<pre><code>          7     -106471.55   2.71e+00</code></pre>
-<pre><code>          8     -106470.50   1.06e+00</code></pre>
-<pre><code>          9     -106470.05   4.45e-01</code></pre>
-<pre><code>         10     -106469.80   2.51e-01</code></pre>
-<pre><code>         11     -106469.66   1.45e-01</code></pre>
-<pre><code>         12     -106469.57   8.12e-02</code></pre>
-<pre><code>         13     -106469.53   4.52e-02</code></pre>
-<pre><code>         14     -106469.50   2.56e-02</code></pre>
-<pre><code>         15     -106469.49   1.47e-02</code></pre>
-<pre><code>         16     -106469.48   8.64e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 13 decreases objective by 2.10e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -106469.48</code></pre>
-<pre><code>Fitting factor/loading 14 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -106316.11        Inf</code></pre>
-<pre><code>          2     -106298.85   1.73e+01</code></pre>
-<pre><code>          3     -106287.84   1.10e+01</code></pre>
-<pre><code>          4     -106279.31   8.53e+00</code></pre>
-<pre><code>          5     -106273.12   6.19e+00</code></pre>
-<pre><code>          6     -106265.98   7.15e+00</code></pre>
-<pre><code>          7     -106259.25   6.72e+00</code></pre>
-<pre><code>          8     -106254.82   4.43e+00</code></pre>
-<pre><code>          9     -106251.80   3.02e+00</code></pre>
-<pre><code>         10     -106249.82   1.98e+00</code></pre>
-<pre><code>         11     -106248.61   1.21e+00</code></pre>
-<pre><code>         12     -106247.88   7.26e-01</code></pre>
-<pre><code>         13     -106247.49   3.93e-01</code></pre>
-<pre><code>         14     -106247.27   2.15e-01</code></pre>
-<pre><code>         15     -106247.13   1.41e-01</code></pre>
-<pre><code>         16     -106247.01   1.25e-01</code></pre>
-<pre><code>         17     -106246.85   1.55e-01</code></pre>
-<pre><code>         18     -106246.62   2.32e-01</code></pre>
-<pre><code>         19     -106246.33   2.93e-01</code></pre>
-<pre><code>         20     -106246.10   2.33e-01</code></pre>
-<pre><code>         21     -106245.97   1.24e-01</code></pre>
-<pre><code>         22     -106245.91   5.83e-02</code></pre>
-<pre><code>         23     -106245.89   2.88e-02</code></pre>
-<pre><code>         24     -106245.87   1.59e-02</code></pre>
-<pre><code>         25     -106245.86   9.78e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 14 decreases objective by 2.24e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -106245.86</code></pre>
-<pre><code>Fitting factor/loading 15 (stop when difference in obj. is &lt; 1.00e-02):</code></pre>
-<pre><code>  Iteration      Objective   Obj Diff</code></pre>
-<pre><code>          1     -106126.54        Inf</code></pre>
-<pre><code>          2     -106096.62   2.99e+01</code></pre>
-<pre><code>          3     -106073.41   2.32e+01</code></pre>
-<pre><code>          4     -106061.70   1.17e+01</code></pre>
-<pre><code>          5     -106055.30   6.40e+00</code></pre>
-<pre><code>          6     -106050.72   4.58e+00</code></pre>
-<pre><code>          7     -106047.10   3.63e+00</code></pre>
-<pre><code>          8     -106042.54   4.56e+00</code></pre>
-<pre><code>          9     -106039.41   3.13e+00</code></pre>
-<pre><code>         10     -106036.42   2.99e+00</code></pre>
-<pre><code>         11     -106032.36   4.05e+00</code></pre>
-<pre><code>         12     -106028.92   3.44e+00</code></pre>
-<pre><code>         13     -106025.97   2.95e+00</code></pre>
-<pre><code>         14     -106023.01   2.95e+00</code></pre>
-<pre><code>         15     -106018.48   4.53e+00</code></pre>
-<pre><code>         16     -106012.80   5.68e+00</code></pre>
-<pre><code>         17     -106006.73   6.07e+00</code></pre>
-<pre><code>         18     -106002.27   4.46e+00</code></pre>
-<pre><code>         19     -106000.51   1.77e+00</code></pre>
-<pre><code>         20     -105999.81   6.94e-01</code></pre>
-<pre><code>         21     -105999.48   3.30e-01</code></pre>
-<pre><code>         22     -105999.32   1.64e-01</code></pre>
-<pre><code>         23     -105999.24   7.68e-02</code></pre>
-<pre><code>         24     -105999.21   3.34e-02</code></pre>
-<pre><code>         25     -105999.19   1.36e-02</code></pre>
-<pre><code>         26     -105999.19   5.36e-03</code></pre>
-<pre><code>Performing nullcheck...</code></pre>
-<pre><code>  Deleting factor 15 decreases objective by 2.47e+02. Factor retained.</code></pre>
-<pre><code>  Nullcheck complete. Objective: -105999.19</code></pre>
 <pre><code>   user  system elapsed 
-  3.812   0.756   4.591 </code></pre>
+  3.732   0.850   4.627 </code></pre>
+<pre class="r"><code>system.time(
+  fit_svd &lt;- svd(X, nu = 3*k, nv = 3*k)
+)</code></pre>
+<pre><code>   user  system elapsed 
+  0.025   0.000   0.026 </code></pre>
 <pre class="r"><code>fit_flash</code></pre>
 <pre><code>Summary of flash object:
   Number of factor/loading pairs: 15
@@ -1020,30 +748,196 @@ system.time(
 </div>
 <div id="look-at-progress-from-greedy-pmf" class="section level2">
 <h2>look at progress from greedy <code>pmf</code></h2>
-<pre class="r"><code>plot(fit_pmf$loglik - max(fit_pmf$loglik))</code></pre>
+<pre class="r"><code>plot(diff(fit_pmf$loglik))</code></pre>
 <p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p.max = apply(fit_pmf$progress, 2, max)
-p.min = apply(fit_pmf$progress, 2, min)</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-5-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="look-at-l-f-from-greedy-pmf" class="section level2">
-<h2>look at <code>L, F</code> from greedy <code>pmf</code></h2>
-<pre class="r"><code>K = 3 *k
-par(mfrow = c(K, 2))
-for(k_ in 1:K){
-  plot(fit_pmf$L[,k_])
-  plot(fit_pmf$F[,k_])
-}</code></pre>
-<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-6-1.png" width="2880" style="display: block; margin: auto;" /></p>
 </div>
-<div id="look-at-l-f-from-flashr" class="section level2">
-<h2>look at <code>L, F</code> from <code>flashr</code></h2>
-<pre class="r"><code>K = 3 *k
-par(mfrow = c(K, 2))
-for(k_ in 1:K){
-  plot(fit_flash$ldf$l[,k_])
-  plot(fit_flash$ldf$f[,k_])
+</div>
+<div id="look-at-l_ik-f_jk-for-pmf_greedy" class="section level2">
+<h2>look at <span class="math inline">\(l_{ik} f_{jk}\)</span> for <code>pmf_greedy</code></h2>
+<p>I scale <span class="math inline">\(l_{Ik}, f_{Jk}\)</span> to have Frobenius norm 1, as the other two methods</p>
+<pre class="r"><code>d_l = sqrt( diag(t(fit_pmf$L) %*% fit_pmf$L) )
+d_f = sqrt( diag(t(fit_pmf$F) %*% fit_pmf$F) )
+d = d_l*d_f
+plot(d, log = &quot;y&quot;)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-6-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_pmf$L[,k_]/d_l[k_]
+  f = fit_pmf$F[,k_]/d_f[k_]
+  lam = l %o% f 
+  image(lam)
 }</code></pre>
 <p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-7-1.png" width="2880" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-7-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="look-at-l_ik-f_jk-for-flashr" class="section level2">
+<h2>look at <span class="math inline">\(l_{ik} f_{jk}\)</span> for <code>flashr</code></h2>
+<pre class="r"><code>plot(fit_flash$ldf$d, log = &quot;y&quot;)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_flash$ldf$l[,k_]
+  f = fit_flash$ldf$f[,k_]
+  lam = l %o% f 
+  image(lam)
+}</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-9-1.png" width="2880" style="display: block; margin: auto;" /></p>
+</div>
+<div id="look-at-l_ik-f_jk-for-svd" class="section level2">
+<h2>look at <span class="math inline">\(l_{ik} f_{jk}\)</span> for <code>svd</code></h2>
+<pre class="r"><code>## u^t u = v^t v = I_k
+plot(fit_svd$d, log = &quot;y&quot;)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_svd$u[,k_]
+  f = fit_svd$v[,k_]
+  lam = l %o% f 
+  image(lam)
+}</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-11-1.png" width="2880" style="display: block; margin: auto;" /></p>
+<!-- ## look at `L, F` from greedy `pmf` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 3 *k -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_pmf$L[,k_]) -->
+<!--   plot(fit_pmf$F[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## look at `L, F` from `flashr` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 3 *k -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_flash$ldf$l[,k_]) -->
+<!--   plot(fit_flash$ldf$f[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## look at `L, F` from `svd` -->
+<!-- ```{r} -->
+<!-- fit_svd$d[1:K] -->
+<!-- ``` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 15 -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_svd$u[,k_]) -->
+<!--   plot(fit_svd$v[,k_]) -->
+<!-- } -->
+<!-- ``` -->
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1080,12 +974,12 @@ loaded via a namespace (and not attached):
 [29] pscl_1.5.2        doParallel_1.0.15 httpuv_1.5.1      irlba_2.3.3      
 [33] parallel_3.5.1    Rcpp_1.0.4.6      promises_1.0.1    backports_1.1.7  
 [37] scales_1.1.1      truncnorm_1.0-8   fs_1.3.1          ggplot2_3.3.0    
-[41] digest_0.6.25     stringi_1.4.3     dplyr_0.8.1       ebnm_0.1-24      
-[45] grid_3.5.1        rprojroot_1.3-2   tools_3.5.1       magrittr_1.5     
-[49] tibble_3.0.1      crayon_1.3.4      whisker_0.3-2     pkgconfig_2.0.3  
-[53] MASS_7.3-51.4     ellipsis_0.3.1    Matrix_1.2-17     SQUAREM_2017.10-1
-[57] assertthat_0.2.1  rmarkdown_2.1     iterators_1.0.12  R6_2.4.1         
-[61] git2r_0.26.1      compiler_3.5.1   </code></pre>
+[41] digest_0.6.25     stringi_1.4.3     dplyr_0.8.1       grid_3.5.1       
+[45] rprojroot_1.3-2   tools_3.5.1       magrittr_1.5      tibble_3.0.1     
+[49] crayon_1.3.4      whisker_0.3-2     pkgconfig_2.0.3   MASS_7.3-51.4    
+[53] ellipsis_0.3.1    Matrix_1.2-17     SQUAREM_2017.10-1 assertthat_0.2.1 
+[57] rmarkdown_2.1     iterators_1.0.12  R6_2.4.1          git2r_0.26.1     
+[61] compiler_3.5.1   </code></pre>
 </div>
 </div>
 
