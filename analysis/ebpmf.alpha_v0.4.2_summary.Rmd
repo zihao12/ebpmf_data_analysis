@@ -28,8 +28,7 @@ editor_options:
 
 [greedy_pmf_experiment](https://zihao12.github.io/ebpmf_data_analysis/pmf_greedy_experiment.html), \
 
-I also show all topics here: [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics
-.html)
+I also show all topics here: [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html)
 
 ## More comparisons across different $K$ and different models
 ```{r echo = FALSE}
