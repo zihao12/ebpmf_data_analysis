@@ -11,6 +11,7 @@ editor_options:
 This is an example the current greedy approach will probably not work. 
 
 ```{r}
+rm(list = ls())
 library(ebpmf.alpha)
 library(flashr)
 ```
@@ -40,6 +41,9 @@ image(X)
 ```
 
 
+
+
+
 ```{r}
 eps = 1e-4
 init = NNLM::nnmf(A = X, k = k, loss = "mkl", method = "lee")
@@ -49,7 +53,7 @@ init_pmf = list(L = matrix(L0[,1] + eps, ncol = 1),
                 F = matrix(F0[,1] + eps, ncol = 1))
 ```
 
-```{r}
+```{r, cache=TRUE, autodep=TRUE, message=FALSE}
 maxiter = 200
 rate = 0.6
 verbose = FALSE
@@ -61,7 +65,11 @@ system.time(
 )
 
 system.time(
-  fit_flash <- flash(data = X, Kmax = 3*k)
+  fit_flash <- flash(data = X, Kmax = 3*k, verbose = verbose)
+)
+
+system.time(
+  fit_svd <- svd(X, nu = 3*k, nv = 3*k)
 )
 
 fit_flash
@@ -69,28 +77,97 @@ fit_flash
 
 ## look at progress from greedy `pmf`
 ```{r}
-plot(fit_pmf$loglik - max(fit_pmf$loglik))
-
-p.max = apply(fit_pmf$progress, 2, max)
-p.min = apply(fit_pmf$progress, 2, min)
+plot(diff(fit_pmf$loglik))
 ```
 
-## look at `L, F` from greedy `pmf`
-```{r, fig.width=30, fig.height=100}
-K = 3 *k
-par(mfrow = c(K, 2))
-for(k_ in 1:K){
-  plot(fit_pmf$L[,k_])
-  plot(fit_pmf$F[,k_])
+## look at $l_{ik} f_{jk}$ for `pmf_greedy`
+I scale $l_{Ik}, f_{Jk}$ to have Frobenius norm 1, as the other two methods
+```{r}
+d_l = sqrt( diag(t(fit_pmf$L) %*% fit_pmf$L) )
+d_f = sqrt( diag(t(fit_pmf$F) %*% fit_pmf$F) )
+d = d_l*d_f
+plot(d, log = "y")
+```
+
+
+```{r fig.width=30, fig.height=50}
+Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_pmf$L[,k_]/d_l[k_]
+  f = fit_pmf$F[,k_]/d_f[k_]
+  lam = l %o% f 
+  image(lam)
 }
 ```
 
-## look at `L, F` from `flashr`
-```{r, fig.width=30, fig.height=100}
-K = 3 *k
-par(mfrow = c(K, 2))
-for(k_ in 1:K){
-  plot(fit_flash$ldf$l[,k_])
-  plot(fit_flash$ldf$f[,k_])
+## look at $l_{ik} f_{jk}$ for `flashr`
+```{r}
+plot(fit_flash$ldf$d, log = "y")
+```
+
+
+```{r fig.width=30, fig.height=50}
+Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_flash$ldf$l[,k_]
+  f = fit_flash$ldf$f[,k_]
+  lam = l %o% f 
+  image(lam)
 }
 ```
+
+
+
+## look at $l_{ik} f_{jk}$ for `svd`
+```{r}
+## u^t u = v^t v = I_k
+plot(fit_svd$d, log = "y")
+```
+
+
+```{r fig.width=30, fig.height=50}
+Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_svd$u[,k_]
+  f = fit_svd$v[,k_]
+  lam = l %o% f 
+  image(lam)
+}
+```
+
+<!-- ## look at `L, F` from greedy `pmf` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 3 *k -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_pmf$L[,k_]) -->
+<!--   plot(fit_pmf$F[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ## look at `L, F` from `flashr` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 3 *k -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_flash$ldf$l[,k_]) -->
+<!--   plot(fit_flash$ldf$f[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ## look at `L, F` from `svd` -->
+<!-- ```{r} -->
+<!-- fit_svd$d[1:K] -->
+<!-- ``` -->
+
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 15 -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_svd$u[,k_]) -->
+<!--   plot(fit_svd$v[,k_]) -->
+<!-- } -->
+<!-- ``` -->
