@@ -28,6 +28,8 @@ editor_options:
 
 [greedy_pmf_experiment](https://zihao12.github.io/ebpmf_data_analysis/pmf_greedy_experiment.html), \
 
+
+
 ## More comparisons across different $K$ and different models
 ```{r echo = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
