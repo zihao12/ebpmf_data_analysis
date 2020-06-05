@@ -28,7 +28,8 @@ editor_options:
 
 [greedy_pmf_experiment](https://zihao12.github.io/ebpmf_data_analysis/pmf_greedy_experiment.html), \
 
-
+I also show all topics here: [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics
+.html)
 
 ## More comparisons across different $K$ and different models
 ```{r echo = FALSE}
@@ -80,5 +81,5 @@ data.frame(K = Ks,
 
 ## why `greedy_pmf` may not work?
 
-The rank-1 model for `pmf`is a mean of row and column, ignoring the structures. This is in contrast to `svd` type methods (PCA itself is a greedy approach that achieves global optimality: the best rank-K approximation). I think the main reason is that L, F are required to be non-negative. 
+The rank-1 model for `pmf`is a mean of row and column, ignoring the structures. This is in contrast to `svd` type methods (PCA itself is a greedy approach that achieves global optimality: the best rank-K approximation). 
 
