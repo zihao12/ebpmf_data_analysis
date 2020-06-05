@@ -1,0 +1,160 @@
+---
+title: "kos_K20_ebpmf.alpha_v0.4.2"
+author: "zihao12"
+date: "2020-06-01"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+rm(list = ls())
+library(ggplot2)
+library(pheatmap)
+library(gridExtra)
+library(fastTopics)
+source("code/misc.R")
+source("code/util.R")
+
+data_dir = "data/uci_BoW/"
+model_initLF_name = "output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2000.Rds"
+model_initL_name = "output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2000.Rds"
+model_pmf_name = "output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2000.Rds"
+dict_name = "vocab.kos.txt"
+data_name = "docword.kos.txt"
+
+Y = read_uci_bag_of_words(file= sprintf("%s/%s",
+			    data_dir,data_name))
+model_initLF = readRDS(model_initLF_name)
+model_initL = readRDS(model_initL_name)
+model_pmf = readRDS(model_pmf_name)
+dict = read.csv(sprintf("%s/%s", data_dir, dict_name), header = FALSE)[,1]
+dict = as.vector(dict)
+
+K = ncol(model_pmf$L)
+L_pmf = model_pmf$L
+F_pmf = model_pmf$F
+
+L_initLF = model_initLF$l0 * model_initLF$qg$qls_mean
+F_initLF = model_initLF$f0 * model_initLF$qg$qfs_mean
+
+L_initL = model_initL$l0 * model_initL$qg$qls_mean
+F_initL = model_initL$f0 * model_initL$qg$qfs_mean
+
+lf_pmf = poisson2multinom(L = L_pmf,F = F_pmf)
+lf_initLF = poisson2multinom(L=L_initLF,F=F_initLF)
+lf_initLF = poisson2multinom(L=L_initL,F=F_initL)
+
+## one small mistake I made: forgot to append KLs
+Ks = seq(500, 2000, 500)
+KL_tmp = c()
+for(K in Ks){
+  model_tmp = readRDS(
+    sprintf("output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter%d.Rds", K))
+  KL_tmp <- c(KL_tmp, model_tmp$KL)
+}
+model_initLF$KL = KL_tmp
+
+KL_tmp = c()
+for(K in Ks){
+  model_tmp = readRDS(
+    sprintf("output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter%d.Rds", K))
+  KL_tmp <- c(KL_tmp, model_tmp$KL)
+}
+model_initL$KL = KL_tmp
+```
+
+
+## ELBO and KL
+```{r fig.width=14, fig.height=14}
+df <- data.frame(iter = 1:length(model_initLF$ELBO), 
+                 wbg_initLF.elbo = model_initLF$ELBO,
+                 wbg_initLF.kl = model_initLF$KL,
+                 wbg_initLF.ell = model_initLF$ELBO + model_initLF$KL,
+                 wbg_initL.elbo = model_initL$ELBO,
+                 wbg_initL.kl = model_initL$KL,
+                 wbg_initL.ell = model_initL$ELBO + model_initL$KL,
+                 pmf.ll = model_pmf$log_liks)
+
+## the log transformation onm y-axis does not work here!
+base = 2
+signed_log <- scales::trans_new("signed_log",
+       transform=function(x) sign(x)*log(abs(x), base = base),
+       inverse=function(x) sign(x)*(base^(abs(x))))
+
+p1 <- ggplot(data = df) + 
+  geom_point(aes(x = iter, y = wbg_initLF.elbo, color = "wbg_initLF"))+
+  geom_point(aes(x = iter, y = wbg_initL.elbo, color = "wbg_initL"))+
+  scale_y_continuous(trans = signed_log)+
+  ylab("elbo")+
+  ggtitle("ELBO")
+
+p2 <- ggplot(data = df) + 
+  geom_point(aes(x = iter, y = wbg_initLF.kl, color = "wbg_initLF"))+
+  geom_point(aes(x = iter, y = wbg_initL.kl, color = "wbg_initL"))+
+  scale_y_continuous(trans = signed_log)+
+  ylab("kl")+
+  ggtitle("KL")
+
+p3 <- ggplot(data = df) + 
+  geom_point(aes(x = iter, y = wbg_initLF.ell, color = "wbg_initLF"))+
+  geom_point(aes(x = iter, y = wbg_initL.ell, color = "wbg_initL"))+
+  geom_point(aes(x = iter, y = pmf.ll, color = "pmf"))+
+  scale_y_continuous(trans = signed_log)+
+  ylab("E(loglik)")+
+  ggtitle("E(loglik)")
+
+grid.arrange(p1, p2, p3, ncol=1)
+```
+
+## look at priors in 
+
+### $g_L$
+```{r}
+get_prior_summary(model_initLF$qg$gls)
+get_prior_summary(model_initL$qg$gls)
+```
+
+### $g_F$
+```{r}
+get_prior_summary(model_initLF$qg$gfs)
+get_prior_summary(model_initL$qg$gfs)
+```
+
+## look at `w`
+```{r}
+get_w_scaled <- function(model){model$w * sum(model$l0) * sum(model$f0)}
+
+plot(get_w_scaled(model_initLF), get_w_scaled(model_initL))
+abline(a = 0, b = 1, col = "red")
+
+hist(get_w_scaled(model_initLF), breaks = 100)
+hist(get_w_scaled(model_initL), breaks = 100)
+
+## average number of words for each topic
+sum(Y@x)/ncol(model_pmf$L)
+```
+
+## look at `l0, f0`
+```{r}
+plot(model_initLF$f0/sum(model_initLF$f0), model_initL$f0/sum(model_initL$f0), log = "xy")
+abline(a = 0, b = 1, col = "red")
+plot(model_initLF$l0/sum(model_initLF$l0), model_initL$l0/sum(model_initL$l0), log = "xy")
+abline(a = 0, b = 1, col = "red")
+```
+
+
+## look at top words (compared with other methods)
+I use `wbg_init_L` together with `bg`, `pmf` and `pmf2binom` (which is log fold change computed from `fastTopics::poisson2binom`). I show their top 20 words for each topic. 
+```{r}
+top_words_df = read.csv("output/uci_BoW/v0.4.2/top_words_v0.4.2.csv")
+# K = ncol(model_pmf$F)
+# for(k in 1:K){
+#   print(top_words_df[top_words_df$Topic == k, ])
+# }
+library('knitr')
+kable(top_words_df, format = "markdown")
+```
+
