@@ -82,3 +82,15 @@ data.frame(K = Ks,
 
 The rank-1 model for `pmf`is a mean of row and column, ignoring the structures. This is in contrast to `svd` type methods (PCA itself is a greedy approach that achieves global optimality: the best rank-K approximation). 
 
+## TODO:
+
+* Find a better dataset and run with bigger $K$ to see if our method has an advantage over `pmf` + `poisson2binom`. \
+
+* Try to estimate $K$. it might be easier to do coordinate update and weed out $w$ (or accept more moves that propose $w_k = 0$, to think about it another way), than using greedy approach ($\lambda^{k}_{ij}$ is a weighted sum of previous $k-1$ components and the current one). \
+
+* Think about getting rid of some computational difficulty by approximating posterior of $L, F$ with mixture of normal. 
+
+
+
+
+
