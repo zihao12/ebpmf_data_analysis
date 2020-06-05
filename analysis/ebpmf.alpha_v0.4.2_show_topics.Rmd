@@ -1,0 +1,49 @@
+---
+title: "ebpmf.alpha_v0.4.2_show_topics"
+author: "zihao12"
+date: "2020-06-05"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+On [kos](https://archive.ics.uci.edu/ml/datasets/Bag+of+Words) dataset,  I show the topics computed from all methods, which are all initialized with the same $L, F$. \
+
+* `bg`: [ebpmf_bg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_bg.pdf); pick the words with most weight sin each topic\
+
+* `wbg`: [ebpmf_wbg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg.pdf); pick the words with most weight sin each topic\
+
+* `pmf`: Poisson NMF; pick the words with most weight sin each topic\
+
+* `pmf2binom`: apply `fasTopics::poisson2binom` to PMF results, then use $log(p_1/p_0)$ to rank the importance of words. 
+
+```{r}
+library('knitr')
+```
+
+## $K = 20$
+```{r}
+K = 20
+top_words_df = read.csv(sprintf("output/uci_BoW/v0.4.2/top_words_K%d_v0.4.2.csv", K))
+kable(top_words_df, format = "markdown")
+```
+
+
+## $K = 50$
+```{r}
+K = 50
+top_words_df = read.csv(sprintf("output/uci_BoW/v0.4.2/top_words_K%d_v0.4.2.csv", K))
+kable(top_words_df, format = "markdown")
+```
+
+## $K = 100$
+```{r}
+K = 100
+top_words_df = read.csv(sprintf("output/uci_BoW/v0.4.2/top_words_K%d_v0.4.2.csv", K))
+kable(top_words_df, format = "markdown")
+```
+
+
+
+
