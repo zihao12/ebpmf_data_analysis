@@ -1,0 +1,96 @@
+---
+title: "ebpmf.alpha_v0.4.2_summary"
+author: "zihao12"
+date: "2020-06-05"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## What's new in `ebpmf.alpha_v0.4.2`
+
+* Implemented `ebpmf_wbg`. \
+
+* Implemented a version of greedy `pmf`. (Would be easy to extend to other models, but I am dubious about its effects). 
+
+* Used a numerical trick to improve stability in computing $B_{ij}$ (in the link below). \
+
+* Used another way of initialization (only using `L`).\ 
+
+## Model and implementation details:
+[ebpmf_wbg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg.pdf) & 
+[pmf_greedy](https://zihao12.github.io/ebpmf_data_analysis/greedy_pmf_draft.pdf)
+
+
+## Individual data analysis results:\ 
+
+[kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.4.2.html), \
+
+[greedy_pmf_experiment](https://zihao12.github.io/ebpmf_data_analysis/pmf_greedy_experiment.html), \
+
+I also show all topics here: [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html)
+
+## More comparisons across different $K$ and different models
+```{r echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
+```
+Note that 
+
+$$ELBO = E_q(\text{log-lik}) - KL(q || g)$$
+
+```{r echo = FALSE}
+output_dir1 = "output/uci_BoW/v0.3.9/"
+output_dir2 = "output/uci_BoW/v0.4.2/"
+
+data_dir = "data/uci_BoW/"
+
+## 
+maxiter = 2000
+Ks = c(20, 50, 100)
+ELBO_bg = c()
+KL_bg = c()
+ELBO_wbg = c()
+KL_wbg = c()
+ll = c()
+for(K in Ks){
+  wbg_name = sprintf("kos_ebpmf_wbg_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+  bg_name = sprintf("kos_ebpmf_bg_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+  pmf_name = sprintf("kos_pmf_initLF50_K%d_maxiter%d.Rds", K, maxiter)
+  wbg = readRDS(sprintf("%s/%s", output_dir2, wbg_name))
+  bg = readRDS(sprintf("%s/%s", output_dir1, bg_name))
+  pmf = readRDS(sprintf("%s/%s", output_dir1, pmf_name))
+  
+  ELBO_bg = c(ELBO_bg, bg$ELBO[length(bg$ELBO)])
+  KL_bg = c(KL_bg, sum(bg$qg$kl_l) + sum(bg$qg$kl_f))
+  
+  ELBO_wbg = c(ELBO_wbg, wbg$ELBO[length(wbg$ELBO)])
+  KL_wbg = c(KL_wbg, sum(wbg$qg$kl_l) + sum(wbg$qg$kl_f))
+  
+  ll = c(ll, pmf$log_liks[length(pmf$log_liks)])
+}
+E_ll_bg = ELBO_bg + KL_bg
+E_ll_wbg = ELBO_wbg + KL_wbg
+
+data.frame(K = Ks, 
+           ELBO_bg = ELBO_bg, ELBO_wbg = ELBO_wbg, 
+           KL_bg = KL_bg, KL_wbg = KL_wbg, 
+           E_ll_bg = E_ll_bg, E_ll_wbg = E_ll_wbg, 
+           ll_pmf = ll)
+```
+
+## why `greedy_pmf` may not work?
+
+The rank-1 model for `pmf`is a mean of row and column, ignoring the structures. This is in contrast to `svd` type methods (PCA itself is a greedy approach that achieves global optimality: the best rank-K approximation). 
+
+## TODO:
+
+* Find a better dataset and run with bigger $K$ to see if our method has an advantage over `pmf` + `poisson2binom`. \
+
+* Try to estimate $K$. it might be easier to do coordinate update and weed out $w$ (or accept more moves that propose $w_k = 0$, to think about it another way), than using greedy approach ($\lambda^{k}_{ij}$ is a weighted sum of previous $k-1$ components and the current one). \
+
+* Think about getting rid of some computational difficulty by approximating posterior of $L, F$ with mixture of normal. 
+
+
+
+
+

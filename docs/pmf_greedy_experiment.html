@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="zihao12" />
+
+<meta name="date" content="2020-06-04" />
+
+<title>pmf_greedy_experiment</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ebpmf_data_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/zihao12/ebpmf_data_analysis">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">pmf_greedy_experiment</h1>
+<h4 class="author">zihao12</h4>
+<h4 class="date">2020-06-04</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-06-05
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongdetected"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Cache:</strong> detected </a>
+</p>
+</div>
+<div id="strongCachestrongdetected" class="panel-collapse collapse">
+<div class="panel-body">
+The following chunks had caches available:
+<ul>
+<li>
+unnamed-chunk-4
+</li>
+</ul>
+<p>To ensure reproducibility of the results, delete the cache directory <code>pmf_greedy_experiment_cache</code> and re-run the analysis. To have workflowr automatically delete the cache directory prior to building the file, set <code>delete_cache = TRUE</code> when running <code>wflow_build()</code> or <code>wflow_publish()</code>.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree9cfba93942e204f34e7b397be09033d4308caba1targetblank9cfba93a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/9cfba93942e204f34e7b397be09033d4308caba1" target="_blank">9cfba93</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree9cfba93942e204f34e7b397be09033d4308caba1targetblank9cfba93a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/9cfba93942e204f34e7b397be09033d4308caba1" target="_blank">9cfba93</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/ebpmf_bg_tutorial_cache/
+    Ignored:    analysis/pmf_greedy_experiment_cache/
+
+Untracked files:
+    Untracked:  analysis/ebpmf.alpha_v0.4.2_summary.Rmd
+    Untracked:  analysis/get_topic_words.R
+    Untracked:  analysis/pmf_greedy_experiment2.Rmd
+    Untracked:  output/uci_BoW/v0.4.2/top_words_v0.4.2.csv
+
+Unstaged changes:
+    Modified:   analysis/plot_topic_words.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/pmf_greedy_experiment.Rmd</code>) and HTML (<code>docs/pmf_greedy_experiment.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/9cfba93942e204f34e7b397be09033d4308caba1/analysis/pmf_greedy_experiment.Rmd" target="_blank">9cfba93</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-05
+</td>
+<td>
+pmf_greedy_experiment.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/23decbee82c86645d047cdd915b17f26fc717696/docs/pmf_greedy_experiment.html" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/cf57f39a44236e4510b2622fa750d4df736bb97a/analysis/pmf_greedy_experiment.Rmd" target="_blank">cf57f39</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+<td>
+pmf_greedy_experiment
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This is an example the current greedy approach will probably not work.</p>
+<pre class="r"><code>rm(list = ls())
+library(ebpmf.alpha)
+library(flashr)</code></pre>
+<pre class="r"><code>set.seed(123)
+n = 150
+p = 500
+k= 5
+L = matrix(0, nrow=n, ncol=k)
+F = matrix(0, nrow=p, ncol=k)
+L[1:(n/5),1] = 1
+L[((n/5)+1):(2*n/5),2] = 1
+L[(2 * (n/5)+1):(3*n/5),3] = 1
+L[(3 * (n/5)+1):(4*n/5),4] = 1
+L[(4 * (n/5)+1):(5 *n/5),5] = 1
+
+F[1:(p/5),1] = 1+10*runif(p/5)
+F[((p/5)+1):(2*p/5),2] = 1+10*runif(p/5)
+F[(2 * (p/5)+1):(3*p/5),3] = 1+10*runif(p/5)
+F[(3 * (p/5)+1):(4*p/5),4] = 1+10*runif(p/5)
+F[(4 * (p/5)+1):(5*p/5),5] = 1+10*runif(p/5)
+
+lambda = L %*% t(F)
+X = matrix(rpois(n=length(lambda),lambda),nrow=n)
+image(X)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-2-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>eps = 1e-4
+init = NNLM::nnmf(A = X, k = k, loss = &quot;mkl&quot;, method = &quot;lee&quot;)
+L0 = init$W
+F0 = t(init$H)
+init_pmf = list(L = matrix(L0[,1] + eps, ncol = 1), 
+                F = matrix(F0[,1] + eps, ncol = 1))</code></pre>
+<pre class="r"><code>maxiter = 200
+rate = 0.6
+verbose = FALSE
+
+system.time(
+  fit_pmf &lt;- ebpmf.alpha::pmf_greedy(X = X, K = 3 * k,
+                              init = init_pmf, maxiter = maxiter, rate = rate,
+                              verbose = verbose)
+)</code></pre>
+<pre><code>   user  system elapsed 
+  4.402   0.087   4.515 </code></pre>
+<pre class="r"><code>system.time(
+  fit_flash &lt;- flash(data = X, Kmax = 3*k, verbose = verbose)
+)</code></pre>
+<pre><code>   user  system elapsed 
+  3.732   0.850   4.627 </code></pre>
+<pre class="r"><code>system.time(
+  fit_svd &lt;- svd(X, nu = 3*k, nv = 3*k)
+)</code></pre>
+<pre><code>   user  system elapsed 
+  0.025   0.000   0.026 </code></pre>
+<pre class="r"><code>fit_flash</code></pre>
+<pre><code>Summary of flash object:
+  Number of factor/loading pairs: 15
+  Proportion of variance explained:
+    Factor/loading 1: 0.182
+    Factor/loading 2: 0.175
+    Factor/loading 3: 0.177
+    Factor/loading 4: 0.178
+    Factor/loading 5: 0.172
+    Factor/loading 6: 0.001
+    Factor/loading 7: 0.001
+    Factor/loading 10: 0.001
+    Factor/loading 12: 0.001
+    Factor/loading 13: 0.001
+    Factor/loading 14: 0.001
+    Factor/loading 15: 0.001
+      *Factor/loadings with PVE &lt; 0.001 are omitted from this summary.
+  Value of objective function: -105999.189</code></pre>
+</div>
+<div id="look-at-progress-from-greedy-pmf" class="section level2">
+<h2>look at progress from greedy <code>pmf</code></h2>
+<pre class="r"><code>plot(diff(fit_pmf$loglik))</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-5-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="look-at-l_ik-f_jk-for-pmf_greedy" class="section level2">
+<h2>look at <span class="math inline">\(l_{ik} f_{jk}\)</span> for <code>pmf_greedy</code></h2>
+<p>I scale <span class="math inline">\(l_{Ik}, f_{Jk}\)</span> to have Frobenius norm 1, as the other two methods</p>
+<pre class="r"><code>d_l = sqrt( diag(t(fit_pmf$L) %*% fit_pmf$L) )
+d_f = sqrt( diag(t(fit_pmf$F) %*% fit_pmf$F) )
+d = d_l*d_f
+plot(d, log = &quot;y&quot;)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-6-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_pmf$L[,k_]/d_l[k_]
+  f = fit_pmf$F[,k_]/d_f[k_]
+  lam = l %o% f 
+  image(lam)
+}</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-7-1.png" width="2880" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/23decbee82c86645d047cdd915b17f26fc717696/docs/figure/pmf_greedy_experiment.Rmd/unnamed-chunk-7-1.png" target="_blank">23decbe</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="look-at-l_ik-f_jk-for-flashr" class="section level2">
+<h2>look at <span class="math inline">\(l_{ik} f_{jk}\)</span> for <code>flashr</code></h2>
+<pre class="r"><code>plot(fit_flash$ldf$d, log = &quot;y&quot;)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_flash$ldf$l[,k_]
+  f = fit_flash$ldf$f[,k_]
+  lam = l %o% f 
+  image(lam)
+}</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-9-1.png" width="2880" style="display: block; margin: auto;" /></p>
+</div>
+<div id="look-at-l_ik-f_jk-for-svd" class="section level2">
+<h2>look at <span class="math inline">\(l_{ik} f_{jk}\)</span> for <code>svd</code></h2>
+<pre class="r"><code>## u^t u = v^t v = I_k
+plot(fit_svd$d, log = &quot;y&quot;)</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Kmax = 3 *k
+par(mfrow = c(k, 3))
+for(k_ in 1:Kmax){
+  l = fit_svd$u[,k_]
+  f = fit_svd$v[,k_]
+  lam = l %o% f 
+  image(lam)
+}</code></pre>
+<p><img src="figure/pmf_greedy_experiment.Rmd/unnamed-chunk-11-1.png" width="2880" style="display: block; margin: auto;" /></p>
+<!-- ## look at `L, F` from greedy `pmf` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 3 *k -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_pmf$L[,k_]) -->
+<!--   plot(fit_pmf$F[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## look at `L, F` from `flashr` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 3 *k -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_flash$ldf$l[,k_]) -->
+<!--   plot(fit_flash$ldf$f[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## look at `L, F` from `svd` -->
+<!-- ```{r} -->
+<!-- fit_svd$d[1:K] -->
+<!-- ``` -->
+<!-- ```{r, fig.width=30, fig.height=100} -->
+<!-- K = 15 -->
+<!-- par(mfrow = c(K, 2)) -->
+<!-- for(k_ in 1:K){ -->
+<!--   plot(fit_svd$u[,k_]) -->
+<!--   plot(fit_svd$v[,k_]) -->
+<!-- } -->
+<!-- ``` -->
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS  10.14
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] flashr_0.6-6      ebpmf.alpha_0.4.2 workflowr_1.6.2  
+
+loaded via a namespace (and not attached):
+ [1] softImpute_1.4    gtools_3.8.2      tidyselect_0.2.5  xfun_0.8         
+ [5] NNLM_0.4.2        reshape2_1.4.3    purrr_0.3.4       ashr_2.2-38      
+ [9] lattice_0.20-38   colorspace_1.4-1  vctrs_0.3.0       htmltools_0.3.6  
+[13] yaml_2.2.0        rlang_0.4.6       mixsqp_0.3-43     later_0.8.0      
+[17] pillar_1.4.4      glue_1.4.1        plyr_1.8.4        foreach_1.4.7    
+[21] lifecycle_0.2.0   ebpm_0.0.1.0      stringr_1.4.0     munsell_0.5.0    
+[25] gtable_0.3.0      codetools_0.2-16  evaluate_0.14     knitr_1.28       
+[29] pscl_1.5.2        doParallel_1.0.15 httpuv_1.5.1      irlba_2.3.3      
+[33] parallel_3.5.1    Rcpp_1.0.4.6      promises_1.0.1    backports_1.1.7  
+[37] scales_1.1.1      truncnorm_1.0-8   fs_1.3.1          ggplot2_3.3.0    
+[41] digest_0.6.25     stringi_1.4.3     dplyr_0.8.1       grid_3.5.1       
+[45] rprojroot_1.3-2   tools_3.5.1       magrittr_1.5      tibble_3.0.1     
+[49] crayon_1.3.4      whisker_0.3-2     pkgconfig_2.0.3   MASS_7.3-51.4    
+[53] ellipsis_0.3.1    Matrix_1.2-17     SQUAREM_2017.10-1 assertthat_0.2.1 
+[57] rmarkdown_2.1     iterators_1.0.12  R6_2.4.1          git2r_0.26.1     
+[61] compiler_3.5.1   </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
