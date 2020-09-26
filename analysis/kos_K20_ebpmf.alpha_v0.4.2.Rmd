@@ -149,12 +149,12 @@ abline(a = 0, b = 1, col = "red")
 ## look at top words (compared with other methods)
 I use `wbg_init_L` together with `bg`, `pmf` and `pmf2binom` (which is log fold change computed from `fastTopics::poisson2binom`). I show their top 20 words for each topic. 
 ```{r}
-top_words_df = read.csv("output/uci_BoW/v0.4.2/top_words_v0.4.2.csv")
-# K = ncol(model_pmf$F)
-# for(k in 1:K){
-#   print(top_words_df[top_words_df$Topic == k, ])
-# }
-library('knitr')
-kable(top_words_df, format = "markdown")
+# top_words_df = read.csv("output/uci_BoW/v0.4.2/top_words_v0.4.2.csv")
+# # K = ncol(model_pmf$F)
+# # for(k in 1:K){
+# #   print(top_words_df[top_words_df$Topic == k, ])
+# # }
+# library('knitr')
+# kable(top_words_df, format = "markdown")
 ```
 
