@@ -11,7 +11,7 @@ K = as.integer(args[2])
 maxiter = as.integer(args[3])
 every = as.integer(args[4])
 
-version = "v0.3.9"
+version = "v0.4.2"
 datadir = "../data/uci_BoW"
 outdir = sprintf("../output/uci_BoW/%s", version)
 filename = sprintf("docword.%s", docname)
