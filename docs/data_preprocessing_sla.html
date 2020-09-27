@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree02880edadedbb81f3fdf1eaa004acc24b631a54etargetblank02880eda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/02880edadedbb81f3fdf1eaa004acc24b631a54e" target="_blank">02880ed</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree98381acea9dcce14f5fb8a7fe187d459d75e9e7etargetblank98381aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/98381acea9dcce14f5fb8a7fe187d459d75e9e7e" target="_blank">98381ac</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree02880edadedbb81f3fdf1eaa004acc24b631a54etargetblank02880eda" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree98381acea9dcce14f5fb8a7fe187d459d75e9e7etargetblank98381aca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/02880edadedbb81f3fdf1eaa004acc24b631a54e" target="_blank">02880ed</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/98381acea9dcce14f5fb8a7fe187d459d75e9e7e" target="_blank">98381ac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -532,12 +532,9 @@ Ignored files:
 
 Untracked files:
     Untracked:  data/SLA/SLA_preprocessed_minzhe.RData
+    Untracked:  data/SLA/abs.sla.txt
     Untracked:  data/SLA/docword.sla_minzhe.txt
-    Untracked:  data/SLA/docword0.sla.txt
     Untracked:  data/SLA/vocab.sla_minzhe.txt
-
-Unstaged changes:
-    Modified:   data/SLA/vocab.sla.txt
 
 </code></pre>
 <p>
@@ -576,6 +573,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/98381acea9dcce14f5fb8a7fe187d459d75e9e7e/analysis/data_preprocessing_sla.Rmd" target="_blank">98381ac</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-27
+</td>
+<td>
+demo for processing SLA data, correction on vocab
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/74b1de48359f6a2a2b72b24d3b6fba64b719dec0/docs/data_preprocessing_sla.html" target="_blank">74b1de4</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -686,7 +717,7 @@ str(abs_corpus[[15]])</code></pre>
  $ content: chr &quot;A standard tool for model selection in a Bayesian framework is the Bayes factor which compares the marginal lik&quot;| __truncated__
  $ meta   :List of 7
   ..$ author       : chr(0) 
-  ..$ datetimestamp: POSIXlt[1:1], format: &quot;2020-09-27 14:41:57&quot;
+  ..$ datetimestamp: POSIXlt[1:1], format: &quot;2020-09-27 15:10:17&quot;
   ..$ description  : chr(0) 
   ..$ heading      : chr(0) 
   ..$ id           : chr &quot;15&quot;
@@ -848,7 +879,8 @@ zihao12
 <pre><code>NULL</code></pre>
 <pre class="r"><code>writeLines(text = abs_dtm$dimnames$Terms[idx],con = &quot;data/SLA/vocab.sla.txt&quot;)
 writeLines(text = sla$title,con = &quot;data/SLA/title.sla.txt&quot;)
-writeLines(text = sla$DOI,con = &quot;data/SLA/doi.sla.txt&quot;)</code></pre>
+writeLines(text = sla$DOI,con = &quot;data/SLA/doi.sla.txt&quot;)
+writeLines(text = sla$abstract,con = &quot;data/SLA/abs.sla.txt&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
