@@ -1,0 +1,102 @@
+---
+title: "data_preprocessing_sla"
+author: "zihao12"
+date: "2020-09-26"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Data
+SLA dataset: https://www.stat.uga.edu/sites/default/files/psji/SCC2016-with-abs.zip
+
+## Reference
+I used the methods introduced in http://rstudio-pubs-static.s3.amazonaws.com/256588_57b585da6c054349825cba46685d8464.html
+
+```{r}
+rm(list = ls())
+library(readr)
+library(tm)
+library(Matrix)
+```
+
+
+## load data
+```{r}
+sla <- read_csv("data/SLA/SCC2016/Data/paperList.txt")
+## remove papers that do not have abstract
+sla <- sla[!is.na(sla$abstract),]
+title <- sla$title
+str(sla)
+```
+
+
+## Building a corpus
+```{r}
+abs_source <- VectorSource(sla$abstract)
+# Make a volatile corpus: tweets_corpus
+abs_corpus <- VCorpus(abs_source)
+# Print out the tweets_corpus
+abs_corpus
+
+## show one abstract
+str(abs_corpus[[15]])
+abs_corpus[[15]][1]
+```
+
+## preprocess corpus
+```{r}
+clean_corpus <- function(corpus){
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, removeNumbers) 
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, removeWords, stopwords("en"))
+  # ## remove words that appear only once (this method seems to have memory issue?)
+  # tdm <- TermDocumentMatrix(corpus)
+  # tokens_to_remove       <- findFreqTerms(tdm, 1, 1)
+  # corpus <- tm_map(corpus, content_transformer(removeWords), tokens_to_remove[1:5000])
+  return(corpus)
+}
+# Apply  customized function to the abs_corpus: clean_corp
+clean_corp <- clean_corpus(abs_corpus)
+# Print out a cleaned up corp
+clean_corp[[15]][1]
+```
+
+
+## Making a document-term matrix 
+```{r}
+abs_dtm <- DocumentTermMatrix(clean_corp)
+abs_m <- as.matrix(abs_dtm)
+## remove terms that appear only once, not very elegant ...
+abs_m <- abs_m[, colSums(abs_m) > 1]
+
+abs_m[148:158, 10:22]
+
+hist(rowSums(abs_m), xlab = "# of words in an abstract")
+
+## to make the plot more readable, I limit y axis
+hist(colSums(abs_m), xlab = "# of appearances of a word", breaks = 100)
+```
+
+### Note
+
+- I remove the most frequent words in the english language (`stopwords("en")`), as well as numbers.\
+
+- I didn't do word stemming. For example, "abilities" "ability"" "abilityto" were treated as 3 different words. \
+
+- I remove words that appear once, since we will never fit a model with one topic ... In practice people set a higher threshold (like 10 used in uci dataset), but since rare words do not add much to computation cost and it's interesting to see how model deals with these words. \
+
+- There is some issue dealing with expression like $J(c)$
+
+
+```{r}
+writeMM(obj = as(abs_m, "sparseMatrix"),file = "data/SLA/docword.sla.txt")
+writeLines(text = abs_dtm$dimnames$Terms,con = "data/SLA/vocab.sla.txt")
+writeLines(text = sla$title,con = "data/SLA/title.sla.txt")
+writeLines(text = sla$DOI,con = "data/SLA/doi.sla.txt")
+```
+
+
+
