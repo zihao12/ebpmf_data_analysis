@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Zihao" />
+
+<meta name="date" content="2020-09-27" />
+
+<title>sla_data_analysis_k10</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ebpmf_data_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/zihao12/ebpmf_data_analysis">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">sla_data_analysis_k10</h1>
+<h4 class="author"><em>Zihao</em></h4>
+<h4 class="date"><em>2020-09-27</em></h4>
+
+</div>
+
+
+<p><strong>Last updated:</strong> 2020-09-27</p>
+<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
+<ul>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20200511)</code> </summary></p>
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</details>
+</li>
+<li>
+<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3f7950a1d3e2d4831831d3d4d02ca35618478cee" target="_blank">3f7950a</a> </summary></p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  data/SLA/SLA_preprocessed_minzhe.RData
+    Untracked:  data/SLA/docword.sla_minzhe.txt
+    Untracked:  data/SLA/vocab.sla_minzhe.txt
+    Untracked:  output/SLA/
+    Untracked:  output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter3000.Rds
+    Untracked:  script/fit_sla_ebpmf_wbg.sbatch
+    Untracked:  script/fit_sla_ebpmf_wbg2.sbatch
+    Untracked:  script/fit_sla_ebpmf_wbg3.sbatch
+    Untracked:  script/fit_sla_ebpmf_wbg4.sbatch
+    Untracked:  script/fit_sla_ebpmf_wbg5.sbatch
+    Untracked:  script/fit_sla_ebpmf_wbg6.sbatch
+    Untracked:  script/fit_sla_pmf.sbatch
+    Untracked:  script/fit_sla_pmf2.sbatch
+    Untracked:  script/fit_sla_pmf3.sbatch
+    Untracked:  script/fit_sla_pmf4.sbatch
+    Untracked:  script/fit_sla_pmf5.sbatch
+    Untracked:  script/fit_sla_pmf6.sbatch
+    Untracked:  script/fit_sla_pmf_initialization.R
+    Untracked:  script/fit_uci_BoW_ebpmf_bg.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_bg2.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_bg3.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_bg_initLF.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initL.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initL2.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initL3.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initLF.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initLF2.sbatch
+    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initLF3.sbatch
+    Untracked:  script/fit_uci_BoW_pmf_initLF.sbatch
+    Untracked:  script/fit_uci_BoW_pmf_initLF2.sbatch
+    Untracked:  script/fit_uci_BoW_pmf_initLF3.sbatch
+    Untracked:  script/slurm-5403681.out
+    Untracked:  script/slurm-5404401.out
+    Untracked:  script/slurm-5404403.out
+    Untracked:  script/slurm-5435873.out
+    Untracked:  script/slurm-5435932.out
+    Untracked:  script/slurm-5436391.out
+    Untracked:  script/slurm-5495928.out
+    Untracked:  script/slurm-5496034.out
+    Untracked:  script/slurm-5496062.out
+    Untracked:  script/slurm-5496165.out
+    Untracked:  script/slurm-5496171.out
+    Untracked:  script/slurm-5496173.out
+
+Unstaged changes:
+    Modified:   script/fit_sla_ebpmf_wbg_initLF.R
+    Modified:   script/fit_sla_pmf_initLF.R
+
+</code></pre>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+</li>
+</ul>
+<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
+<ul>
+<table style="border-collapse:separate; border-spacing:5px;">
+<thead>
+<tr>
+<th style="text-align:left;">
+File
+</th>
+<th style="text-align:left;">
+Version
+</th>
+<th style="text-align:left;">
+Author
+</th>
+<th style="text-align:left;">
+Date
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Rmd
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3f7950a1d3e2d4831831d3d4d02ca35618478cee/analysis/sla_data_analysis_k10.Rmd" target="_blank">3f7950a</a>
+</td>
+<td style="text-align:left;">
+Zihao
+</td>
+<td style="text-align:left;">
+2020-09-27
+</td>
+<td style="text-align:left;">
+prelim analysis sla k 10
+</td>
+</tr>
+</tbody>
+</table>
+</ul>
+<p></details></p>
+<hr />
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>I applied topic modeling to SLA dataset. let’s see the results.</p>
+<pre class="r"><code>model = readRDS(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds&quot;)
+
+doi = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/doi.sla.txt&quot;)
+vocab = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/vocab.sla.txt&quot;)
+title = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/title.sla.txt&quot;)
+abs = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/abs.sla.txt&quot;)</code></pre>
+<pre class="r"><code>plot(model$ELBO)</code></pre>
+<p><img src="figure/sla_data_analysis_k10.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>L = model$qg$qls_mean
+F = model$qg$qfs_mean
+
+k = 5
+topic_k = sort(F[,k], decreasing = TRUE, index.return=TRUE)
+hist(topic_k$x, breaks = 100)</code></pre>
+<p><img src="figure/sla_data_analysis_k10.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>vocab[topic_k$ix[1:10]]</code></pre>
+<pre><code> [1] &quot;additive&quot;           &quot;curves&quot;             &quot;spline&quot;            
+ [4] &quot;principal&quot;          &quot;splines&quot;            &quot;predictors&quot;        
+ [7] &quot;varyingcoefficient&quot; &quot;trajectories&quot;       &quot;dimensionreduction&quot;
+[10] &quot;eigenvalues&quot;       </code></pre>
+<pre class="r"><code>## see documents with most weights in that topic
+doc_weight_k = sort(L[,k], decreasing = TRUE, index.return=TRUE)
+abs[doc_weight_k$ix[1:5]]</code></pre>
+<pre><code>[1] &quot;Modern graphical tools have enhanced our ability-to learn many things from data directly. In recent years, dimension reduction has proven to be an effective tool for generating low-dimensional summary plots without appreciable loss of information. Some well-known inverse regression methods for dimension reduction such as sliced inverse regression (Li; 1991) and sliced average variance estimation (Cook &amp; Weisberg, 1991) have been developed to estimate summary plots for regression and discriminant analysis; In this paper, we suggest a new method that makes use of inverse third moments. This method can find structure beyond that found by sliced inverse regression and sliced average variance estimation, particularly regression mixtures. Illustrative examples are presented.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+[2] &quot;With modem technology development, functional data are being observed frequently in many scientific fields. A popular method for analyzing such functional data is &#39;&#39; smoothing first, then estimation.&#39;&#39; That is, statistical inference such as estimation and hypothesis testing about functional data is conducted based on the substitution of the underlying individual functions by their reconstructions obtained by one smoothing technique or another. However, little is known about this substitution effect on functional data analysis. In this paper this problem is investigated when the local polynomial kernel (LPK) smoothing technique is used for individual function reconstructions. We find that under some mild conditions, the substitution effect can be ignored asymptotically. Based on this, we construct LPK reconstruction-based estimators for the mean, covariance and noise variance functions of a functional data set and derive their asymptotics. We also propose a GCV rule for selecting good bandwidths for the LPK reconstructions. When the mean function also depends on some time-independent covariates, we consider a functional linear model where the mean function is linearly related to the covariates but the covariate effects are functions of time. The LPK reconstruction-based estimators for the covariate effects and the covariance function are also constructed and their asymptotics are derived. Moreover, we propose a L-2- norm-based global test statistic for a general hypothesis testing problem about the covariate effects and derive its asymptotic random expression. The effect of the bandwidths selected by the proposed GCV rule on the accuracy of the LPK reconstructions and the mean function estimator is investigated via a simulation study. The proposed methodologies are illustrated via an application to a real functional data set collected in climatology.&quot;                                                                                                                
+[3] &quot;This paper provides ANOVA inference for nonparametric local polynomial regression (LPR) in analogy with ANOVA tools for the classical linear regression model. A surprisingly simple and exact local ANOVA decomposition is established, and a local R-squared quantity is defined to measure the proportion of local variation explained by fitting LPR. A global ANOVA decomposition is obtained by integrating local counterparts, and a global R-squared and a symmetric projection matrix are defined. We show that the proposed projection matrix is asymptotically idempotent and asymptotically orthogonal to its complement, naturally leading to an F-test for testing for no effect. A by-product result is that the asymptotic bias of the \&quot;projected\&quot; response based on local linear regression is of quartic order of the bandwidth. Numerical results illustrate the behaviors of the proposed R-squared and F-test. The ANOVA methodology is also extended to varying coefficient models.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+[4] &quot;We propose an iterative estimation procedure for performing functional principal component analysis. The procedure aims at functional or longitudinal data where the repeated measurements from the same subject are correlated. An increasingly popular smoothing approach, penalized spline regression, is used to represent the mean function. This allows straightforward incorporation of covariates and simple implementation of approximate inference procedures for coefficients. For the handling of the within-subject correlation, we develop an iterative procedure which reduces the dependence between the repeated measurements that are made for the same subject. The resulting data after iteration are theoretically shown to be asymptotically equivalent (in probability) to a set of independent data. This suggests that the general theory of penalized spline regression that has been developed for independent data can also be applied to functional data. The effectiveness of the proposed procedure is demonstrated via a simulation study and an application to yeast cell cycle gene expression data.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+[5] &quot;Representation of generalized additive models (GAM&#39;s) using penalized regression splines allows GAM&#39;s to be employed in a straightforward manner using penalized regression methods. Not only is inference facilitated by this approach, but it is also possible to integrate model selection in the form of smoothing parameter selection into model fitting in a computationally efficient manner using well founded criteria such as generalized cross-validation. The current fitting and smoothing parameter selection methods for such models are usually effective, but do not provide the level of numerical stability to which users of linear regression packages, for example, are accustomed. In particular the existing methods cannot deal adequately with numerical rank deficiency of the GAM fitting problem, and it is not straightforward to produce methods that can do so, given that the degree of rank deficiency can be smoothing parameter dependent. In addition, models with the potential flexibility of GAM&#39;s can also present practical fitting difficulties as a result of indeterminacy in the model likelihood: Data with many zeros fitted by a model with a log link are a good example. In this article it is proposed that GAM&#39;s with a ridge penalty provide a practical solution in such circumstances, and a multiple smoothing parameter selection method suitable for use in the presence of such a penalty is developed. The method is based on the pivoted QR decomposition and the singular value decomposition, so that with or without a ridge penalty it has good error propagation properties and is capable of detecting and coping elegantly with numerical rank deficiency. The method also allows mixtures of user specified and estimated smoothing parameters and the setting of lower bounds on smoothing parameters. In terms of computational efficiency, the method compares well with existing methods. A simulation study compares the method to existing methods, including treating GAM&#39;s as mixed models.&quot;</code></pre>
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] workflowr_1.1.1   Rcpp_1.0.2        digest_0.6.22    
+ [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.5  
+ [7] magrittr_1.5      git2r_0.26.1      evaluate_0.14    
+[10] stringi_1.4.3     whisker_0.4       R.oo_1.22.0      
+[13] R.utils_2.7.0     rmarkdown_1.10    tools_3.5.1      
+[16] stringr_1.4.0     yaml_2.2.0        compiler_3.5.1   
+[19] htmltools_0.3.6   knitr_1.20       </code></pre>
+</div>
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+<hr>
+<p>
+  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+  analysis was created with
+  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
+</p>
+<hr>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
