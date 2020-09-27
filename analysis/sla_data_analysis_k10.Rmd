@@ -1,0 +1,46 @@
+---
+title: "sla_data_analysis_k10"
+author: "Zihao"
+date: "2020-09-27"
+output: workflowr::wflow_html
+---
+
+## Introduction
+I  applied topic modeling to SLA dataset. let's see the results.
+
+```{r}
+model = readRDS("/project2/mstephens/zihao/ebpmf_data_analysis/output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds")
+
+doi = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/doi.sla.txt")
+vocab = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/vocab.sla.txt")
+title = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/title.sla.txt")
+abs = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/abs.sla.txt")
+
+```
+
+```{r}
+plot(model$ELBO)
+```
+
+
+```{r}
+L = model$qg$qls_mean
+F = model$qg$qfs_mean
+
+k = 5
+topic_k = sort(F[,k], decreasing = TRUE, index.return=TRUE)
+hist(topic_k$x, breaks = 100)
+vocab[topic_k$ix[1:10]]
+
+## see documents with most weights in that topic
+doc_weight_k = sort(L[,k], decreasing = TRUE, index.return=TRUE)
+abs[doc_weight_k$ix[1:5]]
+```
+
+
+
+
+
+
+
+
