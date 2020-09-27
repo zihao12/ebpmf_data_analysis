@@ -96,6 +96,7 @@ writeMM(obj = as(abs_m, "sparseMatrix"),file = "data/SLA/docword.sla.txt")
 writeLines(text = abs_dtm$dimnames$Terms[idx],con = "data/SLA/vocab.sla.txt")
 writeLines(text = sla$title,con = "data/SLA/title.sla.txt")
 writeLines(text = sla$DOI,con = "data/SLA/doi.sla.txt")
+writeLines(text = sla$abstract,con = "data/SLA/abs.sla.txt")
 ```
 
 
