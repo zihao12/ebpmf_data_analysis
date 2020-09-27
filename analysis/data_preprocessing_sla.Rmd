@@ -26,7 +26,6 @@ library(Matrix)
 sla <- read_csv("data/SLA/SCC2016/Data/paperList.txt")
 ## remove papers that do not have abstract
 sla <- sla[!is.na(sla$abstract),]
-title <- sla$title
 str(sla)
 ```
 
@@ -70,7 +69,8 @@ clean_corp[[15]][1]
 abs_dtm <- DocumentTermMatrix(clean_corp)
 abs_m <- as.matrix(abs_dtm)
 ## remove terms that appear only once, not very elegant ...
-abs_m <- abs_m[, colSums(abs_m) > 1]
+idx <- (colSums(abs_m) > 1)
+abs_m <- abs_m[, idx]
 
 abs_m[148:158, 10:22]
 
@@ -93,7 +93,7 @@ hist(colSums(abs_m), xlab = "# of appearances of a word", breaks = 100)
 
 ```{r}
 writeMM(obj = as(abs_m, "sparseMatrix"),file = "data/SLA/docword.sla.txt")
-writeLines(text = abs_dtm$dimnames$Terms,con = "data/SLA/vocab.sla.txt")
+writeLines(text = abs_dtm$dimnames$Terms[idx],con = "data/SLA/vocab.sla.txt")
 writeLines(text = sla$title,con = "data/SLA/title.sla.txt")
 writeLines(text = sla$DOI,con = "data/SLA/doi.sla.txt")
 ```
