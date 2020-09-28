@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreec7f04f881cd952c10b5367add8d154936af33884targetblankc7f04f8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/c7f04f881cd952c10b5367add8d154936af33884" target="_blank">c7f04f8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeceb420075af643b3fff9b6a49aad184449c812aatargetblankceb4200a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/ceb420075af643b3fff9b6a49aad184449c812aa" target="_blank">ceb4200</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreec7f04f881cd952c10b5367add8d154936af33884targetblankc7f04f8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeceb420075af643b3fff9b6a49aad184449c812aatargetblankceb4200a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/c7f04f881cd952c10b5367add8d154936af33884" target="_blank">c7f04f8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/ceb420075af643b3fff9b6a49aad184449c812aa" target="_blank">ceb4200</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -530,15 +530,14 @@ Ignored files:
     Ignored:    data/.DS_Store
     Ignored:    output/.DS_Store
     Ignored:    topicView-app/.DS_Store
+    Ignored:    topicView-app/data/.DS_Store
+    Ignored:    topicView-app/data/SLA/SCC2016/.DS_Store
 
 Untracked files:
-    Untracked:  code/plots.R
-    Untracked:  topicView-app/README.md
-    Untracked:  topicView-app/data/
-    Untracked:  topicView-app/output/
-    Untracked:  topicView-app/rsconnect/
+    Untracked:  analysis/test.Rmd
 
 Unstaged changes:
+    Modified:   code/plots.R
     Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
     Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
     Deleted:    data/SLA/SCC2016/Code/APL/compParamErr2.m
@@ -769,7 +768,6 @@ Unstaged changes:
     Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K100_maxiter500.Rds
     Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K20_maxiter500.Rds
     Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K50_maxiter500.Rds
-    Modified:   topicView-app/app.R
 
 </code></pre>
 <p>
@@ -808,6 +806,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/ceb420075af643b3fff9b6a49aad184449c812aa/analysis/sla_data_analysis_k10.Rmd" target="_blank">ceb4200</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+<td>
+update plotting for sla data analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/sla_data_analysis_k10.html" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -897,21 +929,89 @@ fit = list(L = L_scaled)</code></pre>
 <h2>Visualization of <span class="math inline">\(L\)</span></h2>
 <div id="t-sne-plots" class="section level3">
 <h3>t-SNE plots</h3>
-<pre class="r"><code>p12 &lt;- my_tsne_plot(fit,k = 1:4, n = 4000,num_threads = 4,verbose = FALSE)
+<pre class="r"><code>p12 &lt;- my_tsne_plot(fit,k = 1:10,num_threads = 4,verbose = FALSE)
 print(p12)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/tsne-plot1-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p13 &lt;- my_tsne_plot(fit,k = 5:7, n = 4000,num_threads = 4,verbose = FALSE)
-print(p13)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/tsne-plot2-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p14 &lt;- my_tsne_plot(fit,k = 8:10, n = 4000,num_threads = 4,verbose = FALSE)
-print(p14)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/tsne-plot3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/sla_data_analysis_k10.Rmd/tsne-plot1-1.png" width="1200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-tsne-plot1-1">
+Past versions of tsne-plot1-1.png
+</button>
+</p>
+<div id="fig-tsne-plot1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/tsne-plot1-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="pca-plots" class="section level3">
 <h3>PCA plots</h3>
 <pre class="r"><code>lams = svd(x = L_scaled)$d
 plot(1:length(lams), lams/sum(lams), xlab = &quot;eigen idx&quot;, ylab = &quot;prop of variance explained&quot;)</code></pre>
 <p><img src="figure/sla_data_analysis_k10.Rmd/unnamed-chunk-1-1.png" width="840" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/unnamed-chunk-1-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <!-- ```{r clustering-1, fig.width=8, fig.height=2.5} -->
 <!-- p1 <- basic_pca_plot(fit,1:2) -->
 <!-- p2 <- basic_pca_plot(fit,3:4) -->
@@ -925,16 +1025,84 @@ p5 &lt;- pca_hexbin_plot(fit,3:4,bins = bins) + guides(fill = &quot;none&quot;)
 p6 &lt;- pca_hexbin_plot(fit,5:6,bins = bins) + guides(fill = &quot;none&quot;)
 plot_grid(p4,p5,p6,nrow = 1,ncol = 3)</code></pre>
 <p><img src="figure/sla_data_analysis_k10.Rmd/clustering-2-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-2-1">
+Past versions of clustering-2-1.png
+</button>
+</p>
+<div id="fig-clustering-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/clustering-2-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Show where each topic lies in PC1-PC2 space</p>
-<pre class="r"><code>p9 &lt;- my_pca_plot(fit,pcs = 1:2,k = 1:4)
+<pre class="r"><code>p9 &lt;- my_pca_plot(fit,pcs = 1:2,k = 1:10)
 print(p9)</code></pre>
 <p><img src="figure/sla_data_analysis_k10.Rmd/clustering-3-1.png" width="660" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p10 &lt;- my_pca_plot(fit,pcs = 1:2,k = 5:7)
-print(p10)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/clustering-4-1.png" width="660" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p11 &lt;- my_pca_plot(fit,pcs = 1:2,k = 8:10)
-print(p11)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/clustering-5-1.png" width="660" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-3-1">
+Past versions of clustering-3-1.png
+</button>
+</p>
+<div id="fig-clustering-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/clustering-3-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
