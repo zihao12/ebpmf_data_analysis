@@ -39,19 +39,9 @@ See [topicView](https://zihao12.shinyapps.io/topicview-app/) (more info to add)
 ## Visualization of $L$ {.tabset}
 
 ### t-SNE plots
-```{r tsne-plot1, fig.width=8, fig.height=4.5, warning=FALSE}
-p12 <- my_tsne_plot(fit,k = 1:4, n = 4000,num_threads = 4,verbose = FALSE)
+```{r tsne-plot1, fig.width=10, fig.height=12}
+p12 <- my_tsne_plot(fit,k = 1:10,num_threads = 4,verbose = FALSE)
 print(p12)
-```
-
-```{r tsne-plot2, fig.width=8, fig.height=4.5, warning=FALSE}
-p13 <- my_tsne_plot(fit,k = 5:7, n = 4000,num_threads = 4,verbose = FALSE)
-print(p13)
-```
-
-```{r tsne-plot3, fig.width=8, fig.height=4.5, warning=FALSE}
-p14 <- my_tsne_plot(fit,k = 8:10, n = 4000,num_threads = 4,verbose = FALSE)
-print(p14)
 ```
 
 ### PCA plots
@@ -78,20 +68,12 @@ plot_grid(p4,p5,p6,nrow = 1,ncol = 3)
 ```
 
 Show where each topic lies in PC1-PC2 space
-```{r clustering-3, fig.width=5.5, fig.height=4.5}
-p9 <- my_pca_plot(fit,pcs = 1:2,k = 1:4)
+```{r clustering-3, fig.width=5.5, fig.height=12}
+p9 <- my_pca_plot(fit,pcs = 1:2,k = 1:10)
 print(p9)
 ```
 
-```{r clustering-4, fig.width=5.5, fig.height=4.5}
-p10 <- my_pca_plot(fit,pcs = 1:2,k = 5:7)
-print(p10)
-```
 
-```{r clustering-5, fig.width=5.5, fig.height=4.5}
-p11 <- my_pca_plot(fit,pcs = 1:2,k = 8:10)
-print(p11)
-```
 
 
 
