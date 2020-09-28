@@ -6,41 +6,92 @@ output: workflowr::wflow_html
 ---
 
 ## Introduction
-I  applied topic modeling to SLA dataset. let's see the results.
+I  applied [ebpmf_wbg](https://github.com/stephenslab/ebpmf.alpha/blob/master/R/ebpmf_wbg.R) (with $k = 10$) to [SLA](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) dataset. let's see the results.
 
-```{r}
-model = readRDS("/project2/mstephens/zihao/ebpmf_data_analysis/output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds")
-
-doi = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/doi.sla.txt")
-vocab = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/vocab.sla.txt")
-title = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/title.sla.txt")
-abs = readLines("/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/abs.sla.txt")
-
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,results = "hold",
+                      fig.align = "center",dpi = 120)
 ```
 
-```{r}
-plot(model$ELBO)
-```
-
-
-```{r}
-L = model$qg$qls_mean
-F = model$qg$qfs_mean
-
-k = 5
-topic_k = sort(F[,k], decreasing = TRUE, index.return=TRUE)
-hist(topic_k$x, breaks = 100)
-vocab[topic_k$ix[1:10]]
-
-## see documents with most weights in that topic
-doc_weight_k = sort(L[,k], decreasing = TRUE, index.return=TRUE)
-abs[doc_weight_k$ix[1:5]]
+```{r load-pkgs, message = FALSE}
+library(Matrix)
+library(dplyr)
+library(fastTopics)
+library(ggplot2)
+library(cowplot)
+source("code/plots.R")
+set.seed(123)
 ```
 
 
+## load fitted model
+Note that: $X_{ij} \sim  Pois(\sum_k w_k l_{i0} l_{ik} f_{j0} f_{jk})$. I use $\text{loading}_{ik} = w_k l_{ik}$ then scale it so that each row sums to 1. There are other ways to get a meaningful loading...
+```{r load-model}
+model = readRDS("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds")
+L_scaled = model$qg$qls_mean %*% diag(model$w)
+L_scaled = L_scaled/rowSums(L_scaled)
+fit = list(L = L_scaled)
+```
+
+## Meaning of topics:
+See [topicView](https://zihao12.shinyapps.io/topicview-app/) (more info to add)
+
+## Visualization of $L$ {.tabset}
+
+### t-SNE plots
+```{r tsne-plot1, fig.width=8, fig.height=4.5, warning=FALSE}
+p12 <- my_tsne_plot(fit,k = 1:4, n = 4000,num_threads = 4,verbose = FALSE)
+print(p12)
+```
+
+```{r tsne-plot2, fig.width=8, fig.height=4.5, warning=FALSE}
+p13 <- my_tsne_plot(fit,k = 5:7, n = 4000,num_threads = 4,verbose = FALSE)
+print(p13)
+```
+
+```{r tsne-plot3, fig.width=8, fig.height=4.5, warning=FALSE}
+p14 <- my_tsne_plot(fit,k = 8:10, n = 4000,num_threads = 4,verbose = FALSE)
+print(p14)
+```
+
+### PCA plots
+```{r}
+lams = svd(x = L_scaled)$d
+plot(1:length(lams), lams/sum(lams), xlab = "eigen idx", ylab = "prop of variance explained")
+```
 
 
+<!-- ```{r clustering-1, fig.width=8, fig.height=2.5} -->
+<!-- p1 <- basic_pca_plot(fit,1:2) -->
+<!-- p2 <- basic_pca_plot(fit,3:4) -->
+<!-- p3 <- basic_pca_plot(fit,5:6) -->
+<!-- plot_grid(p1,p2,p3,nrow = 1,ncol = 3) -->
+<!-- ``` -->
 
+PCA plots (Show the density of the points by “hexbin” plots)
+```{r clustering-2, fig.width=8, fig.height=2.5}
+bins <- c(0,1,5,10,100,Inf)
+p4 <- pca_hexbin_plot(fit,1:2,bins = bins) + guides(fill = "none")
+p5 <- pca_hexbin_plot(fit,3:4,bins = bins) + guides(fill = "none")
+p6 <- pca_hexbin_plot(fit,5:6,bins = bins) + guides(fill = "none")
+plot_grid(p4,p5,p6,nrow = 1,ncol = 3)
+```
+
+Show where each topic lies in PC1-PC2 space
+```{r clustering-3, fig.width=5.5, fig.height=4.5}
+p9 <- my_pca_plot(fit,pcs = 1:2,k = 1:4)
+print(p9)
+```
+
+```{r clustering-4, fig.width=5.5, fig.height=4.5}
+p10 <- my_pca_plot(fit,pcs = 1:2,k = 5:7)
+print(p10)
+```
+
+```{r clustering-5, fig.width=5.5, fig.height=4.5}
+p11 <- my_pca_plot(fit,pcs = 1:2,k = 8:10)
+print(p11)
+```
 
 
 
