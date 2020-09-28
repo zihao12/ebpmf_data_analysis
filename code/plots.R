@@ -1,0 +1,328 @@
+## Reference: https://github.com/stephenslab/single-cell-topics/blob/master/code/plots.R
+
+library(Rtsne)
+
+# Create a basic scatterplot showing the topic proportions projected
+# onto two principal components (PCs).
+basic_pca_plot <- function (fit, pcs = 1:2) {
+  if (inherits(fit,"poisson_nmf_fit"))
+    fit <- poisson2multinom(fit)
+  dat <- as.data.frame(prcomp(fit$L)$x)
+  if (is.numeric(pcs))
+    pcs <- names(dat)[pcs]
+  return(ggplot(dat,aes_string(x = pcs[1],y = pcs[2])) +
+           geom_point(shape = 21,color = "white",fill = "black",size = 1.25) +
+           theme_cowplot(font_size = 10))
+}
+
+# Create a basic scatterplot showing the topic proportions projected
+# onto two principal components (PCs), and the colour of the points is
+# varied according to a factor ("labels").
+labeled_pca_plot <-
+  function (fit, pcs = 1:2, labels,
+            colors = c("firebrick","dodgerblue","forestgreen","darkmagenta",
+                       "darkorange","gold","darkblue","peru","greenyellow"),
+            legend_label = "label", font_size = 10) {
+    if (inherits(fit,"poisson_nmf_fit"))
+      fit <- poisson2multinom(fit)
+    dat <- as.data.frame(prcomp(fit$L)$x)
+    if (is.numeric(pcs))
+      pcs <- names(dat)[pcs]
+    dat <- cbind(data.frame(label = factor(labels)),dat)
+    return(ggplot(dat,aes_string(x = pcs[1],y = pcs[2],fill = "label")) +
+             geom_point(shape = 21,color = "white",size = 1.2,na.rm = TRUE) +
+             scale_fill_manual(values = colors) +
+             labs(fill = legend_label) +
+             theme_cowplot(font_size = font_size))
+  }
+
+# Create a "hexbin plot" showing the density of the data points
+# (specifically, the topic proportions) as they are projected onto two
+# principal components (PCs).
+pca_hexbin_plot <-
+  function (fit, pcs = 1:2, n = 40, bins = c(0,1,10,100,1000,Inf),
+            colors = c("gainsboro","lightskyblue","gold","orange","magenta")) {
+    if (inherits(fit,"poisson_nmf_fit"))
+      fit <- poisson2multinom(fit)
+    dat <- as.data.frame(prcomp(fit$L)$x)
+    if (is.numeric(pcs))
+      pcs <- names(dat)[pcs]
+    return(ggplot(dat,aes_string(x = pcs[1],y = pcs[2])) +
+             stat_bin_hex(mapping = aes_q(fill = quote(cut(..count..,bins))),
+                          bins = n) +
+             scale_fill_manual(values = colors) +
+             labs(fill = "count") +
+             theme_cowplot(font_size = 10))
+  }
+
+# This is a refinement of the volcano plot implemented in the
+# fastTopics package. Here, an additional set of genes is highlighted
+# by labeling the points with darker text.
+volcano_plot_with_highlighted_genes <- function (diff_count_res, k,
+                                                 genes, ...) {
+  dat <- data.frame(beta  = diff_count_res$beta[genes,k],
+                    y     = abs(diff_count_res$Z[genes,k]),
+                    label = genes)
+  rows <- match(genes,rownames(diff_count_res$beta))
+  rownames(diff_count_res$beta)[rows] <- ""
+  rownames(diff_count_res$Z)[rows] <- ""
+  return(volcano_plot(diff_count_res,k = k,
+                      ggplot_call = ggplot_call_for_volcano_plot,...) +
+           geom_text_repel(data = dat,
+                           mapping = aes(x = beta,y = y,label = label),
+                           inherit.aes = FALSE,color = "black",size = 2.25,
+                           fontface = "italic",segment.color = "black",
+                           segment.size = 0.25,max.overlaps = Inf,
+                           na.rm = TRUE))
+}
+
+# This is used by volcano_plot_with_highlighted_genes to create the
+# volcano plot.
+ggplot_call_for_volcano_plot <- function (dat, y.label, topic.label)
+  ggplot(dat,aes_string(x = "beta",y = "y",fill = "mean",label = "label")) +
+  geom_point(color = "white",stroke = 0.3,shape = 21,na.rm = TRUE) +
+  scale_y_continuous(trans = "sqrt",
+                     breaks = c(0,1,2,5,10,20,50,100,200,500,1e3,2e3,5e3,1e4,2e4,5e4)) +
+  scale_fill_gradient2(low = "deepskyblue",mid = "gold",high = "orangered",
+                       midpoint = mean(range(dat$mean))) +
+  geom_text_repel(color = "gray",size = 2.25,fontface = "italic",
+                  segment.color = "gray",segment.size = 0.25,
+                  max.overlaps = 10,na.rm = TRUE) +
+  labs(x = "log-fold change (\u03b2)",y = y.label,fill = "log10 mean") +
+  theme_cowplot(font_size = 9)
+
+# Create a scatterplot comparing two sets of log-fold change
+# statistics generated from two different differential expression
+# analyses of the same data. Only log-fold change statistics with
+# z-scores greater than zmin are shown. Points with the largest
+# z-scores (in magnitude) are labeled (controlled by the
+# "label_above_score" argument). An additional set of genes can be
+# highlighted with the "genes" argument.
+beta_scatterplot <- function (res1, res2, k1, k2, genes = NULL,
+                              label_above_score = 100, zmin = 10,
+                              betamax = 10) {
+  z1   <- res1$Z[,k1]
+  z2   <- res2$Z[,k2]
+  pdat <- data.frame(mean = cut(res1$colmeans,c(0,0.01,0.1,1,10,Inf)),
+                     b1   = res1$beta[,k1],
+                     b2   = res2$beta[,k2],
+                     gene = rownames(res1$Z),
+                     stringsAsFactors = FALSE)
+  pdat <- transform(pdat,
+                    b1 = sign(b1) * pmin(abs(b1),betamax),
+                    b2 = sign(b2) * pmin(abs(b2),betamax))
+  rows <- which(!(is.element(rownames(res1$Z),genes) |
+                    abs(z1) > label_above_score |
+                    abs(z2) > label_above_score))
+  pdat[rows,"gene"] <- ""
+  rows <- which(abs(z1) > zmin | abs(z2) > zmin)
+  pdat <- pdat[rows,]
+  return(ggplot(pdat,aes_string(x = "b1",y = "b2",fill = "mean",
+                                label = "gene")) +
+           geom_point(shape = 21,size = 1.5,color = "white") +
+           geom_text_repel(color = "black",size = 2.25,fontface = "italic",
+                           segment.color = "black",segment.size = 0.25,
+                           max.overlaps = Inf,na.rm = TRUE) +
+           scale_fill_manual(values = c("skyblue","cornflowerblue","orange",
+                                        "tomato","firebrick")) +
+           geom_abline(slope = 1,intercept = 0,color = "black",
+                       linetype = "dotted") +
+           xlim(range(c(pdat$b1,pdat$b2))) +
+           ylim(range(c(pdat$b1,pdat$b2))) +
+           theme_cowplot(font_size = 10) +
+           theme(plot.title = element_text(size = 10,face = "plain")))
+}
+
+# Create a scatterplot comparing two sets of z-scores generated from
+# two different differential expression analyses of the same data.
+# Points with the largest z-scores (in magnitude) are labeled
+# (controlled by the "label_above_score" argument). The "zmax" argument
+# is useful for creating a nice scatterplot when a small number of the
+# z-scores are much larger than the others. An additional set of genes
+# can be highlighted with the "genes" argument.
+zscores_scatterplot <- function (res1, res2, k1, k2, genes = NULL,
+                                 label_above_score = 100, zmax = 1000) {
+  z1   <- pmin(res1$Z[,k1],zmax)
+  z2   <- pmin(res2$Z[,k2],zmax)
+  pdat <- data.frame(mean = cut(res1$colmeans,c(0,0.01,0.1,1,10,Inf)),
+                     z1   = z1,
+                     z2   = z2,
+                     gene = rownames(res1$Z),
+                     stringsAsFactors = FALSE)
+  rows <- which(!(is.element(rownames(res1$Z),genes) |
+                    abs(z1) > label_above_score |
+                    abs(z2) > label_above_score))
+  pdat[rows,"gene"] <- ""
+  return(ggplot(pdat,aes_string(x = "z1",y = "z2",fill = "mean",
+                                label = "gene")) +
+           geom_point(shape = 21,size = 1.5,color = "white") +
+           geom_text_repel(color = "black",size = 2.25,fontface = "italic",
+                           segment.color = "black",segment.size = 0.25,
+                           max.overlaps = Inf,na.rm = TRUE) +
+           scale_fill_manual(values = c("skyblue","cornflowerblue","orange",
+                                        "tomato","firebrick")) +
+           geom_abline(slope = 1,intercept = 0,color = "black",
+                       linetype = "dotted") +
+           xlim(range(c(z1,z2))) +
+           ylim(range(c(z1,z2))) +
+           theme_cowplot(font_size = 10) +
+           theme(plot.title = element_text(size = 10,face = "plain")))
+}
+
+# Layer count data onto a basic PCA plot; the colour of the points are
+# varied by the counts (when log = FALSE), or the log-counts (when log
+# = TRUE).
+pca_plot_with_counts <- function (fit, counts, pcs = 1:2, log = FALSE,
+                                  font_size = 10) {
+  if (inherits(fit,"poisson_nmf_fit"))
+    fit <- poisson2multinom(fit)
+  dat <- as.data.frame(prcomp(fit$L)$x)
+  if (is.numeric(pcs))
+    pcs <- names(dat)[pcs]
+  dat <- cbind(dat,data.frame(count = counts))
+  if (log)
+    dat$count <- log(dat$count)
+  return(ggplot(dat,aes_string(x = pcs[1],y = pcs[2],fill = "count")) +
+           geom_point(shape = 21,color = "white",size = 1.25) +
+           scale_fill_gradientn(colors = c("skyblue","gold","darkorange",
+                                           "magenta"),
+                                na.value = "lightskyblue") +
+           labs(fill = ifelse(log,"log-count","count")) +
+           theme_cowplot(font_size = font_size))
+}
+
+
+
+## https://github.com/stephenslab/fastTopics/blob/master/R/plots.R#L727
+my_pca_plot <-
+  function (fit, k, out.pca, pcs = 1:2, ggplot_call = pca_plot_ggplot_call,
+            plot_grid_call = function (plots) do.call(plot_grid,plots), ...) {
+
+    # Check and process inputs.
+    if (missing(k))
+      k <- seq(1,ncol(fit$L))
+
+    # If necessary, compute the principal components using prcomp.
+    if (missing(out.pca))
+      out.pca <- prcomp(fit$L,...)
+
+    if (length(k) == 1) {
+
+      # Prepare the data for plotting.
+      if (is.numeric(pcs))
+        pcs <- colnames(out.pca$x)[pcs]
+      dat <- as.data.frame(cbind(out.pca$x[,pcs],fit$L[,k]))
+      names(dat) <- c(pcs,"loading")
+
+      # Create the PCA plot.
+      return(pca_plot_ggplot_call(dat,pcs,k))
+    } else {
+
+      # Create a PCA plot for each selected topic, and combine them
+      # using plot_grid. This is done by recursively calling pca_plot.
+      m     <- length(k)
+      plots <- vector("list",m)
+      names(plots) <- k
+      for (i in 1:m)
+        plots[[i]] <- my_pca_plot(fit,k[i],out.pca,pcs,ggplot_call,
+                               plot_grid_call,...)
+      return(plot_grid_call(plots))
+    }
+  }
+
+## https://github.com/stephenslab/fastTopics/blob/master/R/plots.R#L1001
+
+## only allow 'color = "prop"' (row sum of L is 1)
+my_tsne_plot <-
+  function (fit, color = "prop", k, tsne,
+            ggplot_call = tsne_plot_ggplot_call,
+            plot_grid_call = function (plots) do.call(plot_grid,plots), ...) {
+
+    # Check and process inputs.
+    color <- match.arg(color)
+    if (missing(k))
+      k <- seq(1,ncol(fit$L))
+
+    # If necessary, compute the 2-d embedding using t-SNE.
+    if (missing(tsne))
+      tsne <- my_tsne_from_topics(fit,2,...)
+
+    if (length(k) == 1) {
+      dat <- as.data.frame(cbind(tsne$Y,fit$L[tsne$rows,k]))
+      names(dat) <- c("d1","d2","loading")
+      # Create the t-SNE plot.
+      return(ggplot_call(dat,k))
+    } else {
+
+      # Create a t-SNE plot for each selected topic, and combine them
+      # using plot_grid. This is done by recursively calling tsne_plot.
+      m     <- length(k)
+      plots <- vector("list",m)
+      names(plots) <- k
+      for (i in 1:m)
+        plots[[i]] <- my_tsne_plot(fit,color,k[i],tsne,ggplot_call,
+                                plot_grid_call,...)
+      return(plot_grid_call(plots))
+    }
+  }
+
+
+
+
+
+my_tsne_from_topics <- function (fit, dims = 2, n = 5000, scaling = NULL,
+                              pca = FALSE, normalize = FALSE,
+                              perplexity = 100, theta = 0.1, max_iter = 1000,
+                              eta = 200, verbose = TRUE, ...) {
+
+  # Randomly subsample, if necessary.
+  n0 <- nrow(fit$L)
+  if (n < n0)
+    rows <- sample(n0,n)
+  else
+    rows <- 1:n0
+
+  # Prepare the data for t-SNE. If requested, re-scale the columns of
+  # the loadings matrix.
+  L <- fit$L[rows,]
+  if (!is.null(scaling))
+    L <- scale.cols(L,scaling)
+
+  # Adjust the perplexity if it is too large for the number of samples.
+  n  <- nrow(L)
+  p0 <- floor((n - 1)/3) - 1
+  if (perplexity > p0) {
+    message(sprintf(paste("Perplexity automatically changed to %d because",
+                          "original setting of %d was too large for the",
+                          "number of samples (%d)"),p0,perplexity,n))
+    perplexity <- p0
+  }
+
+  # Compute the t-SNE embedding.
+  out <- Rtsne(L,dims,pca = pca,normalize = normalize,perplexity = perplexity,
+               theta = theta,max_iter = max_iter,verbose = verbose,...)
+
+  # Return the t-SNE embedding stored as an n x dims matrix (Y), and
+  # the rows of L included in the embedding (rows).
+  Y           <- out$Y
+  rownames(Y) <- rownames(L)
+  colnames(Y) <- paste0("d",1:dims)
+  return(list(Y = Y,rows = rows))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
