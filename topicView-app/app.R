@@ -1,9 +1,9 @@
 # Load packages ----
 library(stringr)
 # Load data ----
-vocab = readLines("../data/SLA/vocab.sla.txt")
-title = readLines("../data/SLA/title.sla.txt")
-doi = readLines("../data/SLA/doi.sla.txt")
+vocab = readLines("data/SLA/vocab.sla.txt")
+title = readLines("data/SLA/title.sla.txt")
+doi = readLines("data/SLA/doi.sla.txt")
 
 
 # User interface ----
@@ -41,7 +41,7 @@ server <- function(input, output) {
     output$top_words <- renderText({
       K = as.integer(input$n_topic)
       k = as.integer(input$k)
-      model = readRDS(sprintf("../output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", K))
+      model = readRDS(sprintf("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", K))
       L = model$qg$qls_mean
       F = model$qg$qfs_mean
       topic_k = sort(F[,k], decreasing = TRUE, index.return=TRUE)
@@ -57,7 +57,7 @@ server <- function(input, output) {
     output$top_doc <- renderText({
       K = as.integer(input$n_topic)
       k = as.integer(input$k)
-      model = readRDS(sprintf("../output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", K))
+      model = readRDS(sprintf("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", K))
       L = model$qg$qls_mean
       F = model$qg$qfs_mean
       doc_weight_k = sort(L[,k], decreasing = TRUE, index.return=TRUE)
