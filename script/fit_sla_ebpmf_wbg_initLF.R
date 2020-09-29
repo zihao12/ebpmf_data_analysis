@@ -12,9 +12,9 @@ K = as.integer(args[2])
 maxiter = as.integer(args[3])
 every = as.integer(args[4])
 
-version = "v0.4.2"
-datadir = "../data/uci_BoW"
-outdir = sprintf("../output/uci_BoW/%s", version)
+version = "v0.4.5"
+datadir = "../data/SLA"
+outdir = sprintf("../output/SLA/%s", version)
 filename = sprintf("docword.%s", docname)
 format = "txt"
 init_iter = 50
@@ -34,6 +34,7 @@ F = init_tmp$F
 T = round(maxiter/every)
 init = ebpmf.alpha::initialize_qgl0f0w_from_LF(L = L, F = F)
 ELBO = c()
+KL = c()
 RUNTIME = c()
 
 start_time = proc.time()
@@ -53,8 +54,10 @@ for(t in 1:T){
 	## update init, elbo
 	init = list(qg = fit$qg, l0 = fit$l0, f0 = fit$f0, w = fit$w)
 	ELBO = c(ELBO, fit$ELBO)
+	KL = c(KL, fit$KL)
 	## save file
 	fit[["ELBO"]] = ELBO
+	fit[["KL"]] = KL
 	fit[["runtime"]] = runtime
 	saveRDS(fit, file = file_out)
 }

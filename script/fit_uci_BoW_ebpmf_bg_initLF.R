@@ -37,6 +37,7 @@ saveRDS(list(L = L, F = F), init_file)
 T = round(maxiter/every)
 init = initialize_qgl0f0_from_LF(L = L, F = F)
 ELBO = c()
+KL = c()
 RUNTIME = c()
 
 start_time = proc.time()
@@ -56,8 +57,10 @@ for(t in 1:T){
 	## update init, elbo
 	init = list(qg = fit$qg, l0 = fit$l0, f0 = fit$f0)
 	ELBO = c(ELBO, fit$ELBO)
+	KL = c(KL, fit$KL)
 	## save file
 	fit[["ELBO"]] = ELBO
+	fit[["KL"]] = KL
 	fit[["runtime"]] = runtime
 	saveRDS(fit, file = file_out)
 }
