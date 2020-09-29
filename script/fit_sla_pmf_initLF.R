@@ -11,7 +11,7 @@ K = as.integer(args[2])
 maxiter = as.integer(args[3])
 every = as.integer(args[4])
 
-version = "v0.4.4"
+version = "v0.4.5"
 datadir = "../data/SLA"
 outdir = sprintf("../output/SLA/%s", version)
 filename = sprintf("docword.%s", docname)
@@ -26,6 +26,7 @@ Y = read_sla_bag_of_words(file= sprintf("%s/%s.%s",
 
 ## initialization & save file
 init = readRDS(init_file)
+#init = NULL
 
 ## fit with ebpmf.alpha
 T = round(maxiter/every)
