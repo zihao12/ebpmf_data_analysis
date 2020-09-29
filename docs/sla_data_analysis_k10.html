@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Zihao" />
@@ -27,9 +27,16 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -77,9 +84,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -93,7 +98,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -103,6 +107,9 @@ img {
 }
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -118,7 +125,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -138,6 +144,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -159,47 +202,66 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -213,6 +275,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -248,8 +316,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -258,6 +324,16 @@ div.tocify {
 
 
 </style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
@@ -306,214 +382,775 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<!-- Add a small amount of space between sections. -->
-<style type="text/css">
-div.section {
-  padding-top: 12px;
-}
-</style>
-
 <div class="fluid-row" id="header">
 
 
 
 <h1 class="title toc-ignore">sla_data_analysis_k10</h1>
-<h4 class="author"><em>Zihao</em></h4>
-<h4 class="date"><em>2020-09-27</em></h4>
+<h4 class="author">Zihao</h4>
+<h4 class="date">2020-09-27</h4>
 
 </div>
 
 
-<p><strong>Last updated:</strong> 2020-09-27</p>
-<strong>workflowr checks:</strong> <small>(Click a bullet for more information)</small>
-<ul>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>R Markdown file:</strong> up-to-date </summary></p>
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
-</details>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Environment:</strong> empty </summary></p>
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
-</details>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Seed:</strong> <code>set.seed(20200511)</code> </summary></p>
-<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Session information:</strong> recorded </summary></p>
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
-</details>
-</li>
-<li>
-<p><details> <summary> <strong style="color:blue;">✔</strong> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3f7950a1d3e2d4831831d3d4d02ca35618478cee" target="_blank">3f7950a</a> </summary></p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
-<pre><code>
-Ignored files:
-    Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  data/SLA/SLA_preprocessed_minzhe.RData
-    Untracked:  data/SLA/docword.sla_minzhe.txt
-    Untracked:  data/SLA/vocab.sla_minzhe.txt
-    Untracked:  output/SLA/
-    Untracked:  output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter3000.Rds
-    Untracked:  script/fit_sla_ebpmf_wbg.sbatch
-    Untracked:  script/fit_sla_ebpmf_wbg2.sbatch
-    Untracked:  script/fit_sla_ebpmf_wbg3.sbatch
-    Untracked:  script/fit_sla_ebpmf_wbg4.sbatch
-    Untracked:  script/fit_sla_ebpmf_wbg5.sbatch
-    Untracked:  script/fit_sla_ebpmf_wbg6.sbatch
-    Untracked:  script/fit_sla_pmf.sbatch
-    Untracked:  script/fit_sla_pmf2.sbatch
-    Untracked:  script/fit_sla_pmf3.sbatch
-    Untracked:  script/fit_sla_pmf4.sbatch
-    Untracked:  script/fit_sla_pmf5.sbatch
-    Untracked:  script/fit_sla_pmf6.sbatch
-    Untracked:  script/fit_sla_pmf_initialization.R
-    Untracked:  script/fit_uci_BoW_ebpmf_bg.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_bg2.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_bg3.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_bg_initLF.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initL.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initL2.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initL3.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initLF.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initLF2.sbatch
-    Untracked:  script/fit_uci_BoW_ebpmf_wbg_initLF3.sbatch
-    Untracked:  script/fit_uci_BoW_pmf_initLF.sbatch
-    Untracked:  script/fit_uci_BoW_pmf_initLF2.sbatch
-    Untracked:  script/fit_uci_BoW_pmf_initLF3.sbatch
-    Untracked:  script/slurm-5403681.out
-    Untracked:  script/slurm-5404401.out
-    Untracked:  script/slurm-5404403.out
-    Untracked:  script/slurm-5435873.out
-    Untracked:  script/slurm-5435932.out
-    Untracked:  script/slurm-5436391.out
-    Untracked:  script/slurm-5495928.out
-    Untracked:  script/slurm-5496034.out
-    Untracked:  script/slurm-5496062.out
-    Untracked:  script/slurm-5496165.out
-    Untracked:  script/slurm-5496171.out
-    Untracked:  script/slurm-5496173.out
-
-Unstaged changes:
-    Modified:   script/fit_sla_ebpmf_wbg_initLF.R
-    Modified:   script/fit_sla_pmf_initLF.R
-
-</code></pre>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes. </details>
+<a data-toggle="tab" href="#versions">Past versions</a>
 </li>
 </ul>
-<details> <summary> <small><strong>Expand here to see past versions:</strong></small> </summary>
-<ul>
-<table style="border-collapse:separate; border-spacing:5px;">
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-09-28
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeceb420075af643b3fff9b6a49aad184449c812aatargetblankceb4200a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/ceb420075af643b3fff9b6a49aad184449c812aa" target="_blank">ceb4200</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeceb420075af643b3fff9b6a49aad184449c812aatargetblankceb4200a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/ceb420075af643b3fff9b6a49aad184449c812aa" target="_blank">ceb4200</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/ebpmf_bg_tutorial_cache/
+    Ignored:    analysis/investigate_np_ebpmf_wbg_cache/
+    Ignored:    analysis/pmf_greedy_experiment_cache/
+    Ignored:    analysis/sla_data_analysis_k10_cache/
+    Ignored:    data/.DS_Store
+    Ignored:    output/.DS_Store
+    Ignored:    topicView-app/.DS_Store
+    Ignored:    topicView-app/data/.DS_Store
+    Ignored:    topicView-app/data/SLA/SCC2016/.DS_Store
+
+Untracked files:
+    Untracked:  analysis/test.Rmd
+
+Unstaged changes:
+    Modified:   code/plots.R
+    Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
+    Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
+    Deleted:    data/SLA/SCC2016/Code/APL/compParamErr2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl4c.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cplEstimParam.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_basic_demo_PJ.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_demo.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_demo2a.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod3.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_nmi_beta_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_nmi_lambda_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_time_vs_n_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod.c
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod.mexa64
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/initLabel5b.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/ProfileLike.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/calCri1.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/calCri2.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/mutiExp.m
+    Deleted:    data/SLA/SCC2016/Code/MatlabCode.m
+    Deleted:    data/SLA/SCC2016/Code/NewmanSM/NewmanSM.m
+    Deleted:    data/SLA/SCC2016/Code/coauthorThresh2GiantAdj.txt
+    Deleted:    data/SLA/SCC2016/Code/coauthorThresh2GiantCommLabelK2Matlab.txt
+    Deleted:    data/SLA/SCC2016/Code/functions.R
+    Deleted:    data/SLA/SCC2016/Code/main.R
+    Deleted:    data/SLA/SCC2016/Data/authorList.txt
+    Deleted:    data/SLA/SCC2016/Data/authorPaperBiadj.txt
+    Deleted:    data/SLA/SCC2016/Data/paperCitAdj.txt
+    Deleted:    data/SLA/SCC2016/Data/paperList.txt
+    Deleted:    data/SLA/SCC2016/ReadMe.txt
+    Deleted:    data/uci_BoW.sh
+    Deleted:    data/uci_BoW/docword.kos.txt
+    Deleted:    data/uci_BoW/readme.txt
+    Deleted:    data/uci_BoW/vocab.kos.txt
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_500.Rout
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K2_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K300_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K500_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K300_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K500_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter5.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter100.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter200.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter300.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter400.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter600.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter700.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter800.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter900.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K100_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K20_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K300_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K500_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K50_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter5.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter100.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter200.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter300.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter400.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter600.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter700.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter800.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter900.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K3_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K100_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K20_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K300_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K3_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K500_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K50_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/sla_data_analysis_k10.Rmd</code>) and HTML (<code>docs/sla_data_analysis_k10.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th>
 File
 </th>
-<th style="text-align:left;">
+<th>
 Version
 </th>
-<th style="text-align:left;">
+<th>
 Author
 </th>
-<th style="text-align:left;">
+<th>
 Date
 </th>
-<th style="text-align:left;">
+<th>
 Message
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
+<td>
 Rmd
 </td>
-<td style="text-align:left;">
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3f7950a1d3e2d4831831d3d4d02ca35618478cee/analysis/sla_data_analysis_k10.Rmd" target="_blank">3f7950a</a>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/ceb420075af643b3fff9b6a49aad184449c812aa/analysis/sla_data_analysis_k10.Rmd" target="_blank">ceb4200</a>
 </td>
-<td style="text-align:left;">
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+<td>
+update plotting for sla data analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/sla_data_analysis_k10.html" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c7f04f881cd952c10b5367add8d154936af33884/analysis/sla_data_analysis_k10.Rmd" target="_blank">c7f04f8</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+<td>
+sla_data_analysis_k10
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/2bb9b310c104a0924f49414b907deef789344098/docs/sla_data_analysis_k10.html" target="_blank">2bb9b31</a>
+</td>
+<td>
 Zihao
 </td>
-<td style="text-align:left;">
+<td>
 2020-09-27
 </td>
-<td style="text-align:left;">
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3f7950a1d3e2d4831831d3d4d02ca35618478cee/analysis/sla_data_analysis_k10.Rmd" target="_blank">3f7950a</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2020-09-27
+</td>
+<td>
 prelim analysis sla k 10
 </td>
 </tr>
 </tbody>
 </table>
-</ul>
-<p></details></p>
-<hr />
+</div>
+<hr>
+</div>
+</div>
+</div>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>I applied topic modeling to SLA dataset. let’s see the results.</p>
-<pre class="r"><code>model = readRDS(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds&quot;)
-
-doi = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/doi.sla.txt&quot;)
-vocab = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/vocab.sla.txt&quot;)
-title = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/title.sla.txt&quot;)
-abs = readLines(&quot;/project2/mstephens/zihao/ebpmf_data_analysis/data/SLA/abs.sla.txt&quot;)</code></pre>
-<pre class="r"><code>plot(model$ELBO)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>L = model$qg$qls_mean
-F = model$qg$qfs_mean
-
-k = 5
-topic_k = sort(F[,k], decreasing = TRUE, index.return=TRUE)
-hist(topic_k$x, breaks = 100)</code></pre>
-<p><img src="figure/sla_data_analysis_k10.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>vocab[topic_k$ix[1:10]]</code></pre>
-<pre><code> [1] &quot;additive&quot;           &quot;curves&quot;             &quot;spline&quot;            
- [4] &quot;principal&quot;          &quot;splines&quot;            &quot;predictors&quot;        
- [7] &quot;varyingcoefficient&quot; &quot;trajectories&quot;       &quot;dimensionreduction&quot;
-[10] &quot;eigenvalues&quot;       </code></pre>
-<pre class="r"><code>## see documents with most weights in that topic
-doc_weight_k = sort(L[,k], decreasing = TRUE, index.return=TRUE)
-abs[doc_weight_k$ix[1:5]]</code></pre>
-<pre><code>[1] &quot;Modern graphical tools have enhanced our ability-to learn many things from data directly. In recent years, dimension reduction has proven to be an effective tool for generating low-dimensional summary plots without appreciable loss of information. Some well-known inverse regression methods for dimension reduction such as sliced inverse regression (Li; 1991) and sliced average variance estimation (Cook &amp; Weisberg, 1991) have been developed to estimate summary plots for regression and discriminant analysis; In this paper, we suggest a new method that makes use of inverse third moments. This method can find structure beyond that found by sliced inverse regression and sliced average variance estimation, particularly regression mixtures. Illustrative examples are presented.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-[2] &quot;With modem technology development, functional data are being observed frequently in many scientific fields. A popular method for analyzing such functional data is &#39;&#39; smoothing first, then estimation.&#39;&#39; That is, statistical inference such as estimation and hypothesis testing about functional data is conducted based on the substitution of the underlying individual functions by their reconstructions obtained by one smoothing technique or another. However, little is known about this substitution effect on functional data analysis. In this paper this problem is investigated when the local polynomial kernel (LPK) smoothing technique is used for individual function reconstructions. We find that under some mild conditions, the substitution effect can be ignored asymptotically. Based on this, we construct LPK reconstruction-based estimators for the mean, covariance and noise variance functions of a functional data set and derive their asymptotics. We also propose a GCV rule for selecting good bandwidths for the LPK reconstructions. When the mean function also depends on some time-independent covariates, we consider a functional linear model where the mean function is linearly related to the covariates but the covariate effects are functions of time. The LPK reconstruction-based estimators for the covariate effects and the covariance function are also constructed and their asymptotics are derived. Moreover, we propose a L-2- norm-based global test statistic for a general hypothesis testing problem about the covariate effects and derive its asymptotic random expression. The effect of the bandwidths selected by the proposed GCV rule on the accuracy of the LPK reconstructions and the mean function estimator is investigated via a simulation study. The proposed methodologies are illustrated via an application to a real functional data set collected in climatology.&quot;                                                                                                                
-[3] &quot;This paper provides ANOVA inference for nonparametric local polynomial regression (LPR) in analogy with ANOVA tools for the classical linear regression model. A surprisingly simple and exact local ANOVA decomposition is established, and a local R-squared quantity is defined to measure the proportion of local variation explained by fitting LPR. A global ANOVA decomposition is obtained by integrating local counterparts, and a global R-squared and a symmetric projection matrix are defined. We show that the proposed projection matrix is asymptotically idempotent and asymptotically orthogonal to its complement, naturally leading to an F-test for testing for no effect. A by-product result is that the asymptotic bias of the \&quot;projected\&quot; response based on local linear regression is of quartic order of the bandwidth. Numerical results illustrate the behaviors of the proposed R-squared and F-test. The ANOVA methodology is also extended to varying coefficient models.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-[4] &quot;We propose an iterative estimation procedure for performing functional principal component analysis. The procedure aims at functional or longitudinal data where the repeated measurements from the same subject are correlated. An increasingly popular smoothing approach, penalized spline regression, is used to represent the mean function. This allows straightforward incorporation of covariates and simple implementation of approximate inference procedures for coefficients. For the handling of the within-subject correlation, we develop an iterative procedure which reduces the dependence between the repeated measurements that are made for the same subject. The resulting data after iteration are theoretically shown to be asymptotically equivalent (in probability) to a set of independent data. This suggests that the general theory of penalized spline regression that has been developed for independent data can also be applied to functional data. The effectiveness of the proposed procedure is demonstrated via a simulation study and an application to yeast cell cycle gene expression data.&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-[5] &quot;Representation of generalized additive models (GAM&#39;s) using penalized regression splines allows GAM&#39;s to be employed in a straightforward manner using penalized regression methods. Not only is inference facilitated by this approach, but it is also possible to integrate model selection in the form of smoothing parameter selection into model fitting in a computationally efficient manner using well founded criteria such as generalized cross-validation. The current fitting and smoothing parameter selection methods for such models are usually effective, but do not provide the level of numerical stability to which users of linear regression packages, for example, are accustomed. In particular the existing methods cannot deal adequately with numerical rank deficiency of the GAM fitting problem, and it is not straightforward to produce methods that can do so, given that the degree of rank deficiency can be smoothing parameter dependent. In addition, models with the potential flexibility of GAM&#39;s can also present practical fitting difficulties as a result of indeterminacy in the model likelihood: Data with many zeros fitted by a model with a log link are a good example. In this article it is proposed that GAM&#39;s with a ridge penalty provide a practical solution in such circumstances, and a multiple smoothing parameter selection method suitable for use in the presence of such a penalty is developed. The method is based on the pivoted QR decomposition and the singular value decomposition, so that with or without a ridge penalty it has good error propagation properties and is capable of detecting and coping elegantly with numerical rank deficiency. The method also allows mixtures of user specified and estimated smoothing parameters and the setting of lower bounds on smoothing parameters. In terms of computational efficiency, the method compares well with existing methods. A simulation study compares the method to existing methods, including treating GAM&#39;s as mixed models.&quot;</code></pre>
+<p>I applied <a href="https://github.com/stephenslab/ebpmf.alpha/blob/master/R/ebpmf_wbg.R">ebpmf_wbg</a> (with <span class="math inline">\(k = 10\)</span>) to <a href="https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla">SLA</a> dataset. let’s see the results.</p>
+<pre class="r"><code>library(Matrix)
+# Warning: package &#39;Matrix&#39; was built under R version 3.5.2
+library(dplyr)
+# Warning: package &#39;dplyr&#39; was built under R version 3.5.2
+library(fastTopics)
+library(ggplot2)
+# Warning: package &#39;ggplot2&#39; was built under R version 3.5.2
+library(cowplot)
+# Warning: package &#39;cowplot&#39; was built under R version 3.5.2
+source(&quot;code/plots.R&quot;)
+set.seed(123)</code></pre>
 </div>
-<div id="session-information" class="section level2">
-<h2>Session information</h2>
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 3.5.1 (2018-07-02)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Scientific Linux 7.4 (Nitrogen)
-
-Matrix products: default
-BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
-
-locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-loaded via a namespace (and not attached):
- [1] workflowr_1.1.1   Rcpp_1.0.2        digest_0.6.22    
- [4] rprojroot_1.3-2   R.methodsS3_1.7.1 backports_1.1.5  
- [7] magrittr_1.5      git2r_0.26.1      evaluate_0.14    
-[10] stringi_1.4.3     whisker_0.4       R.oo_1.22.0      
-[13] R.utils_2.7.0     rmarkdown_1.10    tools_3.5.1      
-[16] stringr_1.4.0     yaml_2.2.0        compiler_3.5.1   
-[19] htmltools_0.3.6   knitr_1.20       </code></pre>
+<div id="load-fitted-model" class="section level2">
+<h2>load fitted model</h2>
+<p>Note that: <span class="math inline">\(X_{ij} \sim Pois(\sum_k w_k l_{i0} l_{ik} f_{j0} f_{jk})\)</span>. I use <span class="math inline">\(\text{loading}_{ik} = w_k l_{ik}\)</span> then scale it so that each row sums to 1. There are other ways to get a meaningful loading…</p>
+<pre class="r"><code>model = readRDS(&quot;output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds&quot;)
+L_scaled = model$qg$qls_mean %*% diag(model$w)
+L_scaled = L_scaled/rowSums(L_scaled)
+fit = list(L = L_scaled)</code></pre>
 </div>
+<div id="meaning-of-topics" class="section level2">
+<h2>Meaning of topics:</h2>
+<p>See <a href="https://zihao12.shinyapps.io/topicview-app/">topicView</a> (more info to add)</p>
+</div>
+<div id="visualization-of-l" class="section level2 tabset">
+<h2>Visualization of <span class="math inline">\(L\)</span></h2>
+<div id="t-sne-plots" class="section level3">
+<h3>t-SNE plots</h3>
+<pre class="r"><code>p12 &lt;- my_tsne_plot(fit,k = 1:10,num_threads = 4,verbose = FALSE)
+print(p12)</code></pre>
+<p><img src="figure/sla_data_analysis_k10.Rmd/tsne-plot1-1.png" width="1200" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-tsne-plot1-1">
+Past versions of tsne-plot1-1.png
+</button>
+</p>
+<div id="fig-tsne-plot1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/tsne-plot1-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="pca-plots" class="section level3">
+<h3>PCA plots</h3>
+<pre class="r"><code>lams = svd(x = L_scaled)$d
+plot(1:length(lams), lams/sum(lams), xlab = &quot;eigen idx&quot;, ylab = &quot;prop of variance explained&quot;)</code></pre>
+<p><img src="figure/sla_data_analysis_k10.Rmd/unnamed-chunk-1-1.png" width="840" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/unnamed-chunk-1-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- ```{r clustering-1, fig.width=8, fig.height=2.5} -->
+<!-- p1 <- basic_pca_plot(fit,1:2) -->
+<!-- p2 <- basic_pca_plot(fit,3:4) -->
+<!-- p3 <- basic_pca_plot(fit,5:6) -->
+<!-- plot_grid(p1,p2,p3,nrow = 1,ncol = 3) -->
+<!-- ``` -->
+<p>PCA plots (Show the density of the points by “hexbin” plots)</p>
+<pre class="r"><code>bins &lt;- c(0,1,5,10,100,Inf)
+p4 &lt;- pca_hexbin_plot(fit,1:2,bins = bins) + guides(fill = &quot;none&quot;)
+p5 &lt;- pca_hexbin_plot(fit,3:4,bins = bins) + guides(fill = &quot;none&quot;)
+p6 &lt;- pca_hexbin_plot(fit,5:6,bins = bins) + guides(fill = &quot;none&quot;)
+plot_grid(p4,p5,p6,nrow = 1,ncol = 3)</code></pre>
+<p><img src="figure/sla_data_analysis_k10.Rmd/clustering-2-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-2-1">
+Past versions of clustering-2-1.png
+</button>
+</p>
+<div id="fig-clustering-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/clustering-2-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Show where each topic lies in PC1-PC2 space</p>
+<pre class="r"><code>p9 &lt;- my_pca_plot(fit,pcs = 1:2,k = 1:10)
+print(p9)</code></pre>
+<p><img src="figure/sla_data_analysis_k10.Rmd/clustering-3-1.png" width="660" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-clustering-3-1">
+Past versions of clustering-3-1.png
+</button>
+</p>
+<div id="fig-clustering-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/094f0069f74f32c13dbc298267ad004dd9bfba8e/docs/figure/sla_data_analysis_k10.Rmd/clustering-3-1.png" target="_blank">094f006</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-09-28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()
+# R version 3.5.1 (2018-07-02)
+# Platform: x86_64-apple-darwin15.6.0 (64-bit)
+# Running under: macOS  10.15.6
+# 
+# Matrix products: default
+# BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+# LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+# 
+# locale:
+# [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+# 
+# attached base packages:
+# [1] stats     graphics  grDevices utils     datasets  methods   base     
+# 
+# other attached packages:
+# [1] Rtsne_0.15         cowplot_0.9.4      ggplot2_3.3.0      fastTopics_0.3-177
+# [5] dplyr_0.8.1        Matrix_1.2-17      workflowr_1.6.2   
+# 
+# loaded via a namespace (and not attached):
+#  [1] ggrepel_0.8.2      Rcpp_1.0.5         lattice_0.20-38    tidyr_0.8.3       
+#  [5] prettyunits_1.1.1  assertthat_0.2.1   rprojroot_1.3-2    digest_0.6.25     
+#  [9] R6_2.4.1           backports_1.1.7    MatrixModels_0.4-1 evaluate_0.14     
+# [13] coda_0.19-3        httr_1.4.1         pillar_1.4.4       rlang_0.4.6       
+# [17] progress_1.2.2     lazyeval_0.2.2     data.table_1.12.2  irlba_2.3.3       
+# [21] SparseM_1.77       whisker_0.3-2      hexbin_1.28.1      rmarkdown_2.1     
+# [25] labeling_0.3       stringr_1.4.0      htmlwidgets_1.3    munsell_0.5.0     
+# [29] compiler_3.5.1     httpuv_1.5.4       xfun_0.8           pkgconfig_2.0.3   
+# [33] mcmc_0.9-5         htmltools_0.5.0    tidyselect_0.2.5   tibble_3.0.1      
+# [37] quadprog_1.5-8     viridisLite_0.3.0  crayon_1.3.4       withr_2.2.0       
+# [41] later_1.1.0.1      MASS_7.3-51.4      grid_3.5.1         jsonlite_1.6.1    
+# [45] gtable_0.3.0       lifecycle_0.2.0    git2r_0.26.1       magrittr_1.5      
+# [49] scales_1.1.1       RcppParallel_4.4.3 stringi_1.4.3      farver_2.0.3      
+# [53] fs_1.3.1           promises_1.1.1     ellipsis_0.3.1     vctrs_0.3.0       
+# [57] tools_3.5.1        glue_1.4.1         purrr_0.3.4        hms_0.4.2         
+# [61] yaml_2.2.0         colorspace_1.4-1   plotly_4.9.2.1     knitr_1.28        
+# [65] quantreg_5.40      MCMCpack_1.4-3</code></pre>
+</div>
+</div>
+</div>
+
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
@@ -526,14 +1163,6 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
-
-<hr>
-<p>
-  This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
-  analysis was created with
-  <a href="https://github.com/jdblischak/workflowr">workflowr</a> 1.1.1
-</p>
-<hr>
 
 
 </div>
@@ -552,6 +1181,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

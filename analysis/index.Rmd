@@ -30,3 +30,5 @@ Data analysis results:\
  [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.4.2.html), \
  [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html)
  
+ * Version `0.4.5`:  \
+ [SLA_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_data_analysis_k10)
