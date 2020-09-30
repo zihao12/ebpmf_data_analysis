@@ -32,6 +32,7 @@ L = readRDS(init_file)$L
 T = round(maxiter/every)
 init = ebpmf.alpha::initialize_qgl0f0w_from_L(X = Y, L = L)
 ELBO = c()
+KL = c()
 RUNTIME = c()
 
 start_time = proc.time()
@@ -51,8 +52,10 @@ for(t in 1:T){
 	## update init, elbo
 	init = list(qg = fit$qg, l0 = fit$l0, f0 = fit$f0, w = fit$w)
 	ELBO = c(ELBO, fit$ELBO)
+	KL = c(KL, fit$KL)
 	## save file
 	fit[["ELBO"]] = ELBO
+	fit[["KL"]] = KL
 	fit[["runtime"]] = runtime
 	saveRDS(fit, file = file_out)
 }
