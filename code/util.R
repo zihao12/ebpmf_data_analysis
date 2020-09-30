@@ -21,6 +21,19 @@ read_sla_bag_of_words <- function(filename){
   return(out)
 }
 
+read_nips_bag_of_words <- function(filename){
+  data = read.table(file = filename, skip= 2, header = FALSE, sep = " ",
+                    col.names= c("i", "j", "x"))
+  out = Matrix::sparseMatrix(i = data$i, j = data$j, x = data$x)
+  return(out)
+}
+
+read_news_bag_of_words <- function(filename){
+  data = read.table(file = filename, skip= 2, header = FALSE, sep = " ",
+                    col.names= c("i", "j", "x"))
+  out = Matrix::sparseMatrix(i = data$i, j = data$j, x = data$x)
+  return(out)
+}
 ##################################################
 ################ Initialization ##################
 ##################################################
