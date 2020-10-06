@@ -31,8 +31,9 @@ Data analysis results:\
  [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html)
  
  * Version `0.4.5`:  \
- [SLA_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_data_analysis_k10)
- [NIPS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_ebpmf_wbg_k20)
- [NIPS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_pmf_k20)
- [NEWS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_ebpmf_wbg_k20)
+ [SLA_EBPMF_WBG_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_ebpmf_wbg_k10) (can change k to 5, 10, 50, 100 for more results)\
+ [SLA_PMF_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_pmf_k10) (can change k to 5, 10, 50, 100 for more results)\
+ [NIPS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_ebpmf_wbg_k20)\
+ [NIPS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_pmf_k20)\
+ [NEWS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_ebpmf_wbg_k20)\
  [NEWS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_pmf_k20)
