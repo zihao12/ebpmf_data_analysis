@@ -1,5 +1,5 @@
 ---
-title: "news_ebpmf_wbg_k20"
+title: "news_pmf_k20"
 author: "Zihao"
 date: "2020-09-27"
 output: workflowr::wflow_html
