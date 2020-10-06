@@ -1,0 +1,79 @@
+---
+title: "sla_data_analysis_k10"
+author: "Zihao"
+date: "2020-09-27"
+output: workflowr::wflow_html
+---
+
+## Introduction
+I  applied [ebpmf_wbg](https://github.com/stephenslab/ebpmf.alpha/blob/master/R/ebpmf_wbg.R) (with $k = 10$) to [SLA](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) dataset. let's see the results.
+
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,results = "hold",
+                      fig.align = "center",dpi = 120)
+```
+
+```{r load-pkgs, message = FALSE}
+library(Matrix)
+library(dplyr)
+library(fastTopics)
+library(ggplot2)
+library(cowplot)
+source("code/plots.R")
+set.seed(123)
+```
+
+
+## load fitted model
+Note that: $X_{ij} \sim  Pois(\sum_k w_k l_{i0} l_{ik} f_{j0} f_{jk})$. I use $\text{loading}_{ik} = w_k l_{ik}$ then scale it so that each row sums to 1. There are other ways to get a meaningful loading...
+```{r load-model}
+model = readRDS("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter5000.Rds")
+L_scaled = model$qg$qls_mean %*% diag(model$w)
+L_scaled = L_scaled/rowSums(L_scaled)
+fit = list(L = L_scaled)
+```
+
+## Meaning of topics:
+See [topicView](https://zihao12.shinyapps.io/topicview-app/) (more info to add)
+
+## Visualization of $L$ {.tabset}
+
+### t-SNE plots
+```{r tsne-plot1, fig.width=10, fig.height=12}
+p12 <- my_tsne_plot(fit,k = 1:10,num_threads = 4,verbose = FALSE)
+print(p12)
+```
+
+### PCA plots
+```{r}
+lams = svd(x = L_scaled)$d
+plot(1:length(lams), lams/sum(lams), xlab = "eigen idx", ylab = "prop of variance explained")
+```
+
+
+<!-- ```{r clustering-1, fig.width=8, fig.height=2.5} -->
+<!-- p1 <- basic_pca_plot(fit,1:2) -->
+<!-- p2 <- basic_pca_plot(fit,3:4) -->
+<!-- p3 <- basic_pca_plot(fit,5:6) -->
+<!-- plot_grid(p1,p2,p3,nrow = 1,ncol = 3) -->
+<!-- ``` -->
+
+PCA plots (Show the density of the points by “hexbin” plots)
+```{r clustering-2, fig.width=8, fig.height=2.5}
+bins <- c(0,1,5,10,100,Inf)
+p4 <- pca_hexbin_plot(fit,1:2,bins = bins) + guides(fill = "none")
+p5 <- pca_hexbin_plot(fit,3:4,bins = bins) + guides(fill = "none")
+p6 <- pca_hexbin_plot(fit,5:6,bins = bins) + guides(fill = "none")
+plot_grid(p4,p5,p6,nrow = 1,ncol = 3)
+```
+
+Show where each topic lies in PC1-PC2 space
+```{r clustering-3, fig.width=5.5, fig.height=12}
+p9 <- my_pca_plot(fit,pcs = 1:2,k = 1:10)
+print(p9)
+```
+
+
+
+
+
