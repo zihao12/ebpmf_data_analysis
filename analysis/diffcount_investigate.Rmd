@@ -1,0 +1,63 @@
+---
+title: "diffcount_example"
+author: "zihao12"
+date: "2020-10-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+I tried Peter's `fastTopics::diff_count_analysis` method. Together with vocano plot, I can pick key words given fitted topic models. 
+
+## Model description (very brief & my own understanding)
+Given \
+
+* the appearance of a word j in all documents,\
+
+* the topic proportion of topic k in all documents, \
+
+we want to say how important word j is for topic k. By ”important” I mean the ability to differentiate it against other topics.\
+
+Then we can borrow the idea of log fold change used in differential expression analysis. Call it $\beta$. We can estimate $\hat{\beta}$ from MLE (with a statitsical model). Then we estimate $se(\hat{\beta})$ and give Z score $\frac{\hat{\beta}}{se(\hat{\beta})}$.  \
+
+Note that it's not enough to only sort $\hat{\beta}$ (too many words have high $\hat{\beta}$) or Z score (frequent words with small $\hat{\beta}$ can have huge Z score) to find the top words. A good way is to visualize with vocano plots. 
+
+
+```{r}
+rm(list = ls())
+library(fastTopics)
+library(cowplot)
+source("code/misc.R")
+source("code/util.R")
+```
+
+```{r}
+model = readRDS("output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter2000.Rds")
+X = read_sla_bag_of_words("data/SLA/docword.sla.txt")
+vocab = readLines("data/SLA/vocab.sla.txt")
+
+## turn pmf model into multinomial
+model_multinom = get_multinom_from_pnmf(F = model$F, L = model$L)
+```
+
+
+```{r}
+k = 1
+diff_count <- fastTopics::diff_count_analysis(pmf2fastTopics_pmf(model), X)
+Z <- diff_count$Z
+Z_sorted = sort(Z[,k], decreasing = TRUE, index.return = TRUE)
+vocab[Z_sorted$ix[1:50]]
+```
+
+```{r}
+p5   <- volcano_plot(diff_count,k = 1, labels = vocab,
+                     label_above_quantile = 0.999)
+p6   <- volcano_plot(diff_count,k = 2, labels = vocab,
+                     label_above_quantile = 0.999)
+plot_grid(p5,p6)
+```
+
+
+
+
