@@ -20,6 +20,7 @@ library(fastTopics)
 library(ggplot2)
 library(cowplot)
 source("code/plots.R")
+source("code/misc.R")
 set.seed(123)
 ```
 
@@ -73,6 +74,12 @@ p9 <- my_pca_plot(fit,pcs = 1:2,k = 1:10)
 print(p9)
 ```
 
+## about `g`
+$l_{ik} \sim \pi_{kl} Ga(1/\phi_{kl}, 1/\phi_{kl})$. Note $Var(X) = \phi, X \sim Ga(1/\phi, 1/\phi)$, and for very big $\phi$, the mass is almost all on 0. 
+```{r}
+get_prior_summary(model$qg$gls)
+get_prior_summary(model$qg$gfs)
+```
 
 
 
