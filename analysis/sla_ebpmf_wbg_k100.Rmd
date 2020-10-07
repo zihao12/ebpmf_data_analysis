@@ -20,6 +20,7 @@ library(fastTopics)
 library(ggplot2)
 library(cowplot)
 source("code/plots.R")
+source("code/misc.R")
 set.seed(1234)
 
 K = 100
@@ -42,7 +43,7 @@ See [topicView](https://zihao12.shinyapps.io/topicview-app/) (more info to add)
 ## Visualization of $L$ {.tabset}
 
 ### t-SNE plots
-```{r tsne-plot1, fig.width=10, fig.height=12}
+```{r tsne-plot1, fig.width=10, fig.height=120}
 p12 <- my_tsne_plot(fit,k = 1:K,num_threads = 4,verbose = FALSE)
 print(p12)
 ```
@@ -71,11 +72,17 @@ plot_grid(p4,p5,p6,nrow = 1,ncol = 3)
 ```
 
 Show where each topic lies in PC1-PC2 space
-```{r clustering-3, fig.width=5.5, fig.height=12}
+```{r clustering-3, fig.width=5.5, fig.height=120}
 p9 <- my_pca_plot(fit,pcs = 1:2,k = 1:K)
 print(p9)
 ```
 
+## about `g`
+$l_{ik} \sim \pi_{kl} Ga(1/\phi_{kl}, 1/\phi_{kl})$. Note $Var(X) = \phi, X \sim Ga(1/\phi, 1/\phi)$, and for very big $\phi$, the mass is almost all on 0. 
+```{r}
+get_prior_summary(model$qg$gls)
+get_prior_summary(model$qg$gfs)
+```
 
 
 
