@@ -6,14 +6,6 @@
 ################ Input/Output ####################
 ##################################################
 
-read_bag_of_words <- function(filename, dataname){
-  if(dataname == "uci") return(read_uci_bag_of_words(filename))
-  if(dataname == "sla") return(read_sla_bag_of_words(filename))
-  if(dataname == "nips") return(read_nips_bag_of_words(filename))
-  if(dataname == "news") return(read_news_bag_of_words(filename))
-  if(dataname == "sim") return(read_sim_bag_of_words(filename))
-}
-
 ## function to read data
 read_uci_bag_of_words <- function(filename){
 	data = read.table(file = filename, skip= 3, sep = " ",
@@ -38,13 +30,6 @@ read_nips_bag_of_words <- function(filename){
 
 read_news_bag_of_words <- function(filename){
   data = read.table(file = filename, skip= 2, header = FALSE, sep = " ",
-                    col.names= c("i", "j", "x"))
-  out = Matrix::sparseMatrix(i = data$i, j = data$j, x = data$x)
-  return(out)
-}
-
-read_sim_bag_of_words <- function(filename){
-  data = read.table(file = filename, skip= 2, sep = " ",
                     col.names= c("i", "j", "x"))
   out = Matrix::sparseMatrix(i = data$i, j = data$j, x = data$x)
   return(out)
@@ -74,11 +59,4 @@ initialize_qgl0f0_from_LF <- function(L, F){
 	qg$gfs = replicate(K, list(bg_prior()))
 	return(list(qg = qg, l0 = l0, f0 = f0))
 }
-
-
-
-
-
-
-
 
