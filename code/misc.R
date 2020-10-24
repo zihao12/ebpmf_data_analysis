@@ -32,7 +32,7 @@ log_lik <- function(X, lam){
   return(sum(dpois(x = X, lambda = lam , log = T)))
 }
 
-get_prior_summary <- function(gs, return_matrix = FALSE){
+get_prior_summary <- function(gs, log10 = FALSE, return_matrix = FALSE){
   K = length(gs)
   phi_L = gs[[1]][["scale"]]
   idx = order(phi_L, decreasing = TRUE)
@@ -43,7 +43,12 @@ get_prior_summary <- function(gs, return_matrix = FALSE){
   }
   rownames(Pi) = paste("phi=", round(phi_L[idx], digits = 4), sep = "")
   colnames(Pi) = paste("Topic", 1:K, sep = "")
-  pheatmap(Pi, cluster_rows=FALSE, cluster_cols=FALSE)
+  main = "Pi"
+  if(log10){
+    Pi = log10(Pi + 0.001 * min(Pi[Pi > 0]))
+    main = "log10(Pi)"
+  }
+  pheatmap(Pi, cluster_rows=FALSE, cluster_cols=FALSE, main = main)
   if(return_matrix){return(Pi)}
 }
 
