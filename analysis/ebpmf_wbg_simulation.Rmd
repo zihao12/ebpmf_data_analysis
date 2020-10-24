@@ -1,0 +1,403 @@
+---
+title: "ebpmf_wbg_simulation"
+author: "zihao12"
+date: "2020-10-19"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+* What I did: 
+    - I want to understand when and how [ebpmf-wbg](https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations) works or does not work. 
+    - Below I simulate samll data from the model assumption: the true mean matrix can be seen as product of a rank-1 background frequency matrix, and rank-k deviation-from-background matrix.
+    - I tested the model fitting, with difficulty from easy (initalize with some info about true structure) to realistic (initalize with `pmf` fit). 
+
+* What I found:
+    - ELBO seems a good measure of the model performance
+    - The algorithm is susceptible to initialization. At least for `l0`, `f0`, if they are not initialized well, they do not change much in the iterated algorithm, and distort the structure in `L`, `F`. (Note that in larger dataset, gettinng a good initial estimate of `l0`, `f0` may be easy. Need more experiments on bigger data).
+    - In easy mode the model works well, and we can see how two modes in `g` capture the top words/documents assumption well. 
+
+```{r set-up}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, autodep = TRUE)
+```
+
+```{r packages}
+library(ebpmf.alpha)
+library(ggplot2)
+source("code/misc.R")
+source("code/init.R")
+set.seed(123)
+```
+
+# Simulate Data
+I want to hide the structure into the deviation from background
+```{r simulate-data}
+n = 160
+p = 500
+K = 5
+r0 = 10
+rl = 10
+rf = 10
+freq_word = 1:30
+topic1_word = 50 : 100
+topic2_word = 150 : 200
+topic3_word = 250 : 300
+topic4_word = 350 : 400
+topic5_word = 450 : 500
+
+freq_doc = 1:10
+topic1_doc = 20 : 40
+topic2_doc = 50 : 70
+topic3_doc = 80 : 100
+topic4_doc = 110 : 130
+topic5_doc = 140 : 160
+
+f0 =  runif(p, min = 0.8, max = 1.2)
+F = matrix(runif(p*K, min = 0.8, max = 1.2), nrow = p)
+f0[freq_word] = r0 * f0[freq_word]
+F[topic1_word,1] = rf * F[topic1_word,1]
+F[topic2_word,2] = rf * F[topic2_word,2]
+F[topic3_word,3] = rf * F[topic3_word,3]
+F[topic4_word,4] = rf * F[topic4_word,4]
+F[topic5_word,5] = rf * F[topic5_word,5]
+
+l0 =  runif(n, min = 0.8, max = 1.2)
+L = matrix(runif(n*K, min = 0.8, max = 1.2), nrow = n)
+l0[freq_doc] = r0 * l0[freq_doc]
+L[topic1_doc,1] = rl * L[topic1_doc,1]
+L[topic2_doc,2] = rl * L[topic2_doc,2]
+L[topic3_doc,3] = rl * L[topic3_doc,3]
+L[topic4_doc,4] = rl * L[topic4_doc,4]
+L[topic5_doc,5] = rl * L[topic5_doc,5]
+
+Lam = (l0 * L) %*% t(f0 * F)
+X = matrix(rpois(n = n*p, lambda = Lam), nrow = n)
+
+## plot Lam and X
+par(mfrow = c(1,2))
+image(Lam, main = "mean Lam")
+image(L %*% t(F), main = "deviation from background")
+
+## note that the mean for "most frequent" block is still stronger
+median(Lam[1:10, 1:10])
+median(Lam[topic1_doc, topic1_word])
+```
+
+
+# Experiments {.tabset}
+
+## Easies: initialize using true l0, f0, L, F
+
+### fit models
+```{r fit-easiest, cache=TRUE}
+maxiter = 100
+init_eb = initialize_qgl0f0w_from_l0f0LF.local(l0 = l0, f0 = f0, L = L, F = F)
+init_mle = list(L = l0 * L, F = f0 * F)
+fit_pmf = pmf(X = X, K = K, maxiter = maxiter, init = init_mle)
+fit_ebpmf_wbg = ebpmf_wbg(X = X, K = K, maxiter = maxiter, init = init_eb)
+```
+
+### check progress
+I plot the `loglik` for `pmf`; `ELBO` and `E_loglik` for `ebpmf-wbg`. Note that $\text{ELBO} = \text{E-loglik} + \text{KL}$, so the KL divergence is the difference between `ELBO` and `E_loglik`. 
+```{r progress-easiest}
+loglik_mle = fit_pmf$log_liks
+E_loglik_eb = fit_ebpmf_wbg$ELBO + fit_ebpmf_wbg$KL
+ELBO_eb = fit_ebpmf_wbg$ELBO
+ll_df <- data.frame(iter = 1:maxiter, loglik_mle = loglik_mle,
+                    E_loglik_eb = E_loglik_eb, ELBO_eb = ELBO_eb, KL_eb = fit_ebpmf_wbg$KL)
+
+plt = ggplot(data = ll_df)+
+  geom_line(aes(iter, loglik_mle, color = "loglik_mle")) +
+  geom_line(aes(iter, E_loglik_eb, color = "E_loglik_eb")) +
+  geom_line(aes(iter, ELBO_eb, color = "ELBO_eb"))+
+  ylab("progress")
+print(plt)
+
+ll_df[maxiter,]
+```
+
+### Compare fitted L, F (right) to truth (left)
+```{r lam-easiest}
+L_ebpmf_wbg = fit_ebpmf_wbg$qg$qls_mean
+F_ebpmf_wbg = fit_ebpmf_wbg$qg$qfs_mean
+w = fit_ebpmf_wbg$w
+w
+image(L_ebpmf_wbg %*% diag(w) %*% t(F_ebpmf_wbg), main = "fitted deviation from background")
+```
+
+```{r L-easiest, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(F[,k])
+  plot(F_ebpmf_wbg[,k])
+}
+```
+
+
+```{r F-easiest, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(L[,k])
+  plot(L_ebpmf_wbg[,k])
+}
+```
+
+
+### look at `g_L`, `g_F`
+```{r g-easiest}
+## around 0.14 for phi = 10; 0.86 for phi = 0.0133 (each L[,k] has 0.13 top documents)
+Pi_L = get_prior_summary(fit_ebpmf_wbg$qg$gls, return_matrix = TRUE)
+##  around 0.1 for phi = 10, 0.9 for phi <=  0.013 (each F[,k] has 0.1 top words)
+Pi_F = get_prior_summary(fit_ebpmf_wbg$qg$gfs, return_matrix = TRUE)
+```
+
+So $\phi = 10$ corresponds to the larger deviation from mean, while $\phi \approx 0.01$ corresponds to the rest that does not deviate much. The proportion is also right.  
+
+
+## Easy: initialize using true `l0*L`, `f0*F`
+
+### fit models
+```{r fit-easy, cache=TRUE}
+rm(init_eb, init_mle, fit_ebpmf_wbg)
+maxiter = 100
+init_eb = initialize_qgl0f0w_from_LF.local(L = l0*L, F = f0*F)
+fit_ebpmf_wbg = ebpmf_wbg(X = X, K = K, maxiter = maxiter, init = init_eb)
+```
+
+### check progress
+I plot the `loglik` for `pmf`; `ELBO` and `E_loglik` for `ebpmf-wbg`. Note that $\text{ELBO} = \text{E-loglik} + \text{KL}$, so the KL divergence is the difference between `ELBO` and `E_loglik`. 
+```{r progress-easy}
+loglik_mle = fit_pmf$log_liks
+E_loglik_eb = fit_ebpmf_wbg$ELBO + fit_ebpmf_wbg$KL
+ELBO_eb = fit_ebpmf_wbg$ELBO
+ll_df <- data.frame(iter = 1:maxiter, loglik_mle = loglik_mle,
+                    E_loglik_eb = E_loglik_eb, ELBO_eb = ELBO_eb, KL_eb = fit_ebpmf_wbg$KL)
+
+plt = ggplot(data = ll_df)+
+  geom_line(aes(iter, loglik_mle, color = "loglik_mle")) +
+  geom_line(aes(iter, E_loglik_eb, color = "E_loglik_eb")) +
+  geom_line(aes(iter, ELBO_eb, color = "ELBO_eb"))+
+  ylab("progress")
+print(plt)
+
+ll_df[maxiter,]
+```
+
+### Compare fitted L, F (right) to truth (left)
+```{r lam-easy}
+L_ebpmf_wbg = fit_ebpmf_wbg$qg$qls_mean
+F_ebpmf_wbg = fit_ebpmf_wbg$qg$qfs_mean
+w = fit_ebpmf_wbg$w
+w
+image(L_ebpmf_wbg %*% diag(w) %*% t(F_ebpmf_wbg), main = "fitted deviation from background")
+```
+
+```{r L-easy, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(F[,k])
+  plot(F_ebpmf_wbg[,k])
+}
+```
+
+
+```{r F-easy, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(L[,k])
+  plot(L_ebpmf_wbg[,k])
+}
+```
+
+
+### look at `g_L`, `g_F`
+```{r g-easy, fig.width=8, fig.height=20}
+## around 0.14 for phi = 1; 0.86 for phi <= 0.05 (each L[,k] has 0.13 top documents)
+Pi_L = get_prior_summary(fit_ebpmf_wbg$qg$gls, return_matrix = TRUE)
+##  around 0.11 for phi = 1, 0.89 for phi <= 0.05 (each F[,k] has 0.1 top words)
+Pi_F = get_prior_summary(fit_ebpmf_wbg$qg$gfs, return_matrix = TRUE)
+```
+
+### Comment:
+* The fit is good. The `ELBO` here is even slightly better than when we initialize with all the information `l0`, `f0`, `L`, `F`\
+
+* The result is very sensitive to initialization. When I initialize `l0` with row mean of `l0*L`(instead of row median used here), the result is very different: `l0` captures some information supposedly in `L`, then both `g` and `q` are quite different. \
+
+
+## Realistic: initialize using rough `pmf` fits
+
+### fit models
+```{r fit-real, cache=TRUE}
+rm(init_eb, fit_ebpmf_wbg, fit_pmf)
+maxiter = 100
+fit_init = pmf(X = X, K = K, maxiter = 20, init = NULL)
+L0 = fit_init$L; F0 = fit_init$F
+init_eb = initialize_qgl0f0w_from_LF.local(L = L0, F = F0)
+init_mle = list(L = L0, F = F0)
+fit_pmf = pmf(X = X, K = K, maxiter = maxiter, init = init_mle)
+fit_ebpmf_wbg = ebpmf_wbg(X = X, K = K, maxiter = maxiter, init = init_eb)
+```
+
+### check progress
+```{r progress-real}
+loglik_mle = fit_pmf$log_liks
+E_loglik_eb = fit_ebpmf_wbg$ELBO + fit_ebpmf_wbg$KL
+ELBO_eb = fit_ebpmf_wbg$ELBO
+ll_df <- data.frame(iter = 1:maxiter, loglik_mle = loglik_mle,
+                    E_loglik_eb = E_loglik_eb, ELBO_eb = ELBO_eb, KL_eb = fit_ebpmf_wbg$KL)
+
+plt = ggplot(data = ll_df)+
+  geom_line(aes(iter, loglik_mle, color = "loglik_mle")) +
+  geom_line(aes(iter, E_loglik_eb, color = "E_loglik_eb")) +
+  geom_line(aes(iter, ELBO_eb, color = "ELBO_eb"))+
+  ylab("progress")
+print(plt)
+
+ll_df[maxiter,]
+```
+
+### Compare fitted L, F (right) to truth (left)
+```{r lam-real}
+L_ebpmf_wbg = fit_ebpmf_wbg$qg$qls_mean
+F_ebpmf_wbg = fit_ebpmf_wbg$qg$qfs_mean
+w = fit_ebpmf_wbg$w
+w
+image(L_ebpmf_wbg %*% diag(w) %*% t(F_ebpmf_wbg), main = "fitted deviation from background")
+```
+
+Compare `l0`, `f0`. Note that they do not change much during iterations, so their initialization is very important. 
+```{r l0f0-real}
+par(mfrow = c(2,3))
+plot(l0)
+plot(init_eb$l0)
+plot(fit_ebpmf_wbg$l0)
+
+plot(f0)
+plot(init_eb$f0)
+plot(fit_ebpmf_wbg$f0)
+```
+
+
+```{r L-real, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(F[,k])
+  plot(F_ebpmf_wbg[,k])
+}
+```
+
+
+```{r F-real, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(L[,k])
+  plot(L_ebpmf_wbg[,k])
+}
+```
+
+
+### look at `g_L`, `g_F`
+```{r g-real}
+## (each L[,k] has 0.13 top documents)
+Pi_L = get_prior_summary(fit_ebpmf_wbg$qg$gls, return_matrix = TRUE)
+##   (each F[,k] has 0.1 top words)
+Pi_F = get_prior_summary(fit_ebpmf_wbg$qg$gfs, return_matrix = TRUE)
+```
+
+### Comment
+From plots of `l0`, `f0` we can see that initialization of `l0`, `f0` is very very important. They change very little, and have a huge impact on L, F. So next experiment I would start from the fits from `pmf` after 100 iterations. 
+
+
+## Realistic: initialize using good `pmf` fits
+
+### fit models
+```{r fit-real2, cache=TRUE}
+rm(init_eb, fit_ebpmf_wbg)
+maxiter = 100
+init_eb = initialize_qgl0f0w_from_LF.local(L = fit_pmf$L, F = fit_pmf$F)
+fit_ebpmf_wbg = ebpmf_wbg(X = X, K = K, maxiter = maxiter, init = init_eb)
+```
+
+### check progress
+```{r progress-real2}
+loglik_mle = fit_pmf$log_liks
+E_loglik_eb = fit_ebpmf_wbg$ELBO + fit_ebpmf_wbg$KL
+ELBO_eb = fit_ebpmf_wbg$ELBO
+ll_df <- data.frame(iter = 1:maxiter, loglik_mle = loglik_mle,
+                    E_loglik_eb = E_loglik_eb, ELBO_eb = ELBO_eb, KL_eb = fit_ebpmf_wbg$KL)
+
+plt = ggplot(data = ll_df)+
+  geom_line(aes(iter, loglik_mle, color = "loglik_mle")) +
+  geom_line(aes(iter, E_loglik_eb, color = "E_loglik_eb")) +
+  geom_line(aes(iter, ELBO_eb, color = "ELBO_eb"))+
+  ylab("progress")
+print(plt)
+
+ll_df[maxiter,]
+```
+
+### Compare fitted L, F (right) to truth (left)
+```{r lam-real2}
+L_ebpmf_wbg = fit_ebpmf_wbg$qg$qls_mean
+F_ebpmf_wbg = fit_ebpmf_wbg$qg$qfs_mean
+w = fit_ebpmf_wbg$w
+w
+image(L_ebpmf_wbg %*% diag(w) %*% t(F_ebpmf_wbg), main = "fitted deviation from background")
+```
+
+
+```{r l0f0-real2}
+par(mfrow = c(2,3))
+plot(l0)
+plot(init_eb$l0)
+plot(fit_ebpmf_wbg$l0)
+
+plot(f0)
+plot(init_eb$f0)
+plot(fit_ebpmf_wbg$f0)
+```
+
+
+```{r L-real2, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(F[,k])
+  plot(F_ebpmf_wbg[,k])
+}
+```
+
+
+```{r F-real2, fig.width=8, fig.height=20}
+par(mfrow = c(5,2))
+for(k in 1:K){
+  plot(L[,k])
+  plot(L_ebpmf_wbg[,k])
+}
+```
+
+
+### look at `g_L`, `g_F`
+```{r g-real2}
+## (each L[,k] has 0.13 top documents)
+Pi_L = get_prior_summary(fit_ebpmf_wbg$qg$gls, return_matrix = TRUE)
+##   (each F[,k] has 0.1 top words)
+Pi_F = get_prior_summary(fit_ebpmf_wbg$qg$gfs, return_matrix = TRUE)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
