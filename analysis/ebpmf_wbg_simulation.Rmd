@@ -14,7 +14,7 @@ editor_options:
 
 * What I found:
     - ELBO seems a good measure of the model performance
-    - The algorithm is susceptible to initialization. At least for `l0`, `f0`, if they are not initialized well, they do not change much in the iterated algorithm, and distort the structure in `L`, `F`. (Note that in larger dataset, gettinng a good initial estimate of `l0`, `f0` may be easy. Need more experiments on bigger data).
+    - The algorithm is susceptible to initialization. At least for `l0`, `f0`, if they are not initialized well, they do not change much in the iterated algorithm, and distort the structure in `L`, `F`. (Note getting good initial estimate of `l0`, `f0` here is because of some artificial properties of the toy dataset. In larger dataset with few top words for each topic, we can probably get good `l0`, `f0` by a rank-1 fit. Need more experiments on bigger data).
     - In easy mode the model works well, and we can see how two modes in `g` capture the top words/documents assumption well. 
 
 ```{r set-up}
