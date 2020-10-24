@@ -195,9 +195,8 @@ pca_plot_with_counts <- function (fit, counts, pcs = 1:2, log = FALSE,
 
 ## https://github.com/stephenslab/fastTopics/blob/master/R/plots.R#L727
 my_pca_plot <-
-  function (fit, k, out.pca, pcs = 1:2, ggplot_call = pca_plot_ggplot_call,
-            plot_grid_call = function (plots) do.call(plot_grid,plots), ...) {
-
+  function (fit, k, out.pca, pcs = 1:2, ggplot_call = pca_plot_ggplot_call, ncol = 2, ...) {
+    plot_grid_call = function (plots) do.call(plot_grid, c(plots, list(ncol = ncol)))
     # Check and process inputs.
     if (missing(k))
       k <- seq(1,ncol(fit$L))
@@ -224,20 +223,17 @@ my_pca_plot <-
       plots <- vector("list",m)
       names(plots) <- k
       for (i in 1:m)
-        plots[[i]] <- my_pca_plot(fit,k[i],out.pca,pcs,ggplot_call,
-                               plot_grid_call,...)
+        plots[[i]] <- my_pca_plot(fit,k[i],out.pca,pcs,ggplot_call,...)
       return(plot_grid_call(plots))
-    }
+      #do.call(plot_grid, c(plots, list(ncol = ncol)))
   }
-
+}
 ## https://github.com/stephenslab/fastTopics/blob/master/R/plots.R#L1001
 
 ## only allow 'color = "prop"' (row sum of L is 1)
 my_tsne_plot <-
-  function (fit, color = "prop", k, tsne,
-            ggplot_call = tsne_plot_ggplot_call,
-            plot_grid_call = function (plots) do.call(plot_grid,plots), ...) {
-
+  function (fit, color = "prop", k, tsne, ggplot_call = tsne_plot_ggplot_call, ncol = 2, ...) {
+    plot_grid_call = function (plots) do.call(plot_grid, c(plots, list(ncol = ncol)))
     # Check and process inputs.
     color <- match.arg(color)
     if (missing(k))
@@ -251,7 +247,7 @@ my_tsne_plot <-
       dat <- as.data.frame(cbind(tsne$Y,fit$L[tsne$rows,k]))
       names(dat) <- c("d1","d2","loading")
       # Create the t-SNE plot.
-      return(ggplot_call(dat,k))
+      return(tsne_plot_ggplot_call(dat,k))
     } else {
 
       # Create a t-SNE plot for each selected topic, and combine them
@@ -260,9 +256,9 @@ my_tsne_plot <-
       plots <- vector("list",m)
       names(plots) <- k
       for (i in 1:m)
-        plots[[i]] <- my_tsne_plot(fit,color,k[i],tsne,ggplot_call,
-                                plot_grid_call,...)
+        plots[[i]] <- my_tsne_plot(fit,color,k[i],tsne,ggplot_call,ncol,...)
       return(plot_grid_call(plots))
+      #do.call(plot_grid, c(plots, list(ncol = ncol)))
     }
   }
 
@@ -299,7 +295,7 @@ my_tsne_from_topics <- function (fit, dims = 2, n = 5000, scaling = NULL,
   }
 
   # Compute the t-SNE embedding.
-  out <- Rtsne(L,dims,pca = pca,normalize = normalize,perplexity = perplexity,
+  out <- Rtsne(L,dims,pca = pca,normalize = normalize,perplexity = perplexity,check_duplicates = FALSE,
                theta = theta,max_iter = max_iter,verbose = verbose,...)
 
   # Return the t-SNE embedding stored as an n x dims matrix (Y), and
@@ -311,15 +307,111 @@ my_tsne_from_topics <- function (fit, dims = 2, n = 5000, scaling = NULL,
 }
 
 
+## https://github.com/stephenslab/fastTopics/blob/75c17fca33076639f1feda32faf3f6429171be41/R/plots.R#L1182
+structure_plot <-
+  function (fit, n = 2000, rows, grouping, topics,
+            colors = c("#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3",
+                       "#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd",
+                       "#ccebc5","#ffed6f"),
+            gap = 1, perplexity = 100, eta = 200,
+            ggplot_call = structure_plot_ggplot_call, ...) {
+
+    # # Check and process inputs.
+    # if (!(inherits(fit,"poisson_nmf_fit") |
+    #       inherits(fit,"multinom_topic_model_fit")))
+    #   stop("Input \"fit\" should be an object of class \"poisson_nmf_fit\" or ",
+    #        "\"multinom_topic_model_fit\"")
+    # if (inherits(fit,"poisson_nmf_fit"))
+    #   fit <- poisson2multinom(fit)
+    n0 <- nrow(fit$L)
+    k  <- ncol(fit$L)
+    if (missing(grouping))
+      grouping <- factor(rep(1,n0))
+    groups     <- levels(grouping)
+    num_groups <- length(groups)
+    if (missing(topics))
+      topics <- order(colMeans(fit$L))
+    if (length(perplexity) == 1)
+      perplexity <- rep(perplexity,num_groups)
+    if (length(eta) == 1)
+      eta <- rep(eta,num_groups)
+    names(perplexity) <- groups
+    names(eta)        <- groups
+    if (num_groups == 1) {
+
+      # If the ordering of the rows is not provided, determine an
+      # ordering by computing a 1-d embedding from the topic
+      # proportions.
+      if (missing(rows)) {
+        out  <- my_tsne_from_topics(fit,1,n,perplexity = perplexity,eta = eta,...)
+        rows <- out$rows[order(out$Y)]
+      }
+
+      # Prepare the data for plotting. Note that it is important to
+      # subset the rows *after* recovering the parameters of the
+      # multinomial topic model.
+      dat <- compile_structure_plot_data(fit$L[rows,],topics)
+
+      # Create the Structure plot.
+      return(ggplot_call(dat,colors))
+    } else {
+
+      # If the ordering of the rows is not provided, determine an
+      # ordering by computing a 1-d embedding from the topic
+      # proportions, separately for each group.
+      if (missing(rows)) {
+        rows <- NULL
+        n    <- round(n/n0*table(grouping))
+        for (j in levels(grouping)) {
+          i    <- which(grouping == j)
+          out  <- my_tsne_from_topics(select(fit,i),1,n[j],
+                                   perplexity = perplexity[j],
+                                   eta = eta[j],...)
+          rows <- c(rows,i[out$rows[order(out$Y)]])
+        }
+      }
+
+      # Prepare the data for plotting. Note that it is important to
+      # subset the rows *after* recovering the parameters of the
+      # multinomial topic model.
+      out <- compile_grouped_structure_plot_data(fit$L[rows,],topics,
+                                                 grouping[rows],gap)
+
+      # Create the Structure plot.
+      return(ggplot_call(out$dat,colors,out$ticks))
+    }
+  }
 
 
+compile_grouped_structure_plot_data <- function (L, topics, grouping,
+                                                 gap = 0) {
+  ng    <- nlevels(grouping)
+  ticks <- rep(0,ng)
+  names(ticks) <- levels(grouping)
+  dat   <- NULL
+  m     <- 0
+  for (j in levels(grouping)) {
+    i          <- which(grouping == j)
+    out        <- compile_structure_plot_data(L[i,],topics)
+    out$sample <- out$sample + m
+    n          <- length(i)
+    dat        <- rbind(dat,out)
+    ticks[j]   <- m + n/2
+    m          <- m + n + gap
+  }
+  return(list(dat = dat,ticks = ticks))
+}
 
 
-
-
-
-
-
+compile_structure_plot_data <- function (L, topics) {
+  n   <- nrow(L)
+  k   <- length(topics)
+  dat <- data.frame(sample = rep(1:n,times = k),
+                    topic  = rep(topics,each = n),
+                    prop   = c(L[,topics]))
+  dat$topic <- factor(dat$topic,topics)
+  return(dat)
+}
 
 
 
