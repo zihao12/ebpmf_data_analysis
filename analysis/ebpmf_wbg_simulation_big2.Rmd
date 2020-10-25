@@ -1,0 +1,240 @@
+---
+title: "ebpmf_wbg_simulation_big2"
+author: "zihao12"
+date: "2020-10-24"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* What I did:
+    * I did experiment using bigger simulated dataset ($n = 1100, p = 2100, K = 50$). [add link to dataset]. Note that in previous experiemnt [link] the signal for top words/documents are not big enough, so even initialized with truth we cannot get any structure. This time we increase their signal.
+    * I tried initializing from true $l_0 L, f_0 F$, and from rough `pmf` fit (50 iterations). Call them `model_from_truth` and `model_from_pmf` respectively.
+      
+* What I found:
+    * `model_from_truth` gets good results. The prior makes sense.
+    * `model_from_pmf` is bad. It has way lower ELBO but even higher expected loglikelihood (which suggests issue with pmf fit maybe), which means very high (bad) KL. It does not learn the structure right.
+    * ELBO seems to be a good measurement of performance when the signal of the structure is stronger. But our algorithm cannot get to good optimal point. 
+  
+
+* Note there is a small bug of placing grids for `g` in `model_from_truth` (missed placing two very big phi) but the result seems  okay. 
+
+```{r set-up}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, autodep = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(Matrix)
+source("code/misc.R")
+source("code/util.R")
+```
+
+## Load model and data
+```{r}
+model_from_truth = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_from_truth.Rds")
+model_from_pmf = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000.Rds")
+model_from_pmf_iter1 = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1.Rds")
+truth = readRDS("output/sim/v0.4.5/exper2/truth.sim_bg_block_n1100_p2100_K50.Rds")
+init = readRDS("output/sim/v0.4.5/exper2/init.sim_bg_block_n1100_p2100_K50.Rds")
+X = read_sim_bag_of_words("output/sim/v0.4.5/exper2/docword.sim_bg_block_n1100_p2100_K50.txt")
+```
+
+See what the data looks like
+```{r}
+par(mfrow = c(1,2))
+pheatmap(as.matrix(X)[1:100, 1:200], cluster_rows=FALSE, cluster_cols=FALSE,
+         main = "X block")
+pheatmap(truth$L[1:100,] %*% t(truth$F[1:200, ]), cluster_rows=FALSE, cluster_cols=FALSE,
+         main = "deviation matrix block")
+```
+
+
+
+## compare progress
+```{r}
+progress_df = data.frame(elbo_from_truth = model_from_truth$ELBO,
+                         Eloglik_from_truth = model_from_truth$ELBO + model_from_truth$KL,
+                         elbo_from_pmf = model_from_pmf$ELBO,
+                         Eloglik_from_pmf = model_from_pmf$ELBO + model_from_pmf$KL,
+                         iter = 1:length(model_from_pmf$ELBO))
+
+plt = ggplot(data = progress_df)+
+  geom_line(aes(iter, elbo_from_truth, color = "elbo_from_truth")) +
+  geom_line(aes(iter, Eloglik_from_truth, color = "Eloglik_from_truth")) +
+  geom_line(aes(iter, elbo_from_pmf, color = "elbo_from_pmf")) +
+  geom_line(aes(iter, Eloglik_from_pmf, color = "Eloglik_from_pmf")) +
+  ylab("progress")
+print(plt)
+
+progress_df[length(model_from_pmf$ELBO),]
+```
+
+
+`model_from_pmf` is much worse than `model_from_truth` in ELBO, which I think is a good indicator of model performance. However, `model_from_pmf` even has higher Expected Loglikelihood (`ELBO = E-loglik + KL`), so its KL must be very very bad. This might suggest a very bad local optimal solution. 
+
+
+## look at `model_from_truth`
+
+### w
+```{r}
+w = model_from_truth$w
+hist(length(w) * w/sum(w), main = "w scaled to have mean 1")
+```
+
+
+
+### deviation matrix L, F
+Not surprisingly it uncovers truth very well. Below I look at factor/loading 12.\
+
+Uncover top documents well
+```{r}
+k = 12
+n_top = ncol(truth$top_doc)
+l_fitted = model_from_truth$qg$qls_mean[,k]
+l_truth = truth$L[,k]
+
+## the red lines marks 1
+plot(l_truth, l_fitted)
+abline(v = 1, col = "red")
+
+sort(sort(l_fitted, index.return = TRUE, decreasing = TRUE)$ix[1:n_top])
+sort(truth$top_doc[k,])
+```
+
+Uncover top words (identify 17 top words out of 20)
+```{r}
+k = 12
+n_top = ncol(truth$top_words)
+f_fitted = model_from_truth$qg$qfs_mean[,k]
+f_truth = truth$F[,k]
+
+## the red lines marks 1
+plot(f_truth, f_fitted)
+abline(v = 1, col = "red")
+
+f_fitted_sorted = sort(f_fitted, index.return = TRUE, decreasing = TRUE)
+sort(f_fitted_sorted$ix[1:n_top])
+sort(truth$top_words[k,])
+
+## look at the values for top words (look at the last 3 wrong ones)
+f_fitted[sort(f_fitted_sorted$ix[1:n_top])]
+```
+
+### Prior `g` 
+They represent how many top words/top documents pretty well. 
+```{r}
+## pi = 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top doc)
+Pi_L = get_prior_summary(model_from_truth$qg$gls, log10 = TRUE, return_matrix = TRUE)
+## pi around 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top words)
+Pi_F = get_prior_summary(model_from_truth$qg$gfs, log10 = TRUE, return_matrix = TRUE)
+```
+
+## look at `model_from_pmf`
+
+### `w`
+Different from truth (all 1)
+```{r}
+model_from_pmf$w
+w = model_from_pmf$w
+w = (w/sum(w)) * length(w)
+hist(w, main = "w (scaled to have mean 1)")
+```
+
+
+### `l0` (same situation for `f0`). 
+
+The initialization for `l0` is good (I also checked that after the first iteration `l0` is still good), but the final output is worse.  So the algorithm seems to move to a bad optimal gradually. 
+```{r}
+par(mfrow = c(2,2))
+
+plot(truth$l0, main = "l0 from truth")
+
+## fitted l0 (Note the minimum is 1e-8)
+plot(model_from_pmf$l0, main = "l0 from model_from_pmfs")
+
+## that's what is used for initialization ((Note the minimum is 1e-8))
+plot(init$ebpmf_wbg$l0, main = "l0 in initialization")
+
+## a natural guess for l0, f0 is rank-1 fit, which is proportional to row&col mean of X
+plot(rowMeans(X), main = "rowMeans(X)")
+```
+
+### Deviation `L`. 
+The majority of `L` are small numbers instead of 1. Each topic seems to capture around 20-30 top words, although obviously there is no correspondence between the fitted topics and the truth. 
+```{r}
+par(mfrow = c(2,2))
+ks = c(1, 12, 23, 42)
+for(k in ks){
+  l_fitted = model_from_pmf$qg$qls_mean[,k]
+  plot(l_fitted, ylab = sprintf("%dth loading", k))
+  print(sprintf("median of %dth loading %s", k, median(l_fitted)))
+}
+```
+
+See how much `L` changes from initialization.  
+```{r}
+par(mfrow = c(2,2))
+ks = c(1, 12, 23, 42)
+for(k in ks){
+  plot(model_from_pmf_iter1$qg$qls_mean[,k], model_from_pmf$qg$qls_mean[,k], 
+       log = "xy", xlab = "iter1", ylab = "iterN")
+}
+```
+The top words change little from the first initialization.
+
+### Prior `g`. 
+
+That explains why the  majority of `L` are very small. The huge `phi` has majority of weights, which favors smaller and bigger numbers than small `phi` (which favors 1). 
+```{r}
+##  pi = 0.8 for phi = 1e+8, pi = 0.13 for phi = 0.001 (truth: around 0.01 are top doc)
+Pi_L = get_prior_summary(model_from_pmf$qg$gls, log10 = TRUE, return_matrix = TRUE)
+##  pi = 0.6 for phi = 1e+8, pi = 0.13 ~ 0.2 for phi = 0.001(truth: around 0.01 are top words)
+Pi_F = get_prior_summary(model_from_pmf$qg$gfs, log10 = TRUE, return_matrix = TRUE)
+```
+
+### what is `model_from_pmf` fitting
+* I choose a block in `lam-deviation` and compare truth to the two models. (the scale of the heatmap is not clear so I show a histogram beisde it). 
+* The value of blocks in truth has 3 clusters: top-word/doc times top-word/doc ; top-word/doc times others; others times others. 
+* `model_from_truth` identifies most structure (probably makes a few mistakes, like when it misses 3 top wirds above)
+* `model_from_pmf` does not seem to get the structure.
+```{r fig.height=24, fig.width=12}
+block_row = 1:100
+block_col = 1:200
+
+lam_devia_from_pmf = model_from_pmf$qg$qls_mean %*% t(model_from_pmf$qg$qfs_mean) 
+lam_devia_from_truth = model_from_truth$qg$qls_mean %*% t(model_from_truth$qg$qfs_mean) 
+lam_devia_truth = truth$L %*% t(truth$F)
+
+block_k_from_pmf = lam_devia_from_pmf[block_row,block_col] 
+block_k_from_truth = lam_devia_from_truth[block_row,block_col] 
+block_k_truth = lam_devia_truth[block_row,block_col] 
+
+## I scaled the block for comparison
+block_k_truth = block_k_truth/sum(block_k_truth)
+block_k_from_truth = block_k_from_truth/sum(block_k_from_truth)
+block_k_from_pmf = block_k_from_pmf/sum(block_k_from_pmf)
+
+par(mfrow = c(4,2))
+image(block_k_truth)
+hist(log(block_k_truth))
+
+image(block_k_from_truth)
+hist(log(block_k_from_truth))
+
+image(block_k_from_pmf)
+hist(log(block_k_from_pmf))
+
+plot(block_k_truth, block_k_from_truth, log = "xy")
+plot(block_k_truth, block_k_from_pmf, log = "xy")
+```
+
+
+
+
+
+
+
