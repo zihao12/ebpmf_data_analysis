@@ -10,7 +10,7 @@ editor_options:
 ## Introduction
 
 * What I did:
-    * I did experiment using bigger simulated dataset ($n = 1100, p = 2100, K = 50$). [add link to dataset]. Note that in previous experiemnt [link] the signal for top words/documents are not big enough, so even initialized with truth we cannot get any structure. This time we increase their signal.
+    * I did experiment with [ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description) using [bigger simulated dataset](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2) ($n = 1100, p = 2100, K = 50$). 
     * I tried initializing from true $l_0 L, f_0 F$, and from rough `pmf` fit (50 iterations). Call them `model_from_truth` and `model_from_pmf` respectively.
     * Also looked at `pmf` (initialized from random and from truth), Call them `model_pmf` and `model_pmf_from_truth`.
       
@@ -19,8 +19,7 @@ editor_options:
     * `model_from_pmf` is bad. It has way lower ELBO but even higher expected loglikelihood (which suggests issue with pmf fit maybe), which means very high (bad) KL. It does not learn the structure right.
     * ELBO seems to be a good measurement of performance when the signal of the structure is stronger. But our algorithm cannot get to good optimal point. 
     * `pmf` does not find good structure even when initialized from truth (obvious when compared to `ebpmf-wbg` initialized from truth). Since we rely on `pmf` for initialization, this might explain why `model_from_pmf` fails. Also, this might suggest when loadings and factors are highly correlated, `pmf` does not work (here correlation is around $0.8 ~ 0.9$)
-    * Maybe the data I used is a bit too hard?
-  
+
 
 (Note there is a small bug of placing grids for `g` in `model_from_truth` (missed placing two very big phi) but the result seems  okay. )
 
@@ -39,7 +38,7 @@ source("code/util.R")
 ```
 
 ## What the data looks like
-* The data is generated in [simulate_big_data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2). 
+* The data is generated in [bigger simulated dataset](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2). 
 * Data model is $X \sim \text{Pois}(\Lambda); \Lambda_{ij} = l_{i0} f_{j0} \sum_k l_{ik} f_{jk}$. We call 
       * $l_0, f_0$ background frequency for loading and factor
       * $L, F$ deviation for loading and factor
@@ -47,6 +46,8 @@ source("code/util.R")
 * $n = 1100, p = 2100, K = 50$
 * The last 100 words and documents are frequent words/docs
 * For each $k = 1...K$, it has 20 top words and 10 top documents (100 times more deviation). I arrange them so that $\tilde{\Lambda}$ has block structures: with $K$ blocks from $n = 1...1000, p = 1:2000$, and a block for frequent words/documents at the end. 
+* The signal from frequent words is much stronger than those from top words/documents (in $X$, the block for frequent word has value $> 10$ times of that in block for top words/documents). Note that this seems to be intrinsic to this type of data: if the amplifying factor for background frequent words, and for top words/documents are the same, the signal from the background is $K$ times stronger. 
+
 ```{r}
 model_from_truth = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds")
 model_from_pmf = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds")
@@ -65,9 +66,10 @@ p = ncol(X)
 
 Below I show some of the blocks in $n = 1...1000, p = 1:2000$ 
 ```{r fig.height=24, fig.width=48}
+
+## X (block)
 data = as.matrix(X)[1:100, 1:200]
 quantile(data, probs = seq(85,100)/100)
-
 p1 = pheatmap(data, 
               cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
               fontsize = 48,legend = FALSE,
@@ -76,6 +78,7 @@ p1 = pheatmap(data,
 data = truth$L[1:100,] %*% t(truth$F[1:200, ])
 quantile(data, probs = seq(1,10)/10)
 
+## deviation from mean (block)
 p2 = pheatmap(data, 
               cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
               fontsize = 48,legend = FALSE,
@@ -88,6 +91,7 @@ grid.arrange(arrangeGrob(grobs= plot_list,ncol=2))
 
 Show the block at the end (for frequent words/docs)
 ```{r fig.height=24, fig.width=48}
+## X (block of frequent words)
 data = as.matrix(X)[(n-150):n, (p-300):p]
 quantile(data, probs = seq(70,100)/100)
 p3 = pheatmap(data,
@@ -95,6 +99,7 @@ p3 = pheatmap(data,
          fontsize = 48,legend = FALSE,
          main = "X (block)")
 
+## deviation from mean (block of frequent words)
 data = truth$L[(n-150):n,] %*% t(truth$F[(p-300):p, ])
 quantile(data, probs = seq(1,10)/10)
 p4 = pheatmap(data,
