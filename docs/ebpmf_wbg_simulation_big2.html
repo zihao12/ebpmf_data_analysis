@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreef3bfe33d4bb342c949a5420f0f7442be7a3ce4c4targetblankf3bfe33a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/f3bfe33d4bb342c949a5420f0f7442be7a3ce4c4" target="_blank">f3bfe33</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree989a25043383112badb5c7e08bb59ae91029c763targetblank989a250a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/989a25043383112badb5c7e08bb59ae91029c763" target="_blank">989a250</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreef3bfe33d4bb342c949a5420f0f7442be7a3ce4c4targetblankf3bfe33a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree989a25043383112badb5c7e08bb59ae91029c763targetblank989a250a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/f3bfe33d4bb342c949a5420f0f7442be7a3ce4c4" target="_blank">f3bfe33</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/989a25043383112badb5c7e08bb59ae91029c763" target="_blank">989a250</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -836,6 +836,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/989a25043383112badb5c7e08bb59ae91029c763/analysis/ebpmf_wbg_simulation_big2.Rmd" target="_blank">989a250</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+<td>
+update simualtion2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/fe147d9e038f473393b0458764bf029bb1c786bd/docs/ebpmf_wbg_simulation_big2.html" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/f3bfe33d4bb342c949a5420f0f7442be7a3ce4c4/analysis/ebpmf_wbg_simulation_big2.Rmd" target="_blank">f3bfe33</a>
 </td>
 <td>
@@ -894,7 +928,7 @@ update ebpmf_wbg_simulation_big2.Rmd
 <ul>
 <li>What I did:
 <ul>
-<li>I did experiment using bigger simulated dataset (<span class="math inline">\(n = 1100, p = 2100, K = 50\)</span>). [add link to dataset]. Note that in previous experiemnt [link] the signal for top words/documents are not big enough, so even initialized with truth we cannot get any structure. This time we increase their signal.</li>
+<li>I did experiment with <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">ebpmf-wbg</a> using <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2">bigger simulated dataset</a> (<span class="math inline">\(n = 1100, p = 2100, K = 50\)</span>).</li>
 <li>I tried initializing from true <span class="math inline">\(l_0 L, f_0 F\)</span>, and from rough <code>pmf</code> fit (50 iterations). Call them <code>model_from_truth</code> and <code>model_from_pmf</code> respectively.</li>
 <li>Also looked at <code>pmf</code> (initialized from random and from truth), Call them <code>model_pmf</code> and <code>model_pmf_from_truth</code>.</li>
 </ul></li>
@@ -904,7 +938,6 @@ update ebpmf_wbg_simulation_big2.Rmd
 <li><code>model_from_pmf</code> is bad. It has way lower ELBO but even higher expected loglikelihood (which suggests issue with pmf fit maybe), which means very high (bad) KL. It does not learn the structure right.</li>
 <li>ELBO seems to be a good measurement of performance when the signal of the structure is stronger. But our algorithm cannot get to good optimal point.</li>
 <li><code>pmf</code> does not find good structure even when initialized from truth (obvious when compared to <code>ebpmf-wbg</code> initialized from truth). Since we rely on <code>pmf</code> for initialization, this might explain why <code>model_from_pmf</code> fails. Also, this might suggest when loadings and factors are highly correlated, <code>pmf</code> does not work (here correlation is around <span class="math inline">\(0.8 ~ 0.9\)</span>)</li>
-<li>Maybe the data I used is a bit too hard?</li>
 </ul></li>
 </ul>
 <p>(Note there is a small bug of placing grids for <code>g</code> in <code>model_from_truth</code> (missed placing two very big phi) but the result seems okay. )</p>
@@ -919,7 +952,7 @@ source(&quot;code/util.R&quot;)</code></pre>
 <div id="what-the-data-looks-like" class="section level2">
 <h2>What the data looks like</h2>
 <ul>
-<li>The data is generated in <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2">simulate_big_data2</a>.</li>
+<li>The data is generated in <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2">bigger simulated dataset</a>.</li>
 <li>Data model is <span class="math inline">\(X \sim \text{Pois}(\Lambda); \Lambda_{ij} = l_{i0} f_{j0} \sum_k l_{ik} f_{jk}\)</span>. We call
 <ul>
 <li><span class="math inline">\(l_0, f_0\)</span> background frequency for loading and factor</li>
@@ -929,6 +962,7 @@ source(&quot;code/util.R&quot;)</code></pre>
 <li><span class="math inline">\(n = 1100, p = 2100, K = 50\)</span></li>
 <li>The last 100 words and documents are frequent words/docs</li>
 <li>For each <span class="math inline">\(k = 1...K\)</span>, it has 20 top words and 10 top documents (100 times more deviation). I arrange them so that <span class="math inline">\(\tilde{\Lambda}\)</span> has block structures: with <span class="math inline">\(K\)</span> blocks from <span class="math inline">\(n = 1...1000, p = 1:2000\)</span>, and a block for frequent words/documents at the end.</li>
+<li>The signal from frequent words is much stronger than those from top words/documents (in <span class="math inline">\(X\)</span>, the block for frequent word has value <span class="math inline">\(&gt; 10\)</span> times of that in block for top words/documents). Note that this seems to be intrinsic to this type of data: if the amplifying factor for background frequent words, and for top words/documents are the same, the signal from the background is <span class="math inline">\(K\)</span> times stronger.</li>
 </ul>
 <pre class="r"><code>model_from_truth = readRDS(&quot;output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds&quot;)
 model_from_pmf = readRDS(&quot;output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds&quot;)
@@ -943,7 +977,8 @@ X = read_sim_bag_of_words(&quot;output/sim/v0.4.5/exper2/docword.sim_bg_block_n1
 n = nrow(X)
 p = ncol(X)</code></pre>
 <p>Below I show some of the blocks in <span class="math inline">\(n = 1...1000, p = 1:2000\)</span></p>
-<pre class="r"><code>data = as.matrix(X)[1:100, 1:200]
+<pre class="r"><code>## X (block)
+data = as.matrix(X)[1:100, 1:200]
 quantile(data, probs = seq(85,100)/100)</code></pre>
 <pre><code> 85%  86%  87%  88%  89%  90%  91%  92%  93%  94%  95%  96%  97%  98%  99% 100% 
    0    0    0    0    0    0    0    0    0    0    0    0    0    1    1    4 </code></pre>
@@ -958,7 +993,8 @@ quantile(data, probs = seq(1,10)/10)</code></pre>
    49.63230    50.86734   128.32094   140.31698   148.64128   158.80422 
         70%         80%         90%        100% 
   172.47518   233.86550   265.42654 14392.56450 </code></pre>
-<pre class="r"><code>p2 = pheatmap(data, 
+<pre class="r"><code>## deviation from mean (block)
+p2 = pheatmap(data, 
               cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
               fontsize = 48,legend = FALSE,
               main = &quot;deviation for the mean (block)&quot;)
@@ -989,6 +1025,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-3-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-3-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1003,7 +1050,8 @@ zihao12
 </div>
 </div>
 <p>Show the block at the end (for frequent words/docs)</p>
-<pre class="r"><code>data = as.matrix(X)[(n-150):n, (p-300):p]
+<pre class="r"><code>## X (block of frequent words)
+data = as.matrix(X)[(n-150):n, (p-300):p]
 quantile(data, probs = seq(70,100)/100)</code></pre>
 <pre><code> 70%  71%  72%  73%  74%  75%  76%  77%  78%  79%  80%  81%  82%  83%  84%  85% 
    1    1    1    1    2    2    2    2    6   12   14   15   16   17   18   18 
@@ -1014,6 +1062,7 @@ quantile(data, probs = seq(70,100)/100)</code></pre>
          fontsize = 48,legend = FALSE,
          main = &quot;X (block)&quot;)
 
+## deviation from mean (block of frequent words)
 data = truth$L[(n-150):n,] %*% t(truth$F[(p-300):p, ])
 quantile(data, probs = seq(1,10)/10)</code></pre>
 <pre><code>        10%         20%         30%         40%         50%         60% 
@@ -1049,6 +1098,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-4-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-4-1.png" target="_blank">c48c518</a>
@@ -1107,6 +1167,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-5-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-5-1.png" target="_blank">c48c518</a>
@@ -1168,6 +1239,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-6-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-6-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1219,6 +1301,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-7-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-7-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1268,6 +1361,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-8-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-8-1.png" target="_blank">c48c518</a>
@@ -1327,6 +1431,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-9-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-9-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1343,6 +1458,43 @@ zihao12
 <pre class="r"><code>## pi around 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top words)
 Pi_F = get_prior_summary(model_from_truth$qg$gfs, log10 = TRUE, return_matrix = TRUE)</code></pre>
 <p><img src="figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-2">
+Past versions of unnamed-chunk-9-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-9-2.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="look-at-model_from_pmf" class="section level2">
@@ -1385,6 +1537,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-10-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-10-1.png" target="_blank">c48c518</a>
@@ -1441,6 +1604,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-11-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-11-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1493,6 +1667,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-12-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-12-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1537,6 +1722,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-13-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-13-1.png" target="_blank">c48c518</a>
@@ -1584,6 +1780,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-14-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/c48c518774ab2cf3f5ff3c9c19d49e808ed362fe/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-14-1.png" target="_blank">c48c518</a>
 </td>
 <td>
@@ -1600,6 +1807,43 @@ zihao12
 <pre class="r"><code>##  pi = 0.6 for phi = 1e+8, pi = 0.13 ~ 0.2 for phi = 0.001(truth: around 0.01 are top words)
 Pi_F = get_prior_summary(model_from_pmf$qg$gfs, log10 = TRUE, return_matrix = TRUE)</code></pre>
 <p><img src="figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-2">
+Past versions of unnamed-chunk-14-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-14-2.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="what-is-model_from_pmf-fitting" class="section level3">
 <h3>what is <code>model_from_pmf</code> fitting</h3>
@@ -1638,6 +1882,43 @@ hist(log(block_k_from_pmf))
 plot(block_k_truth, block_k_from_truth, log = &quot;xy&quot;)
 plot(block_k_truth, block_k_from_pmf, log = &quot;xy&quot;)</code></pre>
 <p><img src="figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-15-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-15-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="pmf-fits" class="section level2">
@@ -1695,6 +1976,43 @@ median(model_pmf_from_truth$L[,k])</code></pre>
 <pre class="r"><code>median(truth$l0 * truth$L[,k])</code></pre>
 <pre><code>[1] 0.09256728</code></pre>
 <p><img src="figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-16-1.png" width="1536" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
+Past versions of unnamed-chunk-16-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-16-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe147d9e038f473393b0458764bf029bb1c786bd/docs/figure/ebpmf_wbg_simulation_big2.Rmd/unnamed-chunk-16-1.png" target="_blank">fe147d9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
 <li>PMF fits ignore the signal from deviation… so it seems to be fitting a rank-1 model with <span class="math inline">\(K = 50\)</span>.</li>
 </ul>
