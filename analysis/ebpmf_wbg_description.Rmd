@@ -24,6 +24,8 @@ editor_options:
 
 * We impose this assumption through $\mathcal{G}$, dicussed in the next section
 
+The algorithm for solving the model can be seen [algorithm](https://github.com/stephenslab/ebpmf.alpha/blob/master/derivations/ebpmf_wbg.pdf)
+
 ## Prior family $\mathcal{G}$
 
 \begin{align}
