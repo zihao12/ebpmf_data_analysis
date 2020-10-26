@@ -1,0 +1,79 @@
+---
+title: "ebpmf_wbg_description"
+author: "zihao12"
+date: "2020-10-26"
+output: workflowr::wflow_html
+header-includes:
+   - \usepackage{bbm}
+editor_options:
+  chunk_output_type: console
+---
+
+## Model
+
+\begin{align}
+  & X_{ij} = \mathrm{Pois}(\lambda_{ij})\\
+  & \lambda_{ij} = l_{i0} f_{j0} \sum_k w_k l_{ik} f_{jk}\\
+  & l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.)\\
+  & g_{L, k}(.), g_{F,k}(.) \in \mathcal{G}
+\end{align}
+
+* If we introduce hidden variable $Z$: $X_{ij} = \sum_k Z_{ijk}$, we can interpret the mean of $Z_{ijk}$ as the product of the background frequency ($(l_{i0} f_{j0})$) and the deviation from that ($\sum_k w_k l_{ik} f_{jk}$). 
+
+* We assume another version of "sparsity" here: for each $k$, majority of the deviation $l_{ik}$ would be close to 1; only a small proportion of top documents have larger deviation from background. Same assumption for factors. 
+
+* We impose this assumption through $\mathcal{G}$, dicussed in the next section
+
+## Prior family $\mathcal{G}$
+
+\begin{align}
+  \mathcal{G} = \{g: g(.) = \sum_{l} \pi_l \mathrm{Ga}(.; 1/\phi_l, 1/\phi_l)\}
+\end{align}
+
+For a random variable $X \sim \mathrm{Ga}(.; 1/\phi_l, 1/\phi_l)$, we have
+\begin{align}
+  & \mathrm{E}(X) = 1\\
+  & \mathrm{Var}(X) = \phi\\
+  & \mathrm{Mode}(X) = max(0, 1 - \phi)
+\end{align}
+
+Below I show the density for different $\phi$s. Note that the first one is a bit deceptive about the tail. 
+```{r}
+rm(list = ls())
+par(las=1)
+phis <- c(0.01, 0.9, 1, 10)
+cols <- c("black", "red", "blue","green")
+
+for(i in 1:length(phis)){
+  if(i != 1){
+    par(new = TRUE)
+    plot(function(x) (dgamma(x, shape = 1/phis[i], rate = 1/phis[i])), 
+     from = 0.001, to = 10, ylab = "dgamma", col = cols[i], axes = FALSE )
+  }else{
+    plot(function(x) (dgamma(x, shape = 1/phis[i], rate = 1/phis[i])), 
+     from = 0.001, to = 10, ylab = "dgamma", col = cols[i])
+  }
+}
+legend("topright", legend = paste("phi = ", phis), col = cols, lty=1, cex=0.8)
+```
+
+look at the tail
+```{r}
+for(i in 1:length(phis)){
+  if(i != 1){
+    par(new = TRUE)
+    plot(function(x) (dgamma(x, shape = 1/phis[i], rate = 1/phis[i])), 
+     from = 5, to = 20, ylab = "dgamma", col = cols[i], axes = FALSE )
+  }else{
+    plot(function(x) (dgamma(x, shape = 1/phis[i], rate = 1/phis[i])), 
+     from = 5, to = 20, ylab = "dgamma", col = cols[i])
+  }
+}
+legend("topright", legend = paste("phi = ", phis), col = cols, lty=1, cex=0.8)
+```
+
+* when $\phi < 1$ it is concentrated near 1; 
+* when $\phi > 1$ it favors points near $0$, as well as larger points (compared to other smaller $\phi1$). 
+
+
+
