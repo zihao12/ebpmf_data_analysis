@@ -12,69 +12,128 @@ editor_options:
 * What I did:
     * I did experiment using bigger simulated dataset ($n = 1100, p = 2100, K = 50$). [add link to dataset]. Note that in previous experiemnt [link] the signal for top words/documents are not big enough, so even initialized with truth we cannot get any structure. This time we increase their signal.
     * I tried initializing from true $l_0 L, f_0 F$, and from rough `pmf` fit (50 iterations). Call them `model_from_truth` and `model_from_pmf` respectively.
+    * Also looked at `pmf` (initialized from random and from truth), Call them `model_pmf` and `model_pmf_from_truth`.
       
 * What I found:
     * `model_from_truth` gets good results. The prior makes sense.
     * `model_from_pmf` is bad. It has way lower ELBO but even higher expected loglikelihood (which suggests issue with pmf fit maybe), which means very high (bad) KL. It does not learn the structure right.
     * ELBO seems to be a good measurement of performance when the signal of the structure is stronger. But our algorithm cannot get to good optimal point. 
+    * `pmf` does not find good structure even when initialized from truth (obvious when compared to `ebpmf-wbg` initialized from truth). Since we rely on `pmf` for initialization, this might explain why `model_from_pmf` fails. Also, this might suggest when loadings and factors are highly correlated, `pmf` does not work (here correlation is around $0.8 ~ 0.9$)
+    * Maybe the data I used is a bit too hard?
   
 
-* Note there is a small bug of placing grids for `g` in `model_from_truth` (missed placing two very big phi) but the result seems  okay. 
+(Note there is a small bug of placing grids for `g` in `model_from_truth` (missed placing two very big phi) but the result seems  okay. )
 
 ```{r set-up}
+rm(list = ls())
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, autodep = TRUE)
 ```
 
 
 ```{r}
 library(ggplot2)
+library(gridExtra)
 library(Matrix)
 source("code/misc.R")
 source("code/util.R")
 ```
 
-## Load model and data
+## What the data looks like
+* The data is generated in [simulate_big_data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2). 
+* Data model is $X \sim \text{Pois}(\Lambda); \Lambda_{ij} = l_{i0} f_{j0} \sum_k l_{ik} f_{jk}$. We call 
+      * $l_0, f_0$ background frequency for loading and factor
+      * $L, F$ deviation for loading and factor
+      * $\tilde{\Lambda} := L F^t$ deviation for the mean 
+* $n = 1100, p = 2100, K = 50$
+* The last 100 words and documents are frequent words/docs
+* For each $k = 1...K$, it has 20 top words and 10 top documents (100 times more deviation). I arrange them so that $\tilde{\Lambda}$ has block structures: with $K$ blocks from $n = 1...1000, p = 1:2000$, and a block for frequent words/documents at the end. 
 ```{r}
-model_from_truth = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_from_truth.Rds")
-model_from_pmf = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000.Rds")
+model_from_truth = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds")
+model_from_pmf = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds")
 model_from_pmf_iter1 = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1.Rds")
 truth = readRDS("output/sim/v0.4.5/exper2/truth.sim_bg_block_n1100_p2100_K50.Rds")
 init = readRDS("output/sim/v0.4.5/exper2/init.sim_bg_block_n1100_p2100_K50.Rds")
+model_pmf_init = init$pmf
+model_pmf = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter5000.Rds")
+model_pmf_from_truth = readRDS("output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter5000_from_truth.Rds")
+
 X = read_sim_bag_of_words("output/sim/v0.4.5/exper2/docword.sim_bg_block_n1100_p2100_K50.txt")
+n = nrow(X)
+p = ncol(X)
 ```
 
-See what the data looks like
-```{r}
-par(mfrow = c(1,2))
-pheatmap(as.matrix(X)[1:100, 1:200], cluster_rows=FALSE, cluster_cols=FALSE,
-         main = "X block")
-pheatmap(truth$L[1:100,] %*% t(truth$F[1:200, ]), cluster_rows=FALSE, cluster_cols=FALSE,
-         main = "deviation matrix block")
+
+Below I show some of the blocks in $n = 1...1000, p = 1:2000$ 
+```{r fig.height=24, fig.width=48}
+data = as.matrix(X)[1:100, 1:200]
+quantile(data, probs = seq(85,100)/100)
+
+p1 = pheatmap(data, 
+              cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
+              fontsize = 48,legend = FALSE,
+              main = "X (block)")
+
+data = truth$L[1:100,] %*% t(truth$F[1:200, ])
+quantile(data, probs = seq(1,10)/10)
+
+p2 = pheatmap(data, 
+              cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
+              fontsize = 48,legend = FALSE,
+              main = "deviation for the mean (block)")
+plot_list = list(X = p1[[4]], dev_mean = p2[[4]])
+grid.arrange(arrangeGrob(grobs= plot_list,ncol=2))
+
+```
+
+
+Show the block at the end (for frequent words/docs)
+```{r fig.height=24, fig.width=48}
+data = as.matrix(X)[(n-150):n, (p-300):p]
+quantile(data, probs = seq(70,100)/100)
+p3 = pheatmap(data,
+         cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
+         fontsize = 48,legend = FALSE,
+         main = "X (block)")
+
+data = truth$L[(n-150):n,] %*% t(truth$F[(p-300):p, ])
+quantile(data, probs = seq(1,10)/10)
+p4 = pheatmap(data,
+         cluster_rows=FALSE, cluster_cols=FALSE,silent = TRUE,
+         fontsize = 48,legend = FALSE,
+         main = "deviation for the mean (block)")
+plot_list = list(X = p3[[4]], dev_mean = p4[[4]])
+grid.arrange(arrangeGrob(grobs= plot_list,ncol=2))
 ```
 
 
 
 ## compare progress
 ```{r}
-progress_df = data.frame(elbo_from_truth = model_from_truth$ELBO,
-                         Eloglik_from_truth = model_from_truth$ELBO + model_from_truth$KL,
-                         elbo_from_pmf = model_from_pmf$ELBO,
-                         Eloglik_from_pmf = model_from_pmf$ELBO + model_from_pmf$KL,
+progress_df = data.frame(elbo_wbg_from_truth = model_from_truth$ELBO,
+                         Eloglik_wbg_from_truth = model_from_truth$ELBO + model_from_truth$KL,
+                         elbo_wbg_from_pmf = model_from_pmf$ELBO,
+                         Eloglik_wbg_from_pmf = model_from_pmf$ELBO + model_from_pmf$KL,
+                         loglik_pmf = model_pmf$log_liks,
+                         loglik_pmf_from_truth = model_pmf_from_truth$log_liks,
                          iter = 1:length(model_from_pmf$ELBO))
 
 plt = ggplot(data = progress_df)+
-  geom_line(aes(iter, elbo_from_truth, color = "elbo_from_truth")) +
-  geom_line(aes(iter, Eloglik_from_truth, color = "Eloglik_from_truth")) +
-  geom_line(aes(iter, elbo_from_pmf, color = "elbo_from_pmf")) +
-  geom_line(aes(iter, Eloglik_from_pmf, color = "Eloglik_from_pmf")) +
+  geom_line(aes(iter, elbo_wbg_from_truth, color = "elbo_wbg_from_truth")) +
+  geom_line(aes(iter, Eloglik_wbg_from_truth, color = "Eloglik_wbg_from_truth")) +
+  geom_line(aes(iter, elbo_wbg_from_pmf, color = "elbo_wbg_from_pmf")) +
+  geom_line(aes(iter, Eloglik_wbg_from_pmf, color = "Eloglik_wbg_from_pmf")) +
+  geom_line(aes(iter, loglik_pmf, color = "loglik_pmf")) +
+  geom_line(aes(iter, loglik_pmf_from_truth, color = "loglik_pmf_from_truth")) +
   ylab("progress")
 print(plt)
 
-progress_df[length(model_from_pmf$ELBO),]
+t(progress_df[length(model_from_pmf$ELBO),])
 ```
 
 
-`model_from_pmf` is much worse than `model_from_truth` in ELBO, which I think is a good indicator of model performance. However, `model_from_pmf` even has higher Expected Loglikelihood (`ELBO = E-loglik + KL`), so its KL must be very very bad. This might suggest a very bad local optimal solution. 
+* `model_from_pmf` is much worse than `model_from_truth` in ELBO, which I think is a good indicator of model performance. 
+* However, `model_from_pmf` even has higher Expected Loglikelihood (`ELBO = E-loglik + KL`), so its KL must be very very bad. This might suggest a very bad local optimal solution.
+* `pmf` fits initialization from truth gets worse likelihood then random initialization... Maybe loglikelihood along is not a good model measurement here. 
 
 
 ## look at `model_from_truth`
@@ -124,8 +183,8 @@ sort(truth$top_words[k,])
 f_fitted[sort(f_fitted_sorted$ix[1:n_top])]
 ```
 
-### Prior `g` 
-They represent how many top words/top documents pretty well. 
+### Prior `g`
+They represent how many top words/top documents pretty well. There are around $0.01$ top words/documents, and they have around $0.01$ weight for $Ga(1/\phi, 1/\phi), \phi = 100$. For the rest, the weight goes to $Ga(1/\phi, 1/\phi), \phi = 0.01$ which is concentrated near 1. 
 ```{r}
 ## pi = 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top doc)
 Pi_L = get_prior_summary(model_from_truth$qg$gls, log10 = TRUE, return_matrix = TRUE)
@@ -145,9 +204,9 @@ hist(w, main = "w (scaled to have mean 1)")
 ```
 
 
-### `l0` (same situation for `f0`). 
+### `l0` (same situation for `f0`).
 
-The initialization for `l0` is good (I also checked that after the first iteration `l0` is still good), but the final output is worse.  So the algorithm seems to move to a bad optimal gradually. 
+The initialization for `l0` is good (I also checked that after the first iteration `l0` is still good), but the final output is worse.  So the algorithm seems to move to a bad optimal gradually.
 ```{r}
 par(mfrow = c(2,2))
 
@@ -163,8 +222,8 @@ plot(init$ebpmf_wbg$l0, main = "l0 in initialization")
 plot(rowMeans(X), main = "rowMeans(X)")
 ```
 
-### Deviation `L`. 
-The majority of `L` are small numbers instead of 1. Each topic seems to capture around 20-30 top words, although obviously there is no correspondence between the fitted topics and the truth. 
+### Deviation `L`.
+The majority of `L` are small numbers instead of 1. Each topic seems to capture around 20-30 top words, although obviously there is no correspondence between the fitted topics and the truth.
 ```{r}
 par(mfrow = c(2,2))
 ks = c(1, 12, 23, 42)
@@ -175,20 +234,20 @@ for(k in ks){
 }
 ```
 
-See how much `L` changes from initialization.  
+See how much `L` changes from initialization.
 ```{r}
 par(mfrow = c(2,2))
 ks = c(1, 12, 23, 42)
 for(k in ks){
-  plot(model_from_pmf_iter1$qg$qls_mean[,k], model_from_pmf$qg$qls_mean[,k], 
+  plot(model_from_pmf_iter1$qg$qls_mean[,k], model_from_pmf$qg$qls_mean[,k],
        log = "xy", xlab = "iter1", ylab = "iterN")
 }
 ```
 The top words change little from the first initialization.
 
-### Prior `g`. 
+### Prior `g`.
 
-That explains why the  majority of `L` are very small. The huge `phi` has majority of weights, which favors smaller and bigger numbers than small `phi` (which favors 1). 
+That explains why the  majority of `L` are very small. The huge `phi` has majority of weights, which favors smaller and bigger numbers than small `phi` (which favors 1).
 ```{r}
 ##  pi = 0.8 for phi = 1e+8, pi = 0.13 for phi = 0.001 (truth: around 0.01 are top doc)
 Pi_L = get_prior_summary(model_from_pmf$qg$gls, log10 = TRUE, return_matrix = TRUE)
@@ -197,21 +256,21 @@ Pi_F = get_prior_summary(model_from_pmf$qg$gfs, log10 = TRUE, return_matrix = TR
 ```
 
 ### what is `model_from_pmf` fitting
-* I choose a block in `lam-deviation` and compare truth to the two models. (the scale of the heatmap is not clear so I show a histogram beisde it). 
-* The value of blocks in truth has 3 clusters: top-word/doc times top-word/doc ; top-word/doc times others; others times others. 
+* I choose a block in `lam-deviation` and compare truth to the two models. (the scale of the heatmap is not clear so I show a histogram beisde it).
+* The value of blocks in truth has 3 clusters: top-word/doc times top-word/doc ; top-word/doc times others; others times others.
 * `model_from_truth` identifies most structure (probably makes a few mistakes, like when it misses 3 top wirds above)
 * `model_from_pmf` does not seem to get the structure.
 ```{r fig.height=24, fig.width=12}
 block_row = 1:100
 block_col = 1:200
 
-lam_devia_from_pmf = model_from_pmf$qg$qls_mean %*% t(model_from_pmf$qg$qfs_mean) 
-lam_devia_from_truth = model_from_truth$qg$qls_mean %*% t(model_from_truth$qg$qfs_mean) 
+lam_devia_from_pmf = model_from_pmf$qg$qls_mean %*% t(model_from_pmf$qg$qfs_mean)
+lam_devia_from_truth = model_from_truth$qg$qls_mean %*% t(model_from_truth$qg$qfs_mean)
 lam_devia_truth = truth$L %*% t(truth$F)
 
-block_k_from_pmf = lam_devia_from_pmf[block_row,block_col] 
-block_k_from_truth = lam_devia_from_truth[block_row,block_col] 
-block_k_truth = lam_devia_truth[block_row,block_col] 
+block_k_from_pmf = lam_devia_from_pmf[block_row,block_col]
+block_k_from_truth = lam_devia_from_truth[block_row,block_col]
+block_k_truth = lam_devia_truth[block_row,block_col]
 
 ## I scaled the block for comparison
 block_k_truth = block_k_truth/sum(block_k_truth)
@@ -234,6 +293,61 @@ plot(block_k_truth, block_k_from_pmf, log = "xy")
 
 
 
+
+## PMF fits
+* I show one of the loadings from various `pmf` fits, truth and `ebpmf` initialized from truth. The true top documents are between the red lines.
+
+```{r fig.height=24, fig.width=16}
+k = 32
+vl = min(truth$top_doc[k,])
+vr = max(truth$top_doc[k,])
+
+
+par(mfrow = c(3,2))
+
+l = model_pmf_init$L[,k]
+model_name = "pmf (rough)"
+plot(l, ylab = "loading k",
+     main = sprintf("%s\n median %.5f", model_name, round(median(l), digits = 5)))
+abline(v = vl, col = "red")
+abline(v = vr, col = "red")
+
+l = model_pmf$L[,k]
+model_name = "pmf (init from rough)"
+plot(l, ylab = "loading k",
+     main = sprintf("%s\n median %.5f", model_name, round(median(l), digits = 5)))
+abline(v = vl, col = "red")
+abline(v = vr, col = "red")
+
+
+l = model_pmf_from_truth$L[,k]
+model_name = "pmf (init from truth)"
+plot(l, ylab = "loading k",
+     main = sprintf("%s\n median %.5f", model_name, round(median(l), digits = 5)))
+abline(v = vl, col = "red")
+abline(v = vr, col = "red")
+
+
+l = truth$l0 * truth$L[,k]
+model_name = "truth"
+plot(l, ylab = "loading k",
+     main = sprintf("%s\n median %.5f", model_name, round(median(l), digits = 5)))
+abline(v = vl, col = "red")
+abline(v = vr, col = "red")
+
+
+l = model_from_truth$l0 * model_from_truth$qg$qls_mean[,k]
+model_name = "ebpmf-wbg from truth"
+plot(l, ylab = "loading k",
+     main = sprintf("%s\n median %.5f", model_name, round(median(l), digits = 5)))
+abline(v = vl, col = "red")
+abline(v = vr, col = "red")
+
+median(model_pmf_from_truth$L[,k])
+median(truth$l0 * truth$L[,k])
+```
+
+* PMF fits ignore the signal from deviation... so it seems to be fitting a rank-1 model with $K = 50$.
 
 
 
