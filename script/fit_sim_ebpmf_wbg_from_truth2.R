@@ -28,7 +28,7 @@ Y = read_sim_bag_of_words(file= sprintf("%s/%s.%s",
 
 ## initialization & save file
 init = readRDS(init_file)
-init = initialize_qgl0f0w_from_LF.local(L = init$l0 * init$L, F = init$f0 * init$F)
+init = initialize_qgl0f0w_from_l0f0LF.local(l0 = init$l0, f0 = init$f0, L = init$L, F = init$F)
 K = length(init$w)
 
 ## fit with ebpmf.alpha
@@ -41,7 +41,7 @@ start_time = proc.time()
 for(t in 1:T){
 	start_iter = 1 + (t-1)*every
 	end_iter = t*every
-	file_out = sprintf("%s/%s_ebpmf_wbg_K%d_maxiter%d_from_truth.Rds",
+	file_out = sprintf("%s/%s_ebpmf_wbg_K%d_maxiter%d_from_truth2.Rds",
        outdir,docname, K, end_iter)
 	print("##########################################")
 	print(sprintf("start fitting from %d iteration", start_iter))

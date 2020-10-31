@@ -14,8 +14,9 @@ every = as.integer(args[4])
 
 
 version = "v0.4.5"
-datadir = "../data/sim"
-outdir = sprintf("../output/sim/%s", version)
+exper_version = 2
+outdir = sprintf("../output/sim/%s/exper%d", version, exper_version)
+datadir = outdir
 filename = sprintf("docword.%s", docname)
 format = "txt"
 init_iter = 50
