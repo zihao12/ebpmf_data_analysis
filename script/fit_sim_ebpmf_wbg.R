@@ -4,30 +4,45 @@ library(Matrix)
 library(NNLM)
 library(ebpmf.alpha)
 source("../code/util.R")
+source("../code/init.R")
 set.seed(123)
 
 args = commandArgs(trailingOnly=TRUE)
 docname = args[1]
-init_name = args[2]
-maxiter = as.integer(args[3])
-every = as.integer(args[4])
+init_name = args[2]## "init", "init_random", "init_random2"
+K = as.integer(args[3])
+exper_version = as.integer(args[4])
+maxiter = as.integer(args[5])
+every = as.integer(args[6])
 
 
 version = "v0.4.5"
-exper_version = 2
 outdir = sprintf("../output/sim/%s/exper%d", version, exper_version)
 datadir = outdir
 filename = sprintf("docword.%s", docname)
 format = "txt"
-init_iter = 50
-init_file = sprintf("%s/%s", datadir,init_name)
 
 ## read data
 Y = read_sim_bag_of_words(file= sprintf("%s/%s.%s",
 			    datadir,filename, format))
 
 ## initialization & save file
-init = readRDS(init_file)$ebpmf_wbg
+#init = readRDS(init_file)$ebpmf_wbg ## for exper2
+# init = readRDS(init_file) ## for exper3
+if(init_name == "init_random2"){
+  init = initialize_qgl0f0w_random(X = Y, K = K, low = 0.3, up = 1.7, seed = 123)
+}
+
+if(init_name == "init_random"){
+  init_file = sprintf("%s/%s.%s.Rds", datadir,init_name, docname)
+  init = readRDS(init_file)
+}
+
+if(init_name == "init"){
+  init_file = sprintf("%s/%s.%s.Rds", datadir,init_name, docname)
+  init = readRDS(init_file)$ebpmf_wbg
+}
+
 K = length(init$w)
 
 ## fit with ebpmf.alpha
@@ -40,8 +55,8 @@ start_time = proc.time()
 for(t in 1:T){
 	start_iter = 1 + (t-1)*every
 	end_iter = t*every
-	file_out = sprintf("%s/%s_ebpmf_wbg_K%d_maxiter%d.Rds",
-       outdir,docname, K, end_iter)
+	file_out = sprintf("%s/%s_ebpmf_wbg_K%d_maxiter%d_%s.Rds",
+       outdir,docname, K, end_iter, init_name)
 	print("##########################################")
 	print(sprintf("start fitting from %d iteration", start_iter))
 	fit <- ebpmf.alpha::ebpmf_wbg(X = Y, K = K,
