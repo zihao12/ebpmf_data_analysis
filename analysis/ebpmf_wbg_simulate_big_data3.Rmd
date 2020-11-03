@@ -1,0 +1,123 @@
+---
+title: "ebpmf_wbg_simulate_big_data3"
+author: "zihao12"
+date: "2020-11-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+* I want to simulate a bigger dataset for `ebpmf-wbg`, where we know the ground truth. 
+
+* In `ebpmf_wbg_simulate_big_data2.Rmd` the data seems still too hard to learn. I increase the signal. 
+
+```{r set-up}
+rm(list = ls())
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, autodep = TRUE)
+out_dir = "output/sim/v0.4.5/exper3"
+```
+
+```{r}
+set.seed(123)
+library(Matrix)
+library(pheatmap)
+source("code/init.R")
+n = 1100
+p = 2100
+K = 50
+
+r0 = 100
+rl = 500
+rf = 500
+doc_length = 500
+
+n_top_words = 20 ## number of top words per k
+n_top_doc = 10 ## number of top documents per k
+
+freq_word = (p-99):p
+freq_doc = (n-99):n
+
+p_ = p - length(freq_word)
+n_ = n - length(freq_doc)
+start_idx_word = seq(0, p_, by = round(p_/K))[1:K] + 1
+start_idx_doc = seq(0, n_, by = round(n_/K))[1:K] + 1
+
+
+f0 = (1/p) * runif(p, min = 0.8, max = 1.2)
+l0 = doc_length * (1/n) * runif(n, min = 0.8, max = 1.2)
+f0[freq_word] = r0 * f0[freq_word]
+l0[freq_doc] = r0 * l0[freq_doc]
+
+F =  matrix(runif(p*K, min = 0.8, max = 1.2), nrow = p)
+L =  matrix(runif(n*K, min = 0.8, max = 1.2), nrow = n)
+
+top_words = matrix(, nrow = K, ncol = n_top_words)
+top_doc = matrix(, nrow = K, ncol = n_top_doc)
+
+for(k in 1:K){
+  idx = start_idx_word[k]:(start_idx_word[k]+n_top_words - 1)
+  top_words[k,] = idx
+  F[idx,k] = rf*F[idx,k]
+  idx = start_idx_doc[k]:(start_idx_doc[k]+n_top_doc - 1)
+  top_doc[k,] = idx
+  L[idx,k] = rl*L[idx,k]
+}
+
+Lam = (l0 * L) %*% t(f0 * F)
+X = Matrix(rpois(n = n*p, lambda = Lam), nrow = n, sparse = TRUE)
+
+
+## sparsity of data matrix X
+sum(X!=0)/(n *p)
+
+## as a comparison, how many counts are in that block?
+(K*n_top_doc*n_top_words + length(freq_doc)*length(freq_word))/(n*p)
+
+## look at the distribution of nonzero X counts
+quantile(X@x, seq(0,1,0.1))
+```
+
+
+
+```{r}
+## look at the X block for topic 1 (and their neighbors)
+X[1:15, 1:30]
+## look at the block for frequent words
+X[(n-10):n, (p-10):p]
+```
+
+
+Can `PMF` learn the structure well, if starthing from truth? (fails to do so in the previous experiment)\
+
+* `pmf_bg` and `pmf` has the same objective function. Only difference is `pmf_bg` separates `l0, f0` from `L, F`. 
+* Turns out this time they can learn the structure pretty well, thanks to the enhanced signal in the data. 
+
+```{r cache=TRUE}
+fit_pmf_bg_from_truth = ebpmf.alpha::pmf_bg(X = X, K = K, fix_option = list(L = FALSE, F = FALSE, l0 = FALSE, f0 = FALSE),
+                               init = list(L = L, F = F, l0 = l0, f0 = f0), maxiter = 10, verbose = TRUE)
+fit_pmf_from_truth = ebpmf.alpha::pmf(X = X, K = K, init = list(L = l0*L, F = f0 *F), maxiter = 10, verbose= TRUE)
+
+plot(fit_pmf_bg_from_truth$L[,1])
+plot(fit_pmf_from_truth$L[,1])
+```
+
+
+
+
+
+Save simulation and initialization
+```{r}
+writeMM(obj = X,file = sprintf("%s/docword.sim_bg_block_n%d_p%d_K%d.txt", out_dir, n, p, K))
+saveRDS(list(l0 = l0, f0 = f0, 
+             L = L, F = F,
+             top_words = top_words, top_doc = top_doc), 
+        file = sprintf("%s/truth.sim_bg_block_n%d_p%d_K%d.Rds", out_dir, n, p, K))
+# saveRDS(list(pmf = fit_init,
+#              ebpmf_wbg = init_ebpmf_wbg), 
+#         file = sprintf("%s/init.sim_bg_block_n%d_p%d_K%d.Rds", out_dir, n, p, K))
+```
+
+
+
+
