@@ -1,5 +1,6 @@
 ## function for initialization
 library(ebpmf.alpha)
+library(Matrix)
 
 initialize_qgl0f0w_from_l0f0LF.local <- function(l0, f0, L, F){
   K = ncol(L)
@@ -29,6 +30,26 @@ initialize_qgl0f0w_from_LF.local <- function(L, F){
   ## replace g with mixture of gamma
   qg$gls = replicate(K, list(ebpmf.alpha::bg_prior()))
   qg$gfs = replicate(K, list(ebpmf.alpha::bg_prior()))
+  return(list(qg = qg, l0 = l0, f0 = f0, w = w))
+}
+
+
+initialize_qgl0f0w_random <- function(X, K, low = 0.9, up = 1.1, seed = 123){
+  set.seed(seed)
+  n = nrow(X)
+  p = ncol(X)
+  l0 = apply(X, 1, mean)
+  f0 = apply(X, 2, mean)
+  l0 = l0 * (sum(X)/sum(f0)/K) / sum(l0)
+  w = replicate(K, 1)
+  kl_l = replicate(K, 0)
+  kl_f = replicate(K, 0)
+  qls_mean = matrix(runif(n*K, min = low, max = up), nrow = n, ncol = K)
+  qfs_mean = matrix(runif(p*K, min = low, max = up), nrow = p, ncol = K)
+  qg = list(qls_mean = qls_mean, qls_mean_log = log(qls_mean), kl_l = kl_l,
+            qfs_mean = qfs_mean, qfs_mean_log = log(qfs_mean), kl_f = kl_f,
+            gls = replicate(K, list(ebpmf.alpha::bg_prior())),
+            gfs = replicate(K, list(ebpmf.alpha::bg_prior())))
   return(list(qg = qg, l0 = l0, f0 = f0, w = w))
 }
 
