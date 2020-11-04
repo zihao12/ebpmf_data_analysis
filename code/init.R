@@ -2,11 +2,19 @@
 library(ebpmf.alpha)
 library(Matrix)
 
-initialize_qgl0f0w_from_l0f0LF.local <- function(l0, f0, L, F){
+initialize_qgl0f0w_from_l0f0LF.local <- function(l0, f0, L, F, scale = FALSE){
   K = ncol(L)
   w = replicate(K, 1)
   L[L <  1e-8] <- 1e-8
   F[F <  1e-8] <- 1e-8
+  if(scale){
+    sf = apply(F, 1, median)
+    F = F/sf
+    f0 = f0 * sf
+    sl = apply(L, 1, median)
+    L = L/sl
+    l0 = l0 * sl
+  }
   qg = list(qls_mean = L, qls_mean_log = log(L), kl_l = replicate(K, 0),
             qfs_mean = F, qfs_mean_log = log(F), kl_f = replicate(K, 0),
             gls = replicate(K, list(ebpmf.alpha::bg_prior())),

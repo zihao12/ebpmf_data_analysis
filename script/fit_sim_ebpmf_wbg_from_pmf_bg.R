@@ -9,11 +9,12 @@ set.seed(123)
 
 args = commandArgs(trailingOnly=TRUE)
 docname = args[1]
-init_name = args[2]## "init", "init_from_pmf_truth","init_random", "init_random2"
+init_name = args[2]
 K = as.integer(args[3])
-exper_version = as.integer(args[4])
-maxiter = as.integer(args[5])
-every = as.integer(args[6])
+scale = as.integer(args[4]) ## whether to scale init
+exper_version = as.integer(args[5])
+maxiter = as.integer(args[6])
+every = as.integer(args[7])
 
 
 version = "v0.4.5"
@@ -26,30 +27,10 @@ format = "txt"
 Y = read_sim_bag_of_words(file= sprintf("%s/%s.%s",
 			    datadir,filename, format))
 
-## initialization & save file
-#init = readRDS(init_file)$ebpmf_wbg ## for exper2
-# init = readRDS(init_file) ## for exper3
-if(init_name == "init_random2"){
-  init = initialize_qgl0f0w_random(X = Y, K = K, low = 0.3, up = 1.7, seed = 123)
-}
 
-if(init_name == "init_random"){
-  init_file = sprintf("%s/%s.%s.Rds", datadir,init_name, docname)
-  init = readRDS(init_file)
-}
-
-if(init_name == "init"){
-  init_file = sprintf("%s/%s.%s.Rds", datadir,init_name, docname)
-  init = readRDS(init_file)$ebpmf_wbg
-}
-
-if(init_name == "pmf_bg_K50_maxiter1000_from_truth"){
-  init_file = sprintf("%s/%s_%s.Rds", datadir,docname, init_name)
-  init = readRDS(init_file)
-  init = initialize_qgl0f0w_from_l0f0LF.local(l0 = init$l0, f0 = init$f0, L = init$L, F = init$F)
-}
-
-
+init_file = sprintf("%s/%s_%s.Rds", datadir,docname, init_name)
+init = readRDS(init_file)
+init = initialize_qgl0f0w_from_l0f0LF.local(l0 = init$l0, f0 = init$f0, L = init$L, F = init$F, scale = scale)
 
 K = length(init$w)
 
@@ -63,8 +44,8 @@ start_time = proc.time()
 for(t in 1:T){
 	start_iter = 1 + (t-1)*every
 	end_iter = t*every
-	file_out = sprintf("%s/%s_ebpmf_wbg_K%d_maxiter%d_%s.Rds",
-       outdir,docname, K, end_iter, init_name)
+	file_out = sprintf("%s/%s_ebpmf_wbg_K%d_maxiter%d_%s_scaled%d.Rds",
+       outdir,docname, K, end_iter, init_name, scale)
 	print("##########################################")
 	print(sprintf("start fitting from %d iteration", start_iter))
 	fit <- ebpmf.alpha::ebpmf_wbg(X = Y, K = K,
