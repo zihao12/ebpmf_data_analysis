@@ -10,11 +10,10 @@ set.seed(123)
 args = commandArgs(trailingOnly=TRUE)
 docname = args[1]
 init_name = args[2]
-K = as.integer(args[3])
-scale = as.integer(args[4]) ## whether to scale init
-exper_version = as.integer(args[5])
-maxiter = as.integer(args[6])
-every = as.integer(args[7])
+scale = as.integer(args[3]) ## whether to scale init
+exper_version = as.integer(args[4])
+maxiter = as.integer(args[5])
+every = as.integer(args[6])
 
 
 version = "v0.4.5"
