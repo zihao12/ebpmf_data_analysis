@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="zihao12" />
+
+<meta name="date" content="2020-11-04" />
+
+<title>ebpmf_wbg_simulation_big2_2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ebpmf_data_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/zihao12/ebpmf_data_analysis">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">ebpmf_wbg_simulation_big2_2</h1>
+<h4 class="author">zihao12</h4>
+<h4 class="date">2020-11-04</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-11-05
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1efe752facde9a7c7f0d36c019f547c2e4e09535targetblank1efe752a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1efe752facde9a7c7f0d36c019f547c2e4e09535" target="_blank">1efe752</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1efe752facde9a7c7f0d36c019f547c2e4e09535targetblank1efe752a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1efe752facde9a7c7f0d36c019f547c2e4e09535" target="_blank">1efe752</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/ebpmf_bg_tutorial_cache/
+    Ignored:    analysis/ebpmf_wbg_model_intro_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data2_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data3_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data_cache/
+    Ignored:    analysis/ebpmf_wbg_simulation_cache/
+    Ignored:    analysis/investigate_np_ebpmf_wbg_cache/
+    Ignored:    analysis/pmf_greedy_experiment_cache/
+    Ignored:    analysis/sla_data_analysis_k10_cache/
+    Ignored:    data/.DS_Store
+    Ignored:    output/.DS_Store
+    Ignored:    topicView-app/.DS_Store
+
+Untracked files:
+    Untracked:  analysis/draft.Rmd
+    Untracked:  analysis/draft2.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big2_more.Rmd
+    Untracked:  analysis/heatmap.Rmd
+    Untracked:  analysis/investigate_largeK.Rmd
+    Untracked:  analysis/investigate_news_topics.Rmd
+    Untracked:  analysis/summary_sla_news_nips.Rmd
+    Untracked:  analysis/test.R
+    Untracked:  data/sim/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  output/sim/v0.4.5/exper2/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter100_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random2.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter20_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter30_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter40_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter60_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter6_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter70_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter7_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter80_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter8_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter90_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter9_from_truth.Rds
+    Untracked:  script/Rplots.pdf
+    Untracked:  script/init_ebpmf_wbg_from_pmf_bg.R
+    Untracked:  script/init_ebpmf_wbg_random.R
+    Untracked:  script/save_volcano_plot.R
+    Untracked:  topicView-app/app_utils.R
+    Untracked:  topicView-app/data/
+    Untracked:  topicView-app/output/
+    Untracked:  topicView-app/rsconnect/
+
+Unstaged changes:
+    Modified:   analysis/ebpmf_wbg_simulate_big_data2.Rmd
+    Deleted:    analysis/sla_data_analysis_k10.Rmd
+    Deleted:    analysis/sla_data_analysis_k5.Rmd
+    Deleted:    analysis/sla_data_analysis_k50.Rmd
+    Modified:   code/misc.R
+    Modified:   code/util.R
+    Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
+    Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
+    Deleted:    data/SLA/SCC2016/Code/APL/compParamErr2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl4c.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cplEstimParam.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_basic_demo_PJ.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_demo.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_demo2a.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod3.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_nmi_beta_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_nmi_lambda_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_time_vs_n_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod.c
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod.mexa64
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/initLabel5b.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/ProfileLike.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/calCri1.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/calCri2.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/mutiExp.m
+    Deleted:    data/SLA/SCC2016/Code/MatlabCode.m
+    Deleted:    data/SLA/SCC2016/Code/NewmanSM/NewmanSM.m
+    Deleted:    data/SLA/SCC2016/Code/coauthorThresh2GiantAdj.txt
+    Deleted:    data/SLA/SCC2016/Code/coauthorThresh2GiantCommLabelK2Matlab.txt
+    Deleted:    data/SLA/SCC2016/Code/functions.R
+    Deleted:    data/SLA/SCC2016/Code/main.R
+    Deleted:    data/SLA/SCC2016/Data/authorList.txt
+    Deleted:    data/SLA/SCC2016/Data/authorPaperBiadj.txt
+    Deleted:    data/SLA/SCC2016/Data/paperCitAdj.txt
+    Deleted:    data/SLA/SCC2016/Data/paperList.txt
+    Deleted:    data/SLA/SCC2016/ReadMe.txt
+    Modified:   data/sim/docword.sim_bg_block_n1100_p2100_K50.txt
+    Deleted:    data/sim/init.sim_bg_block_n1100_p2100_K50.Rds
+    Modified:   data/sim/truth.sim_bg_block_n1100_p2100_K50.Rds
+    Deleted:    data/uci_BoW.sh
+    Deleted:    data/uci_BoW/docword.kos.txt
+    Deleted:    data/uci_BoW/readme.txt
+    Deleted:    data/uci_BoW/vocab.kos.txt
+    Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
+    Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_from_truth.Rout
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_from_truth2.Rds
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_500.Rout
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K2_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K300_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K500_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K300_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K500_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter5.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter100.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter200.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter300.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter400.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter600.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter700.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter800.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter900.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K100_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K20_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K300_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K500_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K50_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter5.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter100.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter200.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter300.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter400.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter600.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter700.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter800.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter900.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K3_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K100_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K20_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K300_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K3_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K500_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K50_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Modified:   topicView-app/app.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ebpmf_wbg_simulation_big2_2.Rmd</code>) and HTML (<code>docs/ebpmf_wbg_simulation_big2_2.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1efe752facde9a7c7f0d36c019f547c2e4e09535/analysis/ebpmf_wbg_simulation_big2_2.Rmd" target="_blank">1efe752</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-11-05
+</td>
+<td>
+ebpmf_wbg_simulation_big2_2.Rmd
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<ul>
+<li>What I did:
+<ul>
+<li>I did experiment with <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">ebpmf-wbg</a> using <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2">bigger simulated dataset</a> (<span class="math inline">\(n = 1100, p = 2100, K = 50\)</span>).</li>
+<li>The signal from <span class="math inline">\(L, F\)</span> is low compared to from <span class="math inline">\(l_0 L, f_0 F\)</span>. <span class="math inline">\(\text{Cor}(L_{k}, L_{k^{&#39;}}) \approx - 0.009\)</span> but <span class="math inline">\(\text{Cor}(l_0 L_{k}, f_0 L_{k^{&#39;}}) \approx - 0.9\)</span></li>
+<li>I compared <code>pmf_bg</code> and <code>ebpmf_wbg</code> on this dataset. (Note <code>pmf_bg</code> has the same objective as <code>pmf</code>, but that I separate <span class="math inline">\(L\)</span> into <span class="math inline">\(l_0, L\)</span> and update them separately (same for <span class="math inline">\(F\)</span>). Or it is just like <code>ebpmf_wbg</code> without the adaptive shrinkage part)</li>
+</ul></li>
+<li>What I found:
+<ul>
+<li>Because the signal from deviation <span class="math inline">\(L, F\)</span> is too low, both methods have solutions that ignore the signal but achieves better objective value</li>
+<li>Even when initialized from truth, <code>pmf-bg</code> learns messy structure.</li>
+<li>When initialized sufficiently close to the truth, <code>ebpmf-wbg</code> recovers the structure well, and the estimate of <code>g</code> also makes sense.</li>
+</ul></li>
+</ul>
+<pre class="r"><code>rm(list = ls())
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, autodep = TRUE)</code></pre>
+<pre class="r"><code>library(ggplot2)
+library(gridExtra)
+library(Matrix)
+source(&quot;code/misc.R&quot;)
+source(&quot;code/util.R&quot;)
+data_dir = &quot;output/sim/v0.4.5/exper2&quot;
+data_name = &quot;sim_bg_block_n1100_p2100_K50&quot;</code></pre>
+<p>Load data and models</p>
+<pre class="r"><code>## load data
+X = read_sim_bag_of_words(sprintf(&quot;%s/docword.%s.txt&quot;, data_dir, data_name))
+truth = readRDS(sprintf(&quot;%s/truth.%s.Rds&quot;, data_dir, data_name))
+n = nrow(X); p = ncol(X); K = ncol(truth$L)
+
+## load wbg models
+wbg_from_truth = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                      method_name = &quot;ebpmf_wbg_K50_maxiter5000_from_truth&quot;)
+wbg_from_pmf_truth = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name=&quot;ebpmf_wbg_K50_maxiter500_pmf_bg_K50_maxiter10_from_truth_scaled0&quot;)
+wbg_from_pmf_truth_scaled = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name=&quot;ebpmf_wbg_K50_maxiter500_pmf_bg_K50_maxiter10_from_truth_scaled0&quot;)
+
+wbg_from_random = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name=&quot;ebpmf_wbg_K50_maxiter100_init_random&quot;)
+
+## load pmf models
+pmf_bg_from_truth = load_model_pmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name = &quot;pmf_bg_K50_maxiter1000_from_truth&quot;)
+
+## load pmf models
+pmf_bg_from_truth_iter10 = load_model_pmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name = &quot;pmf_bg_K50_maxiter10_from_truth&quot;)</code></pre>
+</div>
+<div id="what-does-the-data-look-like" class="section level2">
+<h2>What does the data look like</h2>
+<ul>
+<li>The data is generated in <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2">bigger_simulated_dataset</a>.</li>
+<li>Data model is <span class="math inline">\(X \sim \text{Pois}(\Lambda); \Lambda_{ij} = l_{i0} f_{j0} \sum_k l_{ik} f_{jk}\)</span>. We call
+<ul>
+<li><span class="math inline">\(l_0, f_0\)</span> background frequency for loading and factor</li>
+<li><span class="math inline">\(L, F\)</span> deviation for loading and factor</li>
+<li><span class="math inline">\(\tilde{\Lambda} := L F^t\)</span> deviation for the mean</li>
+</ul></li>
+<li><span class="math inline">\(n = 1100, p = 2100, K = 50\)</span></li>
+<li>The last 100 words and documents are frequent words/docs</li>
+<li>For each <span class="math inline">\(k = 1...K\)</span>, it has 20 top words and 10 top documents (100 times more deviation). I arrange them so that <span class="math inline">\(\tilde{\Lambda}\)</span> has block structures: with <span class="math inline">\(K\)</span> blocks from <span class="math inline">\(n = 1...1000, p = 1:2000\)</span>, and a block for frequent words/documents at the end.</li>
+<li>The signal from frequent words is much stronger than those from top words/documents (in <span class="math inline">\(X\)</span>, the block for frequent word has value <span class="math inline">\(&gt; 10\)</span> times of that in block for top words/documents). Note that this seems to be intrinsic to this type of data: if the amplifying factor for background frequent words, and for top words/documents are the same, the signal from the background is <span class="math inline">\(K\)</span> times stronger.</li>
+</ul>
+</div>
+<div id="truth-l_0-f_0-l-f-and-deviation-matrix" class="section level2">
+<h2>Truth (<span class="math inline">\(l_0, f_0, L, F\)</span> and deviation matrix)</h2>
+<pre class="r"><code>par(mfrow = c(2,2))
+plot(truth$l0, log = &quot;y&quot;, main = &quot;l0 (truth)&quot;)
+plot(truth$f0, log = &quot;y&quot;, main = &quot;f0 (truth)&quot;)
+
+k = 12
+plot(truth$L[,k], log = &quot;y&quot;, main = sprintf(&quot;%dth loading&quot;, k))
+plot(truth$F[,k], log = &quot;y&quot;, main = sprintf(&quot;%dth factor&quot;, k))</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>Deviation matrix (block for top words and docs)</p>
+<pre class="r"><code>image(truth$L[1:50,] %*% t(truth$F[1:100,]), main = &quot;deviation matrix (one block)&quot;)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="show-some-blocks-in-x" class="section level3 tabset">
+<h3>Show some blocks in <span class="math inline">\(X\)</span></h3>
+<div id="with-topic-wordsdocuments-plus-neghbors" class="section level4">
+<h4>with topic words/documents, plus neghbors</h4>
+<pre class="r"><code>X[1:15, 1:30]</code></pre>
+<pre><code>15 x 30 sparse Matrix of class &quot;dgCMatrix&quot;
+                                                                 
+ [1,] 1 . . 1 . . . 3 . . 2 1 . . 1 1 . . 1 . . . . . . . . . . .
+ [2,] . 1 1 . 2 1 2 . . 1 . . . 2 . 1 . 2 . 1 . . . . . . . . . .
+ [3,] . 1 . . . . 1 . 1 1 1 . 3 . . . . . 3 . . . . . . . . . . .
+ [4,] . 2 2 1 . 1 . . . 1 1 . . 2 1 . 3 . . 2 . . . . . . . . . .
+ [5,] 2 1 1 . 1 . . 1 1 1 . . 1 . . . . 1 . . . . . . . . . . . .
+ [6,] 2 . 1 . 2 1 . 1 . 1 1 . 1 . . 1 1 1 2 . . . . . . . . . . .
+ [7,] 1 . . 1 . 1 . . . . . . . . . . 1 . . . . . . . . . . . . .
+ [8,] 2 3 . . . 1 . 1 . . 1 . . . 1 . . . 1 . . . . . . . . . . .
+ [9,] 1 . . 1 . . 1 . 1 1 . . 1 1 . 1 2 . . . . . . . . . . . . .
+[10,] 1 . 1 . . 1 . 1 1 . . 2 . . . . 2 . . 1 . . . . . . . . . .
+[11,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[12,] . . . . . . . . . . . . . . . . 1 . . . . . . . . . . . . .
+[13,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[14,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[15,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</code></pre>
+</div>
+<div id="with-frequent-wordsdocuments" class="section level4">
+<h4>with frequent words/documents</h4>
+<pre class="r"><code>X[(n-10):n, (p-20):p]</code></pre>
+<pre><code>11 x 21 sparse Matrix of class &quot;dgCMatrix&quot;
+                                                                    
+ [1,] 16 16 22 25 16 26 29 15 27 27 22 16 19 19 18 22 26 32 20 24 18
+ [2,] 20 16 34 23 28 35 31 22 30 24 21 28 29 19 20 20 29 31 12 20 19
+ [3,] 17 14 33 31 17 31 21 22 18 26 28 27 22 29 15 21 30 25 25 29 17
+ [4,] 23 22 20 17 19 27 18 12 23 27 34 18 16 14  9 15 24 23 12 13 24
+ [5,] 27 26 24 21 22 29 23 19 38 31 25 21 26 20 21 30 16 35 25 18 30
+ [6,] 15 19 16 26 11 21 29 16 25 31 23 26 26 19 28 15 37 34 22 27 17
+ [7,] 20 17 25 27 18 24 24 34 34 28 22 17 28 29 23 27 26 32 25 22 16
+ [8,] 13 14 21 18 14 15  8 13 25 16 12 30 13  8 20 19 26 16 18 16 17
+ [9,] 16 10 29 28 24 25 25 16 31 25 13 19 14 18 20 24 24 25 16 16 24
+[10,] 20 15 36 30 29 23 26 26 34 25 25 29 16 25 16 19 30 32 25 24 21
+[11,] 12 16 25 24 13 25 22 26 23 25 19 15 23 23 12 11 23 29 21 20 14</code></pre>
+</div>
+<div id="with-frequent-words-and-ordinary-documents" class="section level4">
+<h4>with frequent words and ordinary documents</h4>
+<pre class="r"><code>X[(n-10):n, 1:20]</code></pre>
+<pre><code>11 x 20 sparse Matrix of class &quot;dgCMatrix&quot;
+                                             
+ [1,] 2 1 . 1 2 . 2 . 2 . . . . . . 1 . 2 1 3
+ [2,] 1 3 . . 1 . 1 1 . 1 2 . . 1 1 . 1 . 1 .
+ [3,] 2 3 1 2 1 . . . 1 . . . . . . 1 1 . 1 1
+ [4,] . 1 2 . 2 . 1 1 1 2 1 . . . . 1 2 1 1 1
+ [5,] 3 1 1 2 . . . . . . 1 . . 1 . 2 1 . 1 .
+ [6,] 1 1 . 1 2 . 3 . 3 . . . 1 . 1 . 1 . . 1
+ [7,] . 1 1 1 1 1 1 3 . 1 . 1 . . . . 1 . . 2
+ [8,] 1 . . . . . . . 1 . . 1 . 1 1 . . . . .
+ [9,] . . 2 2 1 . 1 1 . . 1 . 1 . . . . 1 . 1
+[10,] . . . 1 1 . 1 2 1 . . . . 1 2 1 1 . . 1
+[11,] . . 2 . 3 2 . 2 . . . 1 4 1 . . . . . 1</code></pre>
+</div>
+<div id="with-top-words-and-ordinary-documents" class="section level4">
+<h4>with top words and ordinary documents</h4>
+<pre class="r"><code>X[20:30, 1:20]</code></pre>
+<pre><code>11 x 20 sparse Matrix of class &quot;dgCMatrix&quot;
+                                             
+ [1,] . . . . . . . . . . . . . . . . . . . .
+ [2,] . . . . . . . . . . . . . . . . . . . .
+ [3,] . . . . . . . . . . . . . . . . . . . .
+ [4,] . . . . . . . . . . . . . . . . . . . .
+ [5,] . . . . . . . . . . . . . . . . . . . .
+ [6,] . . . . . . . . . . . . . . . . . . . .
+ [7,] . 1 . . . . . . . . . . . . . . . . . .
+ [8,] . . . . . . . . . . . . . . . . . . . .
+ [9,] . . . . . . . . . . . 1 . . . . . . . .
+[10,] . . . . . . . . . . . . . . . . . . . .
+[11,] . . . . . . . . . . . . . . . . . . . .</code></pre>
+</div>
+<div id="with-ordinary-documents-and-ordinary-words" class="section level4">
+<h4>with ordinary documents and ordinary words</h4>
+<pre class="r"><code>X[50:60, 50:70]</code></pre>
+<pre><code>11 x 21 sparse Matrix of class &quot;dgCMatrix&quot;
+                                               
+ [1,] . . . . . . . . . . . . . . . . . . . . .
+ [2,] . . . . . . . . . . . . . . . . . . . . .
+ [3,] . . . . . . . . . . . . . . . . . . . . .
+ [4,] . . . . . . . . . . . . . . . . . . . . .
+ [5,] . . . . . . . . . . . . . . . . . . . . .
+ [6,] . . . . . . . . . . . . . . . . . . . . .
+ [7,] . . . . . . . . . . . . . . . . . . . . .
+ [8,] . . . . . . . . . . . . . . . . . . . . .
+ [9,] . . . . . . . . . . . . . . . . . . . . .
+[10,] . . . . . . . . . . . . . . . . . . . . .
+[11,] . . . . . . . . . . . . . . . . . . . . .</code></pre>
+</div>
+</div>
+</div>
+<div id="pmf_bg-from-truth" class="section level2">
+<h2><code>pmf_bg</code> from truth</h2>
+<p>It gets more messy results (why?)</p>
+<pre class="r"><code>par(mfrow = c(2,2))
+k = 13
+plot(pmf_bg_from_truth_iter10$L[,k], main = sprintf(&quot;10th iter: %dth loading&quot;, k), ylab = &quot;loading&quot;)
+plot(pmf_bg_from_truth$L[,k], main = sprintf(&quot;1000th iter: %dth loading&quot;, k), ylab = &quot;loading&quot;)
+
+plot(pmf_bg_from_truth_iter10$F[,k], main = sprintf(&quot;10th iter: %dth factor&quot;, k), ylab = &quot;factor&quot;)
+plot(pmf_bg_from_truth$F[,k], main = sprintf(&quot;1000th iter: %dth factor&quot;, k), ylab = &quot;factor&quot;)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ebpmf_wbg-from-truth" class="section level2">
+<h2><code>ebpmf_wbg</code> from truth</h2>
+<p>Posterior mean for <span class="math inline">\(L, F\)</span> are good</p>
+<pre class="r"><code>par(mfrow = c(2,2))
+k = 13
+plot(wbg_from_truth$qg$qls_mean[,k], log = &quot;y&quot;, main = sprintf(&quot; %dth loading&quot;, k), ylab = &quot;loading&quot;)
+plot(wbg_from_truth$qg$qfs_mean[,k], log = &quot;y&quot;, main = sprintf(&quot; %dth factor&quot;, k), ylab = &quot;factor&quot;)
+
+k = 29
+plot(wbg_from_truth$qg$qls_mean[,k], log = &quot;y&quot;, main = sprintf(&quot; %dth loading&quot;, k), ylab = &quot;loading&quot;)
+plot(wbg_from_truth$qg$qfs_mean[,k], log = &quot;y&quot;, main = sprintf(&quot; %dth factor&quot;, k), ylab = &quot;factor&quot;)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>The prior <code>g</code> makes sense:<br />
+* <code>g</code> has weights on two components, one with small <span class="math inline">\(\phi\)</span>, the other large <span class="math inline">\(\phi\)</span> * the weights of big <span class="math inline">\(\phi\)</span> almost equal the proportion of top words/documents for <span class="math inline">\(L, F\)</span>.</p>
+<pre class="r"><code>## pi = 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top doc)
+g = wbg_from_truth$qg$gls
+Pi_L = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## pi around 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top words)
+g = wbg_from_truth$qg$gfs
+Pi_F = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-13-2.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ebpmf_wbg-from-close-to-truth" class="section level2">
+<h2><code>ebpmf_wbg</code> from close to truth</h2>
+<p>Above we see <code>pmf_bg</code> gets messy when initialized from the truth. I use that <code>pmf_bg</code> of 10 iterations as initialization for <code>ebpmf-wbg</code> (also tried 1000 iteration <code>pmf_bg</code> for initialization but not very good)</p>
+<p>Posterior mean for <span class="math inline">\(L, F\)</span>: make a few mistakes, due to initialization</p>
+<pre class="r"><code>par(mfrow = c(2,2))
+k = 19
+plot(pmf_bg_from_truth_iter10$L[,k], main = sprintf(&quot;init: %dth loading&quot;, k), ylab = &quot;loading&quot;)
+plot(wbg_from_pmf_truth$qg$qls_mean[,k], main = sprintf(&quot;wbg: %dth loading&quot;, k), ylab = &quot;loading&quot;)
+
+plot(pmf_bg_from_truth_iter10$F[,k], main = sprintf(&quot;init iter: %dth factor&quot;, k), ylab = &quot;factor&quot;)
+plot(wbg_from_pmf_truth$qg$qfs_mean[,k], main = sprintf(&quot;wbg: %dth factor&quot;, k), ylab = &quot;factor&quot;)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-14-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>The prior <code>g</code> still mostly makes sense. The proportions are mostly good.<br />
+(Note topic 15 and 29 are down-weighted. Their <code>g_F</code> are slightly different than others)</p>
+<pre class="r"><code>g = wbg_from_pmf_truth$qg$gls
+Pi_L = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>g = wbg_from_pmf_truth$qg$gfs
+Pi_F = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)</code></pre>
+<p><img src="figure/ebpmf_wbg_simulation_big2_2.Rmd/unnamed-chunk-15-2.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="whereebpmf-wbg-can-go-wrong" class="section level2">
+<h2>Where<code>ebpmf-wbg</code> can go wrong</h2>
+<ul>
+<li><p>When the initialization is not good enough, <code>ebpmf-wbg</code> can go wrong.</p></li>
+<li><p>When initialized with <span class="math inline">\(l_0\)</span>, <span class="math inline">\(f_0\)</span> from rank-1 model (scaled properly), and <span class="math inline">\(L, F\)</span> uniform with mean 1, the model ignores the signal from <span class="math inline">\(L,F\)</span> and <code>g</code> puts all mass on very small <span class="math inline">\(\phi\)</span>. As a result, the <code>E-loglik</code> is slightly worse, but the KL divergence is much smaller. This gives the model a higher ELBO than starting the truth. It converges after a couple of iterations.</p></li>
+<li><p>When initialized from <code>pmf</code> which completely misses the structure, the final model also does not make sense, and has low ELBO (didn’t show).</p></li>
+</ul>
+<pre class="r"><code>compare_df = data.frame(cbind(as.numeric(wbg_from_random$summary), 
+                              as.numeric(wbg_from_truth$summary),
+                              as.numeric(wbg_from_pmf_truth$summary)), 
+                        row.names = names(wbg_from_random$summary))
+colnames(compare_df) &lt;- c(&quot;from_random&quot;, &quot;from_truth&quot;, &quot;from_pmf&quot;)
+round(compare_df)</code></pre>
+<pre><code>             from_random from_truth from_pmf
+ELBO             -364607    -370581  -371185
+KL                     7      16476    17404
+E_loglik         -364600    -354105  -353781
+runtime_iter           9          7        8</code></pre>
+<!-- ```{r} -->
+<!-- par(mfrow = c(2,2)) -->
+<!-- dev_m = pmf_bg_from_truth$L %*% t(pmf_bg_from_truth$F) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "pmf-bg from truth") -->
+<!-- # image((pmf_from_truth$L[1:50,]/truth$l0[1:50]) %*%  -->
+<!-- #         t(pmf_bg_from_truth$F[1:100,]/truth$f0[1:100]), main = "pmf from truth") -->
+<!-- dev_m = wbg_from_truth$qg$qls_mean %*% t(wbg_from_truth$qg$qfs_mean) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "ebpmf-wbg from truth") -->
+<!-- dev_m = wbg_from_pmf_truth$qg$qls_mean %*% t(wbg_from_pmf_truth$qg$qfs_mean) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "ebpmf-wbg from truth") -->
+<!-- # image(wbg_from_pmf_truth$qg$qls_mean[1:50,] %*% t(wbg_from_pmf_truth$qg$qfs_mean[1:100,]), main = "ebpmf-wbg from pmf-bg-truth") -->
+<!-- dev_m = truth$L %*% t(truth$F) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "truth") -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- par(mfrow = c(2,2)) -->
+<!-- k = 12 -->
+<!-- plot(pmf_bg_from_truth$F[,k]) -->
+<!-- plot(wbg_from_pmf_truth$qg$qfs_mean[,k]) -->
+<!-- plot(wbg_from_truth$qg$qfs_mean[,k], log = "y") -->
+<!-- plot(truth$F[,k], log = "y") -->
+<!-- ``` -->
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS  10.15.7
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] pheatmap_1.0.12 Matrix_1.2-17   gridExtra_2.3   ggplot2_3.3.0  
+[5] workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5         RColorBrewer_1.1-2 compiler_3.5.1     pillar_1.4.4      
+ [5] later_1.1.0.1      git2r_0.26.1       tools_3.5.1        digest_0.6.25     
+ [9] lattice_0.20-38    evaluate_0.14      lifecycle_0.2.0    tibble_3.0.1      
+[13] gtable_0.3.0       pkgconfig_2.0.3    rlang_0.4.6        yaml_2.2.0        
+[17] xfun_0.8           withr_2.2.0        stringr_1.4.0      dplyr_0.8.1       
+[21] knitr_1.28         fs_1.3.1           vctrs_0.3.0        rprojroot_1.3-2   
+[25] grid_3.5.1         tidyselect_0.2.5   glue_1.4.1         R6_2.4.1          
+[29] rmarkdown_2.1      purrr_0.3.4        magrittr_1.5       whisker_0.3-2     
+[33] backports_1.1.7    scales_1.1.1       promises_1.1.1     htmltools_0.5.0   
+[37] ellipsis_0.3.1     assertthat_0.2.1   colorspace_1.4-1   httpuv_1.5.4      
+[41] stringi_1.4.3      munsell_0.5.0      crayon_1.3.4      </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
