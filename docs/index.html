@@ -333,7 +333,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-05
+<strong>Last updated:</strong> 2020-11-05
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -364,16 +364,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreed8ba5a163373dceabce232a1651593840af568f3targetblankd8ba5a1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/d8ba5a163373dceabce232a1651593840af568f3" target="_blank">d8ba5a1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635targetblank1aae3e9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635" target="_blank">1aae3e9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreed8ba5a163373dceabce232a1651593840af568f3targetblankd8ba5a1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635targetblank1aae3e9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/d8ba5a163373dceabce232a1651593840af568f3" target="_blank">d8ba5a1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635" target="_blank">1aae3e9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -384,6 +384,11 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/ebpmf_bg_tutorial_cache/
+    Ignored:    analysis/ebpmf_wbg_model_intro_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data2_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data3_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data_cache/
+    Ignored:    analysis/ebpmf_wbg_simulation_cache/
     Ignored:    analysis/investigate_np_ebpmf_wbg_cache/
     Ignored:    analysis/pmf_greedy_experiment_cache/
     Ignored:    analysis/sla_data_analysis_k10_cache/
@@ -392,18 +397,60 @@ Ignored files:
     Ignored:    topicView-app/.DS_Store
 
 Untracked files:
-    Untracked:  analysis/sla_pmf_k100.Rmd
+    Untracked:  analysis/draft.Rmd
+    Untracked:  analysis/draft2.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big2_more.Rmd
+    Untracked:  analysis/heatmap.Rmd
+    Untracked:  analysis/investigate_largeK.Rmd
+    Untracked:  analysis/investigate_news_topics.Rmd
+    Untracked:  analysis/summary_sla_news_nips.Rmd
+    Untracked:  analysis/test.R
+    Untracked:  data/sim/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  output/sim/v0.4.5/exper2/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter100_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random2.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter20_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter30_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter40_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter60_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter6_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter70_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter7_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter80_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter8_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter90_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter9_from_truth.Rds
+    Untracked:  script/Rplots.pdf
+    Untracked:  script/init_ebpmf_wbg_from_pmf_bg.R
+    Untracked:  script/init_ebpmf_wbg_random.R
+    Untracked:  script/save_volcano_plot.R
     Untracked:  topicView-app/app_utils.R
     Untracked:  topicView-app/data/
     Untracked:  topicView-app/output/
     Untracked:  topicView-app/rsconnect/
 
 Unstaged changes:
+    Modified:   analysis/ebpmf_wbg_simulate_big_data2.Rmd
     Deleted:    analysis/sla_data_analysis_k10.Rmd
     Deleted:    analysis/sla_data_analysis_k5.Rmd
     Deleted:    analysis/sla_data_analysis_k50.Rmd
     Modified:   code/misc.R
-    Modified:   code/plots.R
+    Modified:   code/util.R
     Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
     Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
     Deleted:    data/SLA/SCC2016/Code/APL/compParamErr2.m
@@ -437,10 +484,19 @@ Unstaged changes:
     Deleted:    data/SLA/SCC2016/Data/paperCitAdj.txt
     Deleted:    data/SLA/SCC2016/Data/paperList.txt
     Deleted:    data/SLA/SCC2016/ReadMe.txt
+    Modified:   data/sim/docword.sim_bg_block_n1100_p2100_K50.txt
+    Deleted:    data/sim/init.sim_bg_block_n1100_p2100_K50.Rds
+    Modified:   data/sim/truth.sim_bg_block_n1100_p2100_K50.Rds
     Deleted:    data/uci_BoW.sh
     Deleted:    data/uci_BoW/docword.kos.txt
     Deleted:    data/uci_BoW/readme.txt
     Deleted:    data/uci_BoW/vocab.kos.txt
+    Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
+    Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_from_truth.Rout
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_from_truth2.Rds
     Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_1000.Rout
     Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_500.Rout
     Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
@@ -673,6 +729,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635/analysis/index.Rmd" target="_blank">1aae3e9</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-11-05
+</td>
+<td>
+update index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b4a4d19a6163ae34abeb0171d77950e3cac7b12b/docs/index.html" target="_blank">b4a4d19</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1038,29 +1128,24 @@ Start workflowr project.
 </div>
 </div>
 <p>Welcome to my research website.</p>
-<p>Data preprocessing demo:<br />
-* <a href="https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla">process SLA dataset</a><br />
-Data analysis results:<br />
-* Version <code>0.3.8</code>:<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html">kos_K20</a><br />
-* Version <code>0.3.9</code>:<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.3.9_summary">summary</a><br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html">kos_K20</a>,<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html">kos_K50</a>,<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html">kos_K100</a></p>
+<p>Model:</p>
 <ul>
-<li><p>Version <code>0.4.2</code>:<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_summary">summary</a><br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.4.2.html">kos_K20</a>,<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html">topics</a></p></li>
-<li><p>Version <code>0.4.5</code>:<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/sla_ebpmf_wbg_k10">SLA_EBPMF_WBG_K10</a> (can change k to 5, 10, 50, 100 for more results)<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/sla_pmf_k10">SLA_PMF_K10</a> (can change k to 5, 10, 50, 100 for more results)<br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/nips_ebpmf_wbg_k20">NIPS_EBPMF_WBG_K20</a><br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/nips_pmf_k20">NIPS_PMF_WBG_K20</a><br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/news_ebpmf_wbg_k20">NEWS_EBPMF_WBG_K20</a><br />
-<a href="https://zihao12.github.io/ebpmf_data_analysis/news_pmf_k20">NEWS_PMF_WBG_K20</a></p></li>
+<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">Model description for ebpmf-wbg</a></p></li>
+<li><p><a href="https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations">Derivations</a></p></li>
+<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/PMF_WBG_presentation.pdf">Presentation at Stephenslab group meeting</a></p></li>
 </ul>
+<!-- Data preprocessing demo:\ -->
+<!-- * [process SLA dataset](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla)\ -->
+<p>Data analysis results:</p>
+<ul>
+<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2">On simulated data</a></p></li>
+<li><p><a href="https://zihao12.shinyapps.io/topicview-app/">On real data</a> (in development)</p></li>
+</ul>
+<p><!-- * Version `0.3.8`: \ --> <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\ --></p>
+<p><!-- * Version `0.3.9`:  \ --> <!-- [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.3.9_summary)\ --> <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), \ --> <!-- [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\ --> <!-- [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html) --></p>
+<p><!--  * Version `0.4.2`:  \ --> <!-- [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_summary)\ --> <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.4.2.html), \ --> <!-- [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html) --></p>
+<p><!-- * Version `0.4.5`:  \ --></p>
+<p><!-- [SLA_EBPMF_WBG_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_ebpmf_wbg_k10) (can change k to 5, 10, 50, 100 for more results)\ --> <!-- [SLA_PMF_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_pmf_k10) (can change k to 5, 10, 50, 100 for more results)\ --> <!-- [NIPS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_ebpmf_wbg_k20)\ --> <!-- [NIPS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_pmf_k20)\ --> <!-- [NEWS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_ebpmf_wbg_k20)\ --> <!-- [NEWS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_pmf_k20) --></p>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
