@@ -1,0 +1,277 @@
+---
+title: "ebpmf_wbg_simulation_big2_2"
+author: "zihao12"
+date: "2020-11-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* What I did:
+    * I did experiment with [ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description) using [bigger simulated dataset](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2) ($n = 1100, p = 2100, K = 50$). 
+    * The signal from $L, F$ is low compared to from $l_0 L, f_0 F$. $\text{Cor}(L_{k}, L_{k^{'}}) \approx - 0.009$ but $\text{Cor}(l_0 L_{k}, f_0 L_{k^{'}}) \approx - 0.9$
+    * I compared `pmf_bg` and `ebpmf_wbg` on this dataset. (Note `pmf_bg` has the same objective as `pmf`, but that I separate $L$ into $l_0,  L$ and update them separately (same for $F$). Or it is just like `ebpmf_wbg` without the adaptive shrinkage part)
+
+* What I found:
+    * Because the signal from deviation $L, F$ is too low, both methods have solutions that ignore the signal but achieves better objective value
+    * Even when initialized from truth, `pmf-bg` learns messy structure.
+    * When initialized sufficiently close to the truth, `ebpmf-wbg` recovers the structure well, and the estimate of `g` also makes sense. 
+
+
+
+
+```{r}
+rm(list = ls())
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, autodep = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(gridExtra)
+library(Matrix)
+source("code/misc.R")
+source("code/util.R")
+data_dir = "output/sim/v0.4.5/exper2"
+data_name = "sim_bg_block_n1100_p2100_K50"
+```
+
+
+Load data and models
+```{r}
+## load data
+X = read_sim_bag_of_words(sprintf("%s/docword.%s.txt", data_dir, data_name))
+truth = readRDS(sprintf("%s/truth.%s.Rds", data_dir, data_name))
+n = nrow(X); p = ncol(X); K = ncol(truth$L)
+
+## load wbg models
+wbg_from_truth = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                      method_name = "ebpmf_wbg_K50_maxiter5000_from_truth")
+wbg_from_pmf_truth = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name="ebpmf_wbg_K50_maxiter500_pmf_bg_K50_maxiter10_from_truth_scaled0")
+wbg_from_pmf_truth_scaled = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name="ebpmf_wbg_K50_maxiter500_pmf_bg_K50_maxiter10_from_truth_scaled0")
+
+wbg_from_random = load_model_ebpmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name="ebpmf_wbg_K50_maxiter100_init_random")
+
+## load pmf models
+pmf_bg_from_truth = load_model_pmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name = "pmf_bg_K50_maxiter1000_from_truth")
+
+## load pmf models
+pmf_bg_from_truth_iter10 = load_model_pmf(data_dir = data_dir, data_name = data_name, 
+                                  method_name = "pmf_bg_K50_maxiter10_from_truth")
+
+```
+
+
+## What does the data look like 
+* The data is generated in [bigger_simulated_dataset](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulate_big_data2).
+* Data model is $X \sim \text{Pois}(\Lambda); \Lambda_{ij} = l_{i0} f_{j0} \sum_k l_{ik} f_{jk}$. We call
+      * $l_0, f_0$ background frequency for loading and factor
+      * $L, F$ deviation for loading and factor
+      * $\tilde{\Lambda} := L F^t$ deviation for the mean
+* $n = 1100, p = 2100, K = 50$
+* The last 100 words and documents are frequent words/docs
+* For each $k = 1...K$, it has 20 top words and 10 top documents (100 times more deviation). I arrange them so that $\tilde{\Lambda}$ has block structures: with $K$ blocks from $n = 1...1000, p = 1:2000$, and a block for frequent words/documents at the end.
+* The signal from frequent words is much stronger than those from top words/documents (in $X$, the block for frequent word has value $> 10$ times of that in block for top words/documents). Note that this seems to be intrinsic to this type of data: if the amplifying factor for background frequent words, and for top words/documents are the same, the signal from the background is $K$ times stronger.
+
+## Truth ($l_0, f_0, L, F$ and deviation matrix)
+```{r fig.height=12, fig.width=12}
+par(mfrow = c(2,2))
+plot(truth$l0, log = "y", main = "l0 (truth)")
+plot(truth$f0, log = "y", main = "f0 (truth)")
+
+k = 12
+plot(truth$L[,k], log = "y", main = sprintf("%dth loading", k))
+plot(truth$F[,k], log = "y", main = sprintf("%dth factor", k))
+
+```
+
+Deviation matrix (block for top words and docs)
+```{r}
+image(truth$L[1:50,] %*% t(truth$F[1:100,]), main = "deviation matrix (one block)")
+```
+
+### Show some blocks in $X$ {.tabset}
+
+#### with topic words/documents, plus neghbors 
+```{r}
+X[1:15, 1:30]
+```
+
+
+#### with frequent words/documents
+```{r}
+X[(n-10):n, (p-20):p]
+```
+
+
+#### with frequent words and ordinary documents
+```{r}
+X[(n-10):n, 1:20]
+```
+
+#### with top words and ordinary documents
+```{r}
+X[20:30, 1:20]
+```
+
+
+#### with ordinary documents and ordinary words
+```{r}
+X[50:60, 50:70]
+```
+
+
+
+
+
+## `pmf_bg` from truth
+It gets more messy results (why?)
+```{r fig.height=12, fig.width=12}
+par(mfrow = c(2,2))
+k = 13
+plot(pmf_bg_from_truth_iter10$L[,k], main = sprintf("10th iter: %dth loading", k), ylab = "loading")
+plot(pmf_bg_from_truth$L[,k], main = sprintf("1000th iter: %dth loading", k), ylab = "loading")
+
+plot(pmf_bg_from_truth_iter10$F[,k], main = sprintf("10th iter: %dth factor", k), ylab = "factor")
+plot(pmf_bg_from_truth$F[,k], main = sprintf("1000th iter: %dth factor", k), ylab = "factor")
+
+```
+
+## `ebpmf_wbg` from truth
+
+Posterior mean for $L, F$ are good
+```{r fig.height=12, fig.width=12}
+par(mfrow = c(2,2))
+k = 13
+plot(wbg_from_truth$qg$qls_mean[,k], log = "y", main = sprintf(" %dth loading", k), ylab = "loading")
+plot(wbg_from_truth$qg$qfs_mean[,k], log = "y", main = sprintf(" %dth factor", k), ylab = "factor")
+
+k = 29
+plot(wbg_from_truth$qg$qls_mean[,k], log = "y", main = sprintf(" %dth loading", k), ylab = "loading")
+plot(wbg_from_truth$qg$qfs_mean[,k], log = "y", main = sprintf(" %dth factor", k), ylab = "factor")
+```
+
+The prior `g` makes sense:\
+* `g` has weights on two components, one with small $\phi$, the other large $\phi$
+* the weights of big $\phi$ almost equal the proportion of top words/documents for $L, F$. 
+```{r fig.width=6, fig.height=6}
+## pi = 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top doc)
+g = wbg_from_truth$qg$gls
+Pi_L = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)
+
+## pi around 0.01 for phi = 100, and 0.99 for phi = 0.001 (truth: around 0.01 are top words)
+g = wbg_from_truth$qg$gfs
+Pi_F = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)
+```
+
+
+## `ebpmf_wbg` from close to truth
+Above we see `pmf_bg` gets messy when initialized from the truth. I use that `pmf_bg` of 10 iterations as initialization for `ebpmf-wbg` (also tried 1000 iteration `pmf_bg` for initialization but not very good)
+
+Posterior mean for $L, F$: make a few mistakes, due to initialization
+```{r fig.height=12, fig.width=12}
+par(mfrow = c(2,2))
+k = 19
+plot(pmf_bg_from_truth_iter10$L[,k], main = sprintf("init: %dth loading", k), ylab = "loading")
+plot(wbg_from_pmf_truth$qg$qls_mean[,k], main = sprintf("wbg: %dth loading", k), ylab = "loading")
+
+plot(pmf_bg_from_truth_iter10$F[,k], main = sprintf("init iter: %dth factor", k), ylab = "factor")
+plot(wbg_from_pmf_truth$qg$qfs_mean[,k], main = sprintf("wbg: %dth factor", k), ylab = "factor")
+```
+
+
+The prior `g` still mostly makes sense. The proportions are mostly good. \
+(Note topic 15 and 29 are down-weighted. Their `g_F` are slightly different than others)
+```{r fig.width=6, fig.height=6}
+g = wbg_from_pmf_truth$qg$gls
+Pi_L = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)
+
+g = wbg_from_pmf_truth$qg$gfs
+Pi_F = get_prior_summary(g, log10 = TRUE, return_matrix = TRUE)
+```
+
+
+## Where`ebpmf-wbg` can go wrong
+* When the initialization is not good enough, `ebpmf-wbg` can go wrong.
+
+* When initialized with $l_0$, $f_0$ from rank-1 model (scaled properly), and $L, F$ uniform with mean 1, the model ignores the signal from $L,F$ and `g` puts all mass on very small $\phi$. As a result, the `E-loglik` is slightly worse, but the KL divergence is much smaller. This gives the model a higher ELBO than starting the truth. It converges after a couple of iterations.
+
+* When initialized from `pmf` which completely misses the structure, the final model also does not make sense, and has low ELBO (didn't show).
+
+```{r}
+compare_df = data.frame(cbind(as.numeric(wbg_from_random$summary), 
+                              as.numeric(wbg_from_truth$summary),
+                              as.numeric(wbg_from_pmf_truth$summary)), 
+                        row.names = names(wbg_from_random$summary))
+colnames(compare_df) <- c("from_random", "from_truth", "from_pmf")
+round(compare_df)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ```{r} -->
+<!-- par(mfrow = c(2,2)) -->
+
+<!-- dev_m = pmf_bg_from_truth$L %*% t(pmf_bg_from_truth$F) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "pmf-bg from truth") -->
+
+<!-- # image((pmf_from_truth$L[1:50,]/truth$l0[1:50]) %*%  -->
+<!-- #         t(pmf_bg_from_truth$F[1:100,]/truth$f0[1:100]), main = "pmf from truth") -->
+
+<!-- dev_m = wbg_from_truth$qg$qls_mean %*% t(wbg_from_truth$qg$qfs_mean) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "ebpmf-wbg from truth") -->
+
+<!-- dev_m = wbg_from_pmf_truth$qg$qls_mean %*% t(wbg_from_pmf_truth$qg$qfs_mean) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "ebpmf-wbg from truth") -->
+
+<!-- # image(wbg_from_pmf_truth$qg$qls_mean[1:50,] %*% t(wbg_from_pmf_truth$qg$qfs_mean[1:100,]), main = "ebpmf-wbg from pmf-bg-truth") -->
+<!-- dev_m = truth$L %*% t(truth$F) -->
+<!-- median(dev_m[truth$top_doc[2,], truth$top_words[2,]]) -->
+<!-- image(dev_m[1:50, 1:100], main = "truth") -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- par(mfrow = c(2,2)) -->
+<!-- k = 12 -->
+<!-- plot(pmf_bg_from_truth$F[,k]) -->
+<!-- plot(wbg_from_pmf_truth$qg$qfs_mean[,k]) -->
+<!-- plot(wbg_from_truth$qg$qfs_mean[,k], log = "y") -->
+<!-- plot(truth$F[,k], log = "y") -->
+
+<!-- ``` -->
+
