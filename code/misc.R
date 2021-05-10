@@ -70,3 +70,67 @@ pmf2fastTopics_pmf <- function(fit){
   class(fit) <- c("poisson_nmf_fit","list")
   return(fit)
 }
+
+ebpmf2fastTopics_pmf <- function(fit){
+  fit = list(L = fit$l0 * fit$qg$qls_mean,
+       F = fit$f0 * fit$qg$qfs_mean %*% diag(fit$w))
+  return(pmf2fastTopics_pmf(fit))
+}
+
+
+load_model_ebpmf <- function(data_dir, data_name, method_name){
+  model = readRDS(sprintf("%s/%s_%s.Rds", data_dir, data_name, method_name))
+  N = length(model$ELBO)
+  model.summary = list(ELBO = model$ELBO[N], KL = model$KL[N],
+                       E_loglik = model$ELBO[N] + model$KL[N], runtime_iter = model$runtime[[3]]/N)
+  model[["summary"]] = model.summary
+  return(model)
+}
+
+load_model_pmf <- function(data_dir, data_name, method_name){
+  model = readRDS(sprintf("%s/%s_%s.Rds", data_dir, data_name, method_name))
+  N = length(model$log_liks)
+  model.summary = list(loglik = model$log_liks[N], runtime_iter = model$runtime[[3]]/N)
+  model[["summary"]] = model.summary
+  return(model)
+}
+
+
+match_topics <- function(F1, F2){
+  K = ncol(F1)
+  id = replicate(K, NaN)
+  for(i in 1:K){
+    f1 = F1[,i]
+    dist_min = Inf
+    for(j in 1:K){
+      dist = sum((f1 - F2[,j])^2)
+      if(dist < dist_min){
+        dist_min = dist
+        matched = j
+      }
+    }
+    id[i] <- matched
+  }
+  return(id)
+}
+
+match_topics_top_words <- function(F1, F2, top_words1){
+  K = ncol(F1)
+  id = replicate(K, NaN)
+  for(i in 1:K){
+    f1 = F1[,i]
+    dist_min = Inf
+    top_words_id = top_words1[i,]
+    for(j in setdiff(1:K, id[1:i])){
+      f2 = F2[,j]
+      dist = sum((f1[top_words_id] - f2[top_words_id])^2)
+      if(dist < dist_min){
+        dist_min = dist
+        matched = j
+      }
+    }
+    id[i] = matched
+  }
+  return(id)
+}
+

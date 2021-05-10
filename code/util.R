@@ -53,27 +53,27 @@ read_sim_bag_of_words <- function(filename){
 ################ Initialization ##################
 ##################################################
 
-bg_prior <- function(){
-	aL = c(seq(0.01, 0.10, 0.01), seq(0.2, 0.9, 0.1), seq(1,15,2), 20, 50, 75, 100, 200, 1e3)
-  D = length(aL)
-  g = ebpm::gammamix(pi = replicate(D, 1/D), shape = aL, scale = 1/aL)
-	return(g)
-}
-
-initialize_qgl0f0_from_LF <- function(L, F){
-	l0 = apply(L, 1, median)
-	l0[l0 == 0] <- 1e-8
-	f0 = apply(F, 1, median)
-	f0[f0 == 0] <- 1e-8
-	L = L/l0
-	F = F/f0
-	qg = ebpmf.alpha::initialize_qg_from_LF(L0 = L, F0 = F)
-	## replace g with mixture of gamma
-	K = ncol(L)
-	qg$gls = replicate(K, list(bg_prior()))
-	qg$gfs = replicate(K, list(bg_prior()))
-	return(list(qg = qg, l0 = l0, f0 = f0))
-}
+# bg_prior <- function(){
+# 	aL = c(seq(0.01, 0.10, 0.01), seq(0.2, 0.9, 0.1), seq(1,15,2), 20, 50, 75, 100, 200, 1e3)
+#   D = length(aL)
+#   g = ebpm::gammamix(pi = replicate(D, 1/D), shape = aL, scale = 1/aL)
+# 	return(g)
+# }
+#
+# initialize_qgl0f0_from_LF <- function(L, F){
+# 	l0 = apply(L, 1, median)
+# 	l0[l0 == 0] <- 1e-8
+# 	f0 = apply(F, 1, median)
+# 	f0[f0 == 0] <- 1e-8
+# 	L = L/l0
+# 	F = F/f0
+# 	qg = ebpmf.alpha::initialize_qg_from_LF(L0 = L, F0 = F)
+# 	## replace g with mixture of gamma
+# 	K = ncol(L)
+# 	qg$gls = replicate(K, list(bg_prior()))
+# 	qg$gfs = replicate(K, list(bg_prior()))
+# 	return(list(qg = qg, l0 = l0, f0 = f0))
+# }
 
 
 
