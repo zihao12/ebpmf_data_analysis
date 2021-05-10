@@ -1,0 +1,125 @@
+---
+title: PMF EB sv MLE in a small, simulated data set
+author: zihao12
+output: workflowr::wflow_html
+---
+
+Reference: https://stephenslab.github.io/fastTopics-experiments/smallsim.html
+
+Basic summary:
+
+* EB approach does not improve MLE
+* Interesting that the RMSE is not changing monotonically with more iterations of EB 
+* I was expecting EB approach can imrpove over MLE, and more iterations make more improvement. 
+
+```{r knitr-opts, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,results = "hold",
+                      fig.align = "center",dpi = 120)
+```
+
+Load the packages used in the analysis below, as well as additional
+functions that we will use to simulate the data.
+
+```{r load-pkgs, message=FALSE}
+library(tm)
+library(topicmodels)
+library(fastTopics)
+library(mvtnorm)
+library(ggplot2)
+library(cowplot)
+library(ebpmf.alpha)
+source("code/smallsim_functions.R")
+source("code/misc.R")
+source("code/init.R")
+```
+
+
+```{r set-seed}
+set.seed(1)
+```
+
+
+```{r simulate-data-1}
+simulate_data_experiment <- function(n = 100, m = 400, k = 6, doc_len = 10, correlated = FALSE, seed = 1){
+  set.seed(seed)
+  S <- 13*diag(k) - 2
+  if(correlated){
+    S[k-1,k] <- 8
+    S[k,k-1] <- 8
+  }
+  F <- simulate_factors(m,k)
+  L <- simulate_loadings(n,k,S)
+  s <- rpois(n = n, lambda = doc_len)
+  #s <- ceiling(10^rnorm(n,3,0.20))
+  X <- simulate_multinom_counts(L,F,s)
+  F <- F[colSums(X > 0) > 0,]
+  X <- X[,colSums(X > 0) > 0]
+  fit.truth <- list(L = L, F = F)
+  return(list(X = X, fit.truth = fit.truth))
+}
+```
+
+
+Global setup
+```{r structure-plot-1, fig.width=6, fig.height=1.5, message=FALSE}
+k = 6
+n = 100
+m = 400
+topic_colors <- c("dodgerblue","darkorange","forestgreen","darkblue",
+                  "gold","skyblue")
+control <- list(extrapolate = FALSE,numiter = 4)
+```
+
+```{r}
+fit_mle_experiment <- function(n, m, k, doc_len){
+  datasim <- simulate_data_experiment(n= n, m = m, k = k, doc_len = doc_len, correlated = FALSE)
+  X = datasim$X
+  fit.truth = datasim$fit.truth
+  # print(sprintf("nonzero percentage: %f", sum(X > 0) /(n * m)))
+  fit0 <- fit_poisson_nmf(X,k,numiter = 50,method = "em",control = control)
+  fit.mle <- fit_poisson_nmf(X,fit0=fit0,numiter=100,method="scd",control=control)
+  fit.mle <- poisson2multinom(fit.mle)
+  # print("KKT residuals")
+  # tail(fit.mle$progress$res)
+  res.mle = mean(tail(fit.mle$progress$res))
+  init.eb <- initialize_qgl0f0w_from_LF.local(L = fit.mle$L, F = fit.mle$F)
+  fit.eb <- ebpmf.alpha::ebpmf_wbg(X = X, K = k, init = init.eb, maxiter = 10, verbose = FALSE)
+  fit.eb2 <- ebpmf.alpha::ebpmf_wbg(X = X, K = k, init = fit.eb, maxiter = 40, verbose = FALSE)
+  fit.eb3 <- ebpmf.alpha::ebpmf_wbg(X = X, K = k, init = fit.eb2, maxiter = 150, verbose = FALSE)
+  
+  fit.eb = poisson2multinom(ebpmf2fastTopics_pmf(fit.eb))
+  fit.eb2 = poisson2multinom(ebpmf2fastTopics_pmf(fit.eb2))
+  fit.eb3 = poisson2multinom(ebpmf2fastTopics_pmf(fit.eb3))
+  
+  rmse.mle <- RMSE_loading(fit.truth, fit.mle)
+  rmse.eb <- RMSE_loading(fit.truth, fit.eb)
+  rmse.eb2 <- RMSE_loading(fit.truth, fit.eb2)
+  rmse.eb3 <- RMSE_loading(fit.truth, fit.eb3)
+  
+  return(list(datasim = datasim, 
+              fit.mle = fit.mle, fit.eb = fit.eb, fit.eb2 = fit.eb2, fit.eb3 = fit.eb3, 
+              rmse.mle = rmse.mle, rmse.eb = rmse.eb, rmse.eb2 = rmse.eb2, rmse.eb3 = rmse.eb3, 
+              res.mle = res.mle))
+}
+```
+
+
+```{r}
+doc_lens = c(10, 20, 50, 100, 200)
+outs <- list()
+for(i in 1: length(doc_lens)){
+  outs[[i]] <- fit_mle_experiment(n = n, m = m, k = k, doc_len = doc_lens[i])
+}
+```
+
+
+```{r}
+print("rmse: MLE vs EB10 vs EB50 vs EB200")
+for(i in 1:length(outs)){
+  result = outs[[i]]
+  print(c(result$rmse.mle, result$rmse.eb, result$rmse.eb2, result$rmse.eb3))
+}
+```
+
+
