@@ -73,10 +73,10 @@ par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)
 ```
 
-* Below I computed $\text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k) = X^t \mathbf{w}_k$ by `nnls` function (solving $\text{min} \ |\mathbf{f}_k - X^t \mathbf{w}_k|_2^2 \ s.t. \mathbf{w}_k \geq 0$). It returns both the projected $f_k$ and weights $w_k$. Here $\hat{\mathbf{f}}_k$ is the MLE fit using the small data. 
+* Below I computed $\text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k) = X^t \mathbf{w}_k$ by `nnls` function (solving $\text{min} \ |\hat{\mathbf{f}}_k - X^t \mathbf{w}_k|_2^2 \ s.t. \mathbf{w}_k \geq 0$). It returns both the projected $f_k$ and weights $w_k$. Here $\hat{\mathbf{f}}_k$ is the MLE fit using the small data. 
 * We can see: 
-    - $\mathbf{f}_k, \text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k)$ are quite similar (at least on important words/genes/features)
-    - $\mathbf{w}_k$ looks like applying soft-thresholding to $l_k$!
+    - $\hat{\mathbf{f}}_k, \text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k)$ are quite similar (at least on important words/genes/features)
+    - $\mathbf{w}_k$ looks like applying soft-thresholding to $\mathbf{l}_k$!
 ```{r fig.height=10, fig.width=10}
 par(mfrow = c(3, 2))
 for(i in 1:k){
