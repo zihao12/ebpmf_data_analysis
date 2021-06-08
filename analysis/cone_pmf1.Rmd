@@ -1,0 +1,149 @@
+---
+title: "cone_pmf1"
+author: "zihao12"
+date: "2021-06-08"
+output: workflowr::wflow_html
+header-includes:
+   - \usepackage{bm}
+editor_options:
+  chunk_output_type: console
+---
+
+## Summary
+
+* Consider the Poisson Matrix Factorization problem: $X \sim \text{Pois}(\Lambda); \Lambda = L F^T; L, F \geq 0$ with $\text{dim}(X) = (n, p), n \ll p$. I use the notation $\text{cone}(A) := \{\sum_k w_k \mathbf{a}_k: w_k \geq 0\} = \{A \mathbf{w}: \mathbf{w} \geq 0\}$ where $\text{dim}(A) = (n, K)$
+* In many such applications with $n \ll p$, I think it's probably reasonable to assume the factors lie in the convex cone of samples. In other words, **each factor is a weighted (non-negative) average of rows of data**. This is a generalization of the "anchor sample" assumption (symmetric to the more famous "anchor word" assumption). 
+* From numerical experiments with both simulated and real data, I find: 
+    - first, this assumption probably holds true in many datasets; 
+    - second, even when we do MLE without using this assumption, the fitted $F_{\text{mle}}$ can be projected to the $\text{cone}(X^{t})$ without much loss of information.
+    - third, the projection coefficients ($\mathbf{w}_k$ in $\text{Proj}_{\text{cone}(X^t)}(\mathbf{f}_k) = X^t \mathbf{w}_k$) is like applying soft-thresholding to loading $\mathbf{l}_k$. It's very sparse and interpretable: for each factor (topic) we can say it's weighted average of a few "important" documents. 
+  * Thus this assumption should be useful for better interpretability as well as develop more efficient and stable algorithm. I haven't figured out a way to implement this, but parameterizing $f_k$ by $w_k$ alone is reducing $p$ parameters to $n$, so possibly making an easier optimization problem. Also we might impose further assumptions on $w_k$... (many possible things to do)
+
+
+
+```{r warning=FALSE, message=FALSE}
+rm(list = ls())
+library(NNLM)
+library(nnls)
+source("code/smallsim2_functions.R")
+source("code/misc.R")
+source("code/util.R")
+
+set.seed(123)
+```
+
+## Simulated Data
+
+* I find in many of my simulated data, we can easily estimate very high dimensional $F$ with very few samples. 
+* I think it's because the true Factors lie in convex cone of samples; and the construction of $L$ makes many "anchor documents". Therefore, even very few samples contain most of useful information of factors.  
+* Below the full data is $\text{dim}(X) = (300, 1000)$. But in fact we can estimate $F$ well with only 60 samples. I use functions  [here](https://github.com/zihao12/ebpmf_data_analysis/blob/master/code/smallsim2_functions.R) 
+```{r}
+n <- 300
+m <- 1000
+k <- 3
+n_sample = 60
+doc_len = m ## average number of words in each document
+
+S <- 15*diag(k) - 2
+F <- simulate_factors(m = m, k = k)
+L <- simulate_loadings(n,k,S)
+s <- simulate_sizes(n = n, doc_len = doc_len)
+X <- simulate_multinom_counts(L,F,s)
+```
+
+I initialize with 50 EM runs on small data; then fit on small and large data (`NNLM::nnmf` supports initializing with only factors). 
+```{r warning=FALSE, message=FALSE}
+fit0 = nnmf(A = X[1:n_sample, ], k = k, loss = "mkl", method = "lee", max.iter = 50)
+
+fit_small = nnmf(A = X[1:n_sample, ], k = k, loss = "mkl", method = "scd", init = list(H = fit0$H), max.iter = 200)
+fit_big = nnmf(A = X, k = k, loss = "mkl", method = "scd", init = list(H = fit0$H), max.iter = 200)
+
+fit_small.m = get_multinom_from_pnmf(F = t(fit_small$H), L = fit_small$W)
+fit_big.m = get_multinom_from_pnmf(F = t(fit_big$H), L = fit_big$W)
+
+idx_small = match_topics(F1 = F, F2 = fit_small.m$F)
+idx_big = match_topics(F1 = F, F2 = fit_big.m$F)
+```
+
+Can see the small data recovers $L, F$ well
+```{r fig.height=10, fig.width=10}
+model = fit_small.m
+idx = idx_small
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F)
+```
+
+* Below I computed $\text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k) = X^t \mathbf{w}_k$ by `nnls` function (solving $\text{min} \ |\mathbf{f}_k - X^t \mathbf{w}_k|_2^2 \ s.t. \mathbf{w}_k \geq 0$). It returns both the projected $f_k$ and weights $w_k$. Here $\hat{\mathbf{f}}_k$ is the MLE fit using the small data. 
+* We can see: 
+    - $\mathbf{f}_k, \text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k)$ are quite similar (at least on important words/genes/features)
+    - $\mathbf{w}_k$ looks like applying soft-thresholding to $l_k$!
+```{r fig.height=10, fig.width=10}
+par(mfrow = c(3, 2))
+for(i in 1:k){
+  f = t(fit_small$H)[,i]
+  l = fit_small.m$L[,i]
+  f_proj  = nnls(A = t(X[1:n_sample,]), b = f)
+  plot(f, f_proj$fitted, ylab = "f_proj", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+  plot(l, f_proj$x, cex = 1, cex.lab = 1,
+       xlab = sprintf("loading %d", i), ylab = sprintf("sample weights for factor %d", i))
+}
+```
+
+Do the same thing for fit on bigger data. Result is similar.
+```{r fig.height=10, fig.width=10}
+par(mfrow = c(3, 2))
+for(i in 1:k){
+  f = t(fit_big$H)[,i]
+  l = fit_big.m$L[,i]
+  f_proj  = nnls(A = t(X), b = f)
+  plot(f, f_proj$fitted, ylab = "f_proj", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+  plot(l, f_proj$x, cex = 1, cex.lab = 1,
+       xlab = sprintf("loading %d", i), ylab = sprintf("sample weights for factor %d", i))
+}
+```
+
+Do the true factors lie in the convex cone of rows of samll subset of $X$ ? Basically yes
+```{r fig.height=8, fig.width=10}
+par(mfrow = c(2, 2))
+for(i in 1:k){
+  f = F[,i]
+  f_proj  = nnls(A = t(X[1:n_sample,]), b = f)
+  plot(f, f_proj$fitted, ylab = "f_proj", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+}
+```
+
+### Comment
+
+* we can see each factor (truth) is basically a weighted sum of a small subset of samples.
+* The small subset contains enough "useful" documents/cells to reconstruct factor. That's why such a high dimensional problem can be estimated with so few samples.
+
+
+## Real Data
+This is a document [dataset](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html) I fitted before, with $(n, p) = (3430, 6906)$. (I did MLE fit using EM)
+
+```{r}
+data = readRDS("output/kos_coneFactor.Rds")
+fit_kos.m = get_multinom_from_pnmf(F = data$pmf$F, L = data$pmf$L)
+```
+
+* Below I look at the projection operator like in the section above
+* The MLE fits basically lie in $\text{cone}(X^t)$
+* The weights vs loading plot is a bit messier than in simulation data,  but we can still see similar picture: $w_k$'s capture similar information as loadings, and are sparse and interpretable. 
+```{r fig.height=60, fig.width=10}
+par(mfrow = c(20, 2))
+for(i in 1:20){
+  f = data$pmf$F[,i]
+  l = fit_kos.m$L[,i]
+  f_proj  = data$f_proj[[i]]
+  plot(f, f_proj$fitted, ylab = "f_proj", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+  plot(l, f_proj$x, cex = 1, cex.lab = 1,
+       xlab = sprintf("loading %d", i), ylab = sprintf("sample weights for factor %d", i))
+}
+```
+
+
+
