@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreefa23ffb03d01260459078d3533dc23d46539a257targetblankfa23ffba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/fa23ffb03d01260459078d3533dc23d46539a257" target="_blank">fa23ffb</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1758fe4a320f78478ad7139ca275d0b910887cf2targetblank1758fe4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1758fe4a320f78478ad7139ca275d0b910887cf2" target="_blank">1758fe4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreefa23ffb03d01260459078d3533dc23d46539a257targetblankfa23ffba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1758fe4a320f78478ad7139ca275d0b910887cf2targetblank1758fe4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/fa23ffb03d01260459078d3533dc23d46539a257" target="_blank">fa23ffb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1758fe4a320f78478ad7139ca275d0b910887cf2" target="_blank">1758fe4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -884,6 +884,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1758fe4a320f78478ad7139ca275d0b910887cf2/analysis/cone_pmf1.Rmd" target="_blank">1758fe4</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+<td>
+cone_pmf1.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/08e63f5b7253557da9a6f44063fb9b37d198bceb/docs/cone_pmf1.html" target="_blank">08e63f5</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fa23ffb03d01260459078d3533dc23d46539a257/analysis/cone_pmf1.Rmd" target="_blank">fa23ffb</a>
 </td>
 <td>
@@ -961,12 +995,49 @@ idx = idx_small
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)</code></pre>
 <p><img src="figure/cone_pmf1.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/08e63f5b7253557da9a6f44063fb9b37d198bceb/docs/figure/cone_pmf1.Rmd/unnamed-chunk-4-1.png" target="_blank">08e63f5</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ul>
-<li>Below I computed <span class="math inline">\(\text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k) = X^t \mathbf{w}_k\)</span> by <code>nnls</code> function (solving <span class="math inline">\(\text{min} \ |\mathbf{f}_k - X^t \mathbf{w}_k|_2^2 \ s.t. \mathbf{w}_k \geq 0\)</span>). It returns both the projected <span class="math inline">\(f_k\)</span> and weights <span class="math inline">\(w_k\)</span>. Here <span class="math inline">\(\hat{\mathbf{f}}_k\)</span> is the MLE fit using the small data.</li>
+<li>Below I computed <span class="math inline">\(\text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k) = X^t \mathbf{w}_k\)</span> by <code>nnls</code> function (solving <span class="math inline">\(\text{min} \ |\hat{\mathbf{f}}_k - X^t \mathbf{w}_k|_2^2 \ s.t. \mathbf{w}_k \geq 0\)</span>). It returns both the projected <span class="math inline">\(f_k\)</span> and weights <span class="math inline">\(w_k\)</span>. Here <span class="math inline">\(\hat{\mathbf{f}}_k\)</span> is the MLE fit using the small data.</li>
 <li>We can see:
 <ul>
-<li><span class="math inline">\(\mathbf{f}_k, \text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k)\)</span> are quite similar (at least on important words/genes/features)</li>
-<li><span class="math inline">\(\mathbf{w}_k\)</span> looks like applying soft-thresholding to <span class="math inline">\(l_k\)</span>!</li>
+<li><span class="math inline">\(\hat{\mathbf{f}}_k, \text{Proj}_{\text{cone}(X^t)}(\hat{\mathbf{f}}_k)\)</span> are quite similar (at least on important words/genes/features)</li>
+<li><span class="math inline">\(\mathbf{w}_k\)</span> looks like applying soft-thresholding to <span class="math inline">\(\mathbf{l}_k\)</span>!</li>
 </ul></li>
 </ul>
 <pre class="r"><code>par(mfrow = c(3, 2))
@@ -980,6 +1051,43 @@ for(i in 1:k){
        xlab = sprintf(&quot;loading %d&quot;, i), ylab = sprintf(&quot;sample weights for factor %d&quot;, i))
 }</code></pre>
 <p><img src="figure/cone_pmf1.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/08e63f5b7253557da9a6f44063fb9b37d198bceb/docs/figure/cone_pmf1.Rmd/unnamed-chunk-5-1.png" target="_blank">08e63f5</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Do the same thing for fit on bigger data. Result is similar.</p>
 <pre class="r"><code>par(mfrow = c(3, 2))
 for(i in 1:k){
@@ -992,6 +1100,43 @@ for(i in 1:k){
        xlab = sprintf(&quot;loading %d&quot;, i), ylab = sprintf(&quot;sample weights for factor %d&quot;, i))
 }</code></pre>
 <p><img src="figure/cone_pmf1.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/08e63f5b7253557da9a6f44063fb9b37d198bceb/docs/figure/cone_pmf1.Rmd/unnamed-chunk-6-1.png" target="_blank">08e63f5</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Do the true factors lie in the convex cone of rows of samll subset of <span class="math inline">\(X\)</span> ? Basically yes</p>
 <pre class="r"><code>par(mfrow = c(2, 2))
 for(i in 1:k){
@@ -1001,6 +1146,43 @@ for(i in 1:k){
   abline(a = 0, b = 1, col = &quot;blue&quot;)
 }</code></pre>
 <p><img src="figure/cone_pmf1.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/08e63f5b7253557da9a6f44063fb9b37d198bceb/docs/figure/cone_pmf1.Rmd/unnamed-chunk-7-1.png" target="_blank">08e63f5</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="comment" class="section level3">
 <h3>Comment</h3>
 <ul>
@@ -1030,6 +1212,43 @@ for(i in 1:20){
        xlab = sprintf(&quot;loading %d&quot;, i), ylab = sprintf(&quot;sample weights for factor %d&quot;, i))
 }</code></pre>
 <p><img src="figure/cone_pmf1.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/08e63f5b7253557da9a6f44063fb9b37d198bceb/docs/figure/cone_pmf1.Rmd/unnamed-chunk-9-1.png" target="_blank">08e63f5</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
