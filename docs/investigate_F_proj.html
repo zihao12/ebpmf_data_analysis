@@ -428,7 +428,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -437,7 +437,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -449,7 +449,7 @@ div.tocify {
 <strong>Last updated:</strong> 2021-06-07
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -513,24 +513,12 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongdetected"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>Cache:</strong> detected </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
-<div id="strongCachestrongdetected" class="panel-collapse collapse">
+<div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-The following chunks had caches available:
-<ul>
-<li>
-unnamed-chunk-10
-</li>
-<li>
-unnamed-chunk-8
-</li>
-<li>
-unnamed-chunk-9
-</li>
-</ul>
-<p>To ensure reproducibility of the results, delete the cache directory <code>investigate_F_proj_cache</code> and re-run the analysis. To have workflowr automatically delete the cache directory prior to building the file, set <code>delete_cache = TRUE</code> when running <code>wflow_build()</code> or <code>wflow_publish()</code>.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
 </div>
 </div>
 </div>
@@ -549,16 +537,16 @@ unnamed-chunk-9
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreef2ebf619b082436d9b47b37e829f320baccb5437targetblankf2ebf61a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/f2ebf619b082436d9b47b37e829f320baccb5437" target="_blank">f2ebf61</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree2a5d890141140b180d4913b792a0a392b3ed10aftargetblank2a5d890a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/2a5d890141140b180d4913b792a0a392b3ed10af" target="_blank">2a5d890</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreef2ebf619b082436d9b47b37e829f320baccb5437targetblankf2ebf61a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree2a5d890141140b180d4913b792a0a392b3ed10aftargetblank2a5d890a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/f2ebf619b082436d9b47b37e829f320baccb5437" target="_blank">f2ebf61</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/2a5d890141140b180d4913b792a0a392b3ed10af" target="_blank">2a5d890</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -566,7 +554,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 <pre><code>
 Ignored files:
     Ignored:    .Rproj.user/
-    Ignored:    analysis/investigate_F_proj_cache/
 
 Untracked files:
     Untracked:  analysis/investigate_F_proj_cache_old/
@@ -904,6 +891,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/2a5d890141140b180d4913b792a0a392b3ed10af/docs/investigate_F_proj.html" target="_blank">2a5d890</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1423,16 +1427,17 @@ other attached packages:
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.5         knitr_1.23         whisker_0.3-2     
- [4] magrittr_1.5       munsell_0.5.0      colorspace_1.4-1  
- [7] R6_2.4.0           rlang_0.4.10       stringr_1.4.0     
-[10] tools_3.6.1        grid_3.6.1         gtable_0.3.0      
-[13] xfun_0.8           git2r_0.26.1       htmltools_0.3.6   
-[16] yaml_2.2.0         digest_0.6.20      rprojroot_1.3-2   
-[19] lifecycle_0.1.0    RColorBrewer_1.1-2 later_0.8.0       
-[22] promises_1.0.1     fs_1.3.1           glue_1.3.1        
-[25] evaluate_0.14      rmarkdown_1.13     stringi_1.4.3     
-[28] compiler_3.6.1     scales_1.1.0       backports_1.1.4   
-[31] httpuv_1.5.1      </code></pre>
+ [4] magrittr_1.5       munsell_0.5.0      lattice_0.20-38   
+ [7] colorspace_1.4-1   R6_2.4.0           rlang_0.4.10      
+[10] stringr_1.4.0      tools_3.6.1        grid_3.6.1        
+[13] gtable_0.3.0       xfun_0.8           git2r_0.26.1      
+[16] htmltools_0.3.6    yaml_2.2.0         digest_0.6.20     
+[19] rprojroot_1.3-2    lifecycle_0.1.0    Matrix_1.2-18     
+[22] RColorBrewer_1.1-2 later_0.8.0        codetools_0.2-16  
+[25] promises_1.0.1     fs_1.3.1           glue_1.3.1        
+[28] evaluate_0.14      rmarkdown_1.13     stringi_1.4.3     
+[31] compiler_3.6.1     scales_1.1.0       backports_1.1.4   
+[34] httpuv_1.5.1      </code></pre>
 </div>
 </div>
 
