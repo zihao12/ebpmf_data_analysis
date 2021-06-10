@@ -1,0 +1,226 @@
+---
+title: "cone_nmf_l2"
+author: "zihao12"
+date: "2021-06-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* I implemented the NMF with L2 loss, with the cone assumption discussed [here](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html) 
+* The derivation is [here](https://drive.google.com/file/d/1DVqrtRsBnHa2gQ-GkoUBWTfezo51PCP5/view?usp=sharing). I derived it from the HALS idea. Note it only uses information of $X^T X$
+* I use simulated data as in [here](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html). Note the setting is for multinomial/poisson data. But I still fit with NMF-L2 and convert to multinomial model for comparison. So comparing with the truth does not make much sense. 
+* The algorithm of cone NMF converges on this simulated data.
+* The estimates are slightly worse than regular NMF in terms of objective function. Compared to truth and regular NMF fit, we can see a similar "soft-thresholding"-like behavior on loadings. It's a bit too strong for the truth. (But note that regular NMF actually needs a bit of softthresholding on loadings).
+* The code can be optimized: it's slower than `nnmf`...
+
+```{r warning=FALSE, message=FALSE}
+rm(list = ls())
+source("code/smallsim2_functions.R")
+source("code/misc.R")
+source("code/util.R")
+```
+
+## Implementaion of cone NMF
+```{r}
+## dim(X) = (p, n)
+## init is list(B = B, W = W, R = R)
+## K is the number of factors; can be null when init is provided
+cone_nmf_l2 <- function(X, K, init = NULL, maxiter = 50, seed = 123){
+  set.seed(seed)
+  if(is.null(init)){ init <- init_cone_nmf_l2(X, K) }
+  M = t(X) %*% X
+  fit = cone_nmf_l2_util(M = M, B = init$B, W = init$W, R = init$R, maxiter = maxiter)
+  fit[["A"]] = X %*% fit$B
+  return(fit)
+}
+
+
+## dim(M) = (n, n); M = t(X) %*% X
+## dim(B) = (n, K)
+## dim(W) = (K, n); need each row has L2 norm 1
+cone_nmf_l2_util <- function(M, B, W, R, maxiter = 50){
+  K = ncol(B)
+  loss = rep(NaN, maxiter)
+  for(i in 1:maxiter){
+    #browser()
+    for(k in 1:K){
+      Rk = R + B[,k] %o% W[k,]
+      B[,k] <- threshold(Rk %*% W[k,], 1e-12)
+      W[k,] <- threshold(t(Rk) %*% (M %*% B[,k]), 1e-12)
+      W[k,] <- W[k,]/(sqrt(sum(W[k,]^2)))
+      R <- Rk - B[,k] %o% W[k,]
+    }
+    loss[i] <- compute_loss_l2(M, R)
+  }
+  return(list(B = B, W = W, loss = loss))
+}
+
+compute_loss_l2 <- function(M, R){
+  loss = sum(diag(t(R) %*% M %*% R))
+  return(loss)
+}
+
+init_cone_nmf_l2 <- function(X, K){
+  p = nrow(X)
+  n = ncol(X)
+  B = matrix(runif(n*K), nrow = n)
+  W = matrix(runif(n*K), nrow = K)
+  W <- W / sqrt(rowSums(W^2))
+  R = diag(replicate(n, 1)) - B %*% W
+  return(list(B = B, W = W, R = R))
+}
+
+threshold <- function(x, eps){
+  x[x < eps] <- eps
+  return(x)
+}
+```
+
+
+
+
+
+## simulation & fitting
+
+* I use the same simulation setting as in [here](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html). (except I increase the number of features 10 fold). Can see the loss decreases after each iteration and converges rather quickly. 
+* The fits on both small and large data are reasonably well. They are slightly worse in MSE compared to regular NMF.
+* Note the "soft-thresholding"-like effect on $L$ compared to regular NMF!
+
+```{r}
+n <- 300
+m <- 10000
+k <- 3
+n_sample = 60
+doc_len = m ## average number of words in each document
+
+S <- 15*diag(k) - 2
+F <- simulate_factors(m = m, k = k)
+L <- simulate_loadings(n,k,S)
+s <- simulate_sizes(n = n, doc_len = doc_len)
+X <- simulate_multinom_counts(L,F,s)
+```
+
+
+Fit with `cone NMF` and regular `NMF` below. 
+```{r fig.height=3, fig.width=10}
+## fit with cone NMF
+fit_small = cone_nmf_l2(X = t(X[1:n_sample, ]), K = k, maxiter = 30)
+fit_big = cone_nmf_l2(X = t(X), K = k, maxiter = 30)
+## Fit with regular NMF
+fit_small2 <- NNLM::nnmf(A = X[1:n_sample, ], k = k, loss = "mse", method = "scd", trace = 1)
+fit_big2 <- NNLM::nnmf(A = X, k = k, loss = "mse", method = "scd", trace = 1)
+```
+
+
+### Compare progress 
+
+The red line is the minimum loss attained by regular NMF. 
+```{r fig.height=7, fig.width=10}
+## compare progress
+par(mfrow = c(2,2))
+loss_ = fit_small$loss/(n_sample*m*2)
+plot(loss_, ylim = c(min(fit_small2$target.loss), max(loss_)),
+     ylab = "mse (cone NMF)", main = "cone NMF on small data")
+abline(h = min(fit_small2$target.loss), col = "red")
+plot(fit_small2$target.loss, ylab = "mse (NMF)", main = "NMF on small data")
+## MSE on cone NMF vs NMF
+print(c(min(loss_), min(fit_small2$target.loss)))
+
+loss_ = fit_big$loss/(n*m*2)
+plot(loss_, ylim = c(min(fit_big2$target.loss),max(loss_)),
+     ylab = "mse (cone NMF)", main = "cone NMF on big data")
+abline(h = min(fit_big2$target.loss), col = "red")
+plot(fit_big2$target.loss, ylab = "mse (NMF)", main = "NMF on big data")
+## MSE on cone NMF vs NMF
+print(c(min(loss_), min(fit_big2$target.loss)))
+```
+
+
+
+```{r}
+## transform to multinomial model
+fit_small.m = get_multinom_from_pnmf(F = fit_small$A, L = t(fit_small$W))
+fit_big.m = get_multinom_from_pnmf(F = fit_big$A, L = t(fit_big$W))
+fit_small2.m = get_multinom_from_pnmf(F = t(fit_small2$H), L = fit_small2$W)
+fit_big2.m = get_multinom_from_pnmf(F = t(fit_big2$H), L = fit_big2$W)
+```
+
+
+### Cone NMF fit on small data VS truth
+```{r fig.height=10, fig.width=10}
+model = fit_small.m
+idx = match_topics(F1 = F, F2 = model$F)
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F)
+```
+
+### Cone NMF fit on small data VS truth
+```{r fig.height=10, fig.width=10}
+model = fit_small.m
+idx = match_topics(F1 = F, F2 = model$F)
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F)
+```
+
+### Regular NMF fit on small data VS truth
+```{r fig.height=10, fig.width=10}
+model = fit_small2.m
+idx = match_topics(F1 = F, F2 = model$F)
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F)
+```
+
+
+### Cone NMF fit on big data VS truth
+```{r fig.height=10, fig.width=10}
+model = fit_big.m
+idx = match_topics(F1 = F, F2 = model$F)
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F)
+```
+
+### Regular NMF fit on big data VS truth
+```{r fig.height=10, fig.width=10}
+model = fit_big2.m
+idx = match_topics(F1 = F, F2 = model$F)
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F)
+```
+
+
+
+## Cone NMF vs Regular NMF on small data
+```{r fig.height=10, fig.width=10}
+model1 = fit_small.m
+model2 = fit_small2.m
+idx1 = match_topics(F1 = F, F2 = model1$F)
+idx2 = match_topics(F1 = F, F2 = model2$F)
+
+par(mfrow = c(3,2))
+for(i in 1:k){
+  plot(model1$F[,idx1[i]], model2$F[,idx2[i]], 
+       xlab = "fhat (cone NMF)", ylab = "fhat (NMF)", main = sprintf("factor %d", i))
+  plot(model1$L[,idx1[i]], model2$L[,idx2[i]],
+       xlab = "lhat (cone NMF)", ylab = "lhat (NMF)", main = sprintf("loading %d", i))
+}
+```
+
+## Cone NMF vs Regular NMF on big data
+```{r fig.height=10, fig.width=10}
+model1 = fit_big.m
+model2 = fit_big2.m
+idx1 = match_topics(F1 = F, F2 = model1$F)
+idx2 = match_topics(F1 = F, F2 = model2$F)
+
+par(mfrow = c(3,2))
+for(i in 1:k){
+  plot(model1$F[,idx1[i]], model2$F[,idx2[i]], 
+       xlab = "fhat (cone NMF)", ylab = "fhat (NMF)", main = sprintf("factor %d", i))
+  plot(model1$L[,idx1[i]], model2$L[,idx2[i]],
+       xlab = "lhat (cone NMF)", ylab = "lhat (NMF)", main = sprintf("loading %d", i))
+}
+```
+
