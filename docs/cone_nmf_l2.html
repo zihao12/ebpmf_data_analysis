@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeb531a09e27c63c559295fd3187c5d9a6569af18btargetblankb531a09a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/b531a09e27c63c559295fd3187c5d9a6569af18b" target="_blank">b531a09</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree03dc2ff705d3ad3bb4c80f6205e858c50684d753targetblank03dc2ffa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/03dc2ff705d3ad3bb4c80f6205e858c50684d753" target="_blank">03dc2ff</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeb531a09e27c63c559295fd3187c5d9a6569af18btargetblankb531a09a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree03dc2ff705d3ad3bb4c80f6205e858c50684d753targetblank03dc2ffa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/b531a09e27c63c559295fd3187c5d9a6569af18b" target="_blank">b531a09</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/03dc2ff705d3ad3bb4c80f6205e858c50684d753" target="_blank">03dc2ff</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -884,6 +884,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/03dc2ff705d3ad3bb4c80f6205e858c50684d753/analysis/cone_nmf_l2.Rmd" target="_blank">03dc2ff</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+<td>
+cone nmf l2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/eadae76a16abe293b4678fca16332e30b30afa8f/docs/cone_nmf_l2.html" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b531a09e27c63c559295fd3187c5d9a6569af18b/analysis/cone_nmf_l2.Rmd" target="_blank">b531a09</a>
 </td>
 <td>
@@ -911,7 +945,7 @@ cone nmf l2
 <li>I use simulated data as in <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html">here</a>. Note the setting is for multinomial/poisson data. But I still fit with NMF-L2 and convert to multinomial model for comparison. So comparing with the truth does not make much sense.</li>
 <li>The algorithm of cone NMF converges on this simulated data.</li>
 <li>The estimates are slightly worse than regular NMF in terms of objective function. Compared to truth and regular NMF fit, we can see a similar “soft-thresholding”-like behavior on loadings. It’s a bit too strong for the truth. (But note that regular NMF actually needs a bit of softthresholding on loadings).</li>
-<li>The code can be optimized: it’s slower than <code>nnmf</code>…</li>
+<li>The code can be optimized: it’s slower than <code>nnmf</code>; the initialization is very naive</li>
 </ul>
 <pre class="r"><code>rm(list = ls())
 source(&quot;code/smallsim2_functions.R&quot;)
@@ -993,8 +1027,8 @@ s &lt;- simulate_sizes(n = n, doc_len = doc_len)
 X &lt;- simulate_multinom_counts(L,F,s)</code></pre>
 <p>Fit with <code>cone NMF</code> and regular <code>NMF</code> below.</p>
 <pre class="r"><code>## fit with cone NMF
-fit_small = cone_nmf_l2(X = t(X[1:n_sample, ]), K = k, maxiter = 30)
-fit_big = cone_nmf_l2(X = t(X), K = k, maxiter = 30)
+fit_small = cone_nmf_l2(X = t(X[1:n_sample, ]), K = k, maxiter = 50)
+fit_big = cone_nmf_l2(X = t(X), K = k, maxiter = 50)
 ## Fit with regular NMF
 fit_small2 &lt;- NNLM::nnmf(A = X[1:n_sample, ], k = k, loss = &quot;mse&quot;, method = &quot;scd&quot;, trace = 1)
 fit_big2 &lt;- NNLM::nnmf(A = X, k = k, loss = &quot;mse&quot;, method = &quot;scd&quot;, trace = 1)</code></pre>
@@ -1017,6 +1051,43 @@ plot(loss_, ylim = c(min(fit_big2$target.loss),max(loss_)),
 abline(h = min(fit_big2$target.loss), col = &quot;red&quot;)
 plot(fit_big2$target.loss, ylab = &quot;mse (NMF)&quot;, main = &quot;NMF on big data&quot;)</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-5-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>## MSE on cone NMF vs NMF
 print(c(min(loss_), min(fit_big2$target.loss)))</code></pre>
 <pre><code>[1] 0.5033803 0.4950356</code></pre>
@@ -1033,6 +1104,43 @@ idx = match_topics(F1 = F, F2 = model$F)
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-7-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cone-nmf-fit-on-small-data-vs-truth-1" class="section level3">
 <h3>Cone NMF fit on small data VS truth</h3>
@@ -1041,6 +1149,43 @@ idx = match_topics(F1 = F, F2 = model$F)
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-8-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="regular-nmf-fit-on-small-data-vs-truth" class="section level3">
 <h3>Regular NMF fit on small data VS truth</h3>
@@ -1049,6 +1194,43 @@ idx = match_topics(F1 = F, F2 = model$F)
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-9-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cone-nmf-fit-on-big-data-vs-truth" class="section level3">
 <h3>Cone NMF fit on big data VS truth</h3>
@@ -1057,6 +1239,43 @@ idx = match_topics(F1 = F, F2 = model$F)
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-10-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="regular-nmf-fit-on-big-data-vs-truth" class="section level3">
 <h3>Regular NMF fit on big data VS truth</h3>
@@ -1065,6 +1284,43 @@ idx = match_topics(F1 = F, F2 = model$F)
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F)</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-11-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="cone-nmf-vs-regular-nmf-on-small-data" class="section level2">
@@ -1082,6 +1338,43 @@ for(i in 1:k){
        xlab = &quot;lhat (cone NMF)&quot;, ylab = &quot;lhat (NMF)&quot;, main = sprintf(&quot;loading %d&quot;, i))
 }</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-12-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cone-nmf-vs-regular-nmf-on-big-data" class="section level2">
 <h2>Cone NMF vs Regular NMF on big data</h2>
@@ -1098,6 +1391,43 @@ for(i in 1:k){
        xlab = &quot;lhat (cone NMF)&quot;, ylab = &quot;lhat (NMF)&quot;, main = sprintf(&quot;loading %d&quot;, i))
 }</code></pre>
 <p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-13-1.png" target="_blank">eadae76</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
