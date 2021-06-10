@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-06-09
+<strong>Last updated:</strong> 2021-06-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree03dc2ff705d3ad3bb4c80f6205e858c50684d753targetblank03dc2ffa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/03dc2ff705d3ad3bb4c80f6205e858c50684d753" target="_blank">03dc2ff</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree9085d85353bdb6c88f7672cc75c5efe75a5670abtargetblank9085d85a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/9085d85353bdb6c88f7672cc75c5efe75a5670ab" target="_blank">9085d85</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree03dc2ff705d3ad3bb4c80f6205e858c50684d753targetblank03dc2ffa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree9085d85353bdb6c88f7672cc75c5efe75a5670abtargetblank9085d85a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/03dc2ff705d3ad3bb4c80f6205e858c50684d753" target="_blank">03dc2ff</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/9085d85353bdb6c88f7672cc75c5efe75a5670ab" target="_blank">9085d85</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -884,6 +884,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/9085d85353bdb6c88f7672cc75c5efe75a5670ab/analysis/cone_nmf_l2.Rmd" target="_blank">9085d85</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-10
+</td>
+<td>
+update cone nmf l2
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/14af86337851c09087db96ebf1cf59171b87a0b5/docs/cone_nmf_l2.html" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/03dc2ff705d3ad3bb4c80f6205e858c50684d753/analysis/cone_nmf_l2.Rmd" target="_blank">03dc2ff</a>
 </td>
 <td>
@@ -943,6 +977,7 @@ cone nmf l2
 <li>I implemented the NMF with L2 loss, with the cone assumption discussed <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html">here</a></li>
 <li>The derivation is <a href="https://drive.google.com/file/d/1DVqrtRsBnHa2gQ-GkoUBWTfezo51PCP5/view?usp=sharing">here</a>. I derived it from the HALS idea. Note it only uses information of <span class="math inline">\(X^T X\)</span></li>
 <li>I use simulated data as in <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html">here</a>. Note the setting is for multinomial/poisson data. But I still fit with NMF-L2 and convert to multinomial model for comparison. So comparing with the truth does not make much sense.</li>
+<li>It’s interesting that the fitted <span class="math inline">\(B,W^T\)</span> are bascially the same! Thus we might make assumption that <span class="math inline">\(B = W^T\)</span> and make more efficient algorithm. s</li>
 <li>The algorithm of cone NMF converges on this simulated data.</li>
 <li>The estimates are slightly worse than regular NMF in terms of objective function. Compared to truth and regular NMF fit, we can see a similar “soft-thresholding”-like behavior on loadings. It’s a bit too strong for the truth. (But note that regular NMF actually needs a bit of softthresholding on loadings).</li>
 <li>The code can be optimized: it’s slower than <code>nnmf</code>; the initialization is very naive</li>
@@ -1075,6 +1110,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/14af86337851c09087db96ebf1cf59171b87a0b5/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-5-1.png" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-5-1.png" target="_blank">eadae76</a>
 </td>
 <td>
@@ -1128,6 +1174,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/14af86337851c09087db96ebf1cf59171b87a0b5/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-7-1.png" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-7-1.png" target="_blank">eadae76</a>
 </td>
 <td>
@@ -1171,6 +1228,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/14af86337851c09087db96ebf1cf59171b87a0b5/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-8-1.png" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-8-1.png" target="_blank">eadae76</a>
@@ -1261,6 +1329,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/14af86337851c09087db96ebf1cf59171b87a0b5/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-10-1.png" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-10-1.png" target="_blank">eadae76</a>
@@ -1362,6 +1441,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/14af86337851c09087db96ebf1cf59171b87a0b5/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-12-1.png" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-12-1.png" target="_blank">eadae76</a>
 </td>
 <td>
@@ -1415,6 +1505,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/14af86337851c09087db96ebf1cf59171b87a0b5/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-13-1.png" target="_blank">14af863</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-09
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eadae76a16abe293b4678fca16332e30b30afa8f/docs/figure/cone_nmf_l2.Rmd/unnamed-chunk-13-1.png" target="_blank">eadae76</a>
 </td>
 <td>
@@ -1428,6 +1529,33 @@ zihao12
 </table>
 </div>
 </div>
+</div>
+<div id="relationship-between-b-w" class="section level2">
+<h2>Relationship between B &amp; W</h2>
+<p>In small data</p>
+<pre class="r"><code>par(mfrow = c(2,2))
+model = fit_small
+for(i in 1:k){
+  plot(model$B[,i], model$W[i,], xlab = &quot;b&quot;,ylab = &quot;w&quot;,main = sprintf(&quot;topic %d&quot;, i))  
+  abline(a = 0, b = 1, col= &quot;red&quot;)
+}
+
+## max difference between B &amp; W
+max(abs(model$B- t(model$W)))</code></pre>
+<pre><code>[1] 0.01307541</code></pre>
+<p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>In big data</p>
+<pre class="r"><code>par(mfrow = c(2,2))
+model = fit_big
+for(i in 1:k){
+  plot(model$B[,i], model$W[i,], xlab = &quot;b&quot;,ylab = &quot;w&quot;,main = sprintf(&quot;topic %d&quot;, i))  
+  abline(a = 0, b = 1, col= &quot;red&quot;)
+}
+
+## max difference between B &amp; W
+max(abs(model$B- t(model$W)))</code></pre>
+<pre><code>[1] 0.005823909</code></pre>
+<p><img src="figure/cone_nmf_l2.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
