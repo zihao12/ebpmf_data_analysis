@@ -12,6 +12,7 @@ editor_options:
 * I implemented the NMF with L2 loss, with the cone assumption discussed [here](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html) 
 * The derivation is [here](https://drive.google.com/file/d/1DVqrtRsBnHa2gQ-GkoUBWTfezo51PCP5/view?usp=sharing). I derived it from the HALS idea. Note it only uses information of $X^T X$
 * I use simulated data as in [here](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html). Note the setting is for multinomial/poisson data. But I still fit with NMF-L2 and convert to multinomial model for comparison. So comparing with the truth does not make much sense. 
+* It's interesting that the fitted $B,W^T$ are bascially the same! Thus we might make assumption that $B = W^T$ and make more efficient algorithm. s
 * The algorithm of cone NMF converges on this simulated data.
 * The estimates are slightly worse than regular NMF in terms of objective function. Compared to truth and regular NMF fit, we can see a similar "soft-thresholding"-like behavior on loadings. It's a bit too strong for the truth. (But note that regular NMF actually needs a bit of softthresholding on loadings).
 * The code can be optimized: it's slower than `nnmf`; the initialization is very naive
@@ -223,4 +224,34 @@ for(i in 1:k){
        xlab = "lhat (cone NMF)", ylab = "lhat (NMF)", main = sprintf("loading %d", i))
 }
 ```
+
+## Relationship between B & W
+
+In small data
+```{r fig.height=7, fig.width=10}
+par(mfrow = c(2,2))
+model = fit_small
+for(i in 1:k){
+  plot(model$B[,i], model$W[i,], xlab = "b",ylab = "w",main = sprintf("topic %d", i))  
+  abline(a = 0, b = 1, col= "red")
+}
+
+## max difference between B & W
+max(abs(model$B- t(model$W)))
+```
+
+In big data
+```{r fig.height=7, fig.width=10}
+par(mfrow = c(2,2))
+model = fit_big
+for(i in 1:k){
+  plot(model$B[,i], model$W[i,], xlab = "b",ylab = "w",main = sprintf("topic %d", i))  
+  abline(a = 0, b = 1, col= "red")
+}
+
+## max difference between B & W
+max(abs(model$B- t(model$W)))
+```
+    
+
 
