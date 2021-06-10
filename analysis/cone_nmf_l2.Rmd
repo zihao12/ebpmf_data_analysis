@@ -14,7 +14,7 @@ editor_options:
 * I use simulated data as in [here](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html). Note the setting is for multinomial/poisson data. But I still fit with NMF-L2 and convert to multinomial model for comparison. So comparing with the truth does not make much sense. 
 * The algorithm of cone NMF converges on this simulated data.
 * The estimates are slightly worse than regular NMF in terms of objective function. Compared to truth and regular NMF fit, we can see a similar "soft-thresholding"-like behavior on loadings. It's a bit too strong for the truth. (But note that regular NMF actually needs a bit of softthresholding on loadings).
-* The code can be optimized: it's slower than `nnmf`...
+* The code can be optimized: it's slower than `nnmf`; the initialization is very naive
 
 ```{r warning=FALSE, message=FALSE}
 rm(list = ls())
@@ -107,8 +107,8 @@ X <- simulate_multinom_counts(L,F,s)
 Fit with `cone NMF` and regular `NMF` below. 
 ```{r fig.height=3, fig.width=10}
 ## fit with cone NMF
-fit_small = cone_nmf_l2(X = t(X[1:n_sample, ]), K = k, maxiter = 30)
-fit_big = cone_nmf_l2(X = t(X), K = k, maxiter = 30)
+fit_small = cone_nmf_l2(X = t(X[1:n_sample, ]), K = k, maxiter = 50)
+fit_big = cone_nmf_l2(X = t(X), K = k, maxiter = 50)
 ## Fit with regular NMF
 fit_small2 <- NNLM::nnmf(A = X[1:n_sample, ], k = k, loss = "mse", method = "scd", trace = 1)
 fit_big2 <- NNLM::nnmf(A = X, k = k, loss = "mse", method = "scd", trace = 1)
