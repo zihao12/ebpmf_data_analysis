@@ -13,6 +13,7 @@ editor_options:
 * Below I show an example where we can get better fit with `cone_NMF_l2` (it's technically still alternating between $B, W$ but their estimates are very very similar, so I think of it as fitting $W$ (or equivalently $L$) alone). 
 
 ```{r warning=FALSE, message=FALSE}
+rm(list = ls())
 source("code/cone_NMF_l2.R")
 source("code/smallsim2_functions.R")
 source("code/misc.R")
@@ -39,7 +40,7 @@ X <- simulate_multinom_counts(L,F,s)
 
 
 ```{r}
-fit_kl_small <- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = "mkl", method = "scd", trace = 1)
+fit_kl_small <- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = "mkl", method = "scd", trace = 1, max.iter = 200)
 fit_kl_big <- NNLM::nnmf(A = X, k = k, loss = "mkl", method = "scd", trace = 1)
 
 fit_kl_small.m = get_multinom_from_pnmf(L = fit_kl_small$W, F = t(fit_kl_small$H))
@@ -103,5 +104,38 @@ idx = match_topics(F1 = F, F2 = model$F)
 idx
 par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F, n_sample)
+```
+
+
+## Refit regular PMF initialized from `cone_NMF_l2`
+
+* `cone_NMF_l2` helps the regular PMF gets out of local maxima (probably by getting a better $L$). 
+
+```{r}
+fit_cone_small.p = multinom2poisson(fit_cone_small.m, X = X[1:n_sample, ])
+fit_kl_small.p = multinom2poisson(fit_kl_small.m, X = X[1:n_sample, ])
+
+fit_kl_small_refit <- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = "mkl", method = "scd", 
+                                 init = list(W = fit_cone_small.p$L, H = t(fit_cone_small.p$F)),
+                                 trace = 1, max.iter = 200)
+fit_kl_small_refit.m = get_multinom_from_pnmf(L = fit_kl_small_refit$W, F = t(fit_kl_small_refit$H))
+fit_kl_small_refit.p = multinom2poisson(fit_kl_small_refit.m, X = X[1:n_sample, ])
+
+
+```
+
+
+```{r fig.height=10, fig.width=10}
+model = fit_kl_small_refit.m
+idx = match_topics(F1 = F, F2 = model$F)
+idx
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F, n_sample)
+```
+
+```{r}
+log_lik(X = X[1:n_sample, ], lam = fit_cone_small.p$L %*% t(fit_cone_small.p$F))
+log_lik(X = X[1:n_sample, ], lam = fit_kl_small.p$L %*% t(fit_kl_small.p$F))
+log_lik(X = X[1:n_sample, ], lam = fit_kl_small_refit.p$L %*% t(fit_kl_small_refit.p$F))
 ```
 
