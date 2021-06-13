@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree218bf8160f954321acb6c49a87d123026cfc7ff8targetblank218bf81a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/218bf8160f954321acb6c49a87d123026cfc7ff8" target="_blank">218bf81</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree53096a41bda3ce7d68481b20eb1e3b7f13b3c062targetblank53096a4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/53096a41bda3ce7d68481b20eb1e3b7f13b3c062" target="_blank">53096a4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree218bf8160f954321acb6c49a87d123026cfc7ff8targetblank218bf81a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree53096a41bda3ce7d68481b20eb1e3b7f13b3c062targetblank53096a4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/218bf8160f954321acb6c49a87d123026cfc7ff8" target="_blank">218bf81</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/53096a41bda3ce7d68481b20eb1e3b7f13b3c062" target="_blank">53096a4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -602,6 +602,7 @@ Unstaged changes:
     Deleted:    analysis/sla_data_analysis_k10.Rmd
     Deleted:    analysis/sla_data_analysis_k5.Rmd
     Deleted:    analysis/sla_data_analysis_k50.Rmd
+    Modified:   code/misc.R
     Modified:   code/smallsim2_functions.R
     Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
     Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
@@ -886,6 +887,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/53096a41bda3ce7d68481b20eb1e3b7f13b3c062/analysis/cone_NMF_l2_2.Rmd" target="_blank">53096a4</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+<td>
+cone_NMF_l2_2.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/4ef042b983eacac4f806aade5e571e8aff98a9b4/docs/cone_NMF_l2_2.html" target="_blank">4ef042b</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/218bf8160f954321acb6c49a87d123026cfc7ff8/analysis/cone_NMF_l2_2.Rmd" target="_blank">218bf81</a>
 </td>
 <td>
@@ -945,7 +980,8 @@ cone_NMF_l2_2.Rmd
 <li>When <span class="math inline">\(n \ll p\)</span>, I think it’s easier to estimate <span class="math inline">\(L\)</span>, but because of the alternating update of <span class="math inline">\(L, F\)</span> we can end up with bad fits of both.</li>
 <li>Below I show an example where we can get better fit with <code>cone_NMF_l2</code> (it’s technically still alternating between <span class="math inline">\(B, W\)</span> but their estimates are very very similar, so I think of it as fitting <span class="math inline">\(W\)</span> (or equivalently <span class="math inline">\(L\)</span>) alone).</li>
 </ul>
-<pre class="r"><code>source(&quot;code/cone_NMF_l2.R&quot;)
+<pre class="r"><code>rm(list = ls())
+source(&quot;code/cone_NMF_l2.R&quot;)
 source(&quot;code/smallsim2_functions.R&quot;)
 source(&quot;code/misc.R&quot;)
 source(&quot;code/util.R&quot;)
@@ -965,7 +1001,7 @@ F &lt;- simulate_factors(m = m, k = k)
 L &lt;- simulate_loadings(n,k,S)
 s &lt;- simulate_sizes(n = n, doc_len = doc_len)
 X &lt;- simulate_multinom_counts(L,F,s)</code></pre>
-<pre class="r"><code>fit_kl_small &lt;- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = &quot;mkl&quot;, method = &quot;scd&quot;, trace = 1)
+<pre class="r"><code>fit_kl_small &lt;- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = &quot;mkl&quot;, method = &quot;scd&quot;, trace = 1, max.iter = 200)
 fit_kl_big &lt;- NNLM::nnmf(A = X, k = k, loss = &quot;mkl&quot;, method = &quot;scd&quot;, trace = 1)
 
 fit_kl_small.m = get_multinom_from_pnmf(L = fit_kl_small$W, F = t(fit_kl_small$H))
@@ -1000,6 +1036,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4ef042b983eacac4f806aade5e571e8aff98a9b4/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-4-1.png" target="_blank">4ef042b</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-4-1.png" target="_blank">4a7ec3e</a>
@@ -1045,6 +1092,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4ef042b983eacac4f806aade5e571e8aff98a9b4/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-5-1.png" target="_blank">4ef042b</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-5-1.png" target="_blank">4a7ec3e</a>
@@ -1118,6 +1176,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4ef042b983eacac4f806aade5e571e8aff98a9b4/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-8-1.png" target="_blank">4ef042b</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-8-1.png" target="_blank">4a7ec3e</a>
 </td>
 <td>
@@ -1131,6 +1200,33 @@ zihao12
 </table>
 </div>
 </div>
+</div>
+<div id="refit-regular-pmf-initialized-from-cone_nmf_l2" class="section level2">
+<h2>Refit regular PMF initialized from <code>cone_NMF_l2</code></h2>
+<ul>
+<li><code>cone_NMF_l2</code> helps the regular PMF gets out of local maxima (probably by getting a better <span class="math inline">\(L\)</span>).</li>
+</ul>
+<pre class="r"><code>fit_cone_small.p = multinom2poisson(fit_cone_small.m, X = X[1:n_sample, ])
+fit_kl_small.p = multinom2poisson(fit_kl_small.m, X = X[1:n_sample, ])
+
+fit_kl_small_refit &lt;- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = &quot;mkl&quot;, method = &quot;scd&quot;, 
+                                 init = list(W = fit_cone_small.p$L, H = t(fit_cone_small.p$F)),
+                                 trace = 1, max.iter = 200)
+fit_kl_small_refit.m = get_multinom_from_pnmf(L = fit_kl_small_refit$W, F = t(fit_kl_small_refit$H))
+fit_kl_small_refit.p = multinom2poisson(fit_kl_small_refit.m, X = X[1:n_sample, ])</code></pre>
+<pre class="r"><code>model = fit_kl_small_refit.m
+idx = match_topics(F1 = F, F2 = model$F)
+idx</code></pre>
+<pre><code>[1] 3 2 1</code></pre>
+<pre class="r"><code>par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F, n_sample)</code></pre>
+<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>log_lik(X = X[1:n_sample, ], lam = fit_cone_small.p$L %*% t(fit_cone_small.p$F))</code></pre>
+<pre><code>[1] -11148.09</code></pre>
+<pre class="r"><code>log_lik(X = X[1:n_sample, ], lam = fit_kl_small.p$L %*% t(fit_kl_small.p$F))</code></pre>
+<pre><code>[1] -11183.23</code></pre>
+<pre class="r"><code>log_lik(X = X[1:n_sample, ], lam = fit_kl_small_refit.p$L %*% t(fit_kl_small_refit.p$F))</code></pre>
+<pre><code>[1] -10899.21</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
