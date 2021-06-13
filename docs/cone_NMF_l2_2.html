@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1189771871ec235ec75b43c96e3ca113b02c1542targetblank1189771a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1189771871ec235ec75b43c96e3ca113b02c1542" target="_blank">1189771</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree218bf8160f954321acb6c49a87d123026cfc7ff8targetblank218bf81a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/218bf8160f954321acb6c49a87d123026cfc7ff8" target="_blank">218bf81</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree1189771871ec235ec75b43c96e3ca113b02c1542targetblank1189771a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree218bf8160f954321acb6c49a87d123026cfc7ff8targetblank218bf81a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/1189771871ec235ec75b43c96e3ca113b02c1542" target="_blank">1189771</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/218bf8160f954321acb6c49a87d123026cfc7ff8" target="_blank">218bf81</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -886,6 +886,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/218bf8160f954321acb6c49a87d123026cfc7ff8/analysis/cone_NMF_l2_2.Rmd" target="_blank">218bf81</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+<td>
+cone_NMF_l2_2.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/cone_NMF_l2_2.html" target="_blank">4a7ec3e</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1189771871ec235ec75b43c96e3ca113b02c1542/analysis/cone_NMF_l2_2.Rmd" target="_blank">1189771</a>
 </td>
 <td>
@@ -912,11 +946,9 @@ cone_NMF_l2_2.Rmd
 <li>Below I show an example where we can get better fit with <code>cone_NMF_l2</code> (it’s technically still alternating between <span class="math inline">\(B, W\)</span> but their estimates are very very similar, so I think of it as fitting <span class="math inline">\(W\)</span> (or equivalently <span class="math inline">\(L\)</span>) alone).</li>
 </ul>
 <pre class="r"><code>source(&quot;code/cone_NMF_l2.R&quot;)
-source(&quot;code/smallsim2_functions.R&quot;)</code></pre>
-<pre><code>Warning: package &#39;mvtnorm&#39; was built under R version 3.5.2</code></pre>
-<pre class="r"><code>source(&quot;code/misc.R&quot;)</code></pre>
-<pre><code>Warning: package &#39;pheatmap&#39; was built under R version 3.5.2</code></pre>
-<pre class="r"><code>source(&quot;code/util.R&quot;)
+source(&quot;code/smallsim2_functions.R&quot;)
+source(&quot;code/misc.R&quot;)
+source(&quot;code/util.R&quot;)
 set.seed(123)</code></pre>
 </div>
 <div id="an-instance-where-both-l-and-f-are-fitted-badly-with-regular-pmf" class="section level2">
@@ -945,7 +977,44 @@ idx</code></pre>
 <pre><code>[1] 3 2 1</code></pre>
 <pre class="r"><code>par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F, n_sample)</code></pre>
-<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-4-1.png" target="_blank">4a7ec3e</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>With more documents we can fit both much better</p>
 <pre class="r"><code>model = fit_kl_big.m
 idx = match_topics(F1 = F, F2 = model$F)
@@ -953,7 +1022,44 @@ idx</code></pre>
 <pre><code>[1] 1 3 2</code></pre>
 <pre class="r"><code>par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F, n)</code></pre>
-<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-5-1.png" target="_blank">4a7ec3e</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="can-we-estimate-l-well-with-cone-nmf" class="section level2">
 <h2>Can we estimate <code>L</code> well with cone-NMF?</h2>
@@ -987,7 +1093,44 @@ idx</code></pre>
 <pre><code>[1] 3 2 1</code></pre>
 <pre class="r"><code>par(mfrow = c(3,2))
 compare_truth_fitted(model, idx, L, F, n_sample)</code></pre>
-<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cone_NMF_l2_2.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4a7ec3e905b3ed7aae47b687ad9be1997fa31e78/docs/figure/cone_NMF_l2_2.Rmd/unnamed-chunk-8-1.png" target="_blank">4a7ec3e</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
