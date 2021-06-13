@@ -1,0 +1,107 @@
+---
+title: "cone_NMF_l2_2"
+author: "zihao12"
+date: "2021-06-13"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* When $n \ll p$, I think it's easier to estimate $L$, but because of the alternating update of $L, F$ we can end up with bad fits of both. 
+* Below I show an example where we can get better fit with `cone_NMF_l2` (it's technically still alternating between $B, W$ but their estimates are very very similar, so I think of it as fitting $W$ (or equivalently $L$) alone). 
+
+```{r}
+source("code/cone_NMF_l2.R")
+source("code/smallsim2_functions.R")
+source("code/misc.R")
+source("code/util.R")
+set.seed(123)
+```
+
+
+## An instance where both `L` and `F` are fitted badly (with regular PMF)
+In the small subset of data used in fitting, there are 50 documents with 1000 words in the dictionary. The document length is 80 on average. 
+```{r}
+n <- 300
+m <- 1000
+k <- 3
+n_sample = 50
+doc_len = round(0.08*m) ## average number of words in each document
+
+S <- 15*diag(k) - 2
+F <- simulate_factors(m = m, k = k)
+L <- simulate_loadings(n,k,S)
+s <- simulate_sizes(n = n, doc_len = doc_len)
+X <- simulate_multinom_counts(L,F,s)
+```
+
+
+```{r}
+fit_kl_small <- NNLM::nnmf(A = X[1:n_sample,], k = k, loss = "mkl", method = "scd", trace = 1)
+fit_kl_big <- NNLM::nnmf(A = X, k = k, loss = "mkl", method = "scd", trace = 1)
+
+fit_kl_small.m = get_multinom_from_pnmf(L = fit_kl_small$W, F = t(fit_kl_small$H))
+fit_kl_big.m = get_multinom_from_pnmf(L = fit_kl_big$W, F = t(fit_kl_big$H))
+```
+
+We can see below that both $L, F$ are fitted badly
+```{r}
+model = fit_kl_small.m
+idx = match_topics(F1 = F, F2 = model$F)
+idx
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F, n_sample)
+```
+
+
+With more documents we can fit both much better
+```{r}
+model = fit_kl_big.m
+idx = match_topics(F1 = F, F2 = model$F)
+idx
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F, n)
+```
+
+## Can we estimate `L` well with cone-NMF?
+
+Initialize with `fit_kl_small`. I project the $F$ on to $\text{cone}(X^T)$
+```{r}
+## dim(X) = (n, p)
+## dim(L) = (n, k)
+## dim(F) = (p, k)
+init_ <- function(X, L, F){
+  k = ncol(L)
+  n = nrow(L)
+  B = matrix(NaN, nrow = n, ncol = k)
+  W = t(L)
+  for(i in 1:k){
+    B[,i]  = nnls::nnls(A = X, b = F[,i])$x
+  }
+  d = sqrt(rowSums(W^2))
+  W <- W / d
+  B <- t(t(B) * d)
+  R = diag(replicate(n, 1)) - B %*% W
+  return(list(B = B, W = W, R = R))
+}
+
+init_small <- init_(X = t(X[1:n_sample,]), L = fit_kl_small$W, F = t(fit_kl_small$H))
+```
+
+Fit with `cone_NMF_l2`
+```{r}
+fit_cone_small = cone_nmf_l2(X = t(X[1:n_sample,]), K = k, init = init_small, maxiter = 50)
+fit_cone_small.m =   get_multinom_from_pnmf(F = fit_cone_small$A, L = t(fit_cone_small$W))
+```
+
+The $L$ fit is much much better!
+```{r}
+model = fit_cone_small.m
+idx = match_topics(F1 = F, F2 = model$F)
+idx
+par(mfrow = c(3,2))
+compare_truth_fitted(model, idx, L, F, n_sample)
+```
+
