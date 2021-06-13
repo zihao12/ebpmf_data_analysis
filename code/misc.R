@@ -134,3 +134,11 @@ match_topics_top_words <- function(F1, F2, top_words1){
   return(id)
 }
 
+
+multinom2poisson <- function (fit, X) {
+  F <- fit$F
+  L <- fit$L * fit$s
+  return(list(L = L, F = F))
+}
+
+
