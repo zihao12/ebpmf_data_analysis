@@ -12,7 +12,7 @@ editor_options:
 * When $n \ll p$, I think it's easier to estimate $L$, but because of the alternating update of $L, F$ we can end up with bad fits of both. 
 * Below I show an example where we can get better fit with `cone_NMF_l2` (it's technically still alternating between $B, W$ but their estimates are very very similar, so I think of it as fitting $W$ (or equivalently $L$) alone). 
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 source("code/cone_NMF_l2.R")
 source("code/smallsim2_functions.R")
 source("code/misc.R")
@@ -47,7 +47,7 @@ fit_kl_big.m = get_multinom_from_pnmf(L = fit_kl_big$W, F = t(fit_kl_big$H))
 ```
 
 We can see below that both $L, F$ are fitted badly
-```{r}
+```{r fig.height=10, fig.width=10}
 model = fit_kl_small.m
 idx = match_topics(F1 = F, F2 = model$F)
 idx
@@ -57,7 +57,7 @@ compare_truth_fitted(model, idx, L, F, n_sample)
 
 
 With more documents we can fit both much better
-```{r}
+```{r fig.height=10, fig.width=10}
 model = fit_kl_big.m
 idx = match_topics(F1 = F, F2 = model$F)
 idx
@@ -97,7 +97,7 @@ fit_cone_small.m =   get_multinom_from_pnmf(F = fit_cone_small$A, L = t(fit_cone
 ```
 
 The $L$ fit is much much better!
-```{r}
+```{r fig.height=10, fig.width=10}
 model = fit_cone_small.m
 idx = match_topics(F1 = F, F2 = model$F)
 idx
