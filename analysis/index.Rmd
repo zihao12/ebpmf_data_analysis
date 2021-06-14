@@ -31,6 +31,15 @@ Data analysis results:
 
 
 
+I am working on cone-NMF (the Frobenius norm case is the same as [convex-NMF](https://people.eecs.berkeley.edu/~jordan/papers/ding-li-jordan-pami.pdf)):
+
+* First, I found that our regular PMF solution is basically inside $\text{cone}(X)$ where each column of $X$ is a sample: [cone_pmf1](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html)
+
+* Then I derived and implemented the cone NMF for Frobeneus norm: [cone_nmf_l2](https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_l2)
+
+* I find an example where cone NMF can improve the PMF fit: [cone_NMF_l2_2](https://zihao12.github.io/ebpmf_data_analysis/cone_NMF_l2_2)
+
+
  <!-- * Version `0.3.8`: \ -->
  <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\ -->
 
