@@ -1,0 +1,36 @@
+---
+title: "cone_nmf_f_3"
+author: "zihao12"
+date: "2021-06-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+
+```{r warning=FALSE, message=FALSE}
+rm(list = ls())
+source("code/cone_NMF_l2.R")
+source("code/smallsim2_functions.R")
+source("code/misc.R")
+source("code/util.R")
+set.seed(123)
+```
+
+
+
+```{r}
+fitted = readRDS("output/fitted_kos_coneNMF_F_K20.Rds")
+```
+
+```{r fig.height=15, fig.width=20}
+k = ncol(fitted$B)
+par(mfrow = c(5, 4))
+for(i in 1:k){
+  plot(fitted$B[,i], fitted$W[i,], xlab = "bk",ylab = "wk", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+  
+}
+```
