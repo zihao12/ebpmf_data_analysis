@@ -48,7 +48,7 @@ simulate_multinom_counts <- function (L, F, s) {
 
 ## L, F are truth (in multinomial model)
 ## model is a list containing fitted L, F (also in multinomial model)
-compare_truth_fitted <- function(model, idx, L, F){
+compare_truth_fitted <- function(model, idx, L, F, n_sample){
   k = ncol(F)
   for(i in 1:k){
     f_fitted = model$F[,idx[i]]
