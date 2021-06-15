@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ## Introduction
-
+I want to confirm my observation that cone NMF (F norm) solution converges to where $B, W^t$ are the same, on realistic data. Here I fit it on a document [dataset](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html) with $(n, p) = (3430, 6906)$
 
 ```{r warning=FALSE, message=FALSE}
 rm(list = ls())
@@ -20,11 +20,15 @@ set.seed(123)
 ```
 
 
-
+# Fit for 100 iterations
+Note it has not converged it. 
 ```{r}
 fitted = readRDS("output/fitted_kos_coneNMF_F_K20.Rds")
+plot(fitted$loss)
+fitted$runtime
 ```
 
+Indeed $B, W^t$ are basically identical. Will show the results after 1000 iterations when ready.   
 ```{r fig.height=15, fig.width=20}
 k = ncol(fitted$B)
 par(mfrow = c(5, 4))
