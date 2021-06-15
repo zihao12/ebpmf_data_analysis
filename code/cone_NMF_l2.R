@@ -1,11 +1,11 @@
 ## dim(X) = (p, n)
 ## init is list(B = B, W = W, R = R)
 ## K is the number of factors; can be null when init is provided
-cone_nmf_l2 <- function(X, K, init = NULL, maxiter = 50, seed = 123){
+cone_nmf_l2 <- function(X, K, init = NULL, maxiter = 50, verbose = FALSE, seed = 123){
   set.seed(seed)
   if(is.null(init)){ init <- init_cone_nmf_l2(X, K) }
   M = t(X) %*% X
-  fit = cone_nmf_l2_util(M = M, B = init$B, W = init$W, R = init$R, maxiter = maxiter)
+  fit = cone_nmf_l2_util(M = M, B = init$B, W = init$W, R = init$R, maxiter = maxiter, verbose = verbose)
   fit[["A"]] = X %*% fit$B
   return(fit)
 }
@@ -14,7 +14,7 @@ cone_nmf_l2 <- function(X, K, init = NULL, maxiter = 50, seed = 123){
 ## dim(M) = (n, n); M = t(X) %*% X
 ## dim(B) = (n, K)
 ## dim(W) = (K, n); need each row has L2 norm 1
-cone_nmf_l2_util <- function(M, B, W, R, maxiter = 50){
+cone_nmf_l2_util <- function(M, B, W, R, verbose = FALSE, maxiter = 50){
   K = ncol(B)
   loss = rep(NaN, maxiter)
   for(i in 1:maxiter){
@@ -27,6 +27,7 @@ cone_nmf_l2_util <- function(M, B, W, R, maxiter = 50){
       R <- Rk - B[,k] %o% W[k,]
     }
     loss[i] <- compute_loss_l2(M, R)
+    if(verbose){cat(sprintf("loss at iter %d: %f\n", i, loss[i]))}
   }
   return(list(B = B, W = W, loss = loss))
 }
