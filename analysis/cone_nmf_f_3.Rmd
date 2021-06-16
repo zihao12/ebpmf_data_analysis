@@ -28,6 +28,25 @@ plot(fitted$loss)
 fitted$runtime
 ```
 
+Indeed $B, W^t$ are basically identical.   
+```{r fig.height=15, fig.width=20}
+k = ncol(fitted$B)
+par(mfrow = c(5, 4))
+for(i in 1:k){
+  plot(fitted$B[,i], fitted$W[i,], xlab = "bk",ylab = "wk", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+  
+}
+```
+
+
+# Fit for 1000 iterations
+```{r}
+fitted = readRDS("output/fitted_kos_coneNMF_F_K20_iter1000.Rds")
+plot(fitted$loss)
+fitted$runtime
+```
+
 Indeed $B, W^t$ are basically identical. Will show the results after 1000 iterations when ready.   
 ```{r fig.height=15, fig.width=20}
 k = ncol(fitted$B)
@@ -38,3 +57,5 @@ for(i in 1:k){
   
 }
 ```
+
+
