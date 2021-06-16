@@ -1,0 +1,105 @@
+---
+title: "multinom_sampling"
+author: "zihao12"
+date: "2021-06-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* I want to see how good is the estimator for word-word covariance matrix (proposed in [here](https://arxiv.org/pdf/1204.1956.pdf), probably easier to understand [here](https://cs.stanford.edu/~rishig/courses/ref/l9b.pdf))
+* Model is: $M =  AW$ where $dim(M)= (p, n)$ and each column is probability vector. Then sampling process has $x_i \sim \text{Multinom}(N, m_i), \forall i \in [n]$.
+* They propose an estimator $Q$ for $\frac{1}{n} M M^T$ and claim when $n > \frac{50 logp}{N \eps^2}$, with high probability all entries of $|Q - \frac{1}{n} M M^T|$ is at most $\epsilon$. The proof looks right. (Though the wording is a bit confusing,on the spliting dictionary part).
+* However, the problem I find is, entries in $\frac{1}{n} M M^T$ is very very small with large $p$. Therefore, to get reasonable good estimate we need to set $\epsilon$ to be even smaller!!  If we instead want to bound the relative difference between $Q$ and $\frac{1}{n} M M^T$, we need a lot more samples than merely $log(p)$. Thus I think the true dependency of $n$ on $p$ is hidden inside $\epsilon$. 
+* Below are my simulations 
+
+
+```{r}
+rm(list = ls())
+set.seed(123)
+```
+
+
+```{r}
+## n: # documents
+## p: # words in dictionary
+## N: document length
+## k: number of topics 
+
+simulate_data <- function(n,p,N,k = 4,seed =123){
+  set.seed(seed)
+  W = matrix( runif(n = k * n), nrow = k)
+  A = matrix( runif(n = k * p), ncol = k)
+  A <- A %*% diag(1/colSums(A))
+  W <- W %*% diag(1/colSums(W))
+  
+  M = A %*% W
+  X = matrix(,nrow = p, ncol = n)
+  for(j in 1:n){
+    X[,j] = rmultinom(n = 1, size = N, prob = M[,j])
+  }
+  cov_word <- (1/n)* M %*% t(M)
+  return(list(X = X,cov_word = cov_word))
+}
+
+est_cov_word <- function(X){
+  n = ncol(X)
+  p = nrow(X)
+  N = mean(colSums(X))
+  upper <- 1:round(p/2)
+  lower <- (round(p/2) + 1) : p
+  Y1 = X; Y2 = X
+  for(i in 1:n){
+    upper <- sample(1:p, round(p/2))
+    Y1[-upper,i]<- 0
+    Y2[upper, i]<-0
+  }
+  Q <- Y1 %*% t(Y2) * (4/(n*N^2))
+  return(Q)
+}
+
+```
+
+
+
+## Setting 1
+The covariance matrix entries are all very small. Even though the absolute difference is small, it's still bad estimate. 
+
+```{r}
+n= 300
+p= 1000
+N = 100
+k = 4
+
+sim <- simulate_data(n = n, p = p, N = N, k = k)
+covhat <- est_cov_word(sim$X)
+idx <-sample(p, 100)
+plot(sim$cov_word[idx,idx], covhat[idx,idx],xlab ="truth", ylab = "est")
+```
+
+
+
+## Setting 2
+I increase $N$ so even direct estimate $M$ is not too bad. The estimate of $MM^T$ is much much better
+```{r}
+n= 300
+p= 1000
+N = 10000
+k = 4
+
+sim <- simulate_data(n = n, p = p, N = N, k = k)
+covhat <- est_cov_word(sim$X)
+idx <-sample(p, 100)
+plot(sim$cov_word[idx,idx], covhat[idx,idx],xlab ="truth", ylab = "est")
+```
+
+##b how many samples do we need
+I think a good estimate here should at least need $\epsilon \leq 10^{-8}$. The dominating term is $\epsilon^2$, which is huge...
+
+
+
+
+
+
