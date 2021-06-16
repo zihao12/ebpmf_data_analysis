@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="zihao12" />
 
+<meta name="date" content="2021-06-15" />
 
-<title>Home</title>
+<title>cone_nmf_f_3</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -258,6 +263,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -265,6 +333,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -308,7 +386,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">cone_nmf_f_3</h1>
+<h4 class="author">zihao12</h4>
+<h4 class="date">2021-06-15</h4>
 
 </div>
 
@@ -333,10 +413,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-06-16
+<strong>Last updated:</strong> 2021-06-15
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -364,16 +444,76 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree86f370b04ae205cbc10651c16e94434c9ef7f2e0targetblank86f370ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/86f370b04ae205cbc10651c16e94434c9ef7f2e0" target="_blank">86f370b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree86f370b04ae205cbc10651c16e94434c9ef7f2e0targetblank86f370ba" class="panel-collapse collapse">
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3bc8ce25c63c50528e4cc1e638685a6bed4df5f5targetblank3bc8ce2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3bc8ce25c63c50528e4cc1e638685a6bed4df5f5" target="_blank">3bc8ce2</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3bc8ce25c63c50528e4cc1e638685a6bed4df5f5targetblank3bc8ce2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/86f370b04ae205cbc10651c16e94434c9ef7f2e0" target="_blank">86f370b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3bc8ce25c63c50528e4cc1e638685a6bed4df5f5" target="_blank">3bc8ce2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -716,7 +856,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/cone_nmf_f_3.Rmd</code>) and HTML (<code>docs/cone_nmf_f_3.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -745,16 +885,16 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/86f370b04ae205cbc10651c16e94434c9ef7f2e0/analysis/index.Rmd" target="_blank">86f370b</a>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3bc8ce25c63c50528e4cc1e638685a6bed4df5f5/analysis/cone_nmf_f_3.Rmd" target="_blank">3bc8ce2</a>
 </td>
 <td>
 zihao12
 </td>
 <td>
-2021-06-16
+2021-06-15
 </td>
 <td>
-index
+cone_nmf_f_3.Rmd
 </td>
 </tr>
 <tr>
@@ -762,7 +902,7 @@ index
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b8991e50d6c3b8ff196d161d474f4f06db5f229e/docs/index.html" target="_blank">b8991e5</a>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/1f213e0cc62cc0e4e864d70df5a52afafceafa3b/docs/cone_nmf_f_3.html" target="_blank">1f213e0</a>
 </td>
 <td>
 zihao12
@@ -779,7 +919,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4d7a1ea2a67d4cca7753de7bf62675c26b42aae4/analysis/index.Rmd" target="_blank">4d7a1ea</a>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1431b86c9037b4e9c80d5410cb7611cb524975c2/analysis/cone_nmf_f_3.Rmd" target="_blank">1431b86</a>
 </td>
 <td>
 zihao12
@@ -788,449 +928,7 @@ zihao12
 2021-06-15
 </td>
 <td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/5c3c833ee162354df9c4dfc322ac0c82defda462/docs/index.html" target="_blank">5c3c833</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/0e0732d3fe60bcda8fa2ff5597f2fb6dc18d66d2/analysis/index.Rmd" target="_blank">0e0732d</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-14
-</td>
-<td>
-index.Rmd update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b7da7669d8927c2c5085150d9135c86c974fac03/docs/index.html" target="_blank">b7da766</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-11-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635/analysis/index.Rmd" target="_blank">1aae3e9</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-11-05
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b4a4d19a6163ae34abeb0171d77950e3cac7b12b/docs/index.html" target="_blank">b4a4d19</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/d8ba5a163373dceabce232a1651593840af568f3/analysis/index.Rmd" target="_blank">d8ba5a1</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/bbfcc6c8ec29eb88072c7baa8ea51f793f88af84/docs/index.html" target="_blank">bbfcc6c</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/7714094fe64516748e95d4b077e929bdc5c35c91/analysis/index.Rmd" target="_blank">7714094</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/acf2eecb572927a4c3f7ed7f26a5719a78627848/docs/index.html" target="_blank">acf2eec</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a6f5d7279138057cf5ea2054505125e8b9fc7537/analysis/index.Rmd" target="_blank">a6f5d72</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-28
-</td>
-<td>
-add link to sla_data_analysis_k10
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/ad468612e011e1586e4f039b0781adc343e6ae63/docs/index.html" target="_blank">ad46861</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/d01dda7c8e72ae666b5b9b113ddfea45bd2195a3/analysis/index.Rmd" target="_blank">d01dda7</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-26
-</td>
-<td>
-demo for processing SLA data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/d481b1d5ef8d0914804ccbfcff65d2f9057caaef/docs/index.html" target="_blank">d481b1d</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/448f65885d7ad4fa3a91623c8f44ff9320decc55/analysis/index.Rmd" target="_blank">448f658</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-updatye index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/a719d7427fcb1baef5a9ea25b6407afc9917267d/docs/index.html" target="_blank">a719d74</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/e075657d7e9daa0c7dd938348add0a55dd8d4222/analysis/index.Rmd" target="_blank">e075657</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/041d2406044d40bcc8ab4d8b9f06dd7d8e987df2/docs/index.html" target="_blank">041d240</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/dc62cf9d5f2bacac77109d7e6930f341ddb0027e/analysis/index.Rmd" target="_blank">dc62cf9</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/8aeda46e17fbbe637d99ed845d89f06adcd1d902/docs/index.html" target="_blank">8aeda46</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/2aec1adcb4e4c819abe3e87a9b115dea2396f4cf/analysis/index.Rmd" target="_blank">2aec1ad</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/7505013a60f84e217821981b424270343c86c429/docs/index.html" target="_blank">7505013</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1bc4a3b936ff6895ec57e021b2e716c783fd8f1e/analysis/index.Rmd" target="_blank">1bc4a3b</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-add links to some data analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/9037b15eb6c953585fd24db2389f7eb5cf216c2b/docs/index.html" target="_blank">9037b15</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/68802cec98b18f6ef3e2a1177cfe3acbe84b5652/analysis/index.Rmd" target="_blank">68802ce</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-add links to some data analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/a4c37a957894443ca930b76e60150dd4df14674a/docs/index.html" target="_blank">a4c37a9</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-11
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/f4ae184f13f4bf2d67a9b83e5e002dcf0f45e5a6/analysis/index.Rmd" target="_blank">f4ae184</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-11
-</td>
-<td>
-Start workflowr project.
+wflow_publish(“analysis/cone_nmf_f_3.Rmd”)
 </td>
 </tr>
 </tbody>
@@ -1240,32 +938,107 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my research website.</p>
-<p>Model:</p>
-<ul>
-<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">Model description for ebpmf-wbg</a></p></li>
-<li><p><a href="https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations">Derivations</a></p></li>
-<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/PMF_WBG_presentation.pdf">Presentation at Stephenslab group meeting</a></p></li>
-</ul>
-<!-- Data preprocessing demo:\ -->
-<!-- * [process SLA dataset](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla)\ -->
-<p>Data analysis results:</p>
-<ul>
-<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2">On simulated data</a></p></li>
-<li><p><a href="https://zihao12.shinyapps.io/topicview-app/">On real data</a> (in development)</p></li>
-</ul>
-<p>I am working on cone-NMF (the Frobenius norm case is the same as <a href="https://people.eecs.berkeley.edu/~jordan/papers/ding-li-jordan-pami.pdf">convex-NMF</a>):</p>
-<ul>
-<li><p>First, I found that our regular PMF solution is basically inside <span class="math inline">\(\text{cone}(X)\)</span> where each column of <span class="math inline">\(X\)</span> is a sample: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html">cone_pmf1</a></p></li>
-<li><p>Then I derived and implemented the cone NMF for Frobeneus norm: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_l2">cone_nmf_l2</a> . I note that fitted <span class="math inline">\(B, W^T\)</span> are almost identical. I fitted on real data to see if it’s still the case: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_f_3.Rmd">cone on kos data</a></p></li>
-<li><p>I find an example where cone NMF can improve the PMF fit: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_NMF_l2_2">cone_NMF_l2_2</a></p></li>
-<li><p>I also investigated direct estimates of word-word covariance matrix: <a href="https://zihao12.github.io/ebpmf_data_analysis/multinom_sampling">multinom_sampling</a></p></li>
-</ul>
-<p><!-- * Version `0.3.8`: \ --> <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\ --></p>
-<p><!-- * Version `0.3.9`:  \ --> <!-- [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.3.9_summary)\ --> <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), \ --> <!-- [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\ --> <!-- [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html) --></p>
-<p><!--  * Version `0.4.2`:  \ --> <!-- [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_summary)\ --> <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.4.2.html), \ --> <!-- [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html) --></p>
-<p><!-- * Version `0.4.5`:  \ --></p>
-<p><!-- [SLA_EBPMF_WBG_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_ebpmf_wbg_k10) (can change k to 5, 10, 50, 100 for more results)\ --> <!-- [SLA_PMF_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_pmf_k10) (can change k to 5, 10, 50, 100 for more results)\ --> <!-- [NIPS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_ebpmf_wbg_k20)\ --> <!-- [NIPS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_pmf_k20)\ --> <!-- [NEWS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_ebpmf_wbg_k20)\ --> <!-- [NEWS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_pmf_k20) --></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>I want to confirm my observation that cone NMF (F norm) solution converges to where <span class="math inline">\(B, W^t\)</span> are the same, on realistic data. Here I fit it on a document <a href="https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html">dataset</a> with <span class="math inline">\((n, p) = (3430, 6906)\)</span></p>
+<pre class="r"><code>rm(list = ls())
+source(&quot;code/cone_NMF_l2.R&quot;)
+source(&quot;code/smallsim2_functions.R&quot;)
+source(&quot;code/misc.R&quot;)
+source(&quot;code/util.R&quot;)
+set.seed(123)</code></pre>
+</div>
+<div id="fit-for-100-iterations" class="section level1">
+<h1>Fit for 100 iterations</h1>
+<p>Note it has not converged it.</p>
+<pre class="r"><code>fitted = readRDS(&quot;output/fitted_kos_coneNMF_F_K20.Rds&quot;)
+plot(fitted$loss)</code></pre>
+<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fitted$runtime</code></pre>
+<pre><code>    user   system  elapsed 
+1024.484  428.177 1455.753 </code></pre>
+<p>Indeed <span class="math inline">\(B, W^t\)</span> are basically identical. Will show the results after 1000 iterations when ready.</p>
+<pre class="r"><code>k = ncol(fitted$B)
+par(mfrow = c(5, 4))
+for(i in 1:k){
+  plot(fitted$B[,i], fitted$W[i,], xlab = &quot;bk&quot;,ylab = &quot;wk&quot;, cex.lab = 1)
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+  
+}</code></pre>
+<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1f213e0cc62cc0e4e864d70df5a52afafceafa3b/docs/figure/cone_nmf_f_3.Rmd/unnamed-chunk-3-1.png" target="_blank">1f213e0</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS  10.15.7
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] pheatmap_1.0.12 mvtnorm_1.1-0   workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5         knitr_1.28         whisker_0.3-2      magrittr_1.5      
+ [5] munsell_0.5.0      colorspace_1.4-1   R6_2.4.1           rlang_0.4.5       
+ [9] stringr_1.4.0      tools_3.5.1        grid_3.5.1         gtable_0.3.0      
+[13] xfun_0.8           git2r_0.26.1       htmltools_0.5.0    yaml_2.2.0        
+[17] digest_0.6.25      rprojroot_1.3-2    lifecycle_0.2.0    RColorBrewer_1.1-2
+[21] later_1.1.0.1      promises_1.1.1     fs_1.3.1           glue_1.4.1        
+[25] evaluate_0.14      rmarkdown_2.1      stringi_1.6.2      compiler_3.5.1    
+[29] scales_1.1.1       backports_1.1.7    httpuv_1.5.4      </code></pre>
+</div>
+</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -1281,6 +1054,8 @@ footer is added to webpages before the MathJax javascript. -->
 </script>
 
 
+</div>
+</div>
 
 </div>
 
@@ -1313,6 +1088,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
