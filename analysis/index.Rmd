@@ -39,6 +39,7 @@ I am working on cone-NMF (the Frobenius norm case is the same as [convex-NMF](ht
 
 * I find an example where cone NMF can improve the PMF fit: [cone_NMF_l2_2](https://zihao12.github.io/ebpmf_data_analysis/cone_NMF_l2_2)
 
+* I also investigated direct estimates of word-word covariance matrix: [multinom_sampling](https://zihao12.github.io/ebpmf_data_analysis/multinom_sampling)
 
  <!-- * Version `0.3.8`: \ -->
  <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\ -->
