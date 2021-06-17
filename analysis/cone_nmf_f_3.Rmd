@@ -90,3 +90,18 @@ for(i in 1:k){
 ```
 
 
+Is the NMF solution contained in the cone?
+
+```{r fig.height=15, fig.width=20}
+F_proj = readRDS("output/kos_coneFactor_F.Rds")$f_proj
+par(mfrow = c(5, 4))
+for(i in 1:k){
+  f = fitted$A[,i]
+  f_proj  = F_proj[[i]]
+  plot(f, f_proj$fitted, ylab = "f_proj", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
+  
+}
+```
+
+
