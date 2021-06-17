@@ -58,7 +58,7 @@ for(i in 1:k){
 ```
 
 ##  compare with regular NMF
-Initialized from coneNMF (iter100) and ran only 20 iterations till converged (`rel.tol = 1e-04`)
+Initialized from coneNMF (iter100) and ran only 20 iterations till converged (`rel.tol = 1e-05`)
 ```{r}
 fitted_nmf = readRDS("output/fitted_kos_NMF_F_K20.Rds")
 n= ncol(fitted_nmf$H)
