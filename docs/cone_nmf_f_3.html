@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree0382ba7f6ed4a46192894fc1661a46dad95081e0targetblank0382ba7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/0382ba7f6ed4a46192894fc1661a46dad95081e0" target="_blank">0382ba7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3fd0f4446443ee2a014f36f74a03f7aa91be206atargetblank3fd0f44a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3fd0f4446443ee2a014f36f74a03f7aa91be206a" target="_blank">3fd0f44</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree0382ba7f6ed4a46192894fc1661a46dad95081e0targetblank0382ba7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3fd0f4446443ee2a014f36f74a03f7aa91be206atargetblank3fd0f44a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/0382ba7f6ed4a46192894fc1661a46dad95081e0" target="_blank">0382ba7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3fd0f4446443ee2a014f36f74a03f7aa91be206a" target="_blank">3fd0f44</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -887,6 +887,57 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3fd0f4446443ee2a014f36f74a03f7aa91be206a/analysis/cone_nmf_f_3.Rmd" target="_blank">3fd0f44</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-17
+</td>
+<td>
+update cone_nmf_f_3.Rmd
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/80e32ab4e2af50cd7f7af2d9c72a3f2408d77c82/analysis/cone_nmf_f_3.Rmd" target="_blank">80e32ab</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-17
+</td>
+<td>
+update cone_nmf_f_3.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/463e2bf7d0f526064b01cc0e2772b3d5faf29787/docs/cone_nmf_f_3.html" target="_blank">463e2bf</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/0382ba7f6ed4a46192894fc1661a46dad95081e0/analysis/cone_nmf_f_3.Rmd" target="_blank">0382ba7</a>
 </td>
 <td>
@@ -1110,36 +1161,68 @@ zihao12
 </table>
 </div>
 </div>
-<!-- # Fit for 1000 iterations -->
-<!-- ```{r} -->
-<!-- fitted = readRDS("output/fitted_kos_coneNMF_F_K20_iter1000.Rds") -->
-<!-- plot(fitted$loss) -->
-<!-- fitted$runtime -->
-<!-- ``` -->
-<!-- Indeed $B, W^t$ are basically identical. Will show the results after 1000 iterations when ready.    -->
-<!-- ```{r fig.height=15, fig.width=20} -->
-<!-- k = ncol(fitted$B) -->
-<!-- par(mfrow = c(5, 4)) -->
-<!-- for(i in 1:k){ -->
-<!--   plot(fitted$B[,i], fitted$W[i,], xlab = "bk",ylab = "wk", cex.lab = 1) -->
-<!--   abline(a = 0, b = 1, col = "blue") -->
-<!-- } -->
-<!-- ``` -->
-<div id="compare-with-regular-nmf" class="section level2">
-<h2>compare with regular NMF</h2>
-<p>Initialized from coneNMF and ran only 20 iterations till converged (<code>rel.tol = 1e-04</code>)</p>
-<pre class="r"><code>fitted_nmf = readRDS(&quot;output/fitted_kos_NMF_F_K20.Rds&quot;)
-n= ncol(fitted_nmf$H)
-p= nrow(fitted_nmf$W)
-
-
-## mse: NMF vs coneNMF
-c(min(fitted_nmf$target.loss), min(fitted$loss)/(n*p*2))</code></pre>
-<pre><code>[1] 0.01402757 0.01486188</code></pre>
-<p>Compare L</p>
-<pre class="r"><code>par(mfrow = c(5, 4))
+</div>
+<div id="fit-for-1000-iterations" class="section level1">
+<h1>Fit for 1000 iterations</h1>
+<pre class="r"><code>fitted = readRDS(&quot;output/fitted_kos_coneNMF_F_K20_iter1000.Rds&quot;)
+plot(fitted$loss)</code></pre>
+<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/463e2bf7d0f526064b01cc0e2772b3d5faf29787/docs/figure/cone_nmf_f_3.Rmd/unnamed-chunk-4-1.png" target="_blank">463e2bf</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/06996fbf29e1a29098892dfcb6249ad19aa69c05/docs/figure/cone_nmf_f_3.Rmd/unnamed-chunk-4-1.png" target="_blank">06996fb</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>fitted$runtime</code></pre>
+<pre><code>     user    system   elapsed 
+10361.252  3976.731 14359.158 </code></pre>
+<p>Indeed <span class="math inline">\(B, W^t\)</span> are basically identical. Will show the results after 1000 iterations when ready.</p>
+<pre class="r"><code>k = ncol(fitted$B)
+par(mfrow = c(5, 4))
 for(i in 1:k){
-  plot(fitted$W[i,], fitted_nmf$H[i,],xlab = &quot;Lk (coneNMF)&quot;,ylab = &quot;Lk (NMF)&quot;, cex.lab = 1)
+  plot(fitted$B[,i], fitted$W[i,], xlab = &quot;bk&quot;,ylab = &quot;wk&quot;, cex.lab = 1)
   abline(a = 0, b = 1, col = &quot;blue&quot;)
 }</code></pre>
 <p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /></p>
@@ -1167,6 +1250,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/463e2bf7d0f526064b01cc0e2772b3d5faf29787/docs/figure/cone_nmf_f_3.Rmd/unnamed-chunk-5-1.png" target="_blank">463e2bf</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-06-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/06996fbf29e1a29098892dfcb6249ad19aa69c05/docs/figure/cone_nmf_f_3.Rmd/unnamed-chunk-5-1.png" target="_blank">06996fb</a>
 </td>
 <td>
@@ -1180,13 +1274,42 @@ zihao12
 </table>
 </div>
 </div>
+<div id="compare-with-regular-nmf" class="section level2">
+<h2>compare with regular NMF</h2>
+<p>Initialized from coneNMF (iter100) and ran only 20 iterations till converged (<code>rel.tol = 1e-04</code>)</p>
+<pre class="r"><code>fitted_nmf = readRDS(&quot;output/fitted_kos_NMF_F_K20.Rds&quot;)
+n= ncol(fitted_nmf$H)
+p= nrow(fitted_nmf$W)
+
+
+## mse: NMF vs coneNMF
+c(min(fitted_nmf$target.loss), min(fitted$loss)/(n*p*2))</code></pre>
+<pre><code>[1] 0.01400633 0.01484356</code></pre>
+<p>Compare L</p>
+<pre class="r"><code>par(mfrow = c(5, 4))
+for(i in 1:k){
+  plot(fitted$W[i,], fitted_nmf$H[i,],xlab = &quot;Lk (coneNMF)&quot;,ylab = &quot;Lk (NMF)&quot;, cex.lab = 1)
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+}</code></pre>
+<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-7-1.png" width="1920" style="display: block; margin: auto;" /></p>
 <p>Compare F</p>
 <pre class="r"><code>par(mfrow = c(5, 4))
 for(i in 1:k){
   plot(fitted$A[,i], fitted_nmf$W[,i],xlab = &quot;Fk (coneNMF)&quot;,ylab = &quot;Fk (NMF)&quot;, cex.lab = 1)
   abline(a = 0, b = 1, col = &quot;blue&quot;)
 }</code></pre>
-<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-6-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-8-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>Is the NMF solution contained in the cone?</p>
+<pre class="r"><code>F_proj = readRDS(&quot;output/kos_coneFactor_F.Rds&quot;)$f_proj
+par(mfrow = c(5, 4))
+for(i in 1:k){
+  f = fitted$A[,i]
+  f_proj  = F_proj[[i]]
+  plot(f, f_proj$fitted, ylab = &quot;f_proj&quot;, cex.lab = 1)
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+  
+}</code></pre>
+<p><img src="figure/cone_nmf_f_3.Rmd/unnamed-chunk-9-1.png" width="1920" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
