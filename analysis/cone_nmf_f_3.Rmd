@@ -40,21 +40,52 @@ for(i in 1:k){
 ```
 
 
-# Fit for 1000 iterations
+<!-- # Fit for 1000 iterations -->
+<!-- ```{r} -->
+<!-- fitted = readRDS("output/fitted_kos_coneNMF_F_K20_iter1000.Rds") -->
+<!-- plot(fitted$loss) -->
+<!-- fitted$runtime -->
+<!-- ``` -->
+
+<!-- Indeed $B, W^t$ are basically identical. Will show the results after 1000 iterations when ready.    -->
+<!-- ```{r fig.height=15, fig.width=20} -->
+<!-- k = ncol(fitted$B) -->
+<!-- par(mfrow = c(5, 4)) -->
+<!-- for(i in 1:k){ -->
+<!--   plot(fitted$B[,i], fitted$W[i,], xlab = "bk",ylab = "wk", cex.lab = 1) -->
+<!--   abline(a = 0, b = 1, col = "blue") -->
+<!-- } -->
+<!-- ``` -->
+
+##  compare with regular NMF
+Initialized from coneNMF and ran only 20 iterations till converged (`rel.tol = 1e-04`)
 ```{r}
-fitted = readRDS("output/fitted_kos_coneNMF_F_K20_iter1000.Rds")
-plot(fitted$loss)
-fitted$runtime
+fitted_nmf = readRDS("output/fitted_kos_NMF_F_K20.Rds")
+n= ncol(fitted_nmf$H)
+p= nrow(fitted_nmf$W)
+
+
+## mse: NMF vs coneNMF
+c(min(fitted_nmf$target.loss), min(fitted$loss)/(n*p*2))
 ```
 
-Indeed $B, W^t$ are basically identical. Will show the results after 1000 iterations when ready.   
+
+Compare L
 ```{r fig.height=15, fig.width=20}
-k = ncol(fitted$B)
 par(mfrow = c(5, 4))
 for(i in 1:k){
-  plot(fitted$B[,i], fitted$W[i,], xlab = "bk",ylab = "wk", cex.lab = 1)
+  plot(fitted$W[i,], fitted_nmf$H[i,],xlab = "Lk (coneNMF)",ylab = "Lk (NMF)", cex.lab = 1)
   abline(a = 0, b = 1, col = "blue")
-  
+}
+```
+
+
+Compare F
+```{r fig.height=15, fig.width=20}
+par(mfrow = c(5, 4))
+for(i in 1:k){
+  plot(fitted$A[,i], fitted_nmf$W[,i],xlab = "Fk (coneNMF)",ylab = "Fk (NMF)", cex.lab = 1)
+  abline(a = 0, b = 1, col = "blue")
 }
 ```
 
