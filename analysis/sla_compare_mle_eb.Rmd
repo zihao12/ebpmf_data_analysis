@@ -1,0 +1,116 @@
+---
+title: "sla_compare_mle_eb"
+author: "zihao12"
+date: "2021-06-22"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r setup}
+rm(list = ls())
+library(fastTopics)
+source("code/misc.R")
+```
+
+$K = 5$
+```{r}
+k = 5
+fitted.eb <- readRDS(sprintf("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", k))
+fitted.mle <- readRDS(sprintf("output/SLA/v0.4.5/sla_pmf_initLF50_K%d_maxiter5000.Rds", k))
+fitted.mle.m <- fastTopics::poisson2multinom(fit = pmf2fastTopics_pmf(fitted.mle))
+fitted.eb.m <- fastTopics::poisson2multinom(fit = ebpmf2fastTopics_pmf(fitted.eb))
+model1 = fitted.mle.m
+model2 = fitted.eb.m
+match_topics(F1 = model1$F, F2 = model2$F)
+```
+
+```{r fig.height=15, fig.width=10}
+par(mfrow = c(5,2))
+for(i in 1:5){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
+
+$K = 10$
+```{r}
+k = 10
+fitted.eb <- readRDS(sprintf("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", k))
+fitted.mle <- readRDS(sprintf("output/SLA/v0.4.5/sla_pmf_initLF50_K%d_maxiter5000.Rds", k))
+fitted.mle.m <- fastTopics::poisson2multinom(fit = pmf2fastTopics_pmf(fitted.mle))
+fitted.eb.m <- fastTopics::poisson2multinom(fit = ebpmf2fastTopics_pmf(fitted.eb))
+model1 = fitted.mle.m
+model2 = fitted.eb.m
+match_topics(F1 = model1$F, F2 = model2$F)
+```
+
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(10,2))
+for(i in 1:10){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
+
+
+
+## $K = 50$
+
+```{r}
+k = 50
+fitted.eb <- readRDS(sprintf("output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K%d_maxiter5000.Rds", k))
+fitted.mle <- readRDS(sprintf("output/SLA/v0.4.5/sla_pmf_initLF50_K%d_maxiter5000.Rds", k))
+fitted.mle.m <- fastTopics::poisson2multinom(fit = pmf2fastTopics_pmf(fitted.mle))
+fitted.eb.m <- fastTopics::poisson2multinom(fit = ebpmf2fastTopics_pmf(fitted.eb))
+model1 = fitted.mle.m
+model2 = fitted.eb.m
+match_topics(F1 = model1$F, F2 = model2$F)
+```
+
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(10,2))
+for(i in 1:10){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
+
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(10,2))
+for(i in 11:20){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
+
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(10,2))
+for(i in 21:30){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(10,2))
+for(i in 31:40){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(10,2))
+for(i in 41:50){
+  plot(model1$L[,i], model2$L[,i], xlab = "L (mle)", ylab = "L (eb)", main = sprintf("topic %d", i))
+  plot(model1$F[,i], model2$F[,i], xlab = "F (mle)", ylab = "F (eb)", main = sprintf("topic %d", i))
+}
+```
+
