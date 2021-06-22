@@ -25,7 +25,7 @@ Model:
 
 Data analysis results:
 
-* [On simulated data](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2)
+* [On simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2) & [more](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_more); [On simulated data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2) We can see our EB approach has the potential to beat MLE in terms of "False Discoveries" of important words & documents. However the requires initialization from close to the truth
 
 * [On real data](https://zihao12.shinyapps.io/topicview-app/) (in development)
 
