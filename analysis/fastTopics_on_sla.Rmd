@@ -1,0 +1,248 @@
+---
+title: "fastTopics_on_sla"
+author: "Zihao"
+date: "2021-06-23"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* I applied `fastTopics` to [sla](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) dataset ($(n,p) = (3207,8770)$), with $k = 6$. 
+* I find initialization with `topicscore` captures $F$ pretty well; estimating $L$ seems harder than estimating $F$ (even though $n < p$) if we consider it in the multinomial model. Porbably because there are many documents with very mixed proportions (seen in structure plot), whereas each factor has only a few key words that are very different from others. 
+* If we instead interpret our fit on $X^T$, we see lots of "pure samples" (words here) in structureplot. Note this is different from "anchor word" assumption (they assume multinomial model for $X$). This satisfies the "anchor document" assumption on $X^T$. 
+
+* Note I didn't make sure the fits converge in this analysis
+
+
+
+
+
+```{r}
+rm(list = ls())
+library(fastTopics)
+source("code/misc.R")
+source("code/util.R")
+library(Matrix)
+set.seed(123)
+```
+
+
+```{r fig.height=3, fig.width=10}
+data = read_sla_bag_of_words("data/SLA/docword.sla.txt")
+doc_len = rowSums(data)
+dim(data)
+n = nrow(data)
+p = ncol(data)
+k = 6
+
+par(mfrow = c(1, 2))
+hist(rowSums(data))
+hist(colSums(data), breaks = 50)
+```
+
+```{r cache=TRUE}
+start = proc.time()
+fit0 = fit_poisson_nmf(data,k = k, numiter = 1, init.method = "topicscore", method = "em")
+fit10 = fit_poisson_nmf(data,fit0 = fit0, numiter = 10, method = "em")
+fit = fit_poisson_nmf(data,fit0 = fit10)
+proc.time() - start
+```
+
+
+## compare MLE vs `topicscore` initialization
+
+* `topicscore` here estimates `F` then L is fitted very roughly with 1 EM update
+* Then I run 10 EM stpes (fit10) then refit it for another 100 SCD updates
+
+### `topicscore` init vs after 10 EM updates
+
+$L$ changes much more than $F$
+```{r fig.height=20, fig.width=10}
+model1 = fit0
+model2 = fit10
+par(mfrow = c(k, 2))
+model1 = poisson2multinom(model1)
+model2 = poisson2multinom(model2)
+for(i in 1:k){
+  plot(model1$F[,i], model2$F[,i])
+  plot(model1$L[,i], model2$L[,i])
+}
+```
+
+### `topicscore` init vs after 10EM + 100SCD updates
+
+We can see again $L$ changes much more than (most) $F$ 
+```{r fig.height=20, fig.width=10}
+model1 = fit0
+model2 = fit
+par(mfrow = c(k, 2))
+model1 = poisson2multinom(model1)
+model2 = poisson2multinom(model2)
+for(i in 1:k){
+  plot(model1$F[,i], model2$F[,i])
+  plot(model1$L[,i], model2$L[,i])
+}
+```
+
+I also trid random initializations. They get worse loglikelihoodf after the same update procedures. Sometimes we fail to to get a 1-1 matching with the naive `match_topics` function. But most topics are similar. $L$ are more different. I didn't show here
+
+<!-- ## Check if random initialization gets the same solution -->
+<!-- random initialization gets worse logliklihood with more refinement iterations -->
+<!-- ```{r cache=TRUE} -->
+<!-- start = proc.time() -->
+<!-- fit.r = fit_topic_model(data,k = k, init.method = "random", numiter.refine = 200) -->
+<!-- proc.time() - start -->
+
+<!-- ## loglik: scoreinit vs random -->
+<!-- c(max(fit$progress$loglik), max(fit.r$progress$loglik)) -->
+<!-- ``` -->
+
+<!-- * I tried a few random initializations. Sometimes we fail to to get a 1-1 matching with the naive `match_topics` function. -->
+<!-- ```{r fig.height=20, fig.width=10} -->
+<!-- model1 = poisson2multinom(fit) -->
+<!-- model2 = fit.r -->
+<!-- par(mfrow = c(k, 2)) -->
+<!-- topic_idx <- match_topics(model1$F, model2$F) -->
+<!-- topic_idx -->
+<!-- for(i in 1:k){ -->
+<!--   j <- topic_idx[i] -->
+<!--   plot(model1$F[,i], model2$F[,j]) -->
+<!--   plot(model1$L[,i], model2$L[,j]) -->
+<!-- } -->
+<!-- ``` -->
+
+
+## fitted loadings and factors
+
+* $L, F$ is identififiable up to scaling $L F^T = L A A^{-1} F^T$ so it's a bit tricky how to show them. First I do the `poisson2multinom` transform. Then I switch the role of $L, F$ and do `poisson2multinom` transform (can be viewed as fitted on $X^T$). 
+* Interestingly, the structure plot for $fit(X^T)$ has lots of pure samples (words here; but that's also different from acnhor words) whereas $fit(X)$ does not. Maybe it's easier to fit on $X^T$ (with some additional assumptions? An extreme one would be doing clustering on $X^T$).  
+
+If we still focusing on fitting topic model on $X$ (i.e. multinomial model on $X$)
+
+* Recovering $L$ mighth be much harder than recovering $F$: $F$ is sparse whereas $L$ is messier. Each $F$ has a few "top" words that are much more important than the rest; but in $L$ there are lots of documents in between (like $0.2$ proportion). This probably explains why $\hat{L}$ differ more between methods (after doing `poisson2multinom`). 
+* Maybe as $k$ increases, this asymmetry can be reversed: with more topics, it might be closer to clustering so $L$ will have more "purer" documents; what will happen to $F$?
+* Also, for Bayesian approach, we can add some restrictions to $L, F$ (and won't change the model under point estimation). Then we might be able to impose more sensible priors, exploiting the asymmetry, or making them more symmetric.  
+
+### $L, F$ in multinomial 
+```{r fig.height=20, fig.width=10}
+model = poisson2multinom(fit)
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$L[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 20)
+  hist(model$F[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 30)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+### multinomial transform with $L, F$ switched
+```{r fig.height=20, fig.width=10}
+model = list(L = fit$F, F = fit$L)
+class(model) <- c("poisson_nmf_fit","list")
+
+model = poisson2multinom(model)
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$F[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 30) ## use the right lab
+  hist(model$L[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 20)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+
+Since the structure plot has more "pure" samples on $X^t$ I try initializing with `topicscore` on $X^T$. 
+
+## `topicscore` on $X^T$
+It gets worse than on $X$ with the same updates procedures..
+```{r cache=TRUE}
+start = proc.time()
+fit0.t = fit_poisson_nmf(t(data),k = k, numiter = 1, init.method = "topicscore", method = "em")
+fit10.t = fit_poisson_nmf(t(data),fit0 = fit0.t, numiter = 10, method = "em")
+fit.t = fit_poisson_nmf(t(data),fit0 = fit10.t)
+proc.time() - start
+
+max(fit.t$progress$loglik)
+max(fit$progress$loglik)
+```
+
+
+
+
+
+<!-- ## Simulate data & Fit -->
+
+<!-- * I want to show the asymmetry between $L, F$ through simulation.  -->
+<!-- * I simulate count data with $L, F$ (I turn them into multinomial and decrease the document length) -->
+<!-- * I also compare initialization, by applying `topicscore` on $X$ nad $X^T$ -->
+
+<!-- ```{r} -->
+<!-- model = poisson2multinom(fit) -->
+<!-- data_sim = simulate_multinom_counts(L = model$L, F = model$F, s = round(doc_len/3)) -->
+<!-- ``` -->
+
+<!-- ### fit on $X$ (simulated data) -->
+<!-- ```{r cache=TRUE} -->
+<!-- start = proc.time() -->
+<!-- fit.new = fastTopics::fit_topic_model(X = as(data_sim$X, "sparseMatrix"), k = k, init.method = "topicscore") -->
+<!-- proc.time() - start -->
+<!-- ``` -->
+
+
+<!-- ```{r fig.height=20, fig.width=10} -->
+<!-- truth = list(L = data_sim$L, F = data_sim$F) -->
+<!-- class(truth) <- c("multinom_topic_model_fit","list") -->
+<!-- topic_idx <- match_topics(truth$F, fit.new$F) -->
+<!-- topic_idx -->
+<!-- par(mfrow = c(k, 2)) -->
+<!-- for(i in 1:k){ -->
+<!--   j = topic_idx[i] -->
+<!--   plot(truth$L[,i], fit.new$L[,j]) -->
+<!--   plot(truth$F[,i], fit.new$F[,j]) -->
+<!-- } -->
+<!-- ``` -->
+
+
+
+<!-- ### fit on $X^T$ (simulated data) -->
+
+<!-- ```{r cache=TRUE} -->
+<!-- start = proc.time() -->
+<!-- fit.new.t = fastTopics::fit_topic_model(X = as(t(data_sim$X), "sparseMatrix"), k = k, init.method = "topicscore") -->
+<!-- proc.time() - start -->
+
+<!-- fit.new.t.p <- fastTopics::multinom2poisson(fit = fit.new.t) -->
+
+<!-- fit.new.tt <- list(L = fit.new.t.p$F, F = fit.new.t.p$L) -->
+<!-- class(fit.new.tt) <-  c("poisson_nmf_fit","list") -->
+<!-- ``` -->
+
+<!-- ```{r fig.height=20, fig.width=10} -->
+<!-- model1 = truth -->
+<!-- model2 = poisson2multinom(fit.new.tt) -->
+<!-- topic_idx <- match_topics(model1$F, model2$F) -->
+<!-- topic_idx -->
+<!-- par(mfrow = c(k, 2)) -->
+<!-- for(i in 1:k){ -->
+<!--   j = topic_idx[i] -->
+<!--   plot(model1$L[,i], model2$L[,j]) -->
+<!--   plot(model1$F[,i], model2$F[,j]) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- compare loglik (both methods run the same number of iteraitions, and not necessarily converge) -->
+<!-- ```{r} -->
+<!-- c(max(fit.new$progress$loglik), max(fit.new.t$progress$loglik)) -->
+<!-- ``` -->
+
+
+
+
+
