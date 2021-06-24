@@ -141,4 +141,15 @@ multinom2poisson <- function (fit, X) {
   return(list(L = L, F = F))
 }
 
-
+# Simulate counts from the multinomial topic model with factors F,
+# loadings L and sample sizes s.
+simulate_multinom_counts <- function (L, F, s) {
+  n <- nrow(L)
+  m <- nrow(F)
+  X <- matrix(0,n,m)
+  P <- tcrossprod(L,F)
+  for (i in 1:n)
+    X[i,] <- rmultinom(1,s[i],P[i,])
+  idx <- which(colSums(X) > 0)
+  return(list(L = L, F = F[idx,], X = X[, idx]))
+}
