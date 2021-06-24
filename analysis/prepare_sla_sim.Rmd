@@ -1,0 +1,99 @@
+---
+title: "prepare_sla_sim"
+author: "Zihao"
+date: "2021-06-24"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+Generate "simulated" from [sla](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla), by subsampling. 
+
+```{r}
+rm(list = ls())
+knitr::opts_chunk$set(autodep = TRUE)
+library(fastTopics)
+source("code/misc.R")
+source("code/util.R")
+library(Matrix)
+set.seed(123)
+```
+
+
+```{r}
+## X is n by p count matrix
+## prob is the probability a word is samppled
+## can speed up with sparse matrix
+count_subsample <- function(X, prob = 0.5){
+  n = nrow(X)
+  p = ncol(X)
+  Y_train <- matrix(rbinom(n = n*p, size = as.matrix(X), prob = prob), nrow = n)
+  Y_test <- X - Y_train
+  idx <- which(colSums(Y_train) > 0)
+  return(list(Y_train = Y_train[,idx], Y_test = Y_test[,idx], w_idx = idx))
+}
+```
+
+
+
+```{r cache=TRUE}
+data = read_sla_bag_of_words("data/SLA/docword.sla.txt")
+
+doc_len = rowSums(data)
+dim(data)
+
+data_sampled = count_subsample(data)
+```
+
+
+```{r cache=TRUE}
+## fit on sub-sampled dataset
+fit = fastTopics::fit_topic_model(X = as(data_sampled$Y_train, "sparseMatrix"), k = 6)
+## fit on full data (excluding some columns), as a comparison
+fit2 = fastTopics::fit_topic_model(X = data[, data_sampled$w_idx],  k = 6)
+```
+
+
+Here "truth" is the fit on the original dataset
+```{r}
+truth = readRDS("output/fastTopics_fit/fit_sla_fastTopics_k6.Rds")
+truth = fastTopics::multinom2poisson(truth)
+truth = list(L = truth$L, F = truth$F[data_sampled$w_idx,])
+class(truth) <- c("poisson_nmf_fit","list")
+truth = fastTopics::poisson2multinom(truth)
+```
+
+
+## Compare "truth" vs fit on sub-sampled data
+```{r fig.height=30, fig.width=20}
+model1 = truth
+model2 = fit
+topic_idx = match_topics(model1$F, model2$F)
+par(mfrow = c(6, 2))
+for(i in 1:6){
+  j = topic_idx[i]
+  plot(model1$L[,i], model2$L[,j])
+  plot(model1$F[,i], model2$F[,j])
+}
+```
+
+
+## Compare "truth" vs fit on full data
+```{r fig.height=30, fig.width=20}
+model1 = truth
+model2 = fit2
+topic_idx = match_topics(model1$F, model2$F)
+par(mfrow = c(6, 2))
+for(i in 1:6){
+  j = topic_idx[i]
+  plot(model1$L[,i], model2$L[,j])
+  plot(model1$F[,i], model2$F[,j])
+}
+```
+
+
+```{r}
+saveRDS(data_sampled, "data/sim/sla_simulated.Rds")
+```
+
