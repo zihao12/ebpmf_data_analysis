@@ -1,0 +1,235 @@
+---
+title: "sla_simulated_compare_mle_eb"
+author: "Zihao"
+date: "2021-06-30"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+* I thin [sla](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) dataset by half to get training and test dataset (see [prepare_sla_sim](https://zihao12.github.io/ebpmf_data_analysis/prepare_sla_sim)). I first fit MLE (`fastTopics`) on original dataset, and call it **truth** . (Probably not a good name but it's convenient...). Then I fit MLE and EB on thinned dataset. A good model should have good likelihood on test data, and should be close to `truth`. 
+* I initialize MLE (`fastTopics`) and EB (`ebpmf-wbg`) methods using the truth. 
+* EB approach is much better than MLE in the two cases shown below: $K = 6$ & $K = 20$. 
+* Note that the mean matrix is slightly different bewteen the original data and train/test, as I remove some columns with 0 counts on training. 
+
+```{r}
+rm(list = ls())
+source("code/misc.R")
+library(fastTopics)
+library(ebpmf.alpha)
+
+datafile = "data/sim/sla_simulated.Rds"
+data = readRDS(datafile)
+data$Y_train = as(data$Y_train, "sparseMatrix")
+data$Y_test = as(as.matrix(data$Y_test), "sparseMatrix") ## the way i generate simulated data is a bit stupid
+
+dim(data$Y_train)
+dim(data$Y_test)
+sum(data$Y_train != 0)/(nrow(data$Y_train) * ncol(data$Y_train))
+sum(data$Y_test != 0)/(nrow(data$Y_test) * ncol(data$Y_test))
+
+```
+
+
+# $K = 6$
+```{r}
+k = 6
+truth.file = sprintf("output/fastTopics_fit/fit_sla_fastTopics_k%d.Rds", k)
+fitted.mle.file = sprintf("output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k%d.Rds", k)
+fitted.eb.file = sprintf("output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k%d.Rds", k)
+
+
+truth = readRDS(truth.file)
+fitted.mle = readRDS(fitted.mle.file)
+fitted.eb = readRDS(fitted.eb.file)
+
+## get "truth"
+truth = fastTopics::multinom2poisson(truth)
+truth = list(L = truth$L, F = truth$F[data$w_idx,])
+class(truth) <- c("poisson_nmf_fit","list")
+truth = fastTopics::poisson2multinom(truth) ## s is not right, but this does not affect computation of log-likelihood
+
+
+fitted.mle.m = fastTopics::poisson2multinom(fitted.mle)
+fitted.eb.p = ebpmf2fastTopics_pmf(fitted.eb)
+fitted.eb.m = fastTopics::poisson2multinom(fitted.eb.p)
+
+idx.mle = match_topics(truth$F, fitted.mle.m$F)
+idx.eb = match_topics(truth$F, fitted.eb.m$F)
+
+## see if there is 1-1 correspondence bewteen topics
+idx.mle
+idx.eb
+```
+
+## compare log-lik on training/test
+```{r}
+loglik.train.truth = fastTopics::loglik_multinom_topic_model(X = data$Y_train, truth)
+loglik.train.mle = fastTopics::loglik_multinom_topic_model(X = data$Y_train, fitted.mle.m)
+loglik.train.eb = fastTopics::loglik_multinom_topic_model(X = data$Y_train, fitted.eb.m)
+
+loglik.test.truth = fastTopics::loglik_multinom_topic_model(X = data$Y_test, truth)
+loglik.test.mle = fastTopics::loglik_multinom_topic_model(X = data$Y_test, fitted.mle.m)
+loglik.test.eb = fastTopics::loglik_multinom_topic_model(X = data$Y_test, fitted.eb.m)
+
+
+## training error
+###  truth          mle             eb
+c(mean(loglik.train.truth), mean(loglik.train.mle), mean(loglik.train.eb))
+## test error
+###  truth          mle             eb
+c(mean(loglik.test.truth), mean(loglik.test.mle), mean(loglik.test.eb))
+
+```
+
+## MLE vs truth
+```{r fig.height=30, fig.width=10}
+model = fitted.mle.m
+idx = match_topics(truth$F, model$F)
+l_mse <- c()
+f_mse <- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = "loading (truth)", ylab = "loading (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+}
+l_mse.mle = l_mse
+f_mse.mle = f_mse
+```
+
+## EB vs truth
+```{r fig.height=30, fig.width=10}
+model = fitted.eb.m
+idx = match_topics(truth$F, model$F)
+l_mse <- c()
+f_mse <- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = "loading (truth)", ylab = "loading (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+}
+l_mse.eb = l_mse
+f_mse.eb = f_mse
+```
+
+## compare RMSE from truth
+```{r}
+round(rbind(l_mse.mle, l_mse.eb), digits = 4)
+round(rbind(f_mse.mle, f_mse.eb), digits = 4)
+```
+
+
+# $K = 20$
+```{r}
+k = 20
+truth.file = sprintf("output/fastTopics_fit/fit_sla_fastTopics_k%d.Rds", k)
+fitted.mle.file = sprintf("output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k%d.Rds", k)
+fitted.eb.file = sprintf("output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k%d.Rds", k)
+
+truth = readRDS(truth.file)
+fitted.mle = readRDS(fitted.mle.file)
+fitted.eb = readRDS(fitted.eb.file)
+
+## get "truth"
+truth = fastTopics::multinom2poisson(truth)
+truth = list(L = truth$L, F = truth$F[data$w_idx,])
+class(truth) <- c("poisson_nmf_fit","list")
+truth = fastTopics::poisson2multinom(truth) ## s is not right, but this does not affect computation of log-likelihood
+
+
+fitted.mle.m = fastTopics::poisson2multinom(fitted.mle)
+fitted.eb.p = ebpmf2fastTopics_pmf(fitted.eb)
+fitted.eb.m = fastTopics::poisson2multinom(fitted.eb.p)
+
+idx.mle = match_topics(truth$F, fitted.mle.m$F)
+idx.eb = match_topics(truth$F, fitted.eb.m$F)
+
+## see if there is 1-1 correspondence bewteen topics
+idx.mle
+idx.eb
+```
+
+## compare log-lik on training/test
+```{r}
+loglik.train.truth = fastTopics::loglik_multinom_topic_model(X = data$Y_train, truth)
+loglik.train.mle = fastTopics::loglik_multinom_topic_model(X = data$Y_train, fitted.mle.m)
+loglik.train.eb = fastTopics::loglik_multinom_topic_model(X = data$Y_train, fitted.eb.m)
+
+loglik.test.truth = fastTopics::loglik_multinom_topic_model(X = data$Y_test, truth)
+loglik.test.mle = fastTopics::loglik_multinom_topic_model(X = data$Y_test, fitted.mle.m)
+loglik.test.eb = fastTopics::loglik_multinom_topic_model(X = data$Y_test, fitted.eb.m)
+
+
+## training error
+###  truth          mle             eb
+c(mean(loglik.train.truth), mean(loglik.train.mle), mean(loglik.train.eb))
+## test error
+###  truth          mle             eb
+c(mean(loglik.test.truth), mean(loglik.test.mle), mean(loglik.test.eb))
+
+```
+
+## MLE vs truth
+```{r fig.height=100, fig.width=10}
+model = fitted.mle.m
+idx = match_topics(truth$F, model$F)
+l_mse <- c()
+f_mse <- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = "loading (truth)", ylab = "loading (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+}
+l_mse.mle = l_mse
+f_mse.mle = f_mse
+```
+
+## EB vs truth
+```{r fig.height=100, fig.width=10}
+model = fitted.eb.m
+idx = match_topics(truth$F, model$F)
+l_mse <- c()
+f_mse <- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = "loading (truth)", ylab = "loading (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+}
+l_mse.eb = l_mse
+f_mse.eb = f_mse
+```
+
+## compare RMSE from truth
+```{r}
+round(rbind(l_mse.mle, l_mse.eb), digits = 4)
+round(rbind(f_mse.mle, f_mse.eb), digits = 4)
+```
+
+
+
