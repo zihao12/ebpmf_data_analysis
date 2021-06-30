@@ -27,6 +27,8 @@ Data analysis results:
 
 * [On simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2) & [more](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_more); [On simulated data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2) We can see our EB approach has the potential to beat MLE in terms of "False Discoveries" of important words & documents. However the requires initialization from close to the truth. So I hope that we can find applications where PMF fit is basically right but can be refined much better with EB approach, like in [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2)
 
+* [On simulated data from sla](https://zihao12.github.io/ebpmf_data_analysis/prepare_sla_sim): I compared [MLE vs ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb) and find EB to be much better. 
+
 * [On real data](https://zihao12.shinyapps.io/topicview-app/) (in development); [fastTopics_on_sla](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla)
 
 * Compare MLE vs EB fits: [sla](https://zihao12.github.io/ebpmf_data_analysis/sla_compare_mle_eb), [nips](https://zihao12.github.io/ebpmf_data_analysis/nips_compare_mle_eb)
