@@ -1,0 +1,138 @@
+---
+title: "fastTopics_on_sla2"
+author: "Zihao"
+date: "2021-07-01"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+rm(list = ls())
+library(fastTopics)
+source("code/misc.R")
+```
+
+
+```{r}
+logliks = c()
+for(k in 2:20){
+  fitted = readRDS(sprintf("output/fastTopics_fit/fit_sla_fastTopics_k%d.Rds", k))
+  logliks = c(logliks, max(fitted$progress$loglik))
+}
+
+plot(2:20, logliks, xlab = "k", ylab = "loglik")
+```
+
+
+
+## $K = 6$
+```{r fig.height=30, fig.width=10}
+k = 6
+fitted = readRDS(sprintf("output/fastTopics_fit/fit_sla_fastTopics_k%d.Rds", k))
+model = fitted
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$L[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 20)
+  hist(model$F[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 30)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+### multinomial transform with L,F switched
+```{r fig.height=30, fig.width=10}
+model = list(L = fitted$F, F = fitted$L)
+class(model) <- c("poisson_nmf_fit","list")
+
+model = poisson2multinom(model)
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$F[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 30) ## use the right lab
+  hist(model$L[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 20)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+
+
+
+## $K = 10$
+```{r fig.height=50, fig.width=10}
+k = 10
+fitted = readRDS(sprintf("output/fastTopics_fit/fit_sla_fastTopics_k%d.Rds", k))
+model = fitted
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$L[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 20)
+  hist(model$F[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 30)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+
+### multinomial transform with L,F switched
+```{r fig.height=50, fig.width=10}
+model = list(L = fitted$F, F = fitted$L)
+class(model) <- c("poisson_nmf_fit","list")
+
+model = poisson2multinom(model)
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$F[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 30) ## use the right lab
+  hist(model$L[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 20)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+
+
+
+## $K = 20$
+```{r fig.height=100, fig.width=10}
+k = 20
+fitted = readRDS(sprintf("output/fastTopics_fit/fit_sla_fastTopics_k%d.Rds", k))
+model = fitted
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$L[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 20)
+  hist(model$F[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 30)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+
+### multinomial transform with L,F switched
+```{r fig.height=100, fig.width=10}
+model = list(L = fitted$F, F = fitted$L)
+class(model) <- c("poisson_nmf_fit","list")
+
+model = poisson2multinom(model)
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  hist(model$F[,i], xlab = "L", main = sprintf("topic %d", i), breaks = 30) ## use the right lab
+  hist(model$L[,i], xlab = "F", main = sprintf("topic %d", i), breaks = 20)
+}
+```
+
+```{r}
+structure_plot(model, colors = 1:k, topics = 1:k)
+```
+
+
