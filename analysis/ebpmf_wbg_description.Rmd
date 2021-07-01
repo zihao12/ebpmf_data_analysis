@@ -26,7 +26,7 @@ editor_options:
 
 * Interpretation: if cell/document $i$ is activated in topic/biological process $k$, then $l_{ik}$ will be larger than $1$; if it's de-activated then $l_{ik}$ will be smaller than $1$. Similarly, if word/gene $j$ is overexpressed in topic/biological process $k$, then $f_{jk}$ will be larger than $1$; if it's less-expressed then $f_{jk}$ will be smaller than $1$. 
 
-* In a simplifying case where $g_{L, k}$ has 3 components for close to/larger than/smaller than $1$, then we estimate the proportions of average/activated/de-activated samples in that topic. Similar interpretation for $g_{F, k}$. 
+* In a simplifying case where $g_{L, k}$ has 2 components for close to/deviate from $1$, then we estimate the proportions of average & activated/de-activated samples in that topic. Similar interpretation for $g_{F, k}$. 
 
 * I think `ebpmf-wbg` is interpretable in itself (transforming into multinomial model loses some information), whereas ordinary PMF is harder to interpret without some scaling.  
 
