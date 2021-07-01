@@ -537,16 +537,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree983a327b5fa5946b6d015abfe947c4a62b642e57targetblank983a327a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/983a327b5fa5946b6d015abfe947c4a62b642e57" target="_blank">983a327</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree938181c0a33c5766852f54d4be461b86d98cc53btargetblank938181ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/938181c0a33c5766852f54d4be461b86d98cc53b" target="_blank">938181c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree983a327b5fa5946b6d015abfe947c4a62b642e57targetblank983a327a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree938181c0a33c5766852f54d4be461b86d98cc53btargetblank938181ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/983a327b5fa5946b6d015abfe947c4a62b642e57" target="_blank">983a327</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/938181c0a33c5766852f54d4be461b86d98cc53b" target="_blank">938181c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -1664,6 +1664,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/938181c0a33c5766852f54d4be461b86d98cc53b/analysis/sla_simulated_compare_mle_eb.Rmd" target="_blank">938181c</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-30
+</td>
+<td>
+update sla_simulated_compare_mle_eb.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/a616a65dcc5984237791d7bc5846f667bca5a2a3/docs/sla_simulated_compare_mle_eb.html" target="_blank">a616a65</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zihao12/ebpmf_data_analysis/blob/983a327b5fa5946b6d015abfe947c4a62b642e57/analysis/sla_simulated_compare_mle_eb.Rmd" target="_blank">983a327</a>
 </td>
 <td>
@@ -1776,9 +1810,46 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = &quot;factor (truth)&quot;, ylab = &quot;factor (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
   abline(a = 0, b = 1, col = &quot;blue&quot;)
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }</code></pre>
 <p><img src="figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a616a65dcc5984237791d7bc5846f667bca5a2a3/docs/figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-4-1.png" target="_blank">a616a65</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>l_mse.mle = l_mse
 f_mse.mle = f_mse</code></pre>
 </div>
@@ -1797,9 +1868,46 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = &quot;factor (truth)&quot;, ylab = &quot;factor (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
   abline(a = 0, b = 1, col = &quot;blue&quot;)
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }</code></pre>
 <p><img src="figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a616a65dcc5984237791d7bc5846f667bca5a2a3/docs/figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-5-1.png" target="_blank">a616a65</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>l_mse.eb = l_mse
 f_mse.eb = f_mse</code></pre>
 </div>
@@ -1810,9 +1918,9 @@ f_mse.eb = f_mse</code></pre>
 l_mse.mle 0.0174 0.0105 0.0161 0.0144 0.0156 0.0100
 l_mse.eb  0.0096 0.0067 0.0120 0.0080 0.0062 0.0035</code></pre>
 <pre class="r"><code>round(rbind(f_mse.mle, f_mse.eb), digits = 4)</code></pre>
-<pre><code>            [,1]   [,2]   [,3]   [,4]   [,5]   [,6] [,7]
-f_mse.mle 0.0174 0.0105 0.0161 0.0144 0.0156 0.0100    0
-f_mse.eb  0.0096 0.0067 0.0120 0.0080 0.0062 0.0035    0</code></pre>
+<pre><code>          [,1] [,2] [,3] [,4] [,5] [,6]
+f_mse.mle    0    0    0    0    0    0
+f_mse.eb     0    0    0    0    0    0</code></pre>
 </div>
 </div>
 <div id="k-20" class="section level1">
@@ -1880,9 +1988,46 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = &quot;factor (truth)&quot;, ylab = &quot;factor (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
   abline(a = 0, b = 1, col = &quot;blue&quot;)
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }</code></pre>
 <p><img src="figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a616a65dcc5984237791d7bc5846f667bca5a2a3/docs/figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-9-1.png" target="_blank">a616a65</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>l_mse.mle = l_mse
 f_mse.mle = f_mse</code></pre>
 </div>
@@ -1901,9 +2046,46 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = &quot;factor (truth)&quot;, ylab = &quot;factor (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
   abline(a = 0, b = 1, col = &quot;blue&quot;)
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }</code></pre>
 <p><img src="figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a616a65dcc5984237791d7bc5846f667bca5a2a3/docs/figure/sla_simulated_compare_mle_eb.Rmd/unnamed-chunk-10-1.png" target="_blank">a616a65</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-06-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>l_mse.eb = l_mse
 f_mse.eb = f_mse</code></pre>
 </div>
@@ -1920,15 +2102,12 @@ l_mse.eb  0.0028 0.0045 0.0011 0.0027 0.0018 0.0039 0.0059 0.0018 0.0024
 l_mse.mle 0.0049 0.0056
 l_mse.eb  0.0024 0.0028</code></pre>
 <pre class="r"><code>round(rbind(f_mse.mle, f_mse.eb), digits = 4)</code></pre>
-<pre><code>            [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]
-f_mse.mle 0.0050 0.0074 0.0052 0.0060 0.0049 0.0037 0.0034 0.0043 0.0056
-f_mse.eb  0.0019 0.0019 0.0019 0.0025 0.0019 0.0010 0.0021 0.0012 0.0018
-           [,10]  [,11]  [,12]  [,13]  [,14]  [,15]  [,16]  [,17]  [,18]
-f_mse.mle 0.0061 0.0077 0.0029 0.0065 0.0040 0.0098 0.0065 0.0040 0.0043
-f_mse.eb  0.0028 0.0045 0.0011 0.0027 0.0018 0.0039 0.0059 0.0018 0.0024
-           [,19]  [,20] [,21]
-f_mse.mle 0.0049 0.0056     0
-f_mse.eb  0.0024 0.0028     0</code></pre>
+<pre><code>          [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+f_mse.mle    0    0    0    0    0    0    0    0    0     0     0     0
+f_mse.eb     0    0    0    0    0    0    0    0    0     0     0     0
+          [,13] [,14] [,15] [,16] [,17] [,18] [,19] [,20]
+f_mse.mle     0     0     0     0     0     0     0     0
+f_mse.eb      0     0     0     0     0     0     0     0</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
