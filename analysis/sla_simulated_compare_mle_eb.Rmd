@@ -126,7 +126,7 @@ l_mse.eb = l_mse
 f_mse.eb = f_mse
 ```
 
-## compare RMSE from truth
+## compare MSE from truth
 ```{r}
 round(l_mse.eb/l_mse.mle, digits = 2)
 round(f_mse.eb/f_mse.mle, digits = 2)
@@ -252,7 +252,7 @@ l_mse.eb = l_mse
 f_mse.eb = f_mse
 ```
 
-## compare RMSE from truth
+## compare MSE from truth
 ```{r}
 round(l_mse.eb/l_mse.mle, digits = 2)
 round(f_mse.eb/f_mse.mle, digits = 2)
