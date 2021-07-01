@@ -99,7 +99,7 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
   abline(a = 0, b = 1, col = "blue")
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }
 l_mse.mle = l_mse
 f_mse.mle = f_mse
@@ -120,7 +120,7 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
   abline(a = 0, b = 1, col = "blue")
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }
 l_mse.eb = l_mse
 f_mse.eb = f_mse
@@ -198,7 +198,7 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
   abline(a = 0, b = 1, col = "blue")
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }
 l_mse.mle = l_mse
 f_mse.mle = f_mse
@@ -219,7 +219,7 @@ for(i in 1:k){
   plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
   abline(a = 0, b = 1, col = "blue")
   l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
-  f_mse = c(l_mse, mean((truth$F[,i] - model$F[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
 }
 l_mse.eb = l_mse
 f_mse.eb = f_mse
