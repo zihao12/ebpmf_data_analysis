@@ -128,10 +128,9 @@ f_mse.eb = f_mse
 
 ## compare RMSE from truth
 ```{r}
-round(rbind(l_mse.mle, l_mse.eb), digits = 4)
-rbind(f_mse.mle, f_mse.eb)
+round(l_mse.eb/l_mse.mle, digits = 2)
+round(f_mse.eb/f_mse.mle, digits = 2)
 ```
-
 
 ## look at EB closely
 
@@ -255,8 +254,8 @@ f_mse.eb = f_mse
 
 ## compare RMSE from truth
 ```{r}
-round(rbind(l_mse.mle, l_mse.eb), digits = 4)
-rbind(f_mse.mle, f_mse.eb)
+round(l_mse.eb/l_mse.mle, digits = 2)
+round(f_mse.eb/f_mse.mle, digits = 2)
 ```
 
 
