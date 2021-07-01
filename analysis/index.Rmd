@@ -11,7 +11,7 @@ editor_options:
 Welcome to my research website.
 
 
-Model:
+## Model:
 
 * [Model description for ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description)
 
@@ -23,19 +23,32 @@ Model:
 
 <!-- * [process SLA dataset](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla)\ -->
 
-Data analysis results:
+## Data analysis results:
 
-* [On simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2) & [more](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_more); [On simulated data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2) We can see our EB approach has the potential to beat MLE in terms of "False Discoveries" of important words & documents. However the requires initialization from close to the truth. So I hope that we can find applications where PMF fit is basically right but can be refined much better with EB approach, like in [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2)
+The goal is to find situations where our EB approach can imporve upon MLE (or Bayesian approaches like LDA). Some datsets used are: [sla](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) ...
 
-* [On simulated data from sla](https://zihao12.github.io/ebpmf_data_analysis/prepare_sla_sim): I compared [MLE vs ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb) and find EB to be much better. 
+* On [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2) (and [more](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_more)) & [simulated data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2) We can see our EB approach has the potential to beat MLE in terms of "[False Discoveries](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2#pmf_bg_from_truth)" of important words & documents. However the requires initialization from close to the truth. So I hope that we can find applications where PMF fit is basically right but can be refined much better with EB approach, like in [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2)
 
-* [On real data](https://zihao12.shinyapps.io/topicview-app/) (in development); [fastTopics_on_sla](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla)
+* I first did [fastTopics_on_sla](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla). I find estimating $F$ seems easier than estimating $L$. Then on [simulated data from sla](https://zihao12.github.io/ebpmf_data_analysis/prepare_sla_sim): I compared [MLE vs ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb) and find EB gives much better estimate of $\hat{L}$.
 
-* Compare MLE vs EB fits: [sla](https://zihao12.github.io/ebpmf_data_analysis/sla_compare_mle_eb), [nips](https://zihao12.github.io/ebpmf_data_analysis/nips_compare_mle_eb)
+* About asymmetry of $L, F$: [fastTopics_on_sla2](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla2), [fastTopics_on_droplet](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_droplet)
+
+* [On real data](https://zihao12.shinyapps.io/topicview-app/) (in development); 
+
+<!-- * Compare MLE vs EB fits: [sla](https://zihao12.github.io/ebpmf_data_analysis/sla_compare_mle_eb), [nips](https://zihao12.github.io/ebpmf_data_analysis/nips_compare_mle_eb) -->
 
 
+## Other stuff
 
-I am working on cone-NMF (the Frobenius norm case is the same as [convex-NMF](https://people.eecs.berkeley.edu/~jordan/papers/ding-li-jordan-pami.pdf)):
+### paper reading
+
+* There are several interesting variants of [LDA](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf): [Correlated Topic Model](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-1/issue-1/A-correlated-topic-model-of/10.1214/07-AOAS114.full), [sparse additive generative models of text](http://www.cs.cmu.edu/~epxing/papers/2011/Eisenstein_Ahmed_Xing_ICML11.pdf), [Structural Topic Model](https://scholar.princeton.edu/files/bstewart/files/stmnips2013.pdf). Here are [my notes](https://drive.google.com/file/d/1W0v2oUS50DgBOVw8Ch5CjBKDELoVjspb/view?usp=sharing)
+
+* Our current optimization approach is VBEM (EB), which is slow to converge and can get stuck at bad local optimal. Some [attempted alternatives](https://users.rcc.uchicago.edu/~aksarkar/singlecell-ideas/hpmf.html). One key problem is compute gradient for $E_q log(X | L, F)$ and [Monte Carlo Gradient Estimation in Machine Learning](https://www.jmlr.org/papers/volume21/19-346/19-346.pdf) suggests some methods applicable here. 
+
+
+### cone-NMF 
+(the Frobenius norm case is the same as [convex-NMF](https://people.eecs.berkeley.edu/~jordan/papers/ding-li-jordan-pami.pdf)):
 
 * First, I found that our regular PMF solution is basically inside $\text{cone}(X)$ where each column of $X$ is a sample: [cone_pmf1](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html)
 
