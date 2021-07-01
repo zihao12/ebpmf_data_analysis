@@ -129,9 +129,37 @@ f_mse.eb = f_mse
 ## compare RMSE from truth
 ```{r}
 round(rbind(l_mse.mle, l_mse.eb), digits = 4)
-round(rbind(f_mse.mle, f_mse.eb), digits = 4)
+rbind(f_mse.mle, f_mse.eb)
 ```
 
+
+## look at EB closely
+
+### $g(L)$
+```{r}
+get_prior_summary(gs = fitted.eb$qg$gls, log10 = FALSE)
+```
+
+### $g(F)$
+```{r}
+get_prior_summary(gs = fitted.eb$qg$gfs, log10 = FALSE)
+```
+
+### $l0, f0, q(l), q(f)$
+```{r fig.height=30, fig.width=10}
+par(mfrow = c(k, 2))
+hist(log(fitted.eb$l0), breaks = 30, xlab = "log(l0)", main = "log(l0)")
+hist(log(fitted.eb$f0), breaks = 30, xlab = "log(f0)", main = "log(f0)")
+for(i in 1:k){
+  hist(log(fitted.eb$qg$qls_mean[,i]), breaks = 30, xlab = "log(l)", main = sprintf("topic %d", i))
+  hist(log(fitted.eb$qg$qfs_mean[,i]), breaks = 30, xlab = "log(f)", main = sprintf("topic %d", i))
+}
+```
+
+### $w$
+```{r}
+fitted.eb$w
+```
 
 # $K = 20$
 ```{r}
@@ -228,7 +256,36 @@ f_mse.eb = f_mse
 ## compare RMSE from truth
 ```{r}
 round(rbind(l_mse.mle, l_mse.eb), digits = 4)
-round(rbind(f_mse.mle, f_mse.eb), digits = 4)
+rbind(f_mse.mle, f_mse.eb)
+```
+
+
+## look at EB closely
+
+### $g(L)$
+```{r}
+get_prior_summary(gs = fitted.eb$qg$gls, log10 = FALSE)
+```
+
+### $g(F)$
+```{r}
+get_prior_summary(gs = fitted.eb$qg$gfs, log10 = FALSE)
+```
+
+### $l0, f0, q(l), q(f)$
+```{r fig.height=90, fig.width=10}
+par(mfrow = c(k, 2))
+hist(log(fitted.eb$l0), breaks = 30, xlab = "log(l0)", main = "log(l0)")
+hist(log(fitted.eb$f0), breaks = 30, xlab = "log(f0)", main = "log(f0)")
+for(i in 1:k){
+  hist(log(fitted.eb$qg$qls_mean[,i]), breaks = 30, xlab = "log(l)", main = sprintf("topic %d", i))
+  hist(log(fitted.eb$qg$qfs_mean[,i]), breaks = 30, xlab = "log(f)", main = sprintf("topic %d", i))
+}
+```
+
+### $w$
+```{r}
+fitted.eb$w
 ```
 
 
