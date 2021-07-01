@@ -12,7 +12,7 @@ editor_options:
 ## Model
 
 \begin{align}
-  & X_{ij} = \mathrm{Pois}(\lambda_{ij})\\
+  & X_{ij} \sim \mathrm{Pois}(\lambda_{ij})\\
   & \lambda_{ij} = l_{i0} f_{j0} \sum_k w_k l_{ik} f_{jk}\\
   & l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.)\\
   & g_{L, k}(.), g_{F,k}(.) \in \mathcal{G}
@@ -20,7 +20,11 @@ editor_options:
 
 * If we introduce hidden variable $Z$: $X_{ij} = \sum_k Z_{ijk}$, we can interpret the mean of $Z_{ijk}$ as the product of the background frequency ($(l_{i0} f_{j0})$) and the deviation from that ($\sum_k w_k l_{ik} f_{jk}$). 
 
+* If $w_k = 1/K$ and $l_{ik} = f_{jk} = 1$ (the $g$'s put most mass around $1$), we have $X_{ij} \sim \mathrm{Pois}(l_{i0} f_{j0})$. This is just rank-1 PMF with solution $l_{i0} \propto \sum_{j} X_{ij}, f_{j0} \propto \sum_{i} X_{ij}$ and $(\sum_i l_{i0}) * (\sum_j f_{j0}) = \sum_{i, j} X_{ij}$. 
+
 * We assume another version of "sparsity" here: for each $k$, majority of the deviation $l_{ik}$ would be close to 1; only a small proportion of top documents have larger deviation from background. Same assumption for factors. 
+
+* Interpretation: if cell/document $i$ is activated in topic/biological process $k$, then $l_{ik}$ will be larger than $1$; if it's de-activated then $l_{ik}$ will be smaller than $1$. Similarly, if word/gene $j$ is overexpressed in topic/biological process $k$, then $f_{jk}$ will be larger than $1$; if it's less-expressed then $f_{jk}$ will be smaller than $1$. 
 
 * We impose this assumption through $\mathcal{G}$, dicussed in the next section
 

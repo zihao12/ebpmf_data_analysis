@@ -413,7 +413,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-26
+<strong>Last updated:</strong> 2021-07-01
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree691cfbe0ee76121927b6dd737e07dc24f06b7bdftargetblank691cfbea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/691cfbe0ee76121927b6dd737e07dc24f06b7bdf" target="_blank">691cfbe</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree484fd1e7ceb18c781380ea5399d7e94504c3d6c6targetblank484fd1ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/484fd1e7ceb18c781380ea5399d7e94504c3d6c6" target="_blank">484fd1e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree691cfbe0ee76121927b6dd737e07dc24f06b7bdftargetblank691cfbea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree484fd1e7ceb18c781380ea5399d7e94504c3d6c6targetblank484fd1ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/691cfbe0ee76121927b6dd737e07dc24f06b7bdf" target="_blank">691cfbe</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/484fd1e7ceb18c781380ea5399d7e94504c3d6c6" target="_blank">484fd1e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -526,6 +526,7 @@ Ignored files:
     Ignored:    analysis/ebpmf_bg_tutorial_cache/
     Ignored:    analysis/ebpmf_wbg_model_intro_cache/
     Ignored:    analysis/ebpmf_wbg_simulate_big_data2_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data3_cache/
     Ignored:    analysis/ebpmf_wbg_simulate_big_data_cache/
     Ignored:    analysis/ebpmf_wbg_simulation_cache/
     Ignored:    analysis/investigate_np_ebpmf_wbg_cache/
@@ -533,17 +534,64 @@ Ignored files:
     Ignored:    analysis/sla_data_analysis_k10_cache/
     Ignored:    data/.DS_Store
     Ignored:    output/.DS_Store
+    Ignored:    output/News/.DS_Store
     Ignored:    topicView-app/.DS_Store
 
 Untracked files:
+    Untracked:  analysis/covid_dataset.Rmd
     Untracked:  analysis/draft.Rmd
+    Untracked:  analysis/draft2.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulate_correlated.Rmd
     Untracked:  analysis/ebpmf_wbg_simulation_big.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big2_more.Rmd
     Untracked:  analysis/heatmap.Rmd
     Untracked:  analysis/investigate_largeK.Rmd
     Untracked:  analysis/investigate_news_topics.Rmd
+    Untracked:  analysis/poissonmix_vs_pmf.Rmd
+    Untracked:  analysis/simulate_data_bg.Rmd
+    Untracked:  analysis/simulate_data_bg2.Rmd
     Untracked:  analysis/summary_sla_news_nips.Rmd
     Untracked:  analysis/test.R
+    Untracked:  data/GSE145926_RAW/
+    Untracked:  data/cell_data.csv
+    Untracked:  data/sim/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  data/sim/simulated_data_small.RData
+    Untracked:  data/sim/simulated_data_small2.RData
+    Untracked:  output/poissonmix_vs_pmf.RDS
+    Untracked:  output/poissonmix_vs_pmf.RData
+    Untracked:  output/sim/v0.4.5/exper2/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter100_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random2.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter20_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter30_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter40_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter60_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter6_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter70_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter7_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter80_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter8_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter90_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter9_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_fastTopics_K50_50em_950_scd.Rds
+    Untracked:  output/smallsim2_1.RData
     Untracked:  script/Rplots.pdf
+    Untracked:  script/init_ebpmf_wbg_from_pmf_bg.R
+    Untracked:  script/init_ebpmf_wbg_random.R
     Untracked:  script/save_volcano_plot.R
     Untracked:  topicView-app/app_utils.R
     Untracked:  topicView-app/data/
@@ -551,12 +599,12 @@ Untracked files:
     Untracked:  topicView-app/rsconnect/
 
 Unstaged changes:
+    Modified:   analysis/cone_NMF_l2_2.Rmd
     Modified:   analysis/ebpmf_wbg_simulate_big_data2.Rmd
-    Modified:   analysis/ebpmf_wbg_simulation_big2.Rmd
+    Modified:   analysis/multinom_sampling.Rmd
     Deleted:    analysis/sla_data_analysis_k10.Rmd
     Deleted:    analysis/sla_data_analysis_k5.Rmd
     Deleted:    analysis/sla_data_analysis_k50.Rmd
-    Modified:   code/util.R
     Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
     Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
     Deleted:    data/SLA/SCC2016/Code/APL/compParamErr2.m
@@ -590,6 +638,9 @@ Unstaged changes:
     Deleted:    data/SLA/SCC2016/Data/paperCitAdj.txt
     Deleted:    data/SLA/SCC2016/Data/paperList.txt
     Deleted:    data/SLA/SCC2016/ReadMe.txt
+    Modified:   data/sim/docword.sim_bg_block_n1100_p2100_K50.txt
+    Deleted:    data/sim/init.sim_bg_block_n1100_p2100_K50.Rds
+    Modified:   data/sim/truth.sim_bg_block_n1100_p2100_K50.Rds
     Deleted:    data/uci_BoW.sh
     Deleted:    data/uci_BoW/docword.kos.txt
     Deleted:    data/uci_BoW/readme.txt
@@ -793,6 +844,7 @@ Unstaged changes:
     Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K100_maxiter500.Rds
     Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K20_maxiter500.Rds
     Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Modified:   script/fit_kos_NMF_F.R
     Modified:   topicView-app/app.R
 
 </code></pre>
@@ -832,6 +884,74 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/484fd1e7ceb18c781380ea5399d7e94504c3d6c6/analysis/ebpmf_wbg_description.Rmd" target="_blank">484fd1e</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+ebpmf_wbg_description.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/286b71c36e267f21a419bab08c7c828e4764c60a/docs/ebpmf_wbg_description.html" target="_blank">286b71c</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/650054c1b37b2783d822fe5de17240aa489f6572/analysis/ebpmf_wbg_description.Rmd" target="_blank">650054c</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+ebpmf_wbg_description.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/71172e4690f6c749571290372a350f9597651b8d/docs/ebpmf_wbg_description.html" target="_blank">71172e4</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2020-10-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -893,14 +1013,16 @@ analysis/ebpmf_wbg_description.Rmd
 <div id="model" class="section level2">
 <h2>Model</h2>
 <span class="math display">\[\begin{align}
-  &amp; X_{ij} = \mathrm{Pois}(\lambda_{ij})\\
+  &amp; X_{ij} \sim \mathrm{Pois}(\lambda_{ij})\\
   &amp; \lambda_{ij} = l_{i0} f_{j0} \sum_k w_k l_{ik} f_{jk}\\
   &amp; l_{ik} \sim g_{L, k}(.), f_{jk} \sim g_{F, k}(.)\\
   &amp; g_{L, k}(.), g_{F,k}(.) \in \mathcal{G}
 \end{align}\]</span>
 <ul>
 <li><p>If we introduce hidden variable <span class="math inline">\(Z\)</span>: <span class="math inline">\(X_{ij} = \sum_k Z_{ijk}\)</span>, we can interpret the mean of <span class="math inline">\(Z_{ijk}\)</span> as the product of the background frequency (<span class="math inline">\((l_{i0} f_{j0})\)</span>) and the deviation from that (<span class="math inline">\(\sum_k w_k l_{ik} f_{jk}\)</span>).</p></li>
+<li><p>If <span class="math inline">\(w_k = 1/K\)</span> and <span class="math inline">\(l_{ik} = f_{jk} = 1\)</span> (the <span class="math inline">\(g\)</span>’s put most mass around <span class="math inline">\(1\)</span>), we have <span class="math inline">\(X_{ij} \sim \mathrm{Pois}(l_{i0} f_{j0})\)</span>. This is just rank-1 PMF with solution <span class="math inline">\(l_{i0} \propto \sum_{j} X_{ij}, f_{j0} \propto \sum_{i} X_{ij}\)</span> and <span class="math inline">\((\sum_i l_{i0}) * (\sum_j f_{j0}) = \sum_{i, j} X_{ij}\)</span>.</p></li>
 <li><p>We assume another version of “sparsity” here: for each <span class="math inline">\(k\)</span>, majority of the deviation <span class="math inline">\(l_{ik}\)</span> would be close to 1; only a small proportion of top documents have larger deviation from background. Same assumption for factors.</p></li>
+<li><p>Interpretation: if cell/document <span class="math inline">\(i\)</span> is activated in topic/biological process <span class="math inline">\(k\)</span>, then <span class="math inline">\(l_{ik}\)</span> will be larger than <span class="math inline">\(1\)</span>; if it’s de-activated then <span class="math inline">\(l_{ik}\)</span> will be smaller than <span class="math inline">\(1\)</span>. Similarly, if word/gene <span class="math inline">\(j\)</span> is overexpressed in topic/biological process <span class="math inline">\(k\)</span>, then <span class="math inline">\(f_{jk}\)</span> will be larger than <span class="math inline">\(1\)</span>; if it’s less-expressed then <span class="math inline">\(f_{jk}\)</span> will be smaller than <span class="math inline">\(1\)</span>.</p></li>
 <li><p>We impose this assumption through <span class="math inline">\(\mathcal{G}\)</span>, dicussed in the next section</p></li>
 </ul>
 <p>The algorithm for solving the model can be seen <a href="https://github.com/stephenslab/ebpmf.alpha/blob/master/derivations/ebpmf_wbg.pdf">algorithm</a></p>
@@ -1053,7 +1175,7 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.5      rprojroot_1.3-2 digest_0.6.25   later_1.1.0.1  
  [5] R6_2.4.1        backports_1.1.7 git2r_0.26.1    magrittr_1.5   
- [9] evaluate_0.14   stringi_1.4.3   rlang_0.4.6     fs_1.3.1       
+ [9] evaluate_0.14   stringi_1.6.2   rlang_0.4.5     fs_1.3.1       
 [13] promises_1.1.1  whisker_0.3-2   rmarkdown_2.1   tools_3.5.1    
 [17] stringr_1.4.0   glue_1.4.1      httpuv_1.5.4    xfun_0.8       
 [21] yaml_2.2.0      compiler_3.5.1  htmltools_0.5.0 knitr_1.28     </code></pre>
