@@ -1,0 +1,95 @@
+---
+title: "select_K1"
+author: "Zihao"
+date: "2021-07-01"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+I want to see what `fastTopics` fits look like when fitted with $k_2 > k$ ($k$ is the true number of topics). 
+
+```{r}
+rm(list = ls())
+source("code/smallsim3_functions.R")
+source("code/init.R")
+source("code/misc.R")
+library(mvtnorm)
+library(ggplot2)
+library(foreach)
+
+set.seed(123)
+```
+
+```{r}
+n <- 100
+m <- 400
+k <- 6
+S <- 13*diag(k) - 2
+F <- simulate_factors(m,k)
+L <- simulate_loadings(n,k,S)
+s <- simulate_sizes(n)
+data <- simulate_multinom_counts(L,F,s)
+X = data$X
+```
+
+```{r fig.height=50, fig.width=10}
+k2 = 10
+fitted.mle <- fastTopics::fit_poisson_nmf(X = X, k = k2) 
+
+model = fastTopics::poisson2multinom(fitted.mle)
+par(mfrow = c(k2, 2))
+for(i in 1:k2){
+  plot(model$L[,i], ylab = "loading", main = sprintf("topic %d", i))
+  plot(model$F[,i], xlab = "factor", main = sprintf("topic %d", i))
+}
+```
+
+
+
+```{r fig.height=100, fig.width=10}
+k2 = 20
+fitted.mle <- fastTopics::fit_poisson_nmf(X = X, k = k2) 
+
+model = fastTopics::poisson2multinom(fitted.mle)
+par(mfrow = c(k2, 2))
+for(i in 1:k2){
+  plot(model$L[,i], ylab = "loading", main = sprintf("topic %d", i))
+  plot(model$F[,i], xlab = "factor", main = sprintf("topic %d", i))
+}
+```
+
+
+
+<!-- ```{r} -->
+<!-- fit0 = fastTopics::multinom2poisson(fitted.mle) -->
+<!-- init = initialize_qgl0f0w_from_LF.local2(L = fit0$L, F = fit0$F) -->
+<!-- fitted.eb = ebpmf.alpha::ebpmf_wbg(X = X, K = k2, init = init, maxiter = 100, verbose = TRUE) -->
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- get_prior_summary(fitted.eb$qg$gls) -->
+<!-- get_prior_summary(fitted.eb$qg$gfs) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- par(mfrow = c(k2, 2)) -->
+<!-- for(i in 1:k2){ -->
+<!--   plot(fitted.eb$qg$qls_mean[,i]) -->
+<!--   plot(fitted.eb$qg$qfs_mean[,i]) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- get_top_words <- function(f, top = 10){ -->
+<!--   sort(sort(f, index.return = TRUE, decreasing = TRUE)$ix[1:top]) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- apply(fitted.eb$qg$qfs_mean, 2, get_top_words) -->
+<!-- ``` -->
+
