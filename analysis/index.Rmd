@@ -58,27 +58,21 @@ The goal is to find situations where our EB approach can imporve upon MLE (or Ba
 
 * I also investigated direct estimates of word-word covariance matrix: [multinom_sampling](https://zihao12.github.io/ebpmf_data_analysis/multinom_sampling)
 
- <!-- * Version `0.3.8`: \ -->
- <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.8.html)\ -->
 
- <!-- * Version `0.3.9`:  \ -->
- <!-- [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.3.9_summary)\ -->
- <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.3.9.html), \ -->
- <!-- [kos_K50](https://zihao12.github.io/ebpmf_data_analysis/kos_K50_ebpmf.alpha_v0.3.9.html),\ -->
- <!-- [kos_K100](https://zihao12.github.io/ebpmf_data_analysis/kos_K100_ebpmf.alpha_v0.3.9.html) -->
-
- <!--  * Version `0.4.2`:  \ -->
- <!-- [summary](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_summary)\ -->
- <!-- [kos_K20](https://zihao12.github.io/ebpmf_data_analysis/kos_K20_ebpmf.alpha_v0.4.2.html), \ -->
- <!-- [topics](https://zihao12.github.io/ebpmf_data_analysis/ebpmf.alpha_v0.4.2_show_topics.html) -->
-
- <!-- * Version `0.4.5`:  \ -->
- 
+### `mmultinom`
+I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1)
 
 
- <!-- [SLA_EBPMF_WBG_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_ebpmf_wbg_k10) (can change k to 5, 10, 50, 100 for more results)\ -->
- <!-- [SLA_PMF_K10](https://zihao12.github.io/ebpmf_data_analysis/sla_pmf_k10) (can change k to 5, 10, 50, 100 for more results)\ -->
- <!-- [NIPS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_ebpmf_wbg_k20)\ -->
- <!-- [NIPS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/nips_pmf_k20)\ -->
- <!-- [NEWS_EBPMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_ebpmf_wbg_k20)\ -->
- <!-- [NEWS_PMF_WBG_K20](https://zihao12.github.io/ebpmf_data_analysis/news_pmf_k20) -->
+
+
+
+
+
+
+
+
+
+
+
+
+
