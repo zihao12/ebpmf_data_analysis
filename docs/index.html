@@ -364,16 +364,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreef6104be85283c1ea04c154162ca5fa3119d76adftargetblankf6104bea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/f6104be85283c1ea04c154162ca5fa3119d76adf" target="_blank">f6104be</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeb92829c9ab96789d6a33c45fa8ec4396db648ecetargetblankb92829ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/b92829c9ab96789d6a33c45fa8ec4396db648ece" target="_blank">b92829c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreef6104be85283c1ea04c154162ca5fa3119d76adftargetblankf6104bea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeb92829c9ab96789d6a33c45fa8ec4396db648ecetargetblankb92829ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/f6104be85283c1ea04c154162ca5fa3119d76adf" target="_blank">f6104be</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/b92829c9ab96789d6a33c45fa8ec4396db648ece" target="_blank">b92829c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -744,6 +744,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b92829c9ab96789d6a33c45fa8ec4396db648ece/analysis/index.Rmd" target="_blank">b92829c</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/6c9d8b18cec053064f6a16001f944b3e3445d5ff/docs/index.html" target="_blank">6c9d8b1</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1475,7 +1509,7 @@ Start workflowr project.
 <div id="paper-reading" class="section level3">
 <h3>paper reading</h3>
 <ul>
-<li><p>There are several interesting variants of <a href="https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf">LDA</a>: <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-1/issue-1/A-correlated-topic-model-of/10.1214/07-AOAS114.full">Correlated Topic Model</a>, <a href="http://www.cs.cmu.edu/~epxing/papers/2011/Eisenstein_Ahmed_Xing_ICML11.pdf">sparse additive generative models of text</a>, <a href="https://scholar.princeton.edu/files/bstewart/files/stmnips2013.pdf">Structural Topic Model</a>. Here are <a href="https://drive.google.com/file/d/1W0v2oUS50DgBOVw8Ch5CjBKDELoVjspb/view?usp=sharing">my notes</a></p></li>
+<li><p>There are several interesting variants of <a href="https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf">LDA</a>: <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-1/issue-1/A-correlated-topic-model-of/10.1214/07-AOAS114.full">Correlated Topic Model</a>, <a href="http://www.cs.cmu.edu/~epxing/papers/2011/Eisenstein_Ahmed_Xing_ICML11.pdf">sparse additive generative models of text (SAGE)</a>, <a href="https://scholar.princeton.edu/files/bstewart/files/stmnips2013.pdf">Structural Topic Model</a>. Here are <a href="https://drive.google.com/file/d/1W0v2oUS50DgBOVw8Ch5CjBKDELoVjspb/view?usp=sharing">my notes</a>. The “sparsity” assumption of SAGE is basically the same as in ours, but imposed using different priors.</p></li>
 <li><p>Our current optimization approach is VBEM (EB), which is slow to converge and can get stuck at bad local optimal. Some <a href="https://users.rcc.uchicago.edu/~aksarkar/singlecell-ideas/hpmf.html">attempted alternatives</a>. One key problem is compute gradient for <span class="math inline">\(E_q log(X | L, F)\)</span> and <a href="https://www.jmlr.org/papers/volume21/19-346/19-346.pdf">Monte Carlo Gradient Estimation in Machine Learning</a> suggests some methods applicable here.</p></li>
 </ul>
 </div>

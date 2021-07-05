@@ -85,5 +85,11 @@ legend("topright", legend = paste("phi = ", phis), col = cols, lty=1, cex=0.8)
 * when $\phi < 1$ it is concentrated near 1; 
 * when $\phi > 1$ it favors points near $0$, as well as larger points (compared to other smaller $\phi1$). 
 
-
+## Posterior Mean
+In Poisson Means problem
+\begin{align}
+  & x_{i} \sim \mathrm{Pois}(s_i\lambda_{i})\\
+  & \lambda_{i} \sim \mathrm{Ga}(.; 1/\phi, 1/\phi)
+\end{align}
+the posterior mean is $\frac{x_i + 1/\phi}{s_i + 1/\phi}$. So for very small $\phi$ (relative to $x_i, s_i$) the posterior is very close to $1$. For very large $\phi$, the posterior mean is very close to $\frac{x_i}{s_i}$. 
 

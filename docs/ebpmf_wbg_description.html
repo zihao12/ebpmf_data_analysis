@@ -504,16 +504,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8864a0012c26a4d8a2368bf0a354e40a5a428f52targetblank8864a00a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8864a0012c26a4d8a2368bf0a354e40a5a428f52" target="_blank">8864a00</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreea92836290e1266bad10ec188ef0a50871567a752targetblanka928362a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/a92836290e1266bad10ec188ef0a50871567a752" target="_blank">a928362</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8864a0012c26a4d8a2368bf0a354e40a5a428f52targetblank8864a00a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreea92836290e1266bad10ec188ef0a50871567a752targetblanka928362a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8864a0012c26a4d8a2368bf0a354e40a5a428f52" target="_blank">8864a00</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/a92836290e1266bad10ec188ef0a50871567a752" target="_blank">a928362</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -848,9 +848,6 @@ Unstaged changes:
     Modified:   script/fit_kos_NMF_F.R
     Modified:   topicView-app/app.R
 
-Staged changes:
-    Modified:   analysis/sla_simulated_compare_mle_eb.Rmd
-
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -888,6 +885,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a92836290e1266bad10ec188ef0a50871567a752/analysis/ebpmf_wbg_description.Rmd" target="_blank">a928362</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+ebpmf_wbg_description.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/dd72315e00d1860cbb1f0434f41e175f7fb435af/docs/ebpmf_wbg_description.html" target="_blank">dd72315</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1238,6 +1269,15 @@ zihao12
 <li>when <span class="math inline">\(\phi &lt; 1\)</span> it is concentrated near 1;</li>
 <li>when <span class="math inline">\(\phi &gt; 1\)</span> it favors points near <span class="math inline">\(0\)</span>, as well as larger points (compared to other smaller <span class="math inline">\(\phi1\)</span>).</li>
 </ul>
+</div>
+<div id="posterior-mean" class="section level2">
+<h2>Posterior Mean</h2>
+In Poisson Means problem
+<span class="math display">\[\begin{align}
+  &amp; x_{i} \sim \mathrm{Pois}(s_i\lambda_{i})\\
+  &amp; \lambda_{i} \sim \mathrm{Ga}(.; 1/\phi, 1/\phi)
+\end{align}\]</span>
+<p>the posterior mean is <span class="math inline">\(\frac{x_i + 1/\phi}{s_i + 1/\phi}\)</span>. So for very small <span class="math inline">\(\phi\)</span> (relative to <span class="math inline">\(x_i, s_i\)</span>) the posterior is very close to <span class="math inline">\(1\)</span>. For very large <span class="math inline">\(\phi\)</span>, the posterior mean is very close to <span class="math inline">\(\frac{x_i}{s_i}\)</span>.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
