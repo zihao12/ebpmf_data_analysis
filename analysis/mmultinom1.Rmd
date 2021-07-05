@@ -1,0 +1,128 @@
+---
+title: "mmultinom1"
+author: "Zihao"
+date: "2021-07-05"
+output: workflowr::wflow_html
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amsfonts}
+editor_options:
+  chunk_output_type: console
+---
+
+## The `mmultinom` subproblem
+In PMF using EM, to estimate $F$ we need to solve the subproblem (except we use $E(Z_{ijk})$ instead of $Z_{ijk}$):
+
+\begin{align}
+  & \sum_i Z_{ijk} \sim \mathrm{Pois}(\sum_i l_{ik} f_{jk}), \ \forall k \in [K]
+\end{align}
+If we do some scaling so that $\sum_j f_{jk} = 1$, and denote $m_{jk} := \sum_i Z_{ijk}, \ n_k := \sum_i l_{ik}, \ \beta_{jk} := f_{jk}$, we have can map it to the `mmultinom` problem defined below (not equivalent, but 1-1 between the MLEs)
+
+\begin{align}
+  & \mathbb{m}_k \sim \mathrm{Multinom}(n_k,  \mathbb{\beta}_{k}), \ \forall k \in [K]
+\end{align}
+
+The `mmultinom` problem becomes hard in high-dimensional setting (when $n_k < p$, say), and I expect MLE performs poorly in this setting. This scenario occurs in PMF when we use large $K$, or the total number of words is too small compared to $p$ (the data cannot support good estimation of desired number of topics)
+
+## Possible improvement by borrowing information 
+
+* Perhaps in reality most words are not active in any of those topics (the same logic behind removing some words before applying models). Therefore, we can assume $\beta_{jk} = \beta_{j0} d_{jk}$. We can estimate $\beta_{j0}$ with all $\sum_k n_k$ occurences of words, and then estimate each $d_{jk}$ with $n_k$ occurences but assuming sparsity on $|d_{jk} - 1|$. 
+
+* I haven't figured out a prior for $d_{jk}$ yet, but it's much easier if we use an "equivalent" Poisson model. 
+
+
+## Fit with MLE
+Below I create situations where MLE fits poorly
+
+```{r}
+rm(list = ls())
+library(fastTopics)
+source("code/mmultinom.R")
+source("code/mmultinom_util.R")
+set.seed(123)
+```
+
+Load data
+```{r}
+dataname = "sla"
+K = 20
+fitted = readRDS(sprintf("output/fastTopics_fit/fit_%s_fastTopics_k%d.Rds",
+                         dataname, K))
+m = nrow(fitted$L)
+```
+
+
+### Use all documents, full document length
+```{r fig.height=35, fig.width=20}
+model = fitted
+data_sim = TM2mmultinom(fit = model)
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, 0)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,], 
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ], 
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
+
+
+### Use less documents
+Suppose we only observe 20% of the documents
+```{r fig.height=35, fig.width=20}
+model = fitted
+idx = sample(x = 1:m, size = round(0.2*m))
+model$L <- model$L[idx, ]
+model$s <- model$s[idx]
+
+data_sim = TM2mmultinom(fit = model)
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, NA)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,], 
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ],
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
+
+### use shorter & less documents
+I use half of the documents and 1/5 document length
+```{r fig.height=35, fig.width=20}
+model = fitted
+idx = sample(x = 1:m, size = round(0.5*m))
+model$L <- model$L[idx, ]
+model$s <- model$s[idx]/5
+
+
+data_sim = TM2mmultinom(fit = model)
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, 0)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,], 
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ], 
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
