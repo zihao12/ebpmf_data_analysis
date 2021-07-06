@@ -1,0 +1,152 @@
+---
+title: "mmultinom2"
+author: "Zihao"
+date: "2021-07-05"
+output: workflowr::wflow_html
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amsfonts}
+editor_options:
+  chunk_output_type: console
+---
+
+Continue from [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1)
+
+Here I create the `pseudo-mmultinom` problem from a converged `fastTopics` fit: just replace $Z_{ijk}$ with $E(Z_{ijk})$ in [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1)
+
+## Fit with MLE
+Below I create situations where MLE fits poorly
+
+```{r}
+rm(list = ls())
+library(fastTopics)
+library(Matrix)
+library(stats)
+source("code/mmultinom.R")
+source("code/mmultinom_util.R")
+source("code/util.R")
+set.seed(123)
+```
+
+Load data
+```{r}
+dataname = "sla"
+K = 20
+fitted = readRDS(sprintf("output/fastTopics_fit/fit_%s_fastTopics_k%d.Rds",
+                         dataname, K))
+X = read_sla_bag_of_words("data/SLA/docword.sla.txt")
+m = nrow(fitted$L)
+```
+
+<!-- ### First take a look at $E(Z)$ -->
+<!-- ```{r fig.height=8, fig.width=5} -->
+<!-- data_sim = TM2mmultinom_pseudo(X, fitted) -->
+<!-- max_ratio <- apply(data_sim$M, 2, max)/colSums(data_sim$M) -->
+<!-- par(mfrow = c(2, 1)) -->
+<!-- hist(max_ratio) -->
+<!-- plot(ecdf(max_ratio)) -->
+<!-- ``` -->
+
+## Use all documents, full document length
+Since the algorithm converges we expect to see $\hat{\beta}$ to be the same as $\beta$ (also the same if we shorten document length)
+```{r fig.height=35, fig.width=20}
+model = fitted
+data_sim = TM2mmultinom_pseudo(X, model)
+
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, 0)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,],
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ],
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
+
+
+## Use 50% documents
+```{r fig.height=35, fig.width=20}
+model = fitted
+idx = sample(x = 1:m, size = round(0.5*m))
+model$L <- model$L[idx, ]
+model$s <- model$s[idx]
+
+data_sim = TM2mmultinom_pseudo(X[idx,], model)
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, NA)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,],
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ],
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
+
+## use 20% documents
+```{r fig.height=35, fig.width=20}
+model = fitted
+idx = sample(x = 1:m, size = round(0.20*m))
+model$L <- model$L[idx, ]
+model$s <- model$s[idx]
+
+data_sim = TM2mmultinom_pseudo(X[idx,], model)
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, NA)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,],
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ],
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
+
+
+## use 5% documents
+```{r fig.height=35, fig.width=20}
+model = fitted
+idx = sample(x = 1:m, size = round(0.05*m))
+model$L <- model$L[idx, ]
+model$s <- model$s[idx]
+
+data_sim = TM2mmultinom_pseudo(X[idx,], model)
+fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
+
+par(mfrow = c(K/4, 4))
+ce = replicate(K, NA)
+for(k in 1:K){
+  ce[k] = cross_entropy(p1 = data_sim$beta[k,],
+                p2 = fit_mle[k, ])
+  plot(data_sim$beta[k,], fit_mle[k, ],
+       xlab = "beta", ylab = "betahat",
+       main = sprintf("topic %d", k))
+  abline(a = 0, b = 1, col = "blue")
+}
+
+round(ce, digits = 3)
+sum(ce)
+```
+
+
+
+
