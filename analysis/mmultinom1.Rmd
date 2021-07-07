@@ -22,7 +22,9 @@ If we do some scaling so that $\sum_j f_{jk} = 1$, and denote $m_{jk} := \sum_i 
   & \mathbb{m}_k \sim \mathrm{Multinom}(n_k,  \mathbb{\beta}_{k}), \ \forall k \in [K]
 \end{align}
 
-The `mmultinom` problem becomes hard in high-dimensional setting (when $n_k < p$, say), and I expect MLE performs poorly in this setting. This scenario occurs in PMF when we use large $K$, or the total number of words is too small compared to $p$ (the data cannot support good estimation of desired number of topics)
+The `mmultinom` problem becomes "hard" in high-dimensional setting (when $n_k < p$, say), and I expect MLE performs poorly in this setting. This scenario occurs in PMF when we use large $K$, or the total number of words is too small compared to $p$ (the data cannot support good estimation of desired number of topics)
+
+The quality of the single MLE estimate $\hat{\beta}_{jk}$ only concerns the true $\beta_{jk}$, and $n_k$, as $n_k \hat{\beta}_{jk} \sim \mathrm{Bin}(n_k, \beta_{jk})$. We have $\mathrm{E}(\frac{\hat{\beta}_{jk}}{\beta_{jk}}) = 1$ &  $\mathrm{Var}(\frac{\hat{\beta}_{jk}}{\beta_{jk}}) = \frac{1 - \beta_{jk}}{n_k \beta_{jk}} \approx \frac{1}{n_k \beta_{jk}}$. Therefore, I expect the estimate to be good as long as $n_k \beta_{jk}$ is large, and bad when it's small. 
 
 ## Possible improvement by borrowing information 
 
@@ -31,14 +33,20 @@ The `mmultinom` problem becomes hard in high-dimensional setting (when $n_k < p$
 * I haven't figured out a prior for $d_{jk}$ yet, but it's much easier if we use an "equivalent" Poisson model. 
 
 
-## Fit with MLE
-Below I create situations where MLE fits poorly
+## "Realistic" cases
+
+* I use the fitted $L, F$ ([fastTopics on SLA](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla)) to generate the `mmultinom` problem below.  (dictionary size $p \approx 9000$). I change the difficulty of the problem by changing the document length and number of documents
+
+* I find even in the most difficult case, MLE is sufficient for those "top words": whose corresponding $\beta_{jk} > 100/p$ (around $0.01$ in this example) (also implies they are the top 1% words). It gets bad for those with smaller $\beta_{jk}$. 
+
+* I look at the other [document data](https://archive.ics.uci.edu/ml/datasets/bag+of+words) and speculate MLE would be fine for $K = 100$ for top 1% words. 
 
 ```{r}
 rm(list = ls())
 library(fastTopics)
 source("code/mmultinom.R")
 source("code/mmultinom_util.R")
+source("code/util.R")
 set.seed(123)
 ```
 
@@ -51,6 +59,16 @@ fitted = readRDS(sprintf("output/fastTopics_fit/fit_%s_fastTopics_k%d.Rds",
 m = nrow(fitted$L)
 ```
 
+Look at distribution of $\beta_{jk}$
+```{r}
+par(mfrow = c(2, 1))
+#plot(ecdf(fitted$F), xlab = "beta_jk")
+quantile(fitted$F, probs = seq(0.9, 1, 0.01))
+hist(log10(fitted$F), xlab = "log10(beta_jk)", probability = TRUE)
+hist(log10(fitted$F), xlab = "log10(beta_jk)", probability = TRUE,xlim = c(-5, 0), breaks = 30)
+```
+80% of $\beta_{jk}$ are just $0$ (set to a small value $< 10^{-15}$), as a result of MLE fit
+
 
 ### Use all documents, full document length
 ```{r fig.height=35, fig.width=20}
@@ -61,14 +79,20 @@ fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
 par(mfrow = c(K/4, 4))
 ce = replicate(K, 0)
 for(k in 1:K){
-  ce[k] = cross_entropy(p1 = data_sim$beta[k,], 
-                p2 = fit_mle[k, ])
-  plot(data_sim$beta[k,], fit_mle[k, ], 
-       xlab = "beta", ylab = "betahat",
-       main = sprintf("topic %d", k))
-  abline(a = 0, b = 1, col = "blue")
+  p1 = data_sim$beta[k,]
+  p2 = fit_mle[k, ]
+  ce[k] = cross_entropy(p1 = p1, p2 = p2)
+  
+  idx <- (log10(p1) > -5)
+  plot(p1[idx], log(p1[idx]) - log(p2[idx]),
+       ylab = "log(beta) - log(betahat)", xlab = "beta",
+       main = sprintf("topic %d; n = %d", k, round(data_sim$n[k])))
+  abline(h = 0, col = "blue")
+  # plot(log10(p1), log10(p1) - log10(p2),
+  #      ylab = "log10(beta) - log10(betahat)", xlab = "log10(beta)",
+  #      main = sprintf("topic %d; n = %d", k, round(data_sim$n[k])))
+  # abline(h = 0, col = "blue")
 }
-
 round(ce, digits = 3)
 sum(ce)
 ```
@@ -88,14 +112,20 @@ fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
 par(mfrow = c(K/4, 4))
 ce = replicate(K, NA)
 for(k in 1:K){
-  ce[k] = cross_entropy(p1 = data_sim$beta[k,], 
-                p2 = fit_mle[k, ])
-  plot(data_sim$beta[k,], fit_mle[k, ],
-       xlab = "beta", ylab = "betahat",
-       main = sprintf("topic %d", k))
-  abline(a = 0, b = 1, col = "blue")
+  p1 = data_sim$beta[k,]
+  p2 = fit_mle[k, ]
+  ce[k] = cross_entropy(p1 = p1, p2 = p2)
+  
+  idx <- (log10(p1) > -5)
+  plot(p1[idx], log(p1[idx]) - log(p2[idx]),
+       ylab = "log(beta) - log(betahat)", xlab = "beta",
+       main = sprintf("topic %d; n = %d", k, round(data_sim$n[k])))
+  abline(h = 0, col = "blue")
+  # plot(log10(p1), log10(p1) - log10(p2),
+  #      ylab = "log10(beta) - log10(betahat)", xlab = "log10(beta)",
+  #      main = sprintf("topic %d; n = %d", k, round(data_sim$n[k])))
+  # abline(h = 0, col = "blue")
 }
-
 round(ce, digits = 3)
 sum(ce)
 ```
@@ -115,12 +145,19 @@ fit_mle = mmultinom.mle(M = data_sim$M, n = data_sim$n)
 par(mfrow = c(K/4, 4))
 ce = replicate(K, 0)
 for(k in 1:K){
-  ce[k] = cross_entropy(p1 = data_sim$beta[k,], 
-                p2 = fit_mle[k, ])
-  plot(data_sim$beta[k,], fit_mle[k, ], 
-       xlab = "beta", ylab = "betahat",
-       main = sprintf("topic %d", k))
-  abline(a = 0, b = 1, col = "blue")
+  p1 = data_sim$beta[k,]
+  p2 = fit_mle[k, ]
+  ce[k] = cross_entropy(p1 = p1, p2 = p2)
+  
+  idx <- (log10(p1) > -5)
+  plot(p1[idx], log(p1[idx]) - log(p2[idx]),
+       ylab = "log(beta) - log(betahat)", xlab = "beta",
+       main = sprintf("topic %d; n = %d", k, round(data_sim$n[k])))
+  abline(h = 0, col = "blue")
+  # plot(log10(p1), log10(p1) - log10(p2),
+  #      ylab = "log10(beta) - log10(betahat)", xlab = "log10(beta)",
+  #      main = sprintf("topic %d; n = %d", k, round(data_sim$n[k])))
+  # abline(h = 0, col = "blue")
 }
 
 round(ce, digits = 3)
