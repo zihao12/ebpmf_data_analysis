@@ -96,14 +96,20 @@ load_model_pmf <- function(data_dir, data_name, method_name){
 }
 
 
-match_topics <- function(F1, F2){
+match_topics <- function(F1, F2, use_top = NULL){
   K = ncol(F1)
+  p = nrow(F1)
   id = replicate(K, NaN)
   for(i in 1:K){
     f1 = F1[,i]
+    if(is.null(use_top)){
+      idx = 1:p
+    }else{
+      idx = sort(f1, index.return = TRUE, decreasing = TRUE)$ix[1:use_top]
+    }
     dist_min = Inf
     for(j in 1:K){
-      dist = sum((f1 - F2[,j])^2)
+      dist = sum((f1[idx] - F2[idx,j])^2)
       if(dist < dist_min){
         dist_min = dist
         matched = j
@@ -135,11 +141,11 @@ match_topics_top_words <- function(F1, F2, top_words1){
 }
 
 
-multinom2poisson <- function (fit, X) {
-  F <- fit$F
-  L <- fit$L * fit$s
-  return(list(L = L, F = F))
-}
+# multinom2poisson <- function (fit, X) {
+#   F <- fit$F
+#   L <- fit$L * fit$s
+#   return(list(L = L, F = F))
+# }
 
 # Simulate counts from the multinomial topic model with factors F,
 # loadings L and sample sizes s.
@@ -153,3 +159,22 @@ simulate_multinom_counts <- function (L, F, s) {
   idx <- which(colSums(X) > 0)
   return(list(L = L, F = F[idx,], X = X[, idx]))
 }
+
+## X is n by p count matrix
+## prob is the probability a word is samppled
+## can speed up with sparse matrix
+count_subsample <- function(X, prob = 0.5){
+  n = nrow(X)
+  p = ncol(X)
+  Y_train <- matrix(rbinom(n = n*p, size = as.matrix(X), prob = prob), nrow = n)
+  Y_train <- as(Y_train, "sparseMatrix")
+  Y_test <- X - Y_train
+  w_idx <- which(colSums(Y_train) > 0)
+  d_idx <- which(rowSums(Y_train) > 0)
+  return(list(Y_train = Y_train[d_idx,w_idx], Y_test = Y_test[d_idx,w_idx],
+              w_idx = w_idx, d_idx = d_idx))
+}
+
+
+
+
