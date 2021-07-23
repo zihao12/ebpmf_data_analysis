@@ -364,16 +364,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeeafbd3f8c8c2ee71328880b516880dd8ef413b30targetblankeafbd3fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/eafbd3f8c8c2ee71328880b516880dd8ef413b30" target="_blank">eafbd3f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8bf34ac4221fb47ed650ff833ae3e2e07774c268targetblank8bf34aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8bf34ac4221fb47ed650ff833ae3e2e07774c268" target="_blank">8bf34ac</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeeafbd3f8c8c2ee71328880b516880dd8ef413b30targetblankeafbd3fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8bf34ac4221fb47ed650ff833ae3e2e07774c268targetblank8bf34aca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/eafbd3f8c8c2ee71328880b516880dd8ef413b30" target="_blank">eafbd3f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8bf34ac4221fb47ed650ff833ae3e2e07774c268" target="_blank">8bf34ac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -744,6 +744,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/8bf34ac4221fb47ed650ff833ae3e2e07774c268/analysis/index.Rmd" target="_blank">8bf34ac</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-23
+</td>
+<td>
+index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/22c0824021881cde311362ec361d3f993c3a3e4c/docs/index.html" target="_blank">22c0824</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1603,7 +1637,8 @@ Start workflowr project.
 <li>In a <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial1.ipynb">more realistically simulated dataset</a>, we can see the algorithm can
 <ul>
 <li>get completely non-sense results when <span class="math inline">\(C\)</span> is estimated poorly</li>
-<li>get perfect result if we know the true <span class="math inline">\(C\)</span> (the dataset happens to satify the anchor word assumption)</li>
+<li>get perfect result if we know the true <span class="math inline">\(C\)</span> (the dataset happens to satify the anchor word assumption) (I also looked at <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/output/sla_multinomial_knowC_k20.out">harder case where <span class="math inline">\(k = 20\)</span></a>; we also gets perfect recovery; anchor-word assumption also holds true. Since the true <span class="math inline">\(L, F\)</span> are MLE fit on real data, it seems anchor word assumption is reasonable in the real data… though estimation of <span class="math inline">\(C\)</span> would be even harder).<br />
+</li>
 <li>when we get slightly better estimate of <span class="math inline">\(C\)</span>, we can get relatively good estimate of <span class="math inline">\(F\)</span> even when it identifies wrong anchor words</li>
 </ul></li>
 <li><p>The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix <span class="math inline">\(C_{ij} = P(X_1 = w_i, X_2 = w_j)\)</span>, which is high dimensional and built from very sparse dataset; results crucially depend on only <span class="math inline">\(K\)</span> rows of <span class="math inline">\(C\)</span>. We can try improving this type of methods by improving estimate of <span class="math inline">\(C\)</span> (e.g. how to deal with rare words? can we impose background assumption here?), or discard the anchor-word assumption and directly minimize <span class="math inline">\(|C - FAF^T|^2_F\)</span>.</p></li>
