@@ -70,7 +70,7 @@ I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12
 
 * In a [more realistically simulated dataset](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial1.ipynb), we can see the algorithm can 
     * get completely non-sense results when $C$ is estimated poorly
-    * get perfect result if we know the true $C$ (the dataset happens to satify the anchor word assumption)
+    * get perfect result if we know the true $C$ (the dataset happens to satify the anchor word assumption) (I also looked at [harder case where $k = 20$](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/output/sla_multinomial_knowC_k20.out); we also gets perfect recovery; anchor-word assumption also holds true. Since the true $L, F$ are MLE fit on real data, it seems anchor word assumption is reasonable in the real data... though estimation of $C$ would be even harder).  
     * when we get slightly better estimate of $C$, we can get relatively good estimate of $F$ even when it identifies wrong anchor words
     
 * The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix $C_{ij} = P(X_1 = w_i, X_2 = w_j)$, which is high dimensional and built from very sparse dataset; results crucially depend on only $K$ rows of $C$. We can try improving this type of methods by improving estimate of $C$ (e.g. how to deal with rare words? can we impose background assumption here?), or discard the anchor-word assumption and directly minimize $|C - FAF^T|^2_F$. 
