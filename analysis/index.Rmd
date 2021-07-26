@@ -62,8 +62,18 @@ The goal is to find situations where our EB approach can imporve upon MLE (or Ba
 ### `mmultinom`
 I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1)
 
+### Anchor-word based topic modeling
 
+* I find [paper](https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf) & [paper](https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf) gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a [study note](https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing) based on the two papers and the [seminal paper](https://arxiv.org/abs/1204.1956)
 
+* I find the algorithm can recover $F,A$ really we, even though the identified "anchor words" do not satisfy the anchor-word assumptions in [the small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment1.ipynb). The reason is that the rows of the identified "anchor words" are very similar to the rows of the true "anchor words" in [here](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment3.ipynb)
+
+* In a [more realistically simulated dataset](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial1.ipynb), we can see the algorithm can 
+    * get completely non-sense results when $C$ is estimated poorly
+    * get perfect result if we know the true $C$ (the dataset happens to satify the anchor word assumption) (I also looked at [harder case where $k = 20$](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/output/sla_multinomial_knowC_k20.out); we also gets perfect recovery; anchor-word assumption also holds true. Since the true $L, F$ are MLE fit on real data, it seems anchor word assumption is reasonable in the real data... though estimation of $C$ would be even harder).  
+    * when we get slightly better estimate of $C$, we can get relatively good estimate of $F$ even when it identifies wrong anchor words
+    
+* The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix $C_{ij} = P(X_1 = w_i, X_2 = w_j)$, which is high dimensional and built from very sparse dataset; results crucially depend on only $K$ rows of $C$. We can try improving this type of methods by improving estimate of $C$ (e.g. how to deal with rare words? can we impose background assumption here?), or discard the anchor-word assumption and directly minimize $|C - FAF^T|^2_F$. 
 
 
 

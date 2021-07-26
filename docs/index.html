@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -93,7 +93,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -242,6 +241,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -253,18 +253,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -345,7 +333,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-05
+<strong>Last updated:</strong> 2021-07-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -376,1018 +364,348 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree328705bce0bd0d5e21a77533341803eb9c23ac3dtargetblank328705ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/328705bce0bd0d5e21a77533341803eb9c23ac3d" target="_blank">328705b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8bf34ac4221fb47ed650ff833ae3e2e07774c268targetblank8bf34aca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8bf34ac4221fb47ed650ff833ae3e2e07774c268" target="_blank">8bf34ac</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree328705bce0bd0d5e21a77533341803eb9c23ac3dtargetblank328705ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree8bf34ac4221fb47ed650ff833ae3e2e07774c268targetblank8bf34aca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/328705bce0bd0d5e21a77533341803eb9c23ac3d" target="_blank">328705b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/8bf34ac4221fb47ed650ff833ae3e2e07774c268" target="_blank">8bf34ac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/fastTopics_on_sla_cache/
-    Ignored:    analysis/investigate_F_proj_cache/
-    Ignored:    analysis/prepare_sla_sim_cache/
+    Ignored:    analysis/ebpmf_bg_tutorial_cache/
+    Ignored:    analysis/ebpmf_wbg_model_intro_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data2_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data3_cache/
+    Ignored:    analysis/ebpmf_wbg_simulate_big_data_cache/
+    Ignored:    analysis/ebpmf_wbg_simulation_cache/
+    Ignored:    analysis/investigate_np_ebpmf_wbg_cache/
+    Ignored:    analysis/pmf_greedy_experiment_cache/
+    Ignored:    analysis/sla_data_analysis_k10_cache/
+    Ignored:    data/.DS_Store
+    Ignored:    output/.DS_Store
+    Ignored:    output/News/.DS_Store
+    Ignored:    topicView-app/.DS_Store
 
 Untracked files:
-    Untracked:  Rplot.pdf
-    Untracked:  analysis/droplet_simulated_0.10_compare_mle_eb.Rmd
-    Untracked:  analysis/fastTopics_on_droplet_sim.Rmd
-    Untracked:  analysis/fastTopics_on_sla_sim.Rmd
-    Untracked:  analysis/investigate_F_proj_cache_old/
-    Untracked:  analysis/nb_est_mom.Rmd
-    Untracked:  analysis/prepare_droplet.Rmd
-    Untracked:  analysis/prepare_droplet_sim.Rmd
-    Untracked:  analysis/prepare_sim_data.Rmd
-    Untracked:  analysis/rank1_examples.Rmd
-    Untracked:  code/hpmf.R
-    Untracked:  code/mmultinom.R
-    Untracked:  code/mmultinom_util.R
-    Untracked:  code/smallsim3_functions.R
-    Untracked:  data/GSE103354_Trachea_droplet_UMIcounts.txt.gz
-    Untracked:  data/SLA/SLA_preprocessed_minzhe.RData
-    Untracked:  data/SLA/docword.sla_minzhe.txt
-    Untracked:  data/SLA/vocab.sla_minzhe.txt
-    Untracked:  data/pbmc_68k/
-    Untracked:  data/sim/droplet_simulated.Rds
-    Untracked:  data/sim/droplet_simulated_0.10.Rds
-    Untracked:  data/sim/droplet_simulated_0.20.Rds
-    Untracked:  data/sim/pbmc_68k_simulated.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter2500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter3000.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter3500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter4000.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter4500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_init_nmf_K20_iter50.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter1000.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter1500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter2500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter3000.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter3500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter4000.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter4500.Rds
-    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter500.Rds
-    Untracked:  output/News/v0.4.5/news_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
-    Untracked:  output/News/v0.4.5/news_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
-    Untracked:  output/News/v0.4.5/news_ebpmf_wbg_initLF50_K20_maxiter500.Rds
-    Untracked:  output/News/v0.4.5/news_init_nmf_K20_iter50.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter1000.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter1500.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter2500.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter3000.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter3500.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter4000.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter4500.Rds
-    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/Rplots.pdf
-    Untracked:  output/SLA/v0.4.5/correct_kl.R
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K100_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K10_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K50_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K5_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K100_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K10_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K3_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K50_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K5_iter50.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K3_maxiter30.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter1000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter1500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter2500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter3000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter3500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter4000.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter4500.Rds
-    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter500.Rds
-    Untracked:  output/fastTopics_fit/fit__fastTopics_k.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k10.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k11.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k12.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k13.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k14.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k15.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k16.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k17.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k18.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k19.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k2.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k20.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k3.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k4.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k5.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k6.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k7.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k8.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k9.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k10.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k11.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k12.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k13.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k14.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k15.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k16.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k17.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k18.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k19.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k2.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k20.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k3.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k4.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k5.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k6.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k7.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k8.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k9.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k10.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k11.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k12.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k13.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k14.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k15.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k16.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k17.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k18.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k19.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k2.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k20.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k3.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k4.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k5.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k6.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k7.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k8.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k9.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_ebpmf_wbg_k10_init_truth.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_evals.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k10.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k10_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k11.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k11_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k12.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k12_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k13.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k13_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k14.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k14_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k15.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k15_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k16.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k16_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k17.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k17_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k18.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k18_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k19.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k19_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k2.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k20.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k20_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k2_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k3.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k3_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k4.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k4_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k5.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k5_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k6.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k6_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k7.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k7_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k8.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k8_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k9.Rds.out
-    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k9_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k100.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k100.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k25.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k25.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k30.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k30.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k35.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k35.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k40.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k40.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k45.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k45.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k50.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k50.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k60.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k60.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k70.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k70.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k80.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k80.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k90.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k90.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_evals.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k10.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k11.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k12.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k13.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k13_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k14.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k15.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k16.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k17.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k18.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k19.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k2.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k20.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k3.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k4.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k5.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k6.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k7.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k8.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k9.Rout
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k10.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k11.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k12.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k13.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k14.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k15.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k16.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k17.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k18.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k19.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k2.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k20.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k3.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k4.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k5.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k6.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k7.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k8.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k9.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_evals.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k10.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k10.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k10_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k11.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k11.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k11_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k12.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k12.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k12_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k13.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k13.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k13_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k14.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k14.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k14_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k15.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k15.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k15_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k16.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k16.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k16_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k17.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k17.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k17_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k18.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k18.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k18_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k19.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k19.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k19_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k2.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k2.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k20.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k20.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k20_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k2_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k3.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k3.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k3_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k4.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k4.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k4_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k5.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k5.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k5_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k6.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k6.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k6_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k7.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k7.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k7_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k8.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k8.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k8_comparison.pdf
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k9.Rds
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k9.Rds.out
-    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k9_comparison.pdf
-    Untracked:  output/fit_kos_coneNMF_F.Rout
-    Untracked:  output/sim/v0.4.5/exper1/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000_from_truth.Rout
-    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter10_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter2000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter4000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter5_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_from_truth.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_pmf_bg_K50_maxiter1000_from_truth.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_bg_maxiter_5000_from_truth.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000_from_truth.Rout
-    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000_from_truth.Rout_old
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter100_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  analysis/covid_dataset.Rmd
+    Untracked:  analysis/draft.Rmd
+    Untracked:  analysis/draft2.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulate_correlated.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big.Rmd
+    Untracked:  analysis/ebpmf_wbg_simulation_big2_more.Rmd
+    Untracked:  analysis/heatmap.Rmd
+    Untracked:  analysis/investigate_largeK.Rmd
+    Untracked:  analysis/investigate_news_topics.Rmd
+    Untracked:  analysis/poissonmix_vs_pmf.Rmd
+    Untracked:  analysis/simulate_data_bg.Rmd
+    Untracked:  analysis/simulate_data_bg2.Rmd
+    Untracked:  analysis/summary_sla_news_nips.Rmd
+    Untracked:  analysis/test.R
+    Untracked:  data/GSE145926_RAW/
+    Untracked:  data/cell_data.csv
+    Untracked:  data/sim/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  data/sim/simulated_data_small.RData
+    Untracked:  data/sim/simulated_data_small2.RData
+    Untracked:  output/poissonmix_vs_pmf.RDS
+    Untracked:  output/poissonmix_vs_pmf.RData
+    Untracked:  output/sim/v0.4.5/exper2/init_random.sim_bg_block_n1100_p2100_K50.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter100_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random2.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
     Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter300_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter400_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter500.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter2000.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter2000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3000.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter4000.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter4000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter1500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter5000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
-    Untracked:  output/sim/v0.4.5/exper3/fit_sim_bg_block_n1100_p2100_K50_pmf_bg_maxiter_5000_from_truth.Rout
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random2.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter20_init_random2.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter1000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter1500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4000_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4500_from_truth.Rds
-    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter500_from_truth.Rds
-    Untracked:  script/ConeFactor_kos_K20_2.R
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter20_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter30_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter40_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter60_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter6_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter70_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter7_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter80_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter8_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter90_init_random.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter9_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_fastTopics_K50_50em_950_scd.Rds
+    Untracked:  output/smallsim2_1.RData
     Untracked:  script/Rplots.pdf
-    Untracked:  script/droplet.RData
-    Untracked:  script/eval_fit_simulated.R
-    Untracked:  script/eval_fit_simulated.sh
-    Untracked:  script/eval_fit_simulated_plot.R
-    Untracked:  script/eval_fit_simulated_plot.sh
-    Untracked:  script/fit_droplet_fastTopics.R
-    Untracked:  script/fit_droplet_fastTopics.sbatch
-    Untracked:  script/fit_droplet_fastTopics.sh
-    Untracked:  script/fit_kos_coneNMF_F.R
-    Untracked:  script/fit_kos_coneNMF_F.sbatch
-    Untracked:  script/fit_news_ebpmf_wbg.sbatch
-    Untracked:  script/fit_news_ebpmf_wbg_initLF.R
-    Untracked:  script/fit_news_pmf.sbatch
-    Untracked:  script/fit_news_pmf_initLF.R
-    Untracked:  script/fit_news_pmf_initialization.R
-    Untracked:  script/fit_nips_ebpmf_wbg.sbatch
-    Untracked:  script/fit_nips_ebpmf_wbg_initLF.R
-    Untracked:  script/fit_nips_pmf.sbatch
-    Untracked:  script/fit_nips_pmf_initLF.R
-    Untracked:  script/fit_nips_pmf_initialization.R
-    Untracked:  script/fit_pbmc_68k_fastTopics.R
-    Untracked:  script/fit_pbmc_68k_fastTopics.sbatch
-    Untracked:  script/fit_pbmc_68k_fastTopics.sh
-    Untracked:  script/fit_sim_ebpmf_wbg2.sbatch
-    Untracked:  script/fit_sim_pmf_bg_from_truth.R
-    Untracked:  script/fit_sim_pmf_bg_from_truth.sbatch
-    Untracked:  script/fit_sim_pmf_bg_from_truth_exper3.sbatch
-    Untracked:  script/fit_simulated_ebpmf_wbg_init.R
-    Untracked:  script/fit_simulated_ebpmf_wbg_init.sbatch
-    Untracked:  script/fit_simulated_ebpmf_wbg_init.sh
-    Untracked:  script/fit_simulated_fastTopics.R
-    Untracked:  script/fit_simulated_fastTopics.sbatch
-    Untracked:  script/fit_simulated_fastTopics.sh
-    Untracked:  script/fit_simulated_fastTopics2.sh
-    Untracked:  script/fit_simulated_fastTopics3.sh
-    Untracked:  script/fit_simulated_fastTopics4.sh
-    Untracked:  script/fit_simulated_fastTopics_init.R
-    Untracked:  script/fit_simulated_fastTopics_init.sbatch
-    Untracked:  script/fit_simulated_fastTopics_init.sh
-    Untracked:  script/fit_sla_ebpmf_wbg2.sbatch
-    Untracked:  script/fit_sla_ebpmf_wbg3.sbatch
-    Untracked:  script/fit_sla_fastTopics.R
-    Untracked:  script/fit_sla_fastTopics.sbatch
-    Untracked:  script/fit_sla_fastTopics.sh
-    Untracked:  script/fit_sla_pmf2.sbatch
-    Untracked:  script/fit_sla_pmf3.sbatch
-    Untracked:  script/fit_sla_sim_fastTopics.R
-    Untracked:  script/fit_sla_sim_fastTopics.sbatch
-    Untracked:  script/fit_sla_sim_fastTopics.sh
-    Untracked:  script/pbmc_68k.RData
-    Untracked:  script/prepare_68k_pbmc.R
-    Untracked:  script/prepare_droplet.R
-    Untracked:  script/simulate_droplet.R
-    Untracked:  script/simulate_pbmc_68k.R
-    Untracked:  script/slurm-12040461.out
-    Untracked:  script/slurm-12040462.out
-    Untracked:  script/slurm-12040463.out
-    Untracked:  script/slurm-12040464.out
-    Untracked:  script/slurm-12040465.out
-    Untracked:  script/slurm-12040466.out
-    Untracked:  script/slurm-12040467.out
-    Untracked:  script/slurm-12040468.out
-    Untracked:  script/slurm-12040469.out
-    Untracked:  script/slurm-12040470.out
-    Untracked:  script/slurm-12040471.out
-    Untracked:  script/smallsim2.R
-    Untracked:  test.R
+    Untracked:  script/init_ebpmf_wbg_from_pmf_bg.R
+    Untracked:  script/init_ebpmf_wbg_random.R
+    Untracked:  script/save_volcano_plot.R
+    Untracked:  topicView-app/app_utils.R
+    Untracked:  topicView-app/data/
+    Untracked:  topicView-app/output/
+    Untracked:  topicView-app/rsconnect/
 
 Unstaged changes:
-    Modified:   code/init.R
-    Modified:   code/misc.R
-    Deleted:    data/sim/docword.sim_bg_block_n1100_p2100_K50.txt
+    Modified:   analysis/cone_NMF_l2_2.Rmd
+    Modified:   analysis/ebpmf_wbg_simulate_big_data2.Rmd
+    Modified:   analysis/multinom_sampling.Rmd
+    Deleted:    analysis/sla_data_analysis_k10.Rmd
+    Deleted:    analysis/sla_data_analysis_k5.Rmd
+    Deleted:    analysis/sla_data_analysis_k50.Rmd
+    Deleted:    data/SLA/SCC2016/Code/APL/compCM.m
+    Deleted:    data/SLA/SCC2016/Code/APL/compMuI.m
+    Deleted:    data/SLA/SCC2016/Code/APL/compParamErr2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl4c.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cplEstimParam.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_basic_demo_PJ.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_demo.m
+    Deleted:    data/SLA/SCC2016/Code/APL/cpl_demo2a.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcBlkMod3.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_nmi_beta_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_nmi_lambda_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/dcbm_time_vs_n_D.m
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod.c
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod.mexa64
+    Deleted:    data/SLA/SCC2016/Code/APL/genDCBlkMod2.m
+    Deleted:    data/SLA/SCC2016/Code/APL/initLabel5b.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/ProfileLike.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/calCri1.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/calCri2.m
+    Deleted:    data/SLA/SCC2016/Code/BCPL/mutiExp.m
+    Deleted:    data/SLA/SCC2016/Code/MatlabCode.m
+    Deleted:    data/SLA/SCC2016/Code/NewmanSM/NewmanSM.m
+    Deleted:    data/SLA/SCC2016/Code/coauthorThresh2GiantAdj.txt
+    Deleted:    data/SLA/SCC2016/Code/coauthorThresh2GiantCommLabelK2Matlab.txt
+    Deleted:    data/SLA/SCC2016/Code/functions.R
+    Deleted:    data/SLA/SCC2016/Code/main.R
+    Deleted:    data/SLA/SCC2016/Data/authorList.txt
+    Deleted:    data/SLA/SCC2016/Data/authorPaperBiadj.txt
+    Deleted:    data/SLA/SCC2016/Data/paperCitAdj.txt
+    Deleted:    data/SLA/SCC2016/Data/paperList.txt
+    Deleted:    data/SLA/SCC2016/ReadMe.txt
+    Modified:   data/sim/docword.sim_bg_block_n1100_p2100_K50.txt
     Deleted:    data/sim/init.sim_bg_block_n1100_p2100_K50.Rds
-    Deleted:    data/sim/truth.sim_bg_block_n1100_p2100_K50.Rds
-    Modified:   output/fastTopics_fit/fit_droplet_simulated_fastTopics_k19_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k10_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k11_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k12_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k2_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k3_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k4_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k5_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k6_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k7_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k8_comparison.pdf
-    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k9_comparison.pdf
+    Modified:   data/sim/truth.sim_bg_block_n1100_p2100_K50.Rds
+    Deleted:    data/uci_BoW.sh
+    Deleted:    data/uci_BoW/docword.kos.txt
+    Deleted:    data/uci_BoW/readme.txt
+    Deleted:    data/uci_BoW/vocab.kos.txt
     Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
     Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_from_truth.Rout
     Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3.Rds
     Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds
     Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds
     Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_from_truth2.Rds
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_500.Rout
+    Deleted:    output/uci_BoW/v0.3.8/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.8/kos_ebpmf_bg_K2_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K300_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K500_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_ebpmf_bg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K300_maxiter_1000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K500_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/fit_kos_pmf_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter5.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter100.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter200.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter300.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter400.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter600.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter700.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter800.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K300_maxiter900.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_ebpmf_bg_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K100_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K20_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K300_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K500_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_init_nmf_K50_iter50.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K100_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter5.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter100.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter200.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter300.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter400.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter600.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter700.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter800.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K300_maxiter900.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.3.9/kos_pmf_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/fit_kos_ebpmf_wbg_initL_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initL50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K20_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K3_maxiter10.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter2000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_ebpmf_wbg_initLF50_K50_maxiter5000.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K100_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K20_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K300_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K3_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K500_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.2/kos_init_nmf_K50_iter50.Rds
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K100_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K20_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/fit_kos_np_ebpmf_wbg_initLF_K50_maxiter_5000.Rout
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Deleted:    output/uci_BoW/v0.4.4/kos_np_ebpmf_wbg_initLF50_K50_maxiter500.Rds
     Modified:   script/fit_kos_NMF_F.R
-    Modified:   script/fit_sim_ebpmf_wbg.sbatch
-    Modified:   script/fit_sim_ebpmf_wbg_from_pmf_bg.sbatch
-    Modified:   script/fit_sim_ebpmf_wbg_from_pmf_bg2.sbatch
+    Modified:   topicView-app/app.R
 
 </code></pre>
 <p>
@@ -1426,6 +744,74 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/8bf34ac4221fb47ed650ff833ae3e2e07774c268/analysis/index.Rmd" target="_blank">8bf34ac</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-23
+</td>
+<td>
+index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/22c0824021881cde311362ec361d3f993c3a3e4c/docs/index.html" target="_blank">22c0824</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eafbd3f8c8c2ee71328880b516880dd8ef413b30/analysis/index.Rmd" target="_blank">eafbd3f</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-23
+</td>
+<td>
+index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/510c956befd641da8478bb48ffa0525e876e9e43/docs/index.html" target="_blank">510c956</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-07-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2243,6 +1629,21 @@ Start workflowr project.
 <h3><code>mmultinom</code></h3>
 <p>I consider the subproblem in the estimation of <span class="math inline">\(F\)</span>: <a href="https://zihao12.github.io/ebpmf_data_analysis/mmultinom1">mmultinom1</a></p>
 </div>
+<div id="anchor-word-based-topic-modeling" class="section level3">
+<h3>Anchor-word based topic modeling</h3>
+<ul>
+<li><p>I find <a href="https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf">paper</a> &amp; <a href="https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf">paper</a> gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a <a href="https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing">study note</a> based on the two papers and the <a href="https://arxiv.org/abs/1204.1956">seminal paper</a></p></li>
+<li><p>I find the algorithm can recover <span class="math inline">\(F,A\)</span> really we, even though the identified “anchor words” do not satisfy the anchor-word assumptions in <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment1.ipynb">the small experiment</a>. The reason is that the rows of the identified “anchor words” are very similar to the rows of the true “anchor words” in <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment3.ipynb">here</a></p></li>
+<li>In a <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial1.ipynb">more realistically simulated dataset</a>, we can see the algorithm can
+<ul>
+<li>get completely non-sense results when <span class="math inline">\(C\)</span> is estimated poorly</li>
+<li>get perfect result if we know the true <span class="math inline">\(C\)</span> (the dataset happens to satify the anchor word assumption) (I also looked at <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/output/sla_multinomial_knowC_k20.out">harder case where <span class="math inline">\(k = 20\)</span></a>; we also gets perfect recovery; anchor-word assumption also holds true. Since the true <span class="math inline">\(L, F\)</span> are MLE fit on real data, it seems anchor word assumption is reasonable in the real data… though estimation of <span class="math inline">\(C\)</span> would be even harder).<br />
+</li>
+<li>when we get slightly better estimate of <span class="math inline">\(C\)</span>, we can get relatively good estimate of <span class="math inline">\(F\)</span> even when it identifies wrong anchor words</li>
+</ul></li>
+<li><p>The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix <span class="math inline">\(C_{ij} = P(X_1 = w_i, X_2 = w_j)\)</span>, which is high dimensional and built from very sparse dataset; results crucially depend on only <span class="math inline">\(K\)</span> rows of <span class="math inline">\(C\)</span>. We can try improving this type of methods by improving estimate of <span class="math inline">\(C\)</span> (e.g. how to deal with rare words? can we impose background assumption here?), or discard the anchor-word assumption and directly minimize <span class="math inline">\(|C - FAF^T|^2_F\)</span>.</p></li>
+</ul>
+</div>
 </div>
 
 
@@ -2274,6 +1675,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
