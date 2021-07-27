@@ -64,7 +64,7 @@ I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12
 
 ### Anchor-word based topic modeling
 
-* I find [paper](https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf) & [paper](https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf) gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a [study note](https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing) based on the two papers and the [seminal paper](https://arxiv.org/abs/1204.1956)
+* I find [paper](https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf) & [paper](https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf) gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a [study note](https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing) & [study note](https://drive.google.com/file/d/1R9kdE8u8wPpNQgk40YMawHrAuKJtFfTC/view?usp=sharing) based on the two papers and the [seminal paper](https://arxiv.org/abs/1204.1956) & [seminal paper](https://arxiv.org/abs/1212.4777)
 
 * I find the algorithm can recover $F,A$ really we, even though the identified "anchor words" do not satisfy the anchor-word assumptions in [the small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment1.ipynb). The reason is that the rows of the identified "anchor words" are very similar to the rows of the true "anchor words" in [here](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment3.ipynb)
 
