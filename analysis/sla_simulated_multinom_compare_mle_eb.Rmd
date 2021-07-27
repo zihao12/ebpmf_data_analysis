@@ -1,0 +1,116 @@
+---
+title: "sla_simulated_multinom_compare_mle_eb"
+author: "Zihao"
+date: "2021-07-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+
+```{r}
+rm(list = ls())
+source("code/misc.R")
+library(fastTopics)
+library(ebpmf.alpha)
+
+datafile = "data/sim_multinom/sla_simulated_fastTopics_k20_0.3.Rds"
+modelname_eb1 = 
+  "output/sim_multinom/fit_ebpmf_wbg2_sla_simulated_fastTopics_k20_0.3.Rds"
+modelname_mle = 
+  "output/sim_multinom/fit_fastTopics_sla_simulated_fastTopics_k20_0.3.Rds"
+
+data = readRDS(datafile)
+truth = data$truth
+X = data$X
+rm(data)
+dim(X)
+k = ncol(truth$F)
+
+fitted.eb1 = readRDS(modelname_eb1)
+fitted.mle = readRDS(modelname_mle)
+```
+
+
+
+```{r}
+fitted.mle.m = fastTopics::poisson2multinom(fitted.mle)
+fitted.eb1.p = ebpmf22fastTopics_pmf(fitted.eb1)
+fitted.eb1.m = fastTopics::poisson2multinom(fitted.eb1.p)
+
+idx.mle = match_topics(truth$F, fitted.mle.m$F)
+idx.eb1 = match_topics(truth$F, fitted.eb1.m$F)
+
+idx.mle
+
+idx.eb1
+```
+
+
+
+```{r fig.height=40, fig.width=10}
+model = fitted.mle.m
+idx = match_topics(truth$F, model$F)
+l_mse <- c()
+f_mse <- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = "loading (truth)", ylab = "loading (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
+}
+l_mse.mle = l_mse
+f_mse.mle = f_mse
+```
+
+```{r fig.height=40, fig.width=10}
+model = fitted.eb1.m
+idx = match_topics(truth$F, model$F)
+l_mse <- c()
+f_mse <- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = "loading (truth)", ylab = "loading (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  plot(truth$F[,i], model$F[,j], xlab = "factor (truth)", ylab = "factor (fitted)", main = sprintf("topic %d", i))
+  abline(a = 0, b = 1, col = "blue")
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
+}
+
+l_mse.eb1 = l_mse
+f_mse.eb1 = f_mse
+```
+
+<!-- ```{r} -->
+<!-- mt = get_prior_summary(gs = fitted.eb1$qg$gfs, log10 = FALSE, return_matrix = TRUE) -->
+
+<!-- mt["phi=0.001",] -->
+<!-- ``` -->
+
+```{r}
+round(l_mse.eb1/l_mse.mle, digits = 2)
+round(f_mse.eb1/f_mse.mle, digits = 2)
+
+```
+
+```{r}
+c(fitted.eb1$ELBO[1000], fitted.eb1$KL[1000])
+
+```
+
+```{r}
+# ## for pg prior on F
+# gf = do.call(rbind, lapply(fitted.eb1$qg$gfs, unlist))
+# round(gf, 3)
+get_prior_summary(gs = fitted.eb1$qg$gfs, log10 = FALSE)
+```
+
