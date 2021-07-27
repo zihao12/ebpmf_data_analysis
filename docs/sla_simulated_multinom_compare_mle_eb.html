@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Zihao" />
+
+<meta name="date" content="2021-07-16" />
+
+<title>sla_simulated_multinom_compare_mle_eb</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ebpmf_data_analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/zihao12/ebpmf_data_analysis">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">sla_simulated_multinom_compare_mle_eb</h1>
+<h4 class="author">Zihao</h4>
+<h4 class="date">2021-07-16</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2021-07-27
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeb7c3d9804b2068a08a8ff3307707633eda560ebftargetblankb7c3d98a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/b7c3d9804b2068a08a8ff3307707633eda560ebf" target="_blank">b7c3d98</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreeb7c3d9804b2068a08a8ff3307707633eda560ebftargetblankb7c3d98a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/b7c3d9804b2068a08a8ff3307707633eda560ebf" target="_blank">b7c3d98</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/fastTopics_on_sla_cache/
+    Ignored:    analysis/investigate_F_proj_cache/
+    Ignored:    analysis/prepare_sla_sim_cache/
+
+Untracked files:
+    Untracked:  Rplot.pdf
+    Untracked:  analysis/droplet_simulated_0.10_compare_mle_eb.Rmd
+    Untracked:  analysis/fastTopics_on_droplet_sim.Rmd
+    Untracked:  analysis/fastTopics_on_sla_sim.Rmd
+    Untracked:  analysis/investigate_F_proj_cache_old/
+    Untracked:  analysis/mmultinom0.Rmd
+    Untracked:  analysis/nb_est_mom.Rmd
+    Untracked:  analysis/pmf_know_L.Rmd
+    Untracked:  analysis/prepare_droplet.Rmd
+    Untracked:  analysis/prepare_droplet_sim.Rmd
+    Untracked:  analysis/prepare_sim_data.Rmd
+    Untracked:  analysis/rank1_examples.Rmd
+    Untracked:  code/hpmf.R
+    Untracked:  code/mmultinom.R
+    Untracked:  code/mmultinom_util.R
+    Untracked:  code/smallsim3_functions.R
+    Untracked:  data/GSE103354_Trachea_droplet_UMIcounts.txt.gz
+    Untracked:  data/SLA/SLA_preprocessed_minzhe.RData
+    Untracked:  data/SLA/docword.sla_minzhe.txt
+    Untracked:  data/SLA/vocab.sla_minzhe.txt
+    Untracked:  data/pbmc_68k/
+    Untracked:  data/sim/droplet_simulated_0.10.Rds
+    Untracked:  data/sim/droplet_simulated_0.20.Rds
+    Untracked:  data/sim/sla_simulated_0.10.Rds
+    Untracked:  data/sim/sla_simulated_0.20.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k10_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k10_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k10_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k10_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k10_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k11_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k11_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k11_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k11_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k11_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k12_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k12_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k12_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k12_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k12_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k13_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k13_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k13_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k13_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k13_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k14_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k14_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k14_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k14_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k14_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k15_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k15_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k15_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k15_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k15_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k16_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k16_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k16_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k16_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k16_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k17_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k17_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k17_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k17_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k17_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k18_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k18_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k18_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k18_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k18_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k19_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k19_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k19_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k19_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k19_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k2_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k2_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k2_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k2_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k2_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k3_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k3_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k3_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k3_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k3_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k4_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k4_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k4_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k4_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k4_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k5_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k5_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k5_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k5_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k5_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k7_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k7_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k7_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k7_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k7_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k8_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k8_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k8_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k8_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k8_1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k9_0.1.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k9_0.3.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k9_0.5.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k9_0.7.Rds
+    Untracked:  data/sim_multinom/sla_simulated_fastTopics_k9_1.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter2500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter3000.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter3500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter4000.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter4500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_init_nmf_K20_iter50.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter1000.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter1500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter2500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter3000.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter3500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter4000.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter4500.Rds
+    Untracked:  output/NIPS/v0.4.5/nips_pmf_initLF50_K20_maxiter500.Rds
+    Untracked:  output/News/v0.4.5/news_ebpmf_wbg_initLF50_K20_maxiter1000.Rds
+    Untracked:  output/News/v0.4.5/news_ebpmf_wbg_initLF50_K20_maxiter1500.Rds
+    Untracked:  output/News/v0.4.5/news_ebpmf_wbg_initLF50_K20_maxiter500.Rds
+    Untracked:  output/News/v0.4.5/news_init_nmf_K20_iter50.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter1000.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter1500.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter2500.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter3000.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter3500.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter4000.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter4500.Rds
+    Untracked:  output/News/v0.4.5/news_pmf_initLF50_K20_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/Rplots.pdf
+    Untracked:  output/SLA/v0.4.5/correct_kl.R
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K10_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_ebpmf_wbg_initLF50_K5_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K100_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K10_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K50_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_init_nmf_K5_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K100_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K10_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K50_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_ebpmf_wbg_initLF50_K5_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K100_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K10_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K3_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K50_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_init_nmf_K5_iter50.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K100_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K10_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K3_maxiter30.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K50_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_minzhe_pmf_initLF50_K5_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K100_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K10_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K50_maxiter500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter1000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter1500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter2500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter3000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter3500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter4000.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter4500.Rds
+    Untracked:  output/SLA/v0.4.5/sla_pmf_initLF50_K5_maxiter500.Rds
+    Untracked:  output/fastTopics_fit/fit__fastTopics_k.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_data_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k10.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k11.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k12.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k13.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k14.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k15.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k16.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k17.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k18.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k19.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k2.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k20.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k3.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k4.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k5.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k6.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k7.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k8.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_0.10_ebpmf_wbg_init_truth_k9.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k10.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k11.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k12.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k13.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k14.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k15.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k16.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k17.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k18.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k19.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k2.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k20.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k3.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k4.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k5.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k6.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k7.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k8.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.10_fastTopics_init_truth_k9.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k10.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k11.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k12.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k13.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k14.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k15.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k16.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k17.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k18.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k19.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k2.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k20.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k3.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k4.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k5.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k6.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k7.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k8.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted__0.20_fastTopics_init_truth_k9.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_ebpmf_wbg_k10_init_truth.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_evals.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k10.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k10_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k11.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k11_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k12.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k12_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k13.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k13_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k14.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k14_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k15.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k15_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k16.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k16_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k17.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k17_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k18.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k18_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k19.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k19_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k2.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k20.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k20_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k2_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k3.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k3_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k4.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k4_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k5.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k5_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k6.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k6_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k7.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k7_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k8.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k8_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k9.Rds.out
+    Untracked:  output/fastTopics_fit/fit_droplet_simualted_fastTopics_init_truth_k9_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.10_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_0.20_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_droplet_simulated_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_pbmc_68k_simulated_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k100.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k100.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k25.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k25.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k30.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k30.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k35.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k35.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k40.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k40.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k45.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k45.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k50.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k50.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k60.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k60.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k70.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k70.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k80.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k80.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k90.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_fastTopics_k90.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_evals.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k10.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k11.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k12.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k13.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k13_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k14.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k15.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k16.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k17.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k18.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k19.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k2.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k20.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k3.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k4.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k5.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k6.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k7.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k8.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_sim_fastTopics_k9.Rout
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k10.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k11.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k12.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k13.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k14.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k15.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k16.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k17.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k18.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k19.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k2.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k20.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k3.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k4.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k5.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k6.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k7.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k8.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_ebpmf_wbg_init_truth_k9.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_evals.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k10.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k10.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k10_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k11.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k11.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k11_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k12.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k12.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k12_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k13.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k13.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k13_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k14.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k14.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k14_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k15.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k15.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k15_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k16.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k16.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k16_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k17.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k17.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k17_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k18.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k18.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k18_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k19.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k19.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k19_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k2.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k2.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k20.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k20.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k20_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k2_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k3.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k3.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k3_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k4.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k4.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k4_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k5.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k5.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k5_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k6.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k6.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k6_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k7.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k7.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k7_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k8.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k8.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k8_comparison.pdf
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k9.Rds
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k9.Rds.out
+    Untracked:  output/fastTopics_fit/fit_sla_simualted_fastTopics_init_truth_k9_comparison.pdf
+    Untracked:  output/fit_kos_coneNMF_F.Rout
+    Untracked:  output/sim/v0.4.5/exper1/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000_from_truth.Rout
+    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter10_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter2000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter4000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper1/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter5_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_from_truth.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_pmf_bg_K50_maxiter1000_from_truth.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_bg_maxiter_5000_from_truth.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000_from_truth.Rout
+    Untracked:  output/sim/v0.4.5/exper2/fit_sim_bg_block_n1100_p2100_K50_pmf_maxiter_5000_from_truth.Rout_old
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter100_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter1_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter2500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter300_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter400_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter4500_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter500.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_pmf_bg_K50_maxiter10_from_truth_scaled0.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_pmf_bg_K50_maxiter10_from_truth_scaled1.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter2000.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter2000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3000.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter3_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter4000.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_K50_maxiter4000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter1500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper2/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter5000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
+    Untracked:  output/sim/v0.4.5/exper3/fit_sim_bg_block_n1100_p2100_K50_pmf_bg_maxiter_5000_from_truth.Rout
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter10_init_random2.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter20_init_random2.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter1000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter1500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter2500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter3500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4000_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter4500_from_truth.Rds
+    Untracked:  output/sim/v0.4.5/exper3/sim_bg_block_n1100_p2100_K50_pmf_bg_K50_maxiter500_from_truth.Rds
+    Untracked:  output/sim_multinom/
+    Untracked:  output/sim_thinned/
+    Untracked:  script/ConeFactor_kos_K20_2.R
+    Untracked:  script/Rplots.pdf
+    Untracked:  script/droplet.RData
+    Untracked:  script/eval_fit_simulated.R
+    Untracked:  script/eval_fit_simulated.sh
+    Untracked:  script/eval_fit_simulated_plot.R
+    Untracked:  script/eval_fit_simulated_plot.sh
+    Untracked:  script/fit_droplet_fastTopics.R
+    Untracked:  script/fit_droplet_fastTopics.sbatch
+    Untracked:  script/fit_droplet_fastTopics.sh
+    Untracked:  script/fit_kos_coneNMF_F.R
+    Untracked:  script/fit_kos_coneNMF_F.sbatch
+    Untracked:  script/fit_news_ebpmf_wbg.sbatch
+    Untracked:  script/fit_news_ebpmf_wbg_initLF.R
+    Untracked:  script/fit_news_pmf.sbatch
+    Untracked:  script/fit_news_pmf_initLF.R
+    Untracked:  script/fit_news_pmf_initialization.R
+    Untracked:  script/fit_nips_ebpmf_wbg.sbatch
+    Untracked:  script/fit_nips_ebpmf_wbg_initLF.R
+    Untracked:  script/fit_nips_pmf.sbatch
+    Untracked:  script/fit_nips_pmf_initLF.R
+    Untracked:  script/fit_nips_pmf_initialization.R
+    Untracked:  script/fit_pbmc_68k_fastTopics.R
+    Untracked:  script/fit_pbmc_68k_fastTopics.sbatch
+    Untracked:  script/fit_pbmc_68k_fastTopics.sh
+    Untracked:  script/fit_sim_ebpmf_wbg2.sbatch
+    Untracked:  script/fit_sim_pmf_bg_from_truth.R
+    Untracked:  script/fit_sim_pmf_bg_from_truth.sbatch
+    Untracked:  script/fit_sim_pmf_bg_from_truth_exper3.sbatch
+    Untracked:  script/fit_simulated_ebpmf_wbg2_init.R
+    Untracked:  script/fit_simulated_ebpmf_wbg_init.R
+    Untracked:  script/fit_simulated_ebpmf_wbg_init.sbatch
+    Untracked:  script/fit_simulated_ebpmf_wbg_init.sh
+    Untracked:  script/fit_simulated_fastTopics.R
+    Untracked:  script/fit_simulated_fastTopics.sbatch
+    Untracked:  script/fit_simulated_fastTopics.sh
+    Untracked:  script/fit_simulated_fastTopics2.sh
+    Untracked:  script/fit_simulated_fastTopics3.sh
+    Untracked:  script/fit_simulated_fastTopics4.sh
+    Untracked:  script/fit_simulated_fastTopics_init.R
+    Untracked:  script/fit_simulated_fastTopics_init.sbatch
+    Untracked:  script/fit_simulated_fastTopics_init.sh
+    Untracked:  script/fit_simulated_multinom_ebpmf_wbg2_fixL.R
+    Untracked:  script/fit_simulated_multinom_ebpmf_wbg2_pg_fixL.R
+    Untracked:  script/fit_simulated_multinom_ebpmf_wbg3.R
+    Untracked:  script/fit_simulated_multinom_ebpmf_wbg3_pg.R
+    Untracked:  script/fit_sla_ebpmf_wbg2.sbatch
+    Untracked:  script/fit_sla_ebpmf_wbg3.sbatch
+    Untracked:  script/fit_sla_fastTopics.R
+    Untracked:  script/fit_sla_fastTopics.sbatch
+    Untracked:  script/fit_sla_fastTopics.sh
+    Untracked:  script/fit_sla_pmf2.sbatch
+    Untracked:  script/fit_sla_pmf3.sbatch
+    Untracked:  script/fit_sla_sim_fastTopics.R
+    Untracked:  script/fit_sla_sim_fastTopics.sbatch
+    Untracked:  script/fit_sla_sim_fastTopics.sh
+    Untracked:  script/pbmc_68k.RData
+    Untracked:  script/prepare_68k_pbmc.R
+    Untracked:  script/prepare_droplet.R
+    Untracked:  script/slurm-12240108.out
+    Untracked:  script/slurm-12240109.out
+    Untracked:  script/slurm-12240110.out
+    Untracked:  script/slurm-12240111.out
+    Untracked:  script/slurm-12240112.out
+    Untracked:  script/slurm-12240113.out
+    Untracked:  script/slurm-12240114.out
+    Untracked:  script/slurm-12240115.out
+    Untracked:  script/slurm-12240116.out
+    Untracked:  script/slurm-12240117.out
+    Untracked:  script/slurm-12240118.out
+    Untracked:  script/slurm-12240119.out
+    Untracked:  script/slurm-12240120.out
+    Untracked:  script/slurm-12240121.out
+    Untracked:  script/slurm-12240122.out
+    Untracked:  script/slurm-12240123.out
+    Untracked:  script/slurm-12240124.out
+    Untracked:  script/slurm-12240125.out
+    Untracked:  script/slurm-12240126.out
+    Untracked:  script/slurm-12240127.out
+    Untracked:  script/slurm-12240128.out
+    Untracked:  script/slurm-12240129.out
+    Untracked:  script/slurm-12240130.out
+    Untracked:  script/slurm-12240131.out
+    Untracked:  script/slurm-12240132.out
+    Untracked:  script/slurm-12240133.out
+    Untracked:  script/slurm-12240134.out
+    Untracked:  script/slurm-12240136.out
+    Untracked:  script/slurm-12240137.out
+    Untracked:  script/slurm-12240138.out
+    Untracked:  script/slurm-12240139.out
+    Untracked:  script/slurm-12240140.out
+    Untracked:  script/slurm-12240141.out
+    Untracked:  script/slurm-12240142.out
+    Untracked:  script/slurm-12240143.out
+    Untracked:  script/slurm-12240144.out
+    Untracked:  script/slurm-12240145.out
+    Untracked:  script/slurm-12240146.out
+    Untracked:  script/slurm-12240147.out
+    Untracked:  script/slurm-12240148.out
+    Untracked:  script/slurm-12240149.out
+    Untracked:  script/slurm-12240150.out
+    Untracked:  script/slurm-12240151.out
+    Untracked:  script/slurm-12240152.out
+    Untracked:  script/slurm-12240153.out
+    Untracked:  script/slurm-12240154.out
+    Untracked:  script/slurm-12240155.out
+    Untracked:  script/slurm-12240156.out
+    Untracked:  script/slurm-12240157.out
+    Untracked:  script/slurm-12240158.out
+    Untracked:  script/slurm-12240159.out
+    Untracked:  script/slurm-12240160.out
+    Untracked:  script/slurm-12240161.out
+    Untracked:  script/slurm-12240162.out
+    Untracked:  script/slurm-12240163.out
+    Untracked:  script/slurm-12240164.out
+    Untracked:  script/slurm-12240165.out
+    Untracked:  script/slurm-12240166.out
+    Untracked:  script/slurm-12240167.out
+    Untracked:  script/slurm-12240168.out
+    Untracked:  script/slurm-12240169.out
+    Untracked:  script/slurm-12240170.out
+    Untracked:  script/slurm-12240171.out
+    Untracked:  script/slurm-12240172.out
+    Untracked:  script/slurm-12240173.out
+    Untracked:  script/slurm-12240174.out
+    Untracked:  script/slurm-12240175.out
+    Untracked:  script/slurm-12240176.out
+    Untracked:  script/slurm-12240177.out
+    Untracked:  script/slurm-12240178.out
+    Untracked:  script/slurm-12240179.out
+    Untracked:  script/slurm-12240180.out
+    Untracked:  script/slurm-12240181.out
+    Untracked:  script/slurm-12240182.out
+    Untracked:  script/slurm-12240183.out
+    Untracked:  script/slurm-12240184.out
+    Untracked:  script/slurm-12240185.out
+    Untracked:  script/slurm-12240186.out
+    Untracked:  script/slurm-12240187.out
+    Untracked:  script/slurm-12240188.out
+    Untracked:  script/slurm-12240189.out
+    Untracked:  script/slurm-12240190.out
+    Untracked:  script/slurm-12240191.out
+    Untracked:  script/slurm-12240192.out
+    Untracked:  script/slurm-12240193.out
+    Untracked:  script/slurm-12240194.out
+    Untracked:  script/slurm-12240195.out
+    Untracked:  script/slurm-12240196.out
+    Untracked:  script/slurm-12240197.out
+    Untracked:  script/slurm-12240198.out
+    Untracked:  script/slurm-12240199.out
+    Untracked:  script/slurm-12240200.out
+    Untracked:  script/slurm-12240201.out
+    Untracked:  script/slurm-12240202.out
+    Untracked:  script/slurm-12240203.out
+    Untracked:  script/slurm-12240204.out
+    Untracked:  script/slurm-12240205.out
+    Untracked:  script/slurm-12240206.out
+    Untracked:  script/slurm-12240207.out
+    Untracked:  script/slurm-12240208.out
+    Untracked:  script/slurm-12240209.out
+    Untracked:  script/slurm-12240210.out
+    Untracked:  script/slurm-12240212.out
+    Untracked:  script/slurm-12240213.out
+    Untracked:  script/slurm-12240214.out
+    Untracked:  script/slurm-12240215.out
+    Untracked:  script/slurm-12240216.out
+    Untracked:  script/slurm-12240217.out
+    Untracked:  script/slurm-12240218.out
+    Untracked:  script/slurm-12240219.out
+    Untracked:  script/slurm-12240220.out
+    Untracked:  script/slurm-12240221.out
+    Untracked:  script/slurm-12240222.out
+    Untracked:  script/slurm-12240223.out
+    Untracked:  script/slurm-12240224.out
+    Untracked:  script/slurm-12240225.out
+    Untracked:  script/slurm-12240226.out
+    Untracked:  script/slurm-12240227.out
+    Untracked:  script/slurm-12240228.out
+    Untracked:  script/slurm-12240229.out
+    Untracked:  script/slurm-12240230.out
+    Untracked:  script/slurm-12240231.out
+    Untracked:  script/slurm-12240232.out
+    Untracked:  script/slurm-12240233.out
+    Untracked:  script/slurm-12240234.out
+    Untracked:  script/slurm-12240235.out
+    Untracked:  script/slurm-12240236.out
+    Untracked:  script/slurm-12240237.out
+    Untracked:  script/slurm-12240238.out
+    Untracked:  script/slurm-12240239.out
+    Untracked:  script/slurm-12240240.out
+    Untracked:  script/slurm-12240241.out
+    Untracked:  script/slurm-12240242.out
+    Untracked:  script/slurm-12240243.out
+    Untracked:  script/slurm-12240244.out
+    Untracked:  script/slurm-12240245.out
+    Untracked:  script/slurm-12240246.out
+    Untracked:  script/slurm-12240247.out
+    Untracked:  script/slurm-12240248.out
+    Untracked:  script/slurm-12240249.out
+    Untracked:  script/slurm-12240250.out
+    Untracked:  script/slurm-12240251.out
+    Untracked:  script/slurm-12240252.out
+    Untracked:  script/slurm-12240253.out
+    Untracked:  script/slurm-12240254.out
+    Untracked:  script/slurm-12240255.out
+    Untracked:  script/slurm-12240256.out
+    Untracked:  script/slurm-12240257.out
+    Untracked:  script/slurm-12240258.out
+    Untracked:  script/slurm-12240259.out
+    Untracked:  script/slurm-12240260.out
+    Untracked:  script/slurm-12240261.out
+    Untracked:  script/slurm-12240262.out
+    Untracked:  script/slurm-12240263.out
+    Untracked:  script/slurm-12240264.out
+    Untracked:  script/slurm-12240265.out
+    Untracked:  script/slurm-12240266.out
+    Untracked:  script/slurm-12240267.out
+    Untracked:  script/slurm-12240268.out
+    Untracked:  script/slurm-12240269.out
+    Untracked:  script/slurm-12240270.out
+    Untracked:  script/slurm-12240271.out
+    Untracked:  script/slurm-12240272.out
+    Untracked:  script/slurm-12240273.out
+    Untracked:  script/slurm-12240274.out
+    Untracked:  script/slurm-12240275.out
+    Untracked:  script/slurm-12240276.out
+    Untracked:  script/slurm-12240277.out
+    Untracked:  script/slurm-12240278.out
+    Untracked:  script/slurm-12240279.out
+    Untracked:  script/slurm-12240280.out
+    Untracked:  script/slurm-12240281.out
+    Untracked:  script/slurm-12240282.out
+    Untracked:  script/slurm-12240283.out
+    Untracked:  script/slurm-12240284.out
+    Untracked:  script/slurm-12240285.out
+    Untracked:  script/slurm-12240286.out
+    Untracked:  script/slurm-12240287.out
+    Untracked:  script/slurm-12240288.out
+    Untracked:  script/slurm-12240289.out
+    Untracked:  script/slurm-12240290.out
+    Untracked:  script/slurm-12240291.out
+    Untracked:  script/slurm-12240292.out
+    Untracked:  script/slurm-12240293.out
+    Untracked:  script/slurm-12240294.out
+    Untracked:  script/slurm-12240295.out
+    Untracked:  script/slurm-12240296.out
+    Untracked:  script/slurm-12240297.out
+    Untracked:  script/slurm-12240298.out
+    Untracked:  script/slurm-12240299.out
+    Untracked:  script/smallsim2.R
+    Untracked:  test.R
+
+Unstaged changes:
+    Modified:   analysis/mmultinom2.Rmd
+    Modified:   analysis/sla_simulated_compare_mle_eb.Rmd
+    Modified:   code/init.R
+    Modified:   code/misc.R
+    Deleted:    data/sim/docword.sim_bg_block_n1100_p2100_K50.txt
+    Deleted:    data/sim/init.sim_bg_block_n1100_p2100_K50.Rds
+    Deleted:    data/sim/truth.sim_bg_block_n1100_p2100_K50.Rds
+    Modified:   output/fastTopics_fit/fit_droplet_simulated_fastTopics_k19_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k10_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k11_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k12_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k2_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k3_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k4_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k5_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k6_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k7_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k8_comparison.pdf
+    Modified:   output/fastTopics_fit/fit_sla_sim_fastTopics_k9_comparison.pdf
+    Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000.Rout
+    Deleted:    output/sim/v0.4.5/fit_sim_bg_block_n1100_p2100_K50_ebpmf_wbg_maxiter_5000_from_truth.Rout
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter3.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter5000_from_truth.Rds
+    Deleted:    output/sim/v0.4.5/sim_bg_block_n1100_p2100_K50_ebpmf_wbg_K50_maxiter50_from_truth2.Rds
+    Modified:   script/fit_kos_NMF_F.R
+    Modified:   script/fit_sim_ebpmf_wbg.sbatch
+    Modified:   script/fit_sim_ebpmf_wbg_from_pmf_bg.sbatch
+    Modified:   script/fit_sim_ebpmf_wbg_from_pmf_bg2.sbatch
+    Modified:   script/fit_simulated_multinom.sh
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/sla_simulated_multinom_compare_mle_eb.Rmd</code>) and HTML (<code>docs/sla_simulated_multinom_compare_mle_eb.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b7c3d9804b2068a08a8ff3307707633eda560ebf/analysis/sla_simulated_multinom_compare_mle_eb.Rmd" target="_blank">b7c3d98</a>
+</td>
+<td>
+Zihao
+</td>
+<td>
+2021-07-27
+</td>
+<td>
+analysis/sla_simulated_multinom_compare_mle_eb.Rmd
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<pre class="r"><code>rm(list = ls())
+source(&quot;code/misc.R&quot;)
+library(fastTopics)
+library(ebpmf.alpha)
+
+datafile = &quot;data/sim_multinom/sla_simulated_fastTopics_k20_0.3.Rds&quot;
+modelname_eb1 = 
+  &quot;output/sim_multinom/fit_ebpmf_wbg2_sla_simulated_fastTopics_k20_0.3.Rds&quot;
+modelname_mle = 
+  &quot;output/sim_multinom/fit_fastTopics_sla_simulated_fastTopics_k20_0.3.Rds&quot;
+
+data = readRDS(datafile)
+truth = data$truth
+X = data$X
+rm(data)
+dim(X)</code></pre>
+<pre><code>[1] 3207 6614</code></pre>
+<pre class="r"><code>k = ncol(truth$F)
+
+fitted.eb1 = readRDS(modelname_eb1)
+fitted.mle = readRDS(modelname_mle)</code></pre>
+<pre class="r"><code>fitted.mle.m = fastTopics::poisson2multinom(fitted.mle)
+fitted.eb1.p = ebpmf22fastTopics_pmf(fitted.eb1)
+fitted.eb1.m = fastTopics::poisson2multinom(fitted.eb1.p)
+
+idx.mle = match_topics(truth$F, fitted.mle.m$F)
+idx.eb1 = match_topics(truth$F, fitted.eb1.m$F)
+
+idx.mle</code></pre>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
+<pre class="r"><code>idx.eb1</code></pre>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
+<pre class="r"><code>model = fitted.mle.m
+idx = match_topics(truth$F, model$F)
+l_mse &lt;- c()
+f_mse &lt;- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = &quot;loading (truth)&quot;, ylab = &quot;loading (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+  plot(truth$F[,i], model$F[,j], xlab = &quot;factor (truth)&quot;, ylab = &quot;factor (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
+}</code></pre>
+<p><img src="figure/sla_simulated_multinom_compare_mle_eb.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>l_mse.mle = l_mse
+f_mse.mle = f_mse</code></pre>
+<pre class="r"><code>model = fitted.eb1.m
+idx = match_topics(truth$F, model$F)
+l_mse &lt;- c()
+f_mse &lt;- c()
+
+par(mfrow = c(k, 2))
+for(i in 1:k){
+  j = idx[i]
+  plot(truth$L[,i], model$L[,j], xlab = &quot;loading (truth)&quot;, ylab = &quot;loading (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+  plot(truth$F[,i], model$F[,j], xlab = &quot;factor (truth)&quot;, ylab = &quot;factor (fitted)&quot;, main = sprintf(&quot;topic %d&quot;, i))
+  abline(a = 0, b = 1, col = &quot;blue&quot;)
+  l_mse = c(l_mse, mean((truth$L[,i] - model$L[,j])^2))
+  f_mse = c(f_mse, mean((truth$F[,i] - model$F[,j])^2))
+}</code></pre>
+<p><img src="figure/sla_simulated_multinom_compare_mle_eb.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>l_mse.eb1 = l_mse
+f_mse.eb1 = f_mse</code></pre>
+<!-- ```{r} -->
+<!-- mt = get_prior_summary(gs = fitted.eb1$qg$gfs, log10 = FALSE, return_matrix = TRUE) -->
+<!-- mt["phi=0.001",] -->
+<!-- ``` -->
+<pre class="r"><code>round(l_mse.eb1/l_mse.mle, digits = 2)</code></pre>
+<pre><code> [1] 0.56 0.74 0.67 0.64 0.61 0.73 0.59 0.47 0.91 0.54 0.68 0.50 0.80 0.48
+[15] 0.65 3.21 0.81 0.53 0.45 0.54</code></pre>
+<pre class="r"><code>round(f_mse.eb1/f_mse.mle, digits = 2)</code></pre>
+<pre><code> [1] 0.77 0.68 1.05 0.51 0.85 0.73 1.12 0.45 0.96 0.41 0.42 0.86 1.19 1.07
+[15] 0.56 1.22 1.23 0.62 0.72 0.82</code></pre>
+<pre class="r"><code>c(fitted.eb1$ELBO[1000], fitted.eb1$KL[1000])</code></pre>
+<pre><code>[1] -440254.38   63207.43</code></pre>
+<pre class="r"><code># ## for pg prior on F
+# gf = do.call(rbind, lapply(fitted.eb1$qg$gfs, unlist))
+# round(gf, 3)
+get_prior_summary(gs = fitted.eb1$qg$gfs, log10 = FALSE)</code></pre>
+<p><img src="figure/sla_simulated_multinom_compare_mle_eb.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.1 (2019-07-05)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ebpmf.alpha_0.5.0 fastTopics_0.5-53 pheatmap_1.0.12   workflowr_1.6.2  
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.1         tidyr_1.1.0        jsonlite_1.6      
+ [4] viridisLite_0.3.0  RcppParallel_4.4.3 assertthat_0.2.1  
+ [7] mixsqp_0.3-43      yaml_2.2.0         progress_1.2.2    
+[10] ggrepel_0.9.1      pillar_1.4.2       backports_1.1.4   
+[13] lattice_0.20-38    quantreg_5.41      glue_1.3.1        
+[16] quadprog_1.5-7     digest_0.6.20      RColorBrewer_1.1-2
+[19] promises_1.0.1     colorspace_1.4-1   cowplot_1.0.0     
+[22] htmltools_0.3.6    httpuv_1.5.1       Matrix_1.2-18     
+[25] pkgconfig_2.0.2    invgamma_1.1       SparseM_1.77      
+[28] purrr_0.3.4        scales_1.1.0       whisker_0.3-2     
+[31] later_0.8.0        Rtsne_0.15         MatrixModels_0.4-1
+[34] git2r_0.26.1       tibble_2.1.3       ggplot2_3.3.3     
+[37] ashr_2.2-47        lazyeval_0.2.2     magrittr_1.5      
+[40] crayon_1.3.4       mcmc_0.9-6         evaluate_0.14     
+[43] ebpm_0.0.1.3       fs_1.3.1           MASS_7.3-51.4     
+[46] truncnorm_1.0-8    tools_3.6.1        data.table_1.13.2 
+[49] prettyunits_1.0.2  hms_0.5.3          matrixStats_0.57.0
+[52] lifecycle_0.1.0    stringr_1.4.0      MCMCpack_1.4-5    
+[55] plotly_4.9.0       munsell_0.5.0      irlba_2.3.3       
+[58] compiler_3.6.1     rlang_0.4.10       grid_3.6.1        
+[61] htmlwidgets_1.3    rmarkdown_1.13     gtable_0.3.0      
+[64] R6_2.4.0           knitr_1.23         dplyr_0.8.3       
+[67] uwot_0.1.5         rprojroot_1.3-2    stringi_1.4.3     
+[70] SQUAREM_2017.10-1  Rcpp_1.0.5         vctrs_0.3.1       
+[73] tidyselect_1.1.0   xfun_0.8           coda_0.19-3       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
