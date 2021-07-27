@@ -60,7 +60,7 @@ The goal is to find situations where our EB approach can imporve upon MLE (or Ba
 
 
 ### `mmultinom`
-I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1)
+I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1). I think borrowing information across topics to estimate $F$ (e.g. background model) benefits those less important words the most, whereas for the important words, MLE probably suffices (in a usual dataset not crazily sparse)
 
 ### Anchor-word based topic modeling
 
