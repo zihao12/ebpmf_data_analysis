@@ -29,6 +29,7 @@ Here $m_{jd}$ is the background frequency of gene $j$ in subject $d$. I implemen
 
 ## Example
 ```{r}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 library(ebpmf.alpha)
 ```
 
@@ -53,7 +54,6 @@ X = matrix(rpois(n = n*p, lambda = lam), nrow = n)
 ### Fit with MLE
 ```{r}
 fit = ebpmf.alpha::pmf_subject(X = X, u = u, K = K, maxiter = 100)
-plot(m, fit$m)
 ```
 
 ### Fit with EB
@@ -63,12 +63,15 @@ fit.eb = ebpmf.alpha::ebpmf_wbg2_subject(X = X, u = u, K = K, init = init, maxit
 ```
 
 ```{r}
-plot(m, fit.eb$m$mean)
+par(mfrow = c(1,2))
+plot(m, fit$m, ylab = "mhat", main = "MLE")
+plot(m, fit.eb$m$mean, ylab = "mhat", main = "EB")
 ```
 
 ```{r}
-plot(fit$log_liks)
-plot(fit.eb$ELBO)
+par(mfrow = c(1,2))
+plot(fit$log_liks, main = "MLE")
+plot(fit.eb$ELBO, main = "EB")
 ```
 
 

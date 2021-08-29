@@ -80,7 +80,8 @@ I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12
 * Possible improvements: we have $p$ points $\hat{C}_i$ in the $p$-simplex, each is an observation of a point in the $p$-simplex, $C_i$. The anchor word assumption says there are $K$ rows of $C_i$ whose convex space is the same as convex space of $C$. Can we jointly estimate $C, S, F, A$? 
 
 
-
+### Incorporate covariates using background model
+* [ebpmf_wbg2_subject](https://zihao12.github.io/ebpmf_data_analysis/experiment_ebpmf_wbg_subject)
 
 
 
