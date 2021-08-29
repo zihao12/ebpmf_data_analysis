@@ -1,0 +1,80 @@
+---
+title: "experiment_ebpmf_wbg_subject"
+author: "zihao12"
+date: "2021-08-29"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+## Introduction
+Suppose now we are given count matrix $X_{ij}$ and subject indicator $u_i$: the expression of gene $j$ in cell $i$ is $x_{ij}$ and we know cell $i$ is from subject $u_i$. It's reasonable to assume that cells from the same subject $i$ are correlated, and that correlation corrupt the biologically meaningful low-rank structure in the mean matrix. Below we model it using background model. 
+
+Here the model is
+
+\begin{align}
+  & X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  & \lambda_{ij} = m_{j u_i} \sum_k l_{ik} f_{jk}
+\end{align}
+Here $m_{jd}$ is the background frequency of gene $j$ in subject $d$. I implemented MLE of this model in `ebpmf.alpha::pmf_subject` using EM algorithm. I also implemented a more complicated empirical bayes version (using the MLE algorithm for its initialization):
+
+\begin{align}
+  & X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  & \lambda_{ij} = m_{j u_i} \sum_k w_k l_{ik} f_{jk}\\
+  & m_{jd} \sim \text{Ga}(\alpha^m_{d}, \beta^m_{d})\\
+  & l_{ik} \sim \text{Ga}(\alpha^l_{k}, \beta^l_{k})\\
+  & f_{jk} \sim \sum_c \pi^f_{kc} \text{Ga}(a_c, a_c)
+\end{align}
+
+
+## Example
+```{r}
+library(ebpmf.alpha)
+```
+
+
+```{r}
+set.seed(123)
+n = 100
+p = 50
+K = 3
+
+## simulate data
+L = matrix(100*runif(n*K), ncol = K)
+F = matrix(runif(p*K), ncol = K)
+m = matrix(runif(p*2), nrow = p)
+u = c(replicate(n/2, 1), replicate(n/2, 2))
+lam = L %*% t(F)
+lam[u == 1,] = t(t(lam[u == 1,]) * m[,1])
+lam[u == 2,] = t(t(lam[u == 2,]) * m[,2])
+X = matrix(rpois(n = n*p, lambda = lam), nrow = n)
+```
+
+### Fit with MLE
+```{r}
+fit = ebpmf.alpha::pmf_subject(X = X, u = u, K = K, maxiter = 100)
+plot(m, fit$m)
+```
+
+### Fit with EB
+```{r}
+init = ebpmf.alpha::initialize_wbg2_subject_from_LFm(L = fit$L, F = fit$F, m = fit$m)
+fit.eb = ebpmf.alpha::ebpmf_wbg2_subject(X = X, u = u, K = K, init = init, maxiter = 500)
+```
+
+```{r}
+plot(m, fit.eb$m$mean)
+```
+
+```{r}
+plot(fit$log_liks)
+plot(fit.eb$ELBO)
+```
+
+
+
+
+
+
+
+
