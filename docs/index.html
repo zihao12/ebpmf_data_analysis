@@ -333,7 +333,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-27
+<strong>Last updated:</strong> 2021-08-29
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -364,16 +364,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree284f2b780ea2060993e7223e36b794dfb26695datargetblank284f2b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/284f2b780ea2060993e7223e36b794dfb26695da" target="_blank">284f2b7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34targetblank3019c5ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34" target="_blank">3019c5e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree284f2b780ea2060993e7223e36b794dfb26695datargetblank284f2b7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34targetblank3019c5ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/284f2b780ea2060993e7223e36b794dfb26695da" target="_blank">284f2b7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34" target="_blank">3019c5e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -410,6 +410,7 @@ Untracked files:
     Untracked:  analysis/poissonmix_vs_pmf.Rmd
     Untracked:  analysis/simulate_data_bg.Rmd
     Untracked:  analysis/simulate_data_bg2.Rmd
+    Untracked:  analysis/sinkhorn.Rmd
     Untracked:  analysis/summary_sla_news_nips.Rmd
     Untracked:  analysis/test.R
     Untracked:  data/GSE145926_RAW/
@@ -744,6 +745,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34/analysis/index.Rmd" target="_blank">3019c5e</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-08-29
+</td>
+<td>
+experiment_ebpmf_wbg_subject
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/49ee7726bcc8188b1afe9e00245cabf97006ec3e/docs/index.html" target="_blank">49ee772</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-07-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1780,6 +1815,12 @@ Start workflowr project.
 <li><p>In this <a href="https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment4.ipynb">small experiment</a> we can see reducing dictionary size can improve the estimate a lot. The main issue with high dimension is identifying correct anchor rows.</p></li>
 <li><p>The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix <span class="math inline">\(C_{ij} = P(X_1 = w_i, X_2 = w_j)\)</span>, which is high dimensional and built from very sparse dataset; results crucially depend on only <span class="math inline">\(K\)</span> rows of <span class="math inline">\(C\)</span>. In practice the we often find the wrong anchor rows with poor estimates for <span class="math inline">\(C_{s_k, k}\)</span>. Why? We have different confidence levels for estimates of rows of <span class="math inline">\(C\)</span>, but after normalizing rows of <span class="math inline">\(C\)</span> we don’t use the different confidence levels when doing vertex hunting.</p></li>
 <li><p>Possible improvements: we have <span class="math inline">\(p\)</span> points <span class="math inline">\(\hat{C}_i\)</span> in the <span class="math inline">\(p\)</span>-simplex, each is an observation of a point in the <span class="math inline">\(p\)</span>-simplex, <span class="math inline">\(C_i\)</span>. The anchor word assumption says there are <span class="math inline">\(K\)</span> rows of <span class="math inline">\(C_i\)</span> whose convex space is the same as convex space of <span class="math inline">\(C\)</span>. Can we jointly estimate <span class="math inline">\(C, S, F, A\)</span>?</p></li>
+</ul>
+</div>
+<div id="incorporate-covariates-using-background-model" class="section level3">
+<h3>Incorporate covariates using background model</h3>
+<ul>
+<li><a href="https://zihao12.github.io/ebpmf_data_analysis/experiment_ebpmf_wbg_subject">ebpmf_wbg2_subject</a></li>
 </ul>
 </div>
 </div>
