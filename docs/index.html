@@ -364,16 +364,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree948280d83d547019eeecf3b9718380adf35c841etargetblank948280da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/948280d83d547019eeecf3b9718380adf35c841e" target="_blank">948280d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreecc70a3015348c40c23f39181bfb13090ef809c3dtargetblankcc70a30a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/cc70a3015348c40c23f39181bfb13090ef809c3d" target="_blank">cc70a30</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree948280d83d547019eeecf3b9718380adf35c841etargetblank948280da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreecc70a3015348c40c23f39181bfb13090ef809c3dtargetblankcc70a30a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/948280d83d547019eeecf3b9718380adf35c841e" target="_blank">948280d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/cc70a3015348c40c23f39181bfb13090ef809c3d" target="_blank">cc70a30</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -747,6 +747,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/cc70a3015348c40c23f39181bfb13090ef809c3d/analysis/index.Rmd" target="_blank">cc70a30</a>
+</td>
+<td>
+Zihao Wang
+</td>
+<td>
+2021-10-15
+</td>
+<td>
+update index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/2bfa2a4d6dccaff5d5b45f52f5be6040a24b591d/docs/index.html" target="_blank">2bfa2a4</a>
+</td>
+<td>
+Zihao Wang
+</td>
+<td>
+2021-10-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1842,7 +1876,7 @@ Start workflowr project.
 <li><p>I find <a href="https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf">paper</a> &amp; <a href="https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf">paper</a> gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a <a href="https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing">study note</a> &amp; <a href="https://drive.google.com/file/d/1R9kdE8u8wPpNQgk40YMawHrAuKJtFfTC/view?usp=sharing">study note</a> based on the two papers and the <a href="https://arxiv.org/abs/1204.1956">seminal paper</a> &amp; <a href="https://arxiv.org/abs/1212.4777">seminal paper</a></p></li>
 <li><p>My experiments using jupyter notebook can be seen <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/HEAD">here</a></p></li>
 <li><p>So far I can say this type of method is very fast, but can give very bad results compared to MLE.</p></li>
-<li><p>The bottleneck step for estimation is <code>recoverS</code> step: (here)[<a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fdiagnostic1.ipynb">https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fdiagnostic1.ipynb</a>]. In this step quality for estimation of the entire <span class="math inline">\(\bar{C}\)</span> matrix is important, and we can’t obtain estimates good enough in many practical problems, without truncating dictionary. In the <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Finvestigate_recoverS.ipynb">example</a> and <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Finvestigate_recoverS2.ipynb">example</a>, we can see how the estimation error for <span class="math inline">\(\bar{C}\)</span> affects the geometry and thus leads to wrongly selected anchor words; I also show how we can improve the estimate using <code>sinkhorn + truncated SVD</code> idea. I explore this further in this (experiment)[<a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fsinkhorn1.ipynb">https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fsinkhorn1.ipynb</a>]</p></li>
+<li><p>The bottleneck step for estimation is <code>recoverS</code> step: <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fdiagnostic1.ipynb">here</a>. In this step quality for estimation of the entire <span class="math inline">\(\bar{C}\)</span> matrix is important, and we can’t obtain estimates good enough in many practical problems, without truncating dictionary. In the <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Finvestigate_recoverS.ipynb">example</a> and <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Finvestigate_recoverS2.ipynb">example</a>, we can see how the estimation error for <span class="math inline">\(\bar{C}\)</span> affects the geometry and thus leads to wrongly selected anchor words; I also show how we can improve the estimate using <code>sinkhorn + truncated SVD</code> idea. I explore this further in this <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fsinkhorn1.ipynb">experiment</a></p></li>
 <li><p>Another modeling choice is to use the first moment directly (instead of forming the word-word co-occurrence matrix). I experimented <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Ffirst_moment%3F.ipynb">here</a>. Directly using counts for anchor words to represent loading is very bad; can be improved by <code>sinkhorn + truncated SVD</code>. Still it’s much worse than MLE.</p></li>
 </ul>
 <!-- * I find the algorithm can recover $F$ really well ($A$ is not as good though), even though the identified "anchor words" do not satisfy the anchor-word assumptions in [the small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment1.ipynb). The reason is that the rows of the identified "anchor words" are very similar to the rows of the true "anchor words" in [here](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment3.ipynb) -->
