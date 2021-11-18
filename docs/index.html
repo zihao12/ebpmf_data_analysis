@@ -333,7 +333,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-10-15
+<strong>Last updated:</strong> 2021-11-18
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -364,16 +364,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreecc70a3015348c40c23f39181bfb13090ef809c3dtargetblankcc70a30a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/cc70a3015348c40c23f39181bfb13090ef809c3d" target="_blank">cc70a30</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree30b634d254077e72c3c9d2ccf3eaf66e4121a3b7targetblank30b634da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/30b634d254077e72c3c9d2ccf3eaf66e4121a3b7" target="_blank">30b634d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistreecc70a3015348c40c23f39181bfb13090ef809c3dtargetblankcc70a30a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree30b634d254077e72c3c9d2ccf3eaf66e4121a3b7targetblank30b634da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/cc70a3015348c40c23f39181bfb13090ef809c3d" target="_blank">cc70a30</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/30b634d254077e72c3c9d2ccf3eaf66e4121a3b7" target="_blank">30b634d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -398,6 +398,7 @@ Ignored files:
     Ignored:    topicView-app/.DS_Store
 
 Untracked files:
+    Untracked:  analysis/.index_draft.txt.swp
     Untracked:  analysis/covid_dataset.Rmd
     Untracked:  analysis/draft.Rmd
     Untracked:  analysis/draft2.Rmd
@@ -405,6 +406,7 @@ Untracked files:
     Untracked:  analysis/ebpmf_wbg_simulation_big.Rmd
     Untracked:  analysis/ebpmf_wbg_simulation_big2_more.Rmd
     Untracked:  analysis/heatmap.Rmd
+    Untracked:  analysis/index_draft.txt
     Untracked:  analysis/investigate_largeK.Rmd
     Untracked:  analysis/investigate_news_topics.Rmd
     Untracked:  analysis/poissonmix_vs_pmf.Rmd
@@ -747,6 +749,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/30b634d254077e72c3c9d2ccf3eaf66e4121a3b7/analysis/index.Rmd" target="_blank">30b634d</a>
+</td>
+<td>
+Zihao Wang
+</td>
+<td>
+2021-11-18
+</td>
+<td>
+clean up index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/c7777da40c20d8727366df53178dd14be4c12647/docs/index.html" target="_blank">c7777da</a>
+</td>
+<td>
+Zihao Wang
+</td>
+<td>
+2021-10-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1825,75 +1861,78 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my research website.</p>
-<div id="model" class="section level2">
-<h2>Model:</h2>
+<div id="model" class="section level1">
+<h1>Model:</h1>
+<div id="poisson-matrix-factorization-pmf" class="section level2">
+<h2>Poisson Matrix Factorization (PMF)</h2>
 <ul>
-<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">Model description for ebpmf-wbg</a></p></li>
-<li><p><a href="https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations">Derivations</a></p></li>
-<li><p><a href="https://zihao12.github.io/ebpmf_data_analysis/PMF_WBG_presentation.pdf">Presentation at Stephenslab group meeting</a></p></li>
-</ul>
-<!-- Data preprocessing demo:\ -->
-<!-- * [process SLA dataset](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla)\ -->
-</div>
-<div id="data-analysis-results" class="section level2">
-<h2>Data analysis results:</h2>
-<p>The goal is to find situations where our EB approach can imporve upon MLE (or Bayesian approaches like LDA). Some datsets used are: <a href="https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla">sla</a> …</p>
-<ul>
-<li><p>On <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2">simulated data1</a> (and <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_more">more</a>) &amp; <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2">simulated data2</a> We can see our EB approach has the potential to beat MLE in terms of “<a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2#pmf_bg_from_truth">False Discoveries</a>” of important words &amp; documents. However the requires initialization from close to the truth. So I hope that we can find applications where PMF fit is basically right but can be refined much better with EB approach, like in <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2">simulated data1</a></p></li>
-<li><p>I first did <a href="https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla">fastTopics_on_sla</a>. I find estimating <span class="math inline">\(F\)</span> seems easier than estimating <span class="math inline">\(L\)</span>. Then on <a href="https://zihao12.github.io/ebpmf_data_analysis/prepare_sla_sim">simulated data from sla</a>: I compared <a href="https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb">MLE vs ebpmf-wbg</a> and find EB gives much better estimate of <span class="math inline">\(\hat{L}\)</span>.</p></li>
-<li><p>About asymmetry of <span class="math inline">\(L, F\)</span>: <a href="https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla2">fastTopics_on_sla2</a>, <a href="https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_droplet">fastTopics_on_droplet</a></p></li>
-<li><p><a href="https://zihao12.shinyapps.io/topicview-app/">On real data</a> (in development);</p></li>
-</ul>
-<!-- * Compare MLE vs EB fits: [sla](https://zihao12.github.io/ebpmf_data_analysis/sla_compare_mle_eb), [nips](https://zihao12.github.io/ebpmf_data_analysis/nips_compare_mle_eb) -->
-</div>
-<div id="other-stuff" class="section level2">
-<h2>Other stuff</h2>
-<div id="paper-reading" class="section level3">
-<h3>paper reading</h3>
-<ul>
-<li><p>There are several interesting variants of <a href="https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf">LDA</a>: <a href="https://projecteuclid.org/journals/annals-of-applied-statistics/volume-1/issue-1/A-correlated-topic-model-of/10.1214/07-AOAS114.full">Correlated Topic Model</a>, <a href="http://www.cs.cmu.edu/~epxing/papers/2011/Eisenstein_Ahmed_Xing_ICML11.pdf">sparse additive generative models of text (SAGE)</a>, <a href="https://scholar.princeton.edu/files/bstewart/files/stmnips2013.pdf">Structural Topic Model</a>. Here are <a href="https://drive.google.com/file/d/1W0v2oUS50DgBOVw8Ch5CjBKDELoVjspb/view?usp=sharing">my notes</a>. The “sparsity” assumption of SAGE is basically the same as in ours, but imposed using different priors.</p></li>
-<li><p>Our current optimization approach is VBEM (EB), which is slow to converge and can get stuck at bad local optimal. Some <a href="https://users.rcc.uchicago.edu/~aksarkar/singlecell-ideas/hpmf.html">attempted alternatives</a>. One key problem is compute gradient for <span class="math inline">\(E_q log(X | L, F)\)</span> and <a href="https://www.jmlr.org/papers/volume21/19-346/19-346.pdf">Monte Carlo Gradient Estimation in Machine Learning</a> suggests some methods applicable here.</p></li>
+<li>Suppose we observe count matrix <span class="math inline">\(X \in R_{+}^{n \times p}\)</span>. In topic modeling context, <span class="math inline">\(X_{ij}\)</span> means the number occurrences of word <span class="math inline">\(i\)</span> in document <span class="math inline">\(j\)</span>; in gene expression data, it means the number of occurrences in gene <span class="math inline">\(i\)</span> in cell <span class="math inline">\(j\)</span>.</li>
+<li>PMF assumes its underlying mean matrix can be decomposed into two low dimensional, non-negative matrices <span class="math inline">\(L F^T\)</span> where <span class="math inline">\(L \in R^{n \times K}, F \in R^{p \times K}\)</span>. Each column of <span class="math inline">\(F\)</span> is called a factor/topic, representing the importance of a word/gene in a topic/biological process. Each row of <span class="math inline">\(L\)</span> is the membership vector for each sample (document/cell) <span class="math inline">\(i\)</span>, representing the importances of topics/bioligical processes for the sample.<br />
+</li>
+<li>The model can be written as:
+<span class="math display">\[\begin{align}
+  &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  &amp; \lambda_{ij} = \sum_{k} l_{ik} f_{jk}\\
+  &amp; l_{ik}, f_{jk} \geq 0
+\end{align}\]</span></li>
+<li><p>To estimate <span class="math inline">\(L, F\)</span> we maximize the likelihood of the model above, through various types of coordinate descent methods.</p></li>
+<li><p>Sometimes the data is very sparse so MLE tends to overfit. Therefore we need to find ways to regularize <span class="math inline">\(L, F\)</span>.</p></li>
 </ul>
 </div>
-<div id="cone-nmf" class="section level3">
-<h3>cone-NMF</h3>
-<p>(the Frobenius norm case is the same as <a href="https://people.eecs.berkeley.edu/~jordan/papers/ding-li-jordan-pami.pdf">convex-NMF</a>):</p>
+<div id="adaptive-penalization-with-empirical-bayes-approach-eb" class="section level2">
+<h2>Adaptive penalization with Empirical Bayes approach (EB)</h2>
 <ul>
-<li><p>First, I found that our regular PMF solution is basically inside <span class="math inline">\(\text{cone}(X)\)</span> where each column of <span class="math inline">\(X\)</span> is a sample: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html">cone_pmf1</a></p></li>
-<li><p>Then I derived and implemented the cone NMF for Frobeneus norm: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_l2">cone_nmf_l2</a> . I note that fitted <span class="math inline">\(B, W^T\)</span> are almost identical. I fitted on real data to see if it’s still the case: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_f_3">cone on kos data</a></p></li>
-<li><p>I find an example where cone NMF can improve the PMF fit: <a href="https://zihao12.github.io/ebpmf_data_analysis/cone_NMF_l2_2">cone_NMF_l2_2</a></p></li>
-<li><p>I also investigated direct estimates of word-word covariance matrix: <a href="https://zihao12.github.io/ebpmf_data_analysis/multinom_sampling">multinom_sampling</a></p></li>
+<li>If we simply add a penalization function on <span class="math inline">\(F\)</span>, we either have only one penalization parameter for all <span class="math inline">\(k\)</span> factors, or need to tune <span class="math inline">\(k\)</span> penalization parameters simultaneously. The same is true for regularizing <span class="math inline">\(L\)</span>.</li>
+<li>With EB approach, we can flexibly incorporate penalization in a data-adaptive fashion:
+<span class="math display">\[\begin{align}
+  &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  &amp; \lambda_{ij} = \sum_{k} l_{ik} f_{jk}\\
+  &amp; l_{ik} \sim g_{L, k}, f_{jk} \sim g_{F, k}\\
+  &amp; g_{L, k} \in \mathcal{G}_L, g_{F, k} \in \mathcal{G}_F
+\end{align}\]</span></li>
+<li>We estimate <span class="math inline">\(\hat{g}\)</span>’s with marginal MLE (so the prior/penalization is adaptive to data); then compute posterior for <span class="math inline">\(L, F\)</span>. (The actual <a href="https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations">derivations</a> uses data augmentation and mean-field variational inference)</li>
+<li>This is a rather general framework (implemented in <code>ebpmf</code> function) for imposing penalizations. Next let’s discuss how to impose “sparsity” assumption.</li>
 </ul>
 </div>
-<div id="mmultinom" class="section level3">
-<h3><code>mmultinom</code></h3>
-<p>I consider the subproblem in the estimation of <span class="math inline">\(F\)</span>: <a href="https://zihao12.github.io/ebpmf_data_analysis/mmultinom1">mmultinom1</a>. I think borrowing information across topics to estimate <span class="math inline">\(F\)</span> (e.g. background model) benefits those less important words the most, whereas for the important words, MLE probably suffices (in a usual dataset not crazily sparse)</p>
-</div>
-<div id="anchor-word-based-topic-modeling" class="section level3">
-<h3>Anchor-word based topic modeling</h3>
+<div id="sparsity-assumption-with-eb-background-model" class="section level2">
+<h2>“Sparsity” assumption with EB + “background model”</h2>
 <ul>
-<li><p>I find <a href="https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf">paper</a> &amp; <a href="https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf">paper</a> gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a <a href="https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing">study note</a> &amp; <a href="https://drive.google.com/file/d/1R9kdE8u8wPpNQgk40YMawHrAuKJtFfTC/view?usp=sharing">study note</a> based on the two papers and the <a href="https://arxiv.org/abs/1204.1956">seminal paper</a> &amp; <a href="https://arxiv.org/abs/1212.4777">seminal paper</a></p></li>
-<li><p>My experiments using jupyter notebook can be seen <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/HEAD">here</a></p></li>
-<li><p>So far I can say this type of method is very fast, but can give very bad results compared to MLE.</p></li>
-<li><p>The bottleneck step for estimation is <code>recoverS</code> step: <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fdiagnostic1.ipynb">here</a>. In this step quality for estimation of the entire <span class="math inline">\(\bar{C}\)</span> matrix is important, and we can’t obtain estimates good enough in many practical problems, without truncating dictionary. In the <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Finvestigate_recoverS.ipynb">example</a> and <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Finvestigate_recoverS2.ipynb">example</a>, we can see how the estimation error for <span class="math inline">\(\bar{C}\)</span> affects the geometry and thus leads to wrongly selected anchor words; I also show how we can improve the estimate using <code>sinkhorn + truncated SVD</code> idea. I explore this further in this <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Fsinkhorn1.ipynb">experiment</a></p></li>
-<li><p>Another modeling choice is to use the first moment directly (instead of forming the word-word co-occurrence matrix). I experimented <a href="https://mybinder.org/v2/gh/zihao12/pyJSMF-RAW/8814ae04b701fe16397b44ce706033fdefc3936a?urlpath=lab%2Ftree%2Fexperiments%2Ffirst_moment%3F.ipynb">here</a>. Directly using counts for anchor words to represent loading is very bad; can be improved by <code>sinkhorn + truncated SVD</code>. Still it’s much worse than MLE.</p></li>
+<li>In topic modeling or gene expression data analysis, a “sparse” model is more interpretable and probably generalizes better than MLE with limited data. However, the usual defintion of sparsity (parameters have few nonzero elements) is not suitable for the applications here (unreasonable to think a topic does not allow a certain word), and easily cause numerical issue (a nonzero count has 0 likelihood if the mean is <span class="math inline">\(0\)</span>).</li>
+<li>A more natural definition of sparsity: each word/gene has a background frequency (call the <span class="math inline">\(p\)</span>-vector <span class="math inline">\(f_0\)</span>); each factor <span class="math inline">\(f_k\)</span> encodes the deviation from the background frequency. Then “sparse” factor means very few words/genes deviate from <span class="math inline">\(f_0\)</span>:</li>
 </ul>
-<!-- * I find the algorithm can recover $F$ really well ($A$ is not as good though), even though the identified "anchor words" do not satisfy the anchor-word assumptions in [the small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment1.ipynb). The reason is that the rows of the identified "anchor words" are very similar to the rows of the true "anchor words" in [here](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment3.ipynb) -->
-<!-- * In a [more realistically simulated dataset](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial1.ipynb) & and a [harder version](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial3.ipynb), we can see the algorithm can  -->
-<!--     * get okay estimate for $F$ but poor estimate for $A$ (picked the wrong anchor words) -->
-<!--     * get perfect result if we know the true $C$ (the dataset happens to satify the anchor word assumption) (I also looked at [harder case where $k = 20$](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/output/sla_multinomial_knowC_k20.out); we also gets perfect recovery; anchor-word assumption also holds true. Since the true $L, F$ are MLE fit on real data, it seems anchor word assumption is reasonable in the real data... though estimation of $C$ would be even harder).   -->
-<!--     * if given correct anchor words, the estimate of $A$ improves a lot -->
-<!-- * In this [small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment4.ipynb) we can see reducing dictionary size can improve the estimate a lot. The main issue with high dimension is identifying correct anchor rows.   -->
-<!-- * The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix $C_{ij} = P(X_1 = w_i, X_2 = w_j)$, which is high dimensional and built from very sparse dataset; results crucially depend on only $K$ rows of $C$. In practice the we often find the wrong anchor rows with poor estimates for $C_{s_k, k}$. Why? We have different confidence levels for estimates of rows of $C$, but after normalizing rows of $C$ we don't use the different confidence levels when doing vertex hunting.  -->
-<!-- * Possible improvements: we have $p$ points $\hat{C}_i$ in the $p$-simplex, each is an observation of a point in the $p$-simplex, $C_i$. The anchor word assumption says there are $K$ rows of $C_i$ whose convex space is the same as convex space of $C$. Can we jointly estimate $C, S, F, A$?  -->
-</div>
-<div id="incorporate-covariates-using-background-model" class="section level3">
-<h3>Incorporate covariates using background model</h3>
+<span class="math display">\[\begin{align}
+  &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  &amp; \lambda_{ij} = f_{j0} \sum_{k} w_k l_{ik} f_{jk}\\
+  &amp; l_{ik} \sim \text{Ga}(a_k, b_k) \\
+  &amp; f_{jk} \sim g_{F, k}\\
+  &amp; g_{F, k} \in \mathcal{G}_F
+\end{align}\]</span>
 <ul>
-<li><a href="https://zihao12.github.io/ebpmf_data_analysis/experiment_ebpmf_wbg_subject">ebpmf_wbg2_subject</a></li>
+<li>Here each prior <span class="math inline">\(g_{F, k}\)</span> has most weights around <span class="math inline">\(1\)</span>, encouraging elements of <span class="math inline">\(f_k\)</span>’s to be close to 1 (“sparse”).</li>
+</ul>
+<div id="choice-of-prior-family" class="section level3">
+<h3>choice of prior family</h3>
+<p>We use mixture of gamma priors (each gamma prior has mean <span class="math inline">\(1\)</span> and variance <span class="math inline">\(\phi_l\)</span>):</p>
+<span class="math display">\[\begin{align}
+  \mathcal{G}_F = \{g: g(.) = \sum_{l} \pi_l \mathrm{Ga}(.; 1/\phi_l, 1/\phi_l)\}
+\end{align}\]</span>
+<p>Here <span class="math inline">\(\{\phi_l\}_l\)</span> are pre-specified grids and the free parameters are weights <span class="math inline">\(\{\pi_l\}_l\)</span>. If the estimated weights are concentrated around small <span class="math inline">\(\phi_l\)</span>’s then it means very few words/genes deviate from the background;if the estimated weights allow very large <span class="math inline">\(\phi_l\)</span>, then more words/genes can deviate from the backrground. (More <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">discussion</a>). This model is implemented as <code>ebpmf_wbg2</code> function.</p>
+</div>
+</div>
+</div>
+<div id="data-analysis" class="section level1">
+<h1>Data Analysis</h1>
+<ul>
+<li><p>On <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2">simulated data1</a> &amp; <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2">simulated data2</a>, we can see <code>pmf</code> overfits the data and interprets noise as signals; whereas if initialized properly, <code>ebpmf_wbg</code> recovers the true sparse structure very well.</p></li>
+<li><p>On a text dataset <a href="https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla">sla</a> I compared <a href="https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb">pmf vs ebpmf-wbg</a> and find our approach gives much better estimate of both <span class="math inline">\(L, F\)</span>.</p></li>
+<li><p>An <a href="https://zihao12.shinyapps.io/topicview-app/">interactive view</a> of the learned models in 3 text datasets.</p></li>
 </ul>
 </div>
+<div id="future-work" class="section level1">
+<h1>Future work</h1>
+<ul>
+<li><code>ebpmf</code>-type methods rely on good initializations: when initialization is good enough, it can refine the solution to be closer to the truth; but when initialization is bad, it can’t recover good solutions. Therefore we need a good initialization strategy.</li>
+</ul>
 </div>
 
 
