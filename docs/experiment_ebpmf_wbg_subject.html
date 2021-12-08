@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="zihao12" />
 
+<meta name="date" content="2021-08-29" />
 
-<title>Home</title>
+<title>experiment_ebpmf_wbg_subject</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -258,6 +263,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -265,6 +333,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -308,7 +386,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">experiment_ebpmf_wbg_subject</h1>
+<h4 class="author">zihao12</h4>
+<h4 class="date">2021-08-29</h4>
 
 </div>
 
@@ -333,10 +413,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-18
+<strong>Last updated:</strong> 2021-08-29
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>ebpmf_data_analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -364,16 +444,76 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree30b634d254077e72c3c9d2ccf3eaf66e4121a3b7targetblank30b634da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/30b634d254077e72c3c9d2ccf3eaf66e4121a3b7" target="_blank">30b634d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree30b634d254077e72c3c9d2ccf3eaf66e4121a3b7targetblank30b634da" class="panel-collapse collapse">
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200511code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200511)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200511code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200511)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34targetblank3019c5ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34" target="_blank">3019c5e</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzihao12ebpmfdataanalysistree3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34targetblank3019c5ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/30b634d254077e72c3c9d2ccf3eaf66e4121a3b7" target="_blank">30b634d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zihao12/ebpmf_data_analysis/tree/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34" target="_blank">3019c5e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -398,7 +538,6 @@ Ignored files:
     Ignored:    topicView-app/.DS_Store
 
 Untracked files:
-    Untracked:  analysis/.index_draft.txt.swp
     Untracked:  analysis/covid_dataset.Rmd
     Untracked:  analysis/draft.Rmd
     Untracked:  analysis/draft2.Rmd
@@ -406,7 +545,6 @@ Untracked files:
     Untracked:  analysis/ebpmf_wbg_simulation_big.Rmd
     Untracked:  analysis/ebpmf_wbg_simulation_big2_more.Rmd
     Untracked:  analysis/heatmap.Rmd
-    Untracked:  analysis/index_draft.txt
     Untracked:  analysis/investigate_largeK.Rmd
     Untracked:  analysis/investigate_news_topics.Rmd
     Untracked:  analysis/poissonmix_vs_pmf.Rmd
@@ -420,7 +558,6 @@ Untracked files:
     Untracked:  data/sim/init_random.sim_bg_block_n1100_p2100_K50.Rds
     Untracked:  data/sim/simulated_data_small.RData
     Untracked:  data/sim/simulated_data_small2.RData
-    Untracked:  data/subject/
     Untracked:  output/poissonmix_vs_pmf.RDS
     Untracked:  output/poissonmix_vs_pmf.RData
     Untracked:  output/sim/v0.4.5/exper2/init_random.sim_bg_block_n1100_p2100_K50.Rds
@@ -465,7 +602,6 @@ Untracked files:
 Unstaged changes:
     Modified:   analysis/cone_NMF_l2_2.Rmd
     Modified:   analysis/ebpmf_wbg_simulate_big_data2.Rmd
-    Modified:   analysis/experiment_ebpmf_wbg_subject.Rmd
     Modified:   analysis/multinom_sampling.Rmd
     Deleted:    analysis/sla_data_analysis_k10.Rmd
     Deleted:    analysis/sla_data_analysis_k5.Rmd
@@ -725,7 +861,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/experiment_ebpmf_wbg_subject.Rmd</code>) and HTML (<code>docs/experiment_ebpmf_wbg_subject.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -754,109 +890,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/30b634d254077e72c3c9d2ccf3eaf66e4121a3b7/analysis/index.Rmd" target="_blank">30b634d</a>
-</td>
-<td>
-Zihao Wang
-</td>
-<td>
-2021-11-18
-</td>
-<td>
-clean up index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/c7777da40c20d8727366df53178dd14be4c12647/docs/index.html" target="_blank">c7777da</a>
-</td>
-<td>
-Zihao Wang
-</td>
-<td>
-2021-10-15
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/cc70a3015348c40c23f39181bfb13090ef809c3d/analysis/index.Rmd" target="_blank">cc70a30</a>
-</td>
-<td>
-Zihao Wang
-</td>
-<td>
-2021-10-15
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/2bfa2a4d6dccaff5d5b45f52f5be6040a24b591d/docs/index.html" target="_blank">2bfa2a4</a>
-</td>
-<td>
-Zihao Wang
-</td>
-<td>
-2021-10-15
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/948280d83d547019eeecf3b9718380adf35c841e/analysis/index.Rmd" target="_blank">948280d</a>
-</td>
-<td>
-Zihao Wang
-</td>
-<td>
-2021-10-15
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/c875946d3cd55e51202889eb812f402e96e4b628/docs/index.html" target="_blank">c875946</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-08-29
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34/analysis/index.Rmd" target="_blank">3019c5e</a>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/3019c5eae8c63ca5e15cc8f3e0e82cef94f8ed34/analysis/experiment_ebpmf_wbg_subject.Rmd" target="_blank">3019c5e</a>
 </td>
 <td>
 zihao12
@@ -873,13 +907,13 @@ experiment_ebpmf_wbg_subject
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/49ee7726bcc8188b1afe9e00245cabf97006ec3e/docs/index.html" target="_blank">49ee772</a>
+<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/88f9feb41e970fe6a9f7add67d65d38c966c1311/docs/experiment_ebpmf_wbg_subject.html" target="_blank">88f9feb</a>
 </td>
 <td>
 zihao12
 </td>
 <td>
-2021-07-27
+2021-08-29
 </td>
 <td>
 Build site.
@@ -890,968 +924,16 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/284f2b780ea2060993e7223e36b794dfb26695da/analysis/index.Rmd" target="_blank">284f2b7</a>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b0ffa0325c0598fb373333e6cff677eb1a1840cc/analysis/experiment_ebpmf_wbg_subject.Rmd" target="_blank">b0ffa03</a>
 </td>
 <td>
 zihao12
 </td>
 <td>
-2021-07-27
+2021-08-29
 </td>
 <td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/5647e60d6fb4533f33106c33026e69d04e789e8b/docs/index.html" target="_blank">5647e60</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-27
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a6f3462d76b810ed44c6ac05f199cbb9ea626a2e/analysis/index.Rmd" target="_blank">a6f3462</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-27
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/f7ae95c8161e4307f516faab9e9c5f3d96e626c8/docs/index.html" target="_blank">f7ae95c</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-27
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/fe139727415053d85bd61803a8ba511ae587ce2e/analysis/index.Rmd" target="_blank">fe13972</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-27
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/734047971ade1a871cd182c2678aa67162bc3835/docs/index.html" target="_blank">7340479</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-24
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/645fd4759d17011ca97fb3cc1383f0dab7917605/analysis/index.Rmd" target="_blank">645fd47</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-24
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/9fbd025395d55be4a1ad2a05fc46e38982c28a53/docs/index.html" target="_blank">9fbd025</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/8bf34ac4221fb47ed650ff833ae3e2e07774c268/analysis/index.Rmd" target="_blank">8bf34ac</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-23
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/22c0824021881cde311362ec361d3f993c3a3e4c/docs/index.html" target="_blank">22c0824</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/eafbd3f8c8c2ee71328880b516880dd8ef413b30/analysis/index.Rmd" target="_blank">eafbd3f</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-23
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/510c956befd641da8478bb48ffa0525e876e9e43/docs/index.html" target="_blank">510c956</a>
-</td>
-<td>
-Zihao
-</td>
-<td>
-2021-07-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/328705bce0bd0d5e21a77533341803eb9c23ac3d/analysis/index.Rmd" target="_blank">328705b</a>
-</td>
-<td>
-Zihao
-</td>
-<td>
-2021-07-05
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/e24ebf51d15bab2836b8369134e99d49e8a5f4fe/docs/index.html" target="_blank">e24ebf5</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/b92829c9ab96789d6a33c45fa8ec4396db648ece/analysis/index.Rmd" target="_blank">b92829c</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-01
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/6c9d8b18cec053064f6a16001f944b3e3445d5ff/docs/index.html" target="_blank">6c9d8b1</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-01
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/f6104be85283c1ea04c154162ca5fa3119d76adf/analysis/index.Rmd" target="_blank">f6104be</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-07-01
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/eafad6084eb357c2e964c103cf8401b68c32e446/docs/index.html" target="_blank">eafad60</a>
-</td>
-<td>
-Zihao
-</td>
-<td>
-2021-06-30
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/540045826056e3db86d17e834ae220cc65b964a2/analysis/index.Rmd" target="_blank">5400458</a>
-</td>
-<td>
-Zihao
-</td>
-<td>
-2021-06-30
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/6a75f0554ad21c977033ec8ae658585fdd899efd/docs/index.html" target="_blank">6a75f05</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-24
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/00174e10451aeabf5c522faca83c998d819c9f4e/analysis/index.Rmd" target="_blank">00174e1</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-24
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/4bff483b02b7c4294cdc46268cce9550e712976c/docs/index.html" target="_blank">4bff483</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/ed8e5098488220a81ca50f5bcc65fa0451b08919/analysis/index.Rmd" target="_blank">ed8e509</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-22
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/451291a01c74ba488e28c2757355daf34a3a6765/docs/index.html" target="_blank">451291a</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-22
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/69b784cf40bc5b49b778ac1b9c4d55063b68cdfd/analysis/index.Rmd" target="_blank">69b784c</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-22
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/93cc22137382d9bf9124ad716060d5877a4b1da3/docs/index.html" target="_blank">93cc221</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/7d57e709b63fdc2f84629a541d725394f5c87933/analysis/index.Rmd" target="_blank">7d57e70</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-16
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/1db3c5cc3943ba522289a003d4640598005c04cf/docs/index.html" target="_blank">1db3c5c</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/86f370b04ae205cbc10651c16e94434c9ef7f2e0/analysis/index.Rmd" target="_blank">86f370b</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-16
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b8991e50d6c3b8ff196d161d474f4f06db5f229e/docs/index.html" target="_blank">b8991e5</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-15
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/4d7a1ea2a67d4cca7753de7bf62675c26b42aae4/analysis/index.Rmd" target="_blank">4d7a1ea</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-15
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/5c3c833ee162354df9c4dfc322ac0c82defda462/docs/index.html" target="_blank">5c3c833</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-14
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/0e0732d3fe60bcda8fa2ff5597f2fb6dc18d66d2/analysis/index.Rmd" target="_blank">0e0732d</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2021-06-14
-</td>
-<td>
-index.Rmd update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b7da7669d8927c2c5085150d9135c86c974fac03/docs/index.html" target="_blank">b7da766</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-11-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1aae3e96fec1d8b7ff24e9d8cf581d60adbc1635/analysis/index.Rmd" target="_blank">1aae3e9</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-11-05
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/b4a4d19a6163ae34abeb0171d77950e3cac7b12b/docs/index.html" target="_blank">b4a4d19</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/d8ba5a163373dceabce232a1651593840af568f3/analysis/index.Rmd" target="_blank">d8ba5a1</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/bbfcc6c8ec29eb88072c7baa8ea51f793f88af84/docs/index.html" target="_blank">bbfcc6c</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/7714094fe64516748e95d4b077e929bdc5c35c91/analysis/index.Rmd" target="_blank">7714094</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-10-05
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/acf2eecb572927a4c3f7ed7f26a5719a78627848/docs/index.html" target="_blank">acf2eec</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/a6f5d7279138057cf5ea2054505125e8b9fc7537/analysis/index.Rmd" target="_blank">a6f5d72</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-28
-</td>
-<td>
-add link to sla_data_analysis_k10
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/ad468612e011e1586e4f039b0781adc343e6ae63/docs/index.html" target="_blank">ad46861</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-26
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/d01dda7c8e72ae666b5b9b113ddfea45bd2195a3/analysis/index.Rmd" target="_blank">d01dda7</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-09-26
-</td>
-<td>
-demo for processing SLA data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/d481b1d5ef8d0914804ccbfcff65d2f9057caaef/docs/index.html" target="_blank">d481b1d</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/448f65885d7ad4fa3a91623c8f44ff9320decc55/analysis/index.Rmd" target="_blank">448f658</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-updatye index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/a719d7427fcb1baef5a9ea25b6407afc9917267d/docs/index.html" target="_blank">a719d74</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/e075657d7e9daa0c7dd938348add0a55dd8d4222/analysis/index.Rmd" target="_blank">e075657</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-06-05
-</td>
-<td>
-index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/041d2406044d40bcc8ab4d8b9f06dd7d8e987df2/docs/index.html" target="_blank">041d240</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/dc62cf9d5f2bacac77109d7e6930f341ddb0027e/analysis/index.Rmd" target="_blank">dc62cf9</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/8aeda46e17fbbe637d99ed845d89f06adcd1d902/docs/index.html" target="_blank">8aeda46</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/2aec1adcb4e4c819abe3e87a9b115dea2396f4cf/analysis/index.Rmd" target="_blank">2aec1ad</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-19
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/7505013a60f84e217821981b424270343c86c429/docs/index.html" target="_blank">7505013</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/1bc4a3b936ff6895ec57e021b2e716c783fd8f1e/analysis/index.Rmd" target="_blank">1bc4a3b</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-add links to some data analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/9037b15eb6c953585fd24db2389f7eb5cf216c2b/docs/index.html" target="_blank">9037b15</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/68802cec98b18f6ef3e2a1177cfe3acbe84b5652/analysis/index.Rmd" target="_blank">68802ce</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-16
-</td>
-<td>
-add links to some data analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/zihao12/ebpmf_data_analysis/a4c37a957894443ca930b76e60150dd4df14674a/docs/index.html" target="_blank">a4c37a9</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-11
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/f4ae184f13f4bf2d67a9b83e5e002dcf0f45e5a6/analysis/index.Rmd" target="_blank">f4ae184</a>
-</td>
-<td>
-zihao12
-</td>
-<td>
-2020-05-11
-</td>
-<td>
-Start workflowr project.
+experiment_ebpmf_wbg_subject
 </td>
 </tr>
 </tbody>
@@ -1861,78 +943,167 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<div id="model" class="section level1">
-<h1>Model:</h1>
-<div id="poisson-matrix-factorization-pmf" class="section level2">
-<h2>Poisson Matrix Factorization (PMF)</h2>
-<ul>
-<li>Suppose we observe count matrix <span class="math inline">\(X \in R_{+}^{n \times p}\)</span>. In topic modeling context, <span class="math inline">\(X_{ij}\)</span> means the number occurrences of word <span class="math inline">\(i\)</span> in document <span class="math inline">\(j\)</span>; in gene expression data, it means the number of occurrences in gene <span class="math inline">\(i\)</span> in cell <span class="math inline">\(j\)</span>.</li>
-<li>PMF assumes its underlying mean matrix can be decomposed into two low dimensional, non-negative matrices <span class="math inline">\(L F^T\)</span> where <span class="math inline">\(L \in R^{n \times K}, F \in R^{p \times K}\)</span>. Each column of <span class="math inline">\(F\)</span> is called a factor/topic, representing the importance of a word/gene in a topic/biological process. Each row of <span class="math inline">\(L\)</span> is the membership vector for each sample (document/cell) <span class="math inline">\(i\)</span>, representing the importances of topics/bioligical processes for the sample.<br />
-</li>
-<li>The model can be written as:
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Suppose now we are given count matrix <span class="math inline">\(X_{ij}\)</span> and subject indicator <span class="math inline">\(u_i\)</span>: the expression of gene <span class="math inline">\(j\)</span> in cell <span class="math inline">\(i\)</span> is <span class="math inline">\(x_{ij}\)</span> and we know cell <span class="math inline">\(i\)</span> is from subject <span class="math inline">\(u_i\)</span>. It’s reasonable to assume that cells from the same subject <span class="math inline">\(i\)</span> are correlated, and that correlation corrupt the biologically meaningful low-rank structure in the mean matrix. Below we model it using background model.</p>
+<p>Here the model is</p>
 <span class="math display">\[\begin{align}
   &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
-  &amp; \lambda_{ij} = \sum_{k} l_{ik} f_{jk}\\
-  &amp; l_{ik}, f_{jk} \geq 0
-\end{align}\]</span></li>
-<li><p>To estimate <span class="math inline">\(L, F\)</span> we maximize the likelihood of the model above, through various types of coordinate descent methods.</p></li>
-<li><p>Sometimes the data is very sparse so MLE tends to overfit. Therefore we need to find ways to regularize <span class="math inline">\(L, F\)</span>.</p></li>
-</ul>
-</div>
-<div id="adaptive-penalization-with-empirical-bayes-approach-eb" class="section level2">
-<h2>Adaptive penalization with Empirical Bayes approach (EB)</h2>
-<ul>
-<li>If we simply add a penalization function on <span class="math inline">\(F\)</span>, we either have only one penalization parameter for all <span class="math inline">\(k\)</span> factors, or need to tune <span class="math inline">\(k\)</span> penalization parameters simultaneously. The same is true for regularizing <span class="math inline">\(L\)</span>.</li>
-<li>With EB approach, we can flexibly incorporate penalization in a data-adaptive fashion:
-<span class="math display">\[\begin{align}
-  &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
-  &amp; \lambda_{ij} = \sum_{k} l_{ik} f_{jk}\\
-  &amp; l_{ik} \sim g_{L, k}, f_{jk} \sim g_{F, k}\\
-  &amp; g_{L, k} \in \mathcal{G}_L, g_{F, k} \in \mathcal{G}_F
-\end{align}\]</span></li>
-<li>We estimate <span class="math inline">\(\hat{g}\)</span>’s with marginal MLE (so the prior/penalization is adaptive to data); then compute posterior for <span class="math inline">\(L, F\)</span>. (The actual <a href="https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations">derivations</a> uses data augmentation and mean-field variational inference)</li>
-<li>This is a rather general framework (implemented in <code>ebpmf</code> function) for imposing penalizations. Next let’s discuss how to impose “sparsity” assumption.</li>
-</ul>
-</div>
-<div id="sparsity-assumption-with-eb-background-model" class="section level2">
-<h2>“Sparsity” assumption with EB + “background model”</h2>
-<ul>
-<li>In topic modeling or gene expression data analysis, a “sparse” model is more interpretable and probably generalizes better than MLE with limited data. However, the usual defintion of sparsity (parameters have few nonzero elements) is not suitable for the applications here (unreasonable to think a topic does not allow a certain word), and easily cause numerical issue (a nonzero count has 0 likelihood if the mean is <span class="math inline">\(0\)</span>).</li>
-<li>A more natural definition of sparsity: each word/gene has a background frequency (call the <span class="math inline">\(p\)</span>-vector <span class="math inline">\(f_0\)</span>); each factor <span class="math inline">\(f_k\)</span> encodes the deviation from the background frequency. Then “sparse” factor means very few words/genes deviate from <span class="math inline">\(f_0\)</span>:</li>
-</ul>
-<span class="math display">\[\begin{align}
-  &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
-  &amp; \lambda_{ij} = f_{j0} \sum_{k} w_k l_{ik} f_{jk}\\
-  &amp; l_{ik} \sim \text{Ga}(a_k, b_k) \\
-  &amp; f_{jk} \sim g_{F, k}\\
-  &amp; g_{F, k} \in \mathcal{G}_F
+  &amp; \lambda_{ij} = m_{j u_i} \sum_k l_{ik} f_{jk}
 \end{align}\]</span>
-<ul>
-<li>Here each prior <span class="math inline">\(g_{F, k}\)</span> has most weights around <span class="math inline">\(1\)</span>, encouraging elements of <span class="math inline">\(f_k\)</span>’s to be close to 1 (“sparse”).</li>
-</ul>
-<div id="choice-of-prior-family" class="section level3">
-<h3>choice of prior family</h3>
-<p>We use mixture of gamma priors (each gamma prior has mean <span class="math inline">\(1\)</span> and variance <span class="math inline">\(\phi_l\)</span>):</p>
+<p>Here <span class="math inline">\(m_{jd}\)</span> is the background frequency of gene <span class="math inline">\(j\)</span> in subject <span class="math inline">\(d\)</span>. I implemented MLE of this model in <code>ebpmf.alpha::pmf_subject</code> using EM algorithm. I also implemented a more complicated empirical bayes version (using the MLE algorithm for its initialization):</p>
 <span class="math display">\[\begin{align}
-  \mathcal{G}_F = \{g: g(.) = \sum_{l} \pi_l \mathrm{Ga}(.; 1/\phi_l, 1/\phi_l)\}
+  &amp; X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  &amp; \lambda_{ij} = m_{j u_i} \sum_k w_k l_{ik} f_{jk}\\
+  &amp; m_{jd} \sim \text{Ga}(\alpha^m_{d}, \beta^m_{d})\\
+  &amp; l_{ik} \sim \text{Ga}(\alpha^l_{k}, \beta^l_{k})\\
+  &amp; f_{jk} \sim \sum_c \pi^f_{kc} \text{Ga}(a_c, a_c)
 \end{align}\]</span>
-<p>Here <span class="math inline">\(\{\phi_l\}_l\)</span> are pre-specified grids and the free parameters are weights <span class="math inline">\(\{\pi_l\}_l\)</span>. If the estimated weights are concentrated around small <span class="math inline">\(\phi_l\)</span>’s then it means very few words/genes deviate from the background;if the estimated weights allow very large <span class="math inline">\(\phi_l\)</span>, then more words/genes can deviate from the backrground. (More <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description">discussion</a>). This model is implemented as <code>ebpmf_wbg2</code> function.</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<pre class="r"><code>knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+library(ebpmf.alpha)</code></pre>
+<pre class="r"><code>set.seed(123)
+n = 100
+p = 50
+K = 3
+
+## simulate data
+L = matrix(100*runif(n*K), ncol = K)
+F = matrix(runif(p*K), ncol = K)
+m = matrix(runif(p*2), nrow = p)
+u = c(replicate(n/2, 1), replicate(n/2, 2))
+lam = L %*% t(F)
+lam[u == 1,] = t(t(lam[u == 1,]) * m[,1])
+lam[u == 2,] = t(t(lam[u == 2,]) * m[,2])
+X = matrix(rpois(n = n*p, lambda = lam), nrow = n)</code></pre>
+<div id="fit-with-mle" class="section level3">
+<h3>Fit with MLE</h3>
+<pre class="r"><code>fit = ebpmf.alpha::pmf_subject(X = X, u = u, K = K, maxiter = 100)</code></pre>
+</div>
+<div id="fit-with-eb" class="section level3">
+<h3>Fit with EB</h3>
+<pre class="r"><code>init = ebpmf.alpha::initialize_wbg2_subject_from_LFm(L = fit$L, F = fit$F, m = fit$m)
+fit.eb = ebpmf.alpha::ebpmf_wbg2_subject(X = X, u = u, K = K, init = init, maxiter = 500)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,2))
+plot(m, fit$m, ylab = &quot;mhat&quot;, main = &quot;MLE&quot;)
+plot(m, fit.eb$m$mean, ylab = &quot;mhat&quot;, main = &quot;EB&quot;)</code></pre>
+<p><img src="figure/experiment_ebpmf_wbg_subject.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/88f9feb41e970fe6a9f7add67d65d38c966c1311/docs/figure/experiment_ebpmf_wbg_subject.Rmd/unnamed-chunk-5-1.png" target="_blank">88f9feb</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-08-29
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<pre class="r"><code>par(mfrow = c(1,2))
+plot(fit$log_liks, main = &quot;MLE&quot;)
+plot(fit.eb$ELBO, main = &quot;EB&quot;)</code></pre>
+<p><img src="figure/experiment_ebpmf_wbg_subject.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zihao12/ebpmf_data_analysis/blob/88f9feb41e970fe6a9f7add67d65d38c966c1311/docs/figure/experiment_ebpmf_wbg_subject.Rmd/unnamed-chunk-6-1.png" target="_blank">88f9feb</a>
+</td>
+<td>
+zihao12
+</td>
+<td>
+2021-08-29
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="data-analysis" class="section level1">
-<h1>Data Analysis</h1>
-<ul>
-<li><p>On <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2">simulated data1</a> &amp; <a href="https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2">simulated data2</a>, we can see <code>pmf</code> overfits the data and interprets noise as signals; whereas if initialized properly, <code>ebpmf_wbg</code> recovers the true sparse structure very well.</p></li>
-<li><p>On a text dataset <a href="https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla">sla</a> I compared <a href="https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb">pmf vs ebpmf-wbg</a> and find our approach gives much better estimate of both <span class="math inline">\(L, F\)</span>.</p></li>
-<li><p>An <a href="https://zihao12.shinyapps.io/topicview-app/">interactive view</a> of the learned models in 3 text datasets.</p></li>
-</ul>
 </div>
-<div id="future-work" class="section level1">
-<h1>Future work</h1>
-<ul>
-<li><code>ebpmf</code>-type methods rely on good initializations: when initialization is good enough, it can refine the solution to be closer to the truth; but when initialization is bad, it can’t recover good solutions. Therefore we need a good initialization strategy.</li>
-</ul>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS  10.15.7
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ebpmf.alpha_0.6.0 workflowr_1.6.2  
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5         knitr_1.28         whisker_0.3-2      magrittr_1.5      
+ [5] ebpm_0.0.1.3       lattice_0.20-38    R6_2.4.1           rlang_0.4.5       
+ [9] stringr_1.4.0      tools_3.5.1        grid_3.5.1         xfun_0.8          
+[13] irlba_2.3.3        git2r_0.26.1       matrixStats_0.54.0 htmltools_0.5.0   
+[17] yaml_2.2.0         digest_0.6.25      rprojroot_1.3-2    mixsqp_0.3-46     
+[21] Matrix_1.2-17      later_1.1.0.1      promises_1.1.1     fs_1.3.1          
+[25] glue_1.4.1         evaluate_0.14      rmarkdown_2.1      stringi_1.6.2     
+[29] compiler_3.5.1     backports_1.1.7    httpuv_1.5.4      </code></pre>
+</div>
+</div>
 </div>
 
 
@@ -1949,6 +1120,8 @@ footer is added to webpages before the MathJax javascript. -->
 </script>
 
 
+</div>
+</div>
 
 </div>
 
@@ -1981,6 +1154,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

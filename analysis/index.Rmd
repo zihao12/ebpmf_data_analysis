@@ -8,77 +8,73 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+
+# Model:
+
+## Poisson Matrix Factorization (PMF)
+
+* Suppose we observe count matrix $X \in R_{+}^{n \times p}$. In topic modeling context, $X_{ij}$ means the number occurrences of word $i$ in document $j$; in gene expression data, it means the number of occurrences in gene $i$ in cell $j$. 
+* PMF assumes its underlying mean matrix can be decomposed into two low dimensional, non-negative matrices $L F^T$ where $L \in R^{n \times K}, F \in R^{p \times K}$. Each column of $F$ is called a factor/topic, representing the importance of a word/gene in a topic/biological process.  Each row of $L$ is the membership vector for each sample (document/cell) $i$, representing the importances of topics/bioligical processes for the sample.  
+* The model can be written as:
+\begin{align}
+  & X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  & \lambda_{ij} = \sum_{k} l_{ik} f_{jk}\\
+  & l_{ik}, f_{jk} \geq 0
+\end{align}
+
+* To estimate $L, F$ we maximize the likelihood of the model above, through various types of coordinate descent methods. 
+
+* Sometimes the data is very sparse so MLE tends to overfit. Therefore we need to find ways to regularize $L, F$. 
+
+## Adaptive penalization with Empirical Bayes approach (EB)
+
+* If we simply add a penalization function on $F$, we either have only one penalization parameter for all $k$ factors, or need to tune $k$ penalization parameters simultaneously. The same is true for regularizing $L$. 
+* With EB approach, we can flexibly incorporate penalization in a data-adaptive fashion:
+\begin{align}
+  & X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  & \lambda_{ij} = \sum_{k} l_{ik} f_{jk}\\
+  & l_{ik} \sim g_{L, k}, f_{jk} \sim g_{F, k}\\
+  & g_{L, k} \in \mathcal{G}_L, g_{F, k} \in \mathcal{G}_F
+\end{align}
+* We estimate $\hat{g}$'s with marginal MLE (so the prior/penalization is adaptive to data); then compute posterior for $L, F$. (The actual [derivations](https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations) uses data augmentation and mean-field variational inference)
+* This is a rather general framework (implemented in `ebpmf` function) for imposing penalizations. Next let's discuss how to impose "sparsity" assumption. 
 
 
-## Model:
+## "Sparsity" assumption with EB + "background model"
+* In topic modeling or gene expression data analysis, a "sparse" model is more interpretable and probably generalizes better than MLE with limited data. However, the usual defintion of sparsity (parameters have few nonzero elements) is not suitable for the applications here (unreasonable to think a topic does not allow a certain word), and easily cause numerical issue (a nonzero count has 0 likelihood if the mean is $0$).
+* A more natural definition of sparsity: each word/gene has a background frequency (call the $p$-vector $f_0$); each factor $f_k$ encodes the deviation from the background frequency. Then "sparse" factor means very few words/genes deviate from $f_0$:
 
-* [Model description for ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description)
+\begin{align}
+  & X_{ij} \sim \text{Pois}(\lambda_{ij})\\
+  & \lambda_{ij} = f_{j0} \sum_{k} w_k l_{ik} f_{jk}\\
+  & l_{ik} \sim \text{Ga}(a_k, b_k) \\
+  & f_{jk} \sim g_{F, k}\\
+  & g_{F, k} \in \mathcal{G}_F
+\end{align}
 
-* [Derivations](https://github.com/stephenslab/ebpmf.alpha/tree/master/derivations)
+* Here each prior $g_{F, k}$ has most weights around $1$, encouraging elements of $f_k$'s to be close to 1 ("sparse"). 
 
-* [Presentation at Stephenslab group meeting](https://zihao12.github.io/ebpmf_data_analysis/PMF_WBG_presentation.pdf)
+### choice of prior family
 
-<!-- Data preprocessing demo:\ -->
+We use mixture of gamma priors (each gamma prior has mean $1$ and variance $\phi_l$):
 
-<!-- * [process SLA dataset](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla)\ -->
-
-## Data analysis results:
-
-The goal is to find situations where our EB approach can imporve upon MLE (or Bayesian approaches like LDA). Some datsets used are: [sla](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) ...
-
-* On [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2) (and [more](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_more)) & [simulated data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2) We can see our EB approach has the potential to beat MLE in terms of "[False Discoveries](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2#pmf_bg_from_truth)" of important words & documents. However the requires initialization from close to the truth. So I hope that we can find applications where PMF fit is basically right but can be refined much better with EB approach, like in [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2)
-
-* I first did [fastTopics_on_sla](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla). I find estimating $F$ seems easier than estimating $L$. Then on [simulated data from sla](https://zihao12.github.io/ebpmf_data_analysis/prepare_sla_sim): I compared [MLE vs ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb) and find EB gives much better estimate of $\hat{L}$.
-
-* About asymmetry of $L, F$: [fastTopics_on_sla2](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_sla2), [fastTopics_on_droplet](https://zihao12.github.io/ebpmf_data_analysis/fastTopics_on_droplet)
-
-* [On real data](https://zihao12.shinyapps.io/topicview-app/) (in development); 
-
-<!-- * Compare MLE vs EB fits: [sla](https://zihao12.github.io/ebpmf_data_analysis/sla_compare_mle_eb), [nips](https://zihao12.github.io/ebpmf_data_analysis/nips_compare_mle_eb) -->
+\begin{align}
+  \mathcal{G}_F = \{g: g(.) = \sum_{l} \pi_l \mathrm{Ga}(.; 1/\phi_l, 1/\phi_l)\}
+\end{align}
+Here $\{\phi_l\}_l$ are pre-specified grids and the free parameters are weights $\{\pi_l\}_l$. If the estimated weights are concentrated around small $\phi_l$'s then it means very few words/genes deviate from the background;if the estimated weights allow very large $\phi_l$, then more words/genes can deviate from the backrground. (More [discussion](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_description)). This model is implemented as `ebpmf_wbg2` function. 
 
 
-## Other stuff
-
-### paper reading
-
-* There are several interesting variants of [LDA](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf): [Correlated Topic Model](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-1/issue-1/A-correlated-topic-model-of/10.1214/07-AOAS114.full), [sparse additive generative models of text (SAGE)](http://www.cs.cmu.edu/~epxing/papers/2011/Eisenstein_Ahmed_Xing_ICML11.pdf), [Structural Topic Model](https://scholar.princeton.edu/files/bstewart/files/stmnips2013.pdf). Here are [my notes](https://drive.google.com/file/d/1W0v2oUS50DgBOVw8Ch5CjBKDELoVjspb/view?usp=sharing). The "sparsity" assumption of SAGE is basically the same as in ours, but imposed using different priors. 
-
-* Our current optimization approach is VBEM (EB), which is slow to converge and can get stuck at bad local optimal. Some [attempted alternatives](https://users.rcc.uchicago.edu/~aksarkar/singlecell-ideas/hpmf.html). One key problem is compute gradient for $E_q log(X | L, F)$ and [Monte Carlo Gradient Estimation in Machine Learning](https://www.jmlr.org/papers/volume21/19-346/19-346.pdf) suggests some methods applicable here. 
+# Data Analysis
 
 
-### cone-NMF 
-(the Frobenius norm case is the same as [convex-NMF](https://people.eecs.berkeley.edu/~jordan/papers/ding-li-jordan-pami.pdf)):
+* On [simulated data1](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2_2) & [simulated data2](https://zihao12.github.io/ebpmf_data_analysis/ebpmf_wbg_simulation_big2), we can see `pmf` overfits the data and interprets noise as signals; whereas if initialized properly, `ebpmf_wbg` recovers the true sparse structure very well. 
 
-* First, I found that our regular PMF solution is basically inside $\text{cone}(X)$ where each column of $X$ is a sample: [cone_pmf1](https://zihao12.github.io/ebpmf_data_analysis/cone_pmf1.html)
+* On a text dataset [sla](https://zihao12.github.io/ebpmf_data_analysis/data_preprocessing_sla) I compared [pmf vs ebpmf-wbg](https://zihao12.github.io/ebpmf_data_analysis/sla_simulated_compare_mle_eb) and find our approach gives much better estimate of both $L, F$.
 
-* Then I derived and implemented the cone NMF for Frobeneus norm: [cone_nmf_l2](https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_l2) . I note that fitted $B, W^T$ are almost identical. I fitted on real data to see if it's still the case: [cone on kos data](https://zihao12.github.io/ebpmf_data_analysis/cone_nmf_f_3)
+* An [interactive view](https://zihao12.shinyapps.io/topicview-app/)  of the learned models in 3 text datasets.
 
-* I find an example where cone NMF can improve the PMF fit: [cone_NMF_l2_2](https://zihao12.github.io/ebpmf_data_analysis/cone_NMF_l2_2)
-
-* I also investigated direct estimates of word-word covariance matrix: [multinom_sampling](https://zihao12.github.io/ebpmf_data_analysis/multinom_sampling)
-
-
-### `mmultinom`
-I consider the subproblem in the estimation of $F$: [mmultinom1](https://zihao12.github.io/ebpmf_data_analysis/mmultinom1)
-
-### Anchor-word based topic modeling
-
-* I find [paper](https://www.cs.cornell.edu/~bindel/papers/2015-nips.pdf) & [paper](https://moontae.people.uic.edu/papers/pdfs/Moontae_Lee-EMNLP2019.pdf) gives a clear probabilistic framework for anchor-word based topic models, and they have the rather recent implementations. I wrote a [study note](https://drive.google.com/file/d/1QU35h0JyrWuANTKFKC-EAgTVb2w5LjEh/view?usp=sharing) & [study note](https://drive.google.com/file/d/1R9kdE8u8wPpNQgk40YMawHrAuKJtFfTC/view?usp=sharing) based on the two papers and the [seminal paper](https://arxiv.org/abs/1204.1956) & [seminal paper](https://arxiv.org/abs/1212.4777)
-
-* I find the algorithm can recover $F,A$ really we, even though the identified "anchor words" do not satisfy the anchor-word assumptions in [the small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment1.ipynb). The reason is that the rows of the identified "anchor words" are very similar to the rows of the true "anchor words" in [here](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment3.ipynb)
-
-* In a [more realistically simulated dataset](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/sla_multinomial1.ipynb), we can see the algorithm can 
-    * get completely non-sense results when $C$ is estimated poorly
-    * get perfect result if we know the true $C$ (the dataset happens to satify the anchor word assumption) (I also looked at [harder case where $k = 20$](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/output/sla_multinomial_knowC_k20.out); we also gets perfect recovery; anchor-word assumption also holds true. Since the true $L, F$ are MLE fit on real data, it seems anchor word assumption is reasonable in the real data... though estimation of $C$ would be even harder).  
-    * when we get slightly better estimate of $C$, we can get relatively good estimate of $F$ even when it identifies wrong anchor words
-    
-* In this [small experiment](https://github.com/zihao12/pyJSMF-RAW/blob/master/experiments/smallsim_experiment4.ipynb) we can see reducing dictionary size can improve the estimate a lot. 
-    
-* The weakness of anchor-word based methods is that they are not very robust:it requires estimatation of the word co-occurence probability matrix $C_{ij} = P(X_1 = w_i, X_2 = w_j)$, which is high dimensional and built from very sparse dataset; results crucially depend on only $K$ rows of $C$. We can try improving this type of methods by improving estimate of $C$ (e.g. how to deal with rare words? can we impose background assumption here?), or discard the anchor-word assumption and directly minimize $|C - FAF^T|^2_F$. 
-
-
-
+# Future work
+* `ebpmf`-type methods rely on good initializations: when initialization is good enough, it can refine the solution to be closer to the truth; but when initialization is bad, it can't recover good solutions. Therefore we need a good initialization strategy. 
 
 
 
