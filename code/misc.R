@@ -176,5 +176,26 @@ count_subsample <- function(X, prob = 0.5){
 }
 
 
+preprocess_data <- function(X, freq_cutoff = 10){
+  ## remove rare words
+  Y <- X[, colSums(X) > (freq_cutoff - 1)]
+  si = rowSums(X)
+  Y <- log(10 * (0.1 + median(si) * t(t(Y) / si)))
+  return(Y)
+}
 
+## function to initialize the snn fit based on flash fit without constraints on L
+init.snn.LL <- function(dat, epsilon=.Machine$double.eps) {
+  LL <- dat$flash.fit$EF[[1]]
+  FF <- dat$flash.fit$EF[[2]]
+  
+  LL <- cbind(pmax(LL, 0), pmax(-LL, 0))
+  FF <- cbind(FF, -FF)
+  
+  to.keep <- (colSums(LL) > epsilon)
+  LL <- LL[, to.keep, drop = FALSE]
+  FF <- FF[, to.keep, drop = FALSE]
+  
+  return(list(LL, FF))
+}
 
